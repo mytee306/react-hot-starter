@@ -1,26 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
 import './App.css';
-import logo from './logo.svg';
 
-const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit
-        <code>src/App.tsx</code>
-        and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
-);
+export interface AppProps {}
+export interface AppState {
+  count: number;
+}
 
-export default App;
+class App extends Component<AppProps, AppState> {
+  state = {
+    count: 0,
+  };
+
+  render() {
+    const {
+      state: { count },
+    } = this;
+
+    return (
+      <div className="App">
+        <h1>React hot loader </h1>
+        <p>Count: {count}</p>
+        <button
+          onClick={() =>
+            this.setState(({ count: _count }) => ({ count: _count + 1 }))
+          }
+          type="button"
+        >
+          Increment
+        </button>
+      </div>
+    );
+  }
+}
+
+const withEnvironment: { [environment: string]: typeof App } = {
+  production: App,
+  development: hot(module)(App),
+};
+
+export default withEnvironment[process.env.NODE_ENV];
