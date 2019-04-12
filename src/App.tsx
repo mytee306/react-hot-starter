@@ -21,9 +21,4 @@ const App: SFC<AppProps> = () => {
   );
 };
 
-const withEnvironment: { [environment: string]: typeof App } = {
-  production: App,
-  development: hot(module)(App),
-};
-
-export default withEnvironment[process.env.NODE_ENV];
+export default hot(App);
