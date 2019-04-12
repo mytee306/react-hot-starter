@@ -16,12 +16,17 @@
     "@types/react-dom": "16.8.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.8.2",
+    "react-redux": "^7.0.1",
     "react-scripts": "2.1.8",
-    "typescript": "3.4.1",
-    "react-hot-loader": "^4.8.2"
+    "redux": "^4.0.1",
+    "redux-starter-kit": "^0.4.3",
+    "redux-utils": "github:mytee306/redux-utils",
+    "typescript": "3.4.1"
   },
   "devDependencies": {
     "@types/react-hot-loader": "^4.1.0",
+    "@types/react-redux": "^7.0.6",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
     "eslint": "^5.16.0",
