@@ -1,14 +1,18 @@
 import React, { SFC } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
+import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import './App.css';
-import { increment as incrementCreator } from './store/actions/count';
-import { selectCount, State } from './store/reducer';
-import { Count } from './store/reducer/count';
+import { State } from './store/reducer';
+import {
+  Count,
+  getCount,
+  increment as incrementCreator,
+} from './store/reducer/count';
 
 export interface AppProps {
   count: Count;
-  increment: () => void;
+  increment: SliceActionCreator<void | number>;
 }
 
 const App: SFC<AppProps> = ({ count, increment }) => (
@@ -22,12 +26,12 @@ const App: SFC<AppProps> = ({ count, increment }) => (
 );
 
 export const mapStateToProps = (state: State) => ({
-  count: selectCount(state),
+  count: getCount(state),
 });
 
 export default hot(module)(
   connect(
     mapStateToProps,
     { increment: incrementCreator },
-  )(App),
+  )(App as any), // void & number instead of void | number
 );
