@@ -8,6 +8,7 @@ export type DecrementPayload = Count;
 
 export type CountPayload = IncrementPayload | DecrementPayload;
 
+// export type CountAction = IncrementAction | DecrementAction; -> void & number
 const slice = createSlice<Count, PayloadAction<CountPayload>>({
   slice: 'count',
   initialState: 0,
