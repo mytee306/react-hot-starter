@@ -1,7 +1,8 @@
 import React, { SFC } from 'react';
+import { CountActionCreator } from './store/slices/count';
 
 export interface IncrementProps {
-  increment: () => void;
+  increment: CountActionCreator;
 }
 
 const Increment: SFC<IncrementProps> = ({ increment }) => (
