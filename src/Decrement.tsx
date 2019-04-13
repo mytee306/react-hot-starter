@@ -8,7 +8,7 @@ export interface DecrementProps {
 }
 
 const Decrement: SFC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
-  // const [amount, setAmount] = useState(0); // * state gets reset upon receiving props
+  // const [amount, setAmount] = useState(1); // * state gets reset upon receiving props
   const [isErrorDisplayed, displayError] = useState(false);
 
   return (
@@ -37,7 +37,7 @@ const Decrement: SFC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
       <hr />
       <Button
         color="secondary"
-        variant="raised"
+        variant="contained"
         onClick={() => decrementBy(amount)}
       >
         Decrement

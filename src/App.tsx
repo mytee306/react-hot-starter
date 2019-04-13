@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import Decrement from './Decrement';
+import Header from './Header';
 import Increment from './Increment';
 import { selectCount, State } from './store/reducer';
 import {
@@ -19,10 +20,11 @@ export interface AppProps {
 }
 
 const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
 
   return (
     <section>
+      <Header />
       <header>
         <nav>
           <h2>Navigation</h2>

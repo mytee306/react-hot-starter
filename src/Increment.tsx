@@ -8,7 +8,7 @@ export interface IncrementProps {
 
 const Increment: SFC<IncrementProps> = ({ increment }) => (
   <>
-    <Button color="primary" variant="raised" onClick={() => increment()}>
+    <Button color="primary" variant="contained" onClick={() => increment()}>
       Increment
     </Button>
   </>
