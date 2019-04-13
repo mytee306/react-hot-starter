@@ -12,7 +12,7 @@ import {
   CountPayload,
   decrementBy as createDecrementBy,
   increment as createIncrement,
-} from './store/reducer/count';
+} from './store/slices/count';
 
 export interface AppProps {
   count: Count;
