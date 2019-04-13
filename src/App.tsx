@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import './App.css';
 import { selectCount, State } from './store/reducer';
-import {
-  Count,
-  increment as createIncrementAction,
-} from './store/reducer/count';
+import { Count, CountPayload, increment as createIncrementAction } from './store/reducer/count';
 
 export interface AppProps {
   count: Count;
-  increment: SliceActionCreator<void | number>;
+  increment: SliceActionCreator<CountPayload>;
 }
 
 const App: SFC<AppProps> = ({ count, increment }) => (
