@@ -2,22 +2,22 @@ import React, { SFC, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
+import { Dispatch } from 'redux';
 import './App.css';
 import Decrement from './Decrement';
 import Increment from './Increment';
 import { selectCount, State } from './store/reducer';
 import {
   Count,
-  CountPayload,
   decrementBy as createDecrementBy,
+  DecrementByPayload,
   increment as createIncrement,
 } from './store/slices/count';
 
 export interface AppProps {
   count: Count;
-  increment: SliceActionCreator<CountPayload>;
-  decrementBy: SliceActionCreator<CountPayload>;
+  increment: () => void;
+  decrementBy: (payload: DecrementByPayload) => void;
 }
 
 const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
@@ -43,7 +43,7 @@ const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
         <Switch>
           <Route
             path="/increment"
-            component={() => <Increment increment={increment as any} />}
+            component={() => <Increment increment={increment} />}
           />
           <Route
             path="/decrement"
@@ -65,9 +65,25 @@ export const mapStateToProps = (state: State) => ({
   count: selectCount(state),
 });
 
+export const mapDispatchToProps = (dispatch: Dispatch) => ({
+  increment: () => {
+    dispatch(createIncrement());
+  },
+  decrementBy: (payload: DecrementByPayload) => {
+    dispatch(createDecrementBy(payload));
+  },
+});
+
 export default hot(module)(
   connect(
     mapStateToProps,
-    { increment: createIncrement, decrementBy: createDecrementBy },
+    dispatch => ({
+      increment: () => {
+        dispatch(createIncrement());
+      },
+      decrementBy: (payload: DecrementByPayload) => {
+        dispatch(createDecrementBy(payload));
+      },
+    }),
   )(App),
 );
