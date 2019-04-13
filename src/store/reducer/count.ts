@@ -13,6 +13,7 @@ const slice = createSlice<Count, PayloadAction<CountPayload>>({
   initialState: 0,
   reducers: {
     increment: count => count + 1,
+    // * if you need to use the payload more than once -> action.payload as DecrementPayload;
     decrementBy: (count, { payload }) => count - (payload as Count),
   },
 });
