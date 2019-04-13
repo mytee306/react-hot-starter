@@ -3,11 +3,10 @@ import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import './App.css';
-import { State } from './store/reducer';
+import { selectCount, State } from './store/reducer';
 import {
   Count,
-  getCount,
-  increment as incrementCreator,
+  increment as createIncrementAction,
 } from './store/reducer/count';
 
 export interface AppProps {
@@ -26,12 +25,12 @@ const App: SFC<AppProps> = ({ count, increment }) => (
 );
 
 export const mapStateToProps = (state: State) => ({
-  count: getCount(state),
+  count: selectCount(state),
 });
 
 export default hot(module)(
   connect(
     mapStateToProps,
-    { increment: incrementCreator },
+    { increment: createIncrementAction },
   )(App),
 );
