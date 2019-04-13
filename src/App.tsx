@@ -1,10 +1,10 @@
 import React, { SFC, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Decrement from './Decrement';
-import Header from './Header';
 import Increment from './Increment';
+import Layout from './Layout';
 import { selectCount, State } from './store/reducer';
 import {
   Count,
@@ -24,39 +24,27 @@ const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
 
   return (
     <section>
-      <Header />
-      <header>
-        <nav>
-          <h2>Navigation</h2>
-          <ul>
-            <li>
-              <NavLink to="/increment">Increment</NavLink>
-            </li>
-            <li>
-              <NavLink to="/decrement">Decrement</NavLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <h1>Count: {count}</h1>
-        <Switch>
-          <Route
-            path="/increment"
-            component={() => <Increment increment={increment} />}
-          />
-          <Route
-            path="/decrement"
-            component={() => (
-              <Decrement
-                decrementBy={decrementBy}
-                amount={amount}
-                setAmount={setAmount}
-              />
-            )}
-          />
-        </Switch>
-      </main>
+      <Layout>
+        <section style={{ margin: '100px' }}>
+          <h1>Count: {count}</h1>
+          <Switch>
+            <Route
+              path="/increment"
+              component={() => <Increment increment={increment} />}
+            />
+            <Route
+              path="/decrement"
+              component={() => (
+                <Decrement
+                  decrementBy={decrementBy}
+                  amount={amount}
+                  setAmount={setAmount}
+                />
+              )}
+            />
+          </Switch>
+        </section>
+      </Layout>
     </section>
   );
 };
