@@ -15,5 +15,5 @@ export default slice.reducer;
 
 export const {
   actions: { increment, decrementBy },
-  selectors: { getCount },
+  selectors: { getCount }, // * unfavorable because of any state type
 } = slice;
