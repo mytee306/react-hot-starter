@@ -4,7 +4,9 @@ import './App.css';
 
 export interface AppProps {}
 
-const App: SFC<AppProps> = () => {
+export type AppComponent = SFC<AppProps>;
+
+const App: AppComponent = () => {
   const [count, setCount] = useState(0);
 
   return (
@@ -21,4 +23,4 @@ const App: SFC<AppProps> = () => {
   );
 };
 
-export default hot(App);
+export default hot(App) as AppComponent;
