@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'redux-starter-kit';
-import count, { Count } from './count';
+import count, { Count } from './slices/count';
 
 export type State = {
   count: Count;
