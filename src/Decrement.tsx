@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React, { SFC, useState } from 'react';
 
 export interface DecrementProps {
@@ -11,15 +12,7 @@ const Decrement: SFC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
   const [isErrorDisplayed, displayError] = useState(false);
 
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-
-        decrementBy(amount);
-
-        return false;
-      }}
-    >
+    <form>
       <label htmlFor="decrement">
         Decrement By Amount
         <br />
@@ -42,7 +35,13 @@ const Decrement: SFC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
       <br />
       {isErrorDisplayed && <i>Please input a valid integer</i>}
       <hr />
-      <input type="submit" />
+      <Button
+        color="secondary"
+        variant="raised"
+        onClick={() => decrementBy(amount)}
+      >
+        Decrement
+      </Button>
     </form>
   );
 };

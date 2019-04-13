@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React, { SFC } from 'react';
 import { CountActionCreator } from './store/slices/count';
 
@@ -7,9 +8,9 @@ export interface IncrementProps {
 
 const Increment: SFC<IncrementProps> = ({ increment }) => (
   <>
-    <button onClick={() => increment()} type="button">
+    <Button color="primary" variant="raised" onClick={() => increment()}>
       Increment
-    </button>
+    </Button>
   </>
 );
 
