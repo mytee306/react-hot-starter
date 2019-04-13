@@ -33,5 +33,5 @@ export default hot(module)(
   connect(
     mapStateToProps,
     { increment: incrementCreator },
-  )(App as any), // void & number instead of void | number
+  )(App),
 );
