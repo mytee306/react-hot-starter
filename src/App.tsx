@@ -77,13 +77,6 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default hot(module)(
   connect(
     mapStateToProps,
-    dispatch => ({
-      increment: () => {
-        dispatch(createIncrement());
-      },
-      decrementBy: (payload: DecrementByPayload) => {
-        dispatch(createDecrementBy(payload));
-      },
-    }),
+    mapDispatchToProps,
   )(App),
 );
