@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import {
   AppBar,
   Divider,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -11,18 +14,35 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core';
-import { ClassNameMap } from '@material-ui/core/styles/withStyles';
+import { ClassNameMap } from '@material-ui/core/styles/withStyles'; // eslint-disable-line import/no-unresolved
 import {
+  ArrowDownward,
+  ArrowUpward,
   ChevronLeft as ChevronLeftIcon,
-  Inbox as InboxIcon,
-  Mail as MailIcon,
   Menu as MenuIcon,
 } from '@material-ui/icons';
 import classNames from 'classnames';
 import React, { SFC, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { LayoutStyles } from './LayoutStyle';
 
-export const items = ['Inbox', 'Starred', 'Send email', 'Drafts'];
+export const items = [
+  {
+    text: 'Increment',
+    Icon: ArrowUpward,
+  },
+  {
+    text: 'Decrement',
+    Icon: ArrowDownward,
+  },
+].map(item => ({
+  ...item,
+  path: item.text
+    .toLowerCase()
+    .split(' ')
+    .join('-')
+    .padStart(1, '/'),
+}));
 
 export type LayoutClasses =
   | 'root'
@@ -71,7 +91,6 @@ const Layout: SFC<LayoutProps> = ({ classes, children }) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      {/* HEADER ENDS */}
       <Drawer
         variant="permanent"
         className={classNames(classes.drawer, {
@@ -93,13 +112,15 @@ const Layout: SFC<LayoutProps> = ({ classes, children }) => {
         </div>
         <Divider />
         <List>
-          {items.map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
+          {items.map(({ text, Icon, path }) => (
+            <Link component={(props: any) => <NavLink to={path} {...props} />}>
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <Icon />
+                </ListItemIcon>
+                <ListItemText>{text}</ListItemText>
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>
