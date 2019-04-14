@@ -25,7 +25,7 @@ const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
   return (
     <section>
       <Layout>
-        <section style={{ margin: '100px' }}>
+        <section>
           <h1>Count: {count}</h1>
           <Switch>
             <Route
