@@ -7,6 +7,7 @@ import {
   Typography,
   WithStyles,
   withStyles,
+  Hidden,
 } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import React, { SFC } from 'react';
@@ -15,7 +16,7 @@ const styles = createStyles({
   header: {
     flexGrow: 1,
   },
-  grow: {
+  expand: {
     flexGrow: 1,
   },
   menuButton: {
@@ -24,18 +25,28 @@ const styles = createStyles({
   },
 });
 
-export interface HeaderProps extends WithStyles<typeof styles> {}
+export interface HeaderProps extends WithStyles<typeof styles> {
+  toggle: () => void;
+}
 
 const Header: SFC<HeaderProps> = ({
-  classes: { header, grow, menuButton },
+  classes: { header, expand, menuButton },
+  toggle,
 }) => (
   <header className={header}>
     <AppBar position="static">
       <Toolbar>
-        <IconButton className={menuButton} color="inherit" aria-label="Menu">
-          <Menu />
-        </IconButton>
-        <Typography className={grow} variant="h6" color="inherit">
+        <Hidden lgUp>
+          <IconButton
+            className={menuButton}
+            color="inherit"
+            aria-label="Menu"
+            onClick={toggle}
+          >
+            <Menu />
+          </IconButton>
+        </Hidden>
+        <Typography className={expand} variant="h6" color="inherit">
           App Name
         </Typography>
         <Button color="inherit">Login</Button>
