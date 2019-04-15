@@ -1,16 +1,22 @@
-import React from 'react';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List } from '@material-ui/icons';
+import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
+import { MenuItems } from './constants/menuItems';
 
-export default () => (
+const Nav: SFC<{ items: MenuItems }> = ({ items }) => (
   <nav>
-    <h2>Navigation</h2>
-    <ul>
-      <li>
-        <NavLink to="/increment">Increment</NavLink>
-      </li>
-      <li>
-        <NavLink to="/decrement">Decrement</NavLink>
-      </li>
-    </ul>
+    <List>
+      {items.map(({ text, icon, path }) => (
+        <NavLink to={path}>
+          <ListItem button key={text}>
+            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemText>{text}</ListItemText>
+          </ListItem>
+        </NavLink>
+      ))}
+    </List>
   </nav>
 );
+
+export default Nav;
