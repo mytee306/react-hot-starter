@@ -1,13 +1,46 @@
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { List } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward, List } from '@material-ui/icons';
 import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { MenuItems } from './constants/menuItems';
 
-const Nav: SFC<{ items: MenuItems }> = ({ items }) => (
+export const getPathFromText = (text: string) =>
+  text
+    .toLowerCase()
+    .split(' ')
+    .join('-')
+    .padStart(1, '/');
+
+interface Item {
+  text: string;
+  icon: JSX.Element;
+}
+
+export type NavItem = Item & {
+  path: string;
+};
+
+export type NavItems = NavItem[];
+
+export const items = [
+  {
+    text: 'Increment',
+    icon: <ArrowUpward />,
+  },
+  {
+    text: 'Decrement',
+    icon: <ArrowDownward />,
+  },
+];
+
+const navItems: NavItems = items.map(item => ({
+  ...item,
+  path: getPathFromText(item.text),
+}));
+
+const Nav: SFC = () => (
   <nav>
     <List>
-      {items.map(({ text, icon, path }) => (
+      {navItems.map(({ text, icon, path }) => (
         <NavLink to={path}>
           <ListItem button key={text}>
             <ListItemIcon>{icon}</ListItemIcon>
