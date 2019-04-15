@@ -36,7 +36,7 @@ const Header: SFC<HeaderProps> = ({
           <Menu />
         </IconButton>
         <Typography className={grow} variant="h6" color="inherit">
-          News
+          App Name
         </Typography>
         <Button color="inherit">Login</Button>
       </Toolbar>
