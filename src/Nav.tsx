@@ -37,11 +37,15 @@ const navItems: NavItems = items.map(item => ({
   path: getPathFromText(item.text),
 }));
 
-const Nav: SFC = () => (
+export interface NavProps {
+  onNavigate: () => void;
+}
+
+const Nav: SFC<NavProps> = ({ onNavigate }) => (
   <nav>
     <List>
       {navItems.map(({ text, icon, path }) => (
-        <NavLink to={path} key={text}>
+        <NavLink to={path} key={text} onClick={onNavigate}>
           <ListItem button key={text}>
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText>{text}</ListItemText>

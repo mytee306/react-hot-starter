@@ -81,7 +81,7 @@ const Layout: SFC<LayoutProps> = ({
           </Hidden>
         </div>
         <Divider />
-        <Nav />
+        <Nav onNavigate={handleDrawerToggle} />
       </Drawer>
       <main className={content}>{children}</main>
     </section>
