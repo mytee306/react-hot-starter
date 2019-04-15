@@ -1,5 +1,5 @@
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { ArrowDownward, ArrowUpward, List } from '@material-ui/icons';
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ const Nav: SFC = () => (
   <nav>
     <List>
       {navItems.map(({ text, icon, path }) => (
-        <NavLink to={path}>
+        <NavLink to={path} key={text}>
           <ListItem button key={text}>
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText>{text}</ListItemText>
