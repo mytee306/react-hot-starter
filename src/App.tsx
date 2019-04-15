@@ -3,8 +3,8 @@ import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import Decrement from './Decrement';
-import Header from './Header';
 import Increment from './Increment';
+import Layout from './Layout';
 import { selectCount, State } from './store/reducer';
 import {
   Count,
@@ -23,8 +23,7 @@ const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
   const [amount, setAmount] = useState(1);
 
   return (
-    <section>
-      <Header />
+    <Layout>
       <h1>Count: {count}</h1>
       <Switch>
         <Route
@@ -42,7 +41,7 @@ const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
           )}
         />
       </Switch>
-    </section>
+    </Layout>
   );
 };
 
