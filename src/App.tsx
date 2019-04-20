@@ -1,4 +1,4 @@
-import React, { SFC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
@@ -19,7 +19,7 @@ export interface AppProps {
   decrementBy: CountActionCreator;
 }
 
-const App: SFC<AppProps> = ({ count, increment, decrementBy }) => {
+const App: FC<AppProps> = ({ count, increment, decrementBy }) => {
   const [amount, setAmount] = useState(1);
 
   return (

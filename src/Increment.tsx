@@ -1,12 +1,12 @@
 import { Button } from '@material-ui/core';
-import React, { SFC } from 'react';
+import React, { FC } from 'react';
 import { CountActionCreator } from './store/slices/count';
 
 export interface IncrementProps {
   increment: CountActionCreator;
 }
 
-const Increment: SFC<IncrementProps> = ({ increment }) => (
+const Increment: FC<IncrementProps> = ({ increment }) => (
   <>
     <Button color="primary" variant="contained" onClick={() => increment()}>
       Increment

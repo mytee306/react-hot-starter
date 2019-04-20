@@ -9,7 +9,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
-import React, { SFC } from 'react';
+import React, { FC } from 'react';
 
 const styles = createStyles({
   header: {
@@ -26,9 +26,7 @@ const styles = createStyles({
 
 export interface HeaderProps extends WithStyles<typeof styles> {}
 
-const Header: SFC<HeaderProps> = ({
-  classes: { header, grow, menuButton },
-}) => (
+const Header: FC<HeaderProps> = ({ classes: { header, grow, menuButton } }) => (
   <header className={header}>
     <AppBar position="static">
       <Toolbar>

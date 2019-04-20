@@ -22,7 +22,7 @@ import {
   Menu as MenuIcon,
 } from '@material-ui/icons';
 import classNames from 'classnames';
-import React, { SFC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutStyles } from './LayoutStyle';
 
@@ -60,7 +60,7 @@ export interface LayoutProps {
   classes: ClassNameMap<LayoutClasses>;
 }
 
-const Layout: SFC<LayoutProps> = ({ classes, children }) => {
+const Layout: FC<LayoutProps> = ({ classes, children }) => {
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
