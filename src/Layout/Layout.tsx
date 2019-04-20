@@ -2,15 +2,15 @@ import {
   createStyles,
   Divider,
   Drawer,
+  Hidden,
+  IconButton,
   Theme,
   withStyles,
   WithStyles,
-  IconButton,
-  Hidden,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { ChevronRight } from '@material-ui/icons';
-import React, { SFC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import Header from '../Header';
 import Nav from '../Nav';
 
@@ -48,7 +48,7 @@ export interface LayoutProps extends WithStyles<typeof LayoutStyle> {
   theme: Theme;
 }
 
-const Layout: SFC<LayoutProps> = ({
+const Layout: FC<LayoutProps> = ({
   classes: { toolbar, drawer, drawerPaper, content },
   children,
   theme,

@@ -2,15 +2,15 @@ import {
   AppBar,
   Button,
   createStyles,
+  Hidden,
   IconButton,
   Toolbar,
   Typography,
   WithStyles,
   withStyles,
-  Hidden,
 } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
-import React, { SFC } from 'react';
+import React, { FC } from 'react';
 
 const styles = createStyles({
   header: {
@@ -29,7 +29,7 @@ export interface HeaderProps extends WithStyles<typeof styles> {
   toggle: () => void;
 }
 
-const Header: SFC<HeaderProps> = ({
+const Header: FC<HeaderProps> = ({
   classes: { header, expand, menuButton },
   toggle,
 }) => (

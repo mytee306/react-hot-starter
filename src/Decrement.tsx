@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { SFC, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 export interface DecrementProps {
   decrementBy: (amount: number) => void;
@@ -7,7 +7,7 @@ export interface DecrementProps {
   setAmount: (amount: number) => void;
 }
 
-const Decrement: SFC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
+const Decrement: FC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
   // const [amount, setAmount] = useState(1); // * state gets reset upon receiving props
   const [isErrorDisplayed, displayError] = useState(false);
 
