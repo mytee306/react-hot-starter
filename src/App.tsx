@@ -9,6 +9,7 @@ import React, { FC } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import { compose } from 'recompose';
 import Decrement from './Decrement';
 import Increment from './Increment';
 import Layout from './Layout';
@@ -66,9 +67,10 @@ export const mapDispatchToProps = {
   decrementBy: createDecrementByAction,
 };
 
-export default hot(module)(
+export default compose<AppProps, {}>(
+  hot(module),
   connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(App),
-);
+  ),
+)(App);
