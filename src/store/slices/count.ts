@@ -1,32 +1,44 @@
-import { createSlice, PayloadAction } from 'redux-starter-kit';
-import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
-
-export const countSlice = 'count';
-
 export type Count = number;
 
-const initialState: Count = 0;
+export const initialCount = 0;
 
-export type IncrementPayload = void;
+export const incrementActionType = '[Count] Increment';
 
-export type DecrementByPayload = Count;
+export type IncrementAction = {
+  type: typeof incrementActionType;
+};
 
-export type CountPayload = IncrementPayload | DecrementByPayload;
+export type IncrementActionCreator = () => IncrementAction;
 
-export type CountActionCreator = SliceActionCreator<CountPayload>;
-
-const slice = createSlice<Count, PayloadAction<CountPayload>>({
-  slice: countSlice,
-  initialState,
-  reducers: {
-    increment: count => count + 1,
-    decrementBy: (count, { payload }) =>
-      count - (payload as DecrementByPayload),
-  },
+export const increment: IncrementActionCreator = () => ({
+  type: incrementActionType,
 });
 
-export default slice.reducer;
+export const decrementByActionType = '[Count] Decrement';
 
-export const {
-  actions: { increment, decrementBy },
-} = slice;
+export type DecrementByAction = {
+  type: typeof decrementByActionType;
+  payload: Count;
+};
+
+export type DecrementByActionCreator = (payload: Count) => DecrementByAction;
+
+export const decrementBy: DecrementByActionCreator = payload => ({
+  type: decrementByActionType,
+  payload,
+});
+
+export type CountAction = IncrementAction | DecrementByAction;
+
+export type CountActionCreator = IncrementActionCreator | DecrementByActionCreator;
+
+export default (count = initialCount, action: CountAction) => {
+  switch (action.type) {
+    case incrementActionType:
+      return count + 1;
+    case decrementByActionType:
+      return count - action.payload;
+    default:
+      return count;
+  }
+};

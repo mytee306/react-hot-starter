@@ -1,10 +1,11 @@
 import { Button, Divider, FormControl, TextField } from '@material-ui/core';
 import React, { FC, useState } from 'react';
+import { Count, DecrementByActionCreator } from './store/slices/count';
 
 export interface DecrementProps {
-  decrementBy: (amount: number) => void;
-  amount: number;
-  setAmount: (amount: number) => void;
+  decrementBy: DecrementByActionCreator;
+  amount: Count;
+  setAmount: (amount: Count) => void;
 }
 
 const Decrement: FC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {

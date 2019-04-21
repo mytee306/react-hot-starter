@@ -14,16 +14,17 @@ import Layout from './Layout';
 import { selectCount, State } from './store/reducer';
 import {
   Count,
-  CountActionCreator,
   decrementBy as createDecrementBy,
+  DecrementByActionCreator,
   increment as createIncrement,
+  IncrementActionCreator,
 } from './store/slices/count';
 import { createThemeFragment } from './utils/createThemeFragment';
 
 export interface AppProps {
   count: Count;
-  increment: CountActionCreator;
-  decrementBy: CountActionCreator;
+  increment: IncrementActionCreator;
+  decrementBy: DecrementByActionCreator;
 }
 
 const App: FC<AppProps> = ({ count, increment, decrementBy }) => {
