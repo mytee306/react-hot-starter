@@ -2,18 +2,8 @@ import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
+import { NavItems } from './models/NavItems';
 import { getPathFromText } from './utils/getPathFromText';
-
-interface Item {
-  text: string;
-  icon: JSX.Element;
-}
-
-export type NavItem = Item & {
-  path: string;
-};
-
-export type NavItems = NavItem[];
 
 export const items = [
   {
