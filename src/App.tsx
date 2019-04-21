@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
@@ -7,7 +7,12 @@ import Decrement from './Decrement';
 import Increment from './Increment';
 import Layout from './Layout';
 import { selectCount, State } from './store/reducer';
-import { Count, CountActionCreator, decrementBy as createDecrementBy, increment as createIncrement } from './store/slices/count';
+import {
+  Count,
+  CountActionCreator,
+  decrementBy as createDecrementBy,
+  increment as createIncrement,
+} from './store/slices/count';
 
 export interface AppProps {
   count: Count;
@@ -21,6 +26,9 @@ const App: FC<AppProps> = ({ count, increment, decrementBy }) => {
   return (
     <Layout>
       <Typography variant="h1">Count: {count}</Typography>
+      <br />
+      <Divider />
+      <br />
       <Switch>
         <Route
           path="/increment"
