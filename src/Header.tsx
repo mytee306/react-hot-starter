@@ -9,8 +9,14 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
+import { Menu, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import React, { FC } from 'react';
+import { connect } from 'react-redux';
+import { selectDarkThemeFlag, State } from './store/reducer';
+import {
+  setPaletteTypeActionCreator,
+  SetPaletteTypeActionCreator,
+} from './store/slices/theme/palette/type';
 
 const HeaderStyles = createStyles({
   header: {
@@ -27,32 +33,55 @@ const HeaderStyles = createStyles({
 
 export interface HeaderProps extends WithStyles<typeof HeaderStyles> {
   toggle: () => void;
+  isDark: boolean;
+  setPaletteType: SetPaletteTypeActionCreator;
 }
 
 const Header: FC<HeaderProps> = ({
   classes: { header, expand, menuButton },
   toggle,
-}) => (
-  <header className={header}>
-    <AppBar position="static">
-      <Toolbar>
-        <Hidden lgUp>
-          <IconButton
-            className={menuButton}
-            color="inherit"
-            aria-label="Menu"
-            onClick={toggle}
-          >
-            <Menu />
-          </IconButton>
-        </Hidden>
-        <Typography className={expand} variant="h6" color="inherit">
-          App Name
-        </Typography>
-        <Button color="inherit">Login</Button>
-      </Toolbar>
-    </AppBar>
-  </header>
-);
+  isDark,
+  setPaletteType,
+}) => {
+  const toggleDarkTheme = isDark
+    ? () => setPaletteType('light')
+    : () => setPaletteType('dark');
 
-export default withStyles(HeaderStyles)(Header);
+  return (
+    <header className={header}>
+      <AppBar position="static">
+        <Toolbar>
+          <Hidden lgUp>
+            <IconButton
+              className={menuButton}
+              color="inherit"
+              aria-label="Menu"
+              onClick={toggle}
+            >
+              <Menu />
+            </IconButton>
+          </Hidden>
+          <Typography className={expand} variant="h6" color="inherit">
+            App Name
+          </Typography>
+          <Button color="inherit" onClick={toggleDarkTheme}>
+            {isDark ? <WbSunny /> : <WbSunnyOutlined />}
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </header>
+  );
+};
+
+const mapStateToProps = (state: State) => ({
+  isDark: selectDarkThemeFlag(state),
+});
+
+const mapDispatchToProps = {
+  setPaletteType: setPaletteTypeActionCreator,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(HeaderStyles)(Header));
