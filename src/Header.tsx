@@ -12,7 +12,7 @@ import {
 import { Menu } from '@material-ui/icons';
 import React, { FC } from 'react';
 
-const styles = createStyles({
+const HeaderStyles = createStyles({
   header: {
     flexGrow: 1,
   },
@@ -25,7 +25,7 @@ const styles = createStyles({
   },
 });
 
-export interface HeaderProps extends WithStyles<typeof styles> {
+export interface HeaderProps extends WithStyles<typeof HeaderStyles> {
   toggle: () => void;
 }
 
@@ -55,4 +55,4 @@ const Header: FC<HeaderProps> = ({
   </header>
 );
 
-export default withStyles(styles)(Header);
+export default withStyles(HeaderStyles)(Header);
