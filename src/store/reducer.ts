@@ -1,6 +1,7 @@
+import { PaletteType } from '@material-ui/core';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import { combineReducers } from 'redux';
-import { createSelector } from 'redux-starter-kit';
+import { createSelector, defaultMemoize } from 'reselect';
 import count, { Count } from './slices/count';
 import theme from './slices/theme';
 
@@ -14,10 +15,16 @@ export default combineReducers<State>({
   theme,
 });
 
-export const selectCount = createSelector<State, Count>([
-  (state: State) => state.count,
-]);
+export const selectCount = defaultMemoize((state: State) => state.count);
 
-export const selectTheme = createSelector<State, ThemeOptions>([
-  (state: State) => state.theme,
-]);
+export const selectTheme = defaultMemoize((state: State) => state.theme);
+
+export const selectPaletteType = createSelector(
+  selectTheme,
+  ({ palette }) => (palette || {}).type,
+);
+
+export const selectDarkThemeFlag = createSelector(
+  selectPaletteType as any,
+  (type: PaletteType) => type === 'dark',
+);
