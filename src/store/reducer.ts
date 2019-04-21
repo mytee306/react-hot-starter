@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'redux-starter-kit';
-import count, { Count } from './slices/count';
+import count, { Count, countSlice } from './slices/count';
 
 export type State = {
-  count: Count;
+  [countSlice]: Count;
 };
 
 export default combineReducers({

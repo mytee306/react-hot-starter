@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 
-const countSlice = 'count';
+export const countSlice = 'count';
 
 export type Count = number;
 
