@@ -23,12 +23,12 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
           onChange={({ target: { value } }) => {
             const newAmount = parseInt(value, 10);
 
-            if (newAmount) {
+            if (Number.isNaN(newAmount)) {
+              displayError(true);
+            } else {
               setAmount(newAmount);
 
               displayError(false);
-            } else {
-              displayError(true);
             }
           }}
           error={isErrorDisplayed}
