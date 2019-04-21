@@ -9,7 +9,7 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
-import { ChevronRight } from '@material-ui/icons';
+import { ChevronLeft } from '@material-ui/icons';
 import React, { FC, useState } from 'react';
 import Header from '../Header';
 import Nav from '../Nav';
@@ -76,7 +76,7 @@ const Layout: FC<LayoutProps> = ({
         <div className={toolbar}>
           <Hidden lgUp>
             <IconButton onClick={handleDrawerToggle}>
-              <ChevronRight />
+              <ChevronLeft />
             </IconButton>
           </Hidden>
         </div>
