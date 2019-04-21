@@ -1,4 +1,9 @@
-import { Divider, Typography } from '@material-ui/core';
+import {
+  createMuiTheme,
+  Divider,
+  MuiThemeProvider,
+  Typography,
+} from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
@@ -13,6 +18,7 @@ import {
   decrementBy as createDecrementBy,
   increment as createIncrement,
 } from './store/slices/count';
+import { createThemeFragment } from './utils/createThemeFragment';
 
 export interface AppProps {
   count: Count;
@@ -23,29 +29,33 @@ export interface AppProps {
 const App: FC<AppProps> = ({ count, increment, decrementBy }) => {
   const [amount, setAmount] = useState(1);
 
+  const theme = createMuiTheme(createThemeFragment(true));
+
   return (
-    <Layout>
-      <Typography variant="h1">Count: {count}</Typography>
-      <br />
-      <Divider />
-      <br />
-      <Switch>
-        <Route
-          path="/increment"
-          component={() => <Increment increment={increment} />}
-        />
-        <Route
-          path="/decrement"
-          component={() => (
-            <Decrement
-              decrementBy={decrementBy}
-              amount={amount}
-              setAmount={setAmount}
-            />
-          )}
-        />
-      </Switch>
-    </Layout>
+    <MuiThemeProvider theme={theme}>
+      <Layout>
+        <Typography variant="h1">Count: {count}</Typography>
+        <br />
+        <Divider />
+        <br />
+        <Switch>
+          <Route
+            path="/increment"
+            component={() => <Increment increment={increment} />}
+          />
+          <Route
+            path="/decrement"
+            component={() => (
+              <Decrement
+                decrementBy={decrementBy}
+                amount={amount}
+                setAmount={setAmount}
+              />
+            )}
+          />
+        </Switch>
+      </Layout>
+    </MuiThemeProvider>
   );
 };
 

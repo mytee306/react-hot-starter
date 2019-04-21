@@ -1,5 +1,6 @@
 import {
   createStyles,
+  CssBaseline,
   Divider,
   Drawer,
   Hidden,
@@ -63,6 +64,7 @@ const Layout: FC<LayoutProps> = ({
 
   return (
     <section>
+      <CssBaseline />
       <Header toggle={handleDrawerToggle} />
       <Drawer
         variant={isLargeScreen ? 'permanent' : 'temporary'}
