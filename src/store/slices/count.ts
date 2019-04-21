@@ -8,9 +8,9 @@ export type IncrementAction = {
   type: typeof incrementActionType;
 };
 
-export type IncrementActionCreator = () => IncrementAction;
+export type CreateIncrementAction = () => IncrementAction;
 
-export const increment: IncrementActionCreator = () => ({
+export const createIncrementAction: CreateIncrementAction = () => ({
   type: incrementActionType,
 });
 
@@ -21,9 +21,9 @@ export type DecrementByAction = {
   payload: Count;
 };
 
-export type DecrementByActionCreator = (payload: Count) => DecrementByAction;
+export type CreateDecrementByAction = (payload: Count) => DecrementByAction;
 
-export const decrementBy: DecrementByActionCreator = payload => ({
+export const createDecrementByAction: CreateDecrementByAction = payload => ({
   type: decrementByActionType,
   payload,
 });
@@ -31,8 +31,8 @@ export const decrementBy: DecrementByActionCreator = payload => ({
 export type CountAction = IncrementAction | DecrementByAction;
 
 export type CountActionCreator =
-  | IncrementActionCreator
-  | DecrementByActionCreator;
+  | CreateIncrementAction
+  | CreateDecrementByAction;
 
 export default (count = initialCount, action: CountAction) => {
   switch (action.type) {

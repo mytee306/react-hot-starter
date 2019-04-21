@@ -15,16 +15,16 @@ import Layout from './Layout';
 import { selectCount, selectTheme, State } from './store/reducer';
 import {
   Count,
-  decrementBy as createDecrementBy,
-  DecrementByActionCreator,
-  increment as createIncrement,
-  IncrementActionCreator,
+  CreateDecrementByAction,
+  createDecrementByAction,
+  CreateIncrementAction,
+  createIncrementAction,
 } from './store/slices/count';
 
 export interface AppProps {
   count: Count;
-  increment: IncrementActionCreator;
-  decrementBy: DecrementByActionCreator;
+  increment: CreateIncrementAction;
+  decrementBy: CreateDecrementByAction;
   theme: ThemeOptions;
 }
 
@@ -65,8 +65,8 @@ export const mapStateToProps = (state: State) => ({
 });
 
 export const mapDispatchToProps = {
-  increment: createIncrement,
-  decrementBy: createDecrementBy,
+  increment: createIncrementAction,
+  decrementBy: createDecrementByAction,
 };
 
 export default hot(module)(

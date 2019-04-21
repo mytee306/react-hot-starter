@@ -1,9 +1,9 @@
 import { Button } from '@material-ui/core';
 import React, { FC } from 'react';
-import { IncrementActionCreator } from './store/slices/count';
+import { CreateIncrementAction } from './store/slices/count';
 
 export interface IncrementProps {
-  increment: IncrementActionCreator;
+  increment: CreateIncrementAction;
 }
 
 const Increment: FC<IncrementProps> = ({ increment }) => (
