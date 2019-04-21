@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'redux-starter-kit';
-import count, { Count, countSlice } from './slices/count';
+import count, { Count } from './slices/count';
 
 export type State = {
-  [countSlice]: Count;
+  count: Count;
 };
 
-export default combineReducers({
+export default combineReducers<State>({
   count,
 });
 
