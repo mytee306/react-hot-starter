@@ -1,11 +1,11 @@
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import dashify from 'dashify';
 import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { NavItems } from './models/NavItems';
-import { getPathFromText } from './utils/getPathFromText';
+import { Items, NavItems } from './models/NavItems';
 
-export const items = [
+export const items: Items = [
   {
     text: 'Increment',
     icon: <ArrowUpward />,
@@ -18,7 +18,7 @@ export const items = [
 
 const navItems: NavItems = items.map(item => ({
   ...item,
-  path: getPathFromText(item.text),
+  path: dashify(item.text),
 }));
 
 export interface NavProps {
