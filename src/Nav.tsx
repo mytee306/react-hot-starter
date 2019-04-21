@@ -1,25 +1,35 @@
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import {
+  ArrowDownward,
+  ArrowUpward,
+  Home as HomeIcon,
+} from '@material-ui/icons';
 import dashify from 'dashify';
 import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Items, NavItems } from './models/NavItems';
+import { NavItems } from './models/NavItems';
 
-export const items: Items = [
+const Home = 'Home';
+const Increment = 'Increment';
+const Decrement = 'Decrement';
+
+export const navItems: NavItems = [
   {
-    text: 'Increment',
-    icon: <ArrowUpward />,
+    text: Home,
+    icon: <HomeIcon />,
+    path: '',
   },
   {
-    text: 'Decrement',
+    text: Increment,
+    icon: <ArrowUpward />,
+    path: dashify(Increment),
+  },
+  {
+    text: Decrement,
     icon: <ArrowDownward />,
+    path: dashify(Decrement),
   },
 ];
-
-const navItems: NavItems = items.map(item => ({
-  ...item,
-  path: dashify(item.text),
-}));
 
 export interface NavProps {
   onNavigate: () => void;

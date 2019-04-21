@@ -1,12 +1,6 @@
-export interface Item {
+export interface NavItem {
   text: string;
   icon: JSX.Element;
-}
-
-export type Items = Item[];
-
-export type NavItem = Item & {
   path: string;
-};
-
+}
 export type NavItems = NavItem[];
