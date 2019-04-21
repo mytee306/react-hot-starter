@@ -68,7 +68,6 @@
     "not op_mini all"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/mytee306/react-hot-starter",
   "description": "Create React App based starter project with Hot Reloading for Components and Redux Reducers",
   "repository": {
     "type": "git",
