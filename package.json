@@ -17,6 +17,7 @@
     "formik": "^1.5.2",
     "ramda": "^0.26.1",
     "react": "^16.8.6",
+    "react-app-rewire-hot-loader": "^2.0.1",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.2",
     "react-redux": "^7.0.1",
@@ -55,7 +56,6 @@
     "eslint-plugin-prettier": "^3.0.1",
     "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
-    "react-app-rewire-hot-loader": "^2.0.1",
     "react-app-rewired": "^2.1.1",
     "typescript": "^3.4.3",
     "utility-types": "^3.5.0"
