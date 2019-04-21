@@ -1,15 +1,15 @@
 import { Button, Divider, FormControl, TextField } from '@material-ui/core';
 import React, { FC, useState } from 'react';
+import { withState } from 'recompose';
 import { Count, CreateDecrementByAction } from './store/slices/count';
 
 export interface DecrementProps {
   decrementBy: CreateDecrementByAction;
   amount: Count;
-  setAmount: (amount: Count) => void;
+  setAmount: (amount: Count) => Count;
 }
 
 const Decrement: FC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
-  // const [amount, setAmount] = useState(1); // * state gets reset upon receiving props
   const [isErrorDisplayed, displayError] = useState(false);
 
   return (
@@ -50,4 +50,4 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
   );
 };
 
-export default Decrement;
+export default withState('amount', 'setAmount', 1)(Decrement);
