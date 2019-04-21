@@ -2,13 +2,7 @@ import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
-
-export const getPathFromText = (text: string) =>
-  text
-    .toLowerCase()
-    .split(' ')
-    .join('-')
-    .padStart(1, '/');
+import { getPathFromText } from './utils/getPathFromText';
 
 interface Item {
   text: string;
