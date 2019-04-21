@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Divider, FormControl, TextField } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 
 export interface DecrementProps {
@@ -13,10 +13,10 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
 
   return (
     <form>
-      <label htmlFor="decrement">
-        Decrement By Amount
-        <br />
-        <input
+      <FormControl>
+        <TextField
+          label="Decrement By Amount"
+          variant="outlined"
           type="number"
           value={amount}
           onChange={({ target: { value } }) => {
@@ -30,11 +30,14 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, amount, setAmount }) => {
               displayError(true);
             }
           }}
+          error={isErrorDisplayed}
+          helperText={isErrorDisplayed && 'Please input a valid integer'}
         />
-      </label>
+      </FormControl>
       <br />
-      {isErrorDisplayed && <i>Please input a valid integer</i>}
-      <hr />
+      <br />
+      <Divider />
+      <br />
       <Button
         color="secondary"
         variant="contained"
