@@ -17,10 +17,26 @@ export const setPaletteTypeActionCreator: SetPaletteTypeActionCreator = payload 
   payload,
 });
 
-export default (type = initialType, action: SetPaletteTypeAction) => {
+export const togglePaletteTypeActionType = 'Theme -> Palette -> Type -> Toggle';
+
+export type TogglePaletteTypeAction = Action<
+  typeof togglePaletteTypeActionType
+>;
+
+export type TogglePaletteTypeActionCreator = () => TogglePaletteTypeAction;
+export const togglePaletteTypeActionCreator: TogglePaletteTypeActionCreator = () => ({
+  type: togglePaletteTypeActionType,
+});
+
+export type PaletteTypeAction = SetPaletteTypeAction | TogglePaletteTypeAction;
+
+export default (type: PaletteType = initialType, action: PaletteTypeAction) => {
   switch (action.type) {
     case setPaletteTypeActionType:
       return action.payload;
+
+    case togglePaletteTypeActionType:
+      return type === 'light' ? 'dark' : 'light';
 
     default:
       return type;
