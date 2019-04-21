@@ -4,6 +4,7 @@ import {
   MuiThemeProvider,
   Typography,
 } from '@material-ui/core';
+import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import React, { FC, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
@@ -11,7 +12,7 @@ import { Route, Switch } from 'react-router-dom';
 import Decrement from './Decrement';
 import Increment from './Increment';
 import Layout from './Layout';
-import { selectCount, State } from './store/reducer';
+import { selectCount, selectTheme, State } from './store/reducer';
 import {
   Count,
   decrementBy as createDecrementBy,
@@ -19,21 +20,19 @@ import {
   increment as createIncrement,
   IncrementActionCreator,
 } from './store/slices/count';
-import { createThemeFragment } from './utils/createThemeFragment';
 
 export interface AppProps {
   count: Count;
   increment: IncrementActionCreator;
   decrementBy: DecrementByActionCreator;
+  theme: ThemeOptions;
 }
 
-const App: FC<AppProps> = ({ count, increment, decrementBy }) => {
+const App: FC<AppProps> = ({ count, increment, decrementBy, theme }) => {
   const [amount, setAmount] = useState(1);
 
-  const theme = createMuiTheme(createThemeFragment(true));
-
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={createMuiTheme(theme)}>
       <Layout>
         <Typography variant="h1">Count: {count}</Typography>
         <br />
@@ -62,6 +61,7 @@ const App: FC<AppProps> = ({ count, increment, decrementBy }) => {
 
 export const mapStateToProps = (state: State) => ({
   count: selectCount(state),
+  theme: selectTheme(state),
 });
 
 export const mapDispatchToProps = {
