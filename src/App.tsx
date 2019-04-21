@@ -29,7 +29,14 @@ export interface AppProps {
 }
 
 const App: FC<AppProps> = ({ count, increment, decrementBy, theme }) => (
-  <MuiThemeProvider theme={createMuiTheme(theme)}>
+  <MuiThemeProvider
+    theme={createMuiTheme({
+      ...theme,
+      typography: {
+        useNextVariants: true,
+      },
+    })}
+  >
     <Layout>
       <Typography variant="h1">Count: {count}</Typography>
       <br />
