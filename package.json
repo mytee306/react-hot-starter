@@ -23,6 +23,7 @@
     "ramda": "^0.26.1",
     "react": "^16.8.6",
     "react-app-rewire-hot-loader": "^2.0.1",
+    "react-content-loader": "^4.2.1",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.2",
     "react-redux": "^7.0.1",
