@@ -8,8 +8,7 @@ import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import React, { FC } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import { compose } from 'recompose';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Decrement from './Decrement';
 import Increment from './Increment';
 import Layout from './Layout';
@@ -21,15 +20,23 @@ import {
   CreateIncrementAction,
   createIncrementAction,
 } from './store/slices/count';
+import Login from './Login';
 
 export interface AppProps {
+  isLoggedIn: boolean;
   count: Count;
   increment: CreateIncrementAction;
   decrementBy: CreateDecrementByAction;
   theme: ThemeOptions;
 }
 
-const App: FC<AppProps> = ({ count, increment, decrementBy, theme }) => (
+const App: FC<AppProps> = ({
+  isLoggedIn,
+  count,
+  increment,
+  decrementBy,
+  theme,
+}) => (
   <MuiThemeProvider
     theme={createMuiTheme({
       ...theme,
@@ -44,6 +51,8 @@ const App: FC<AppProps> = ({ count, increment, decrementBy, theme }) => (
       <Divider />
       <br />
       <Switch>
+        <Route path="/login" component={Login} />
+        {isLoggedIn && <Route component={() => <Redirect to="/login" />} />}
         <Route
           path="/increment"
           component={() => <Increment increment={increment} />}
@@ -67,10 +76,9 @@ export const mapDispatchToProps = {
   decrementBy: createDecrementByAction,
 };
 
-export default compose<AppProps, {}>(
-  hot(module),
+export default hot(module)(
   connect(
     mapStateToProps,
     mapDispatchToProps,
-  ),
-)(App);
+  )(App),
+);

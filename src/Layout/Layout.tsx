@@ -83,7 +83,7 @@ const Layout: FC<LayoutProps> = ({
           </Hidden>
         </div>
         <Divider />
-        <Nav onNavigate={handleDrawerToggle} />
+        <Nav isLoggedIn={false} onNavigate={handleDrawerToggle} />
       </Drawer>
       <main className={content}>{children}</main>
     </section>

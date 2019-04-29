@@ -3,6 +3,7 @@ import {
   ArrowDownward,
   ArrowUpward,
   Dashboard,
+  Person,
 } from '@material-ui/icons';
 import dashify from 'dashify';
 import React, { SFC } from 'react';
@@ -12,6 +13,8 @@ const Home = 'Dashboard';
 const Increment = 'Increment';
 const Decrement = 'Decrement';
 
+const Login = 'Login';
+
 export interface NavItem {
   text: string;
   icon: JSX.Element;
@@ -19,7 +22,7 @@ export interface NavItem {
 }
 export type NavItems = NavItem[];
 
-export const navItems: NavItems = [
+export const privateNavItems: NavItems = [
   {
     text: Home,
     icon: <Dashboard />,
@@ -37,14 +40,23 @@ export const navItems: NavItems = [
   },
 ];
 
+const publicNavItems: NavItems = [
+  {
+    text: Login,
+    icon: <Person />,
+    path: dashify(Login),
+  },
+];
+
 export interface NavProps {
+  isLoggedIn: boolean;
   onNavigate: () => void;
 }
 
-const Nav: SFC<NavProps> = ({ onNavigate }) => (
+const Nav: SFC<NavProps> = ({ isLoggedIn, onNavigate }) => (
   <nav>
     <List>
-      {navItems.map(({ text, icon, path }) => (
+      {(isLoggedIn ? privateNavItems : publicNavItems).map(({ text, icon, path }) => (
         <NavLink to={path} key={text} onClick={onNavigate}>
           <ListItem button key={text}>
             <ListItemIcon>{icon}</ListItemIcon>
