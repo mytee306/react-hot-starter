@@ -2,21 +2,27 @@ import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import {
   ArrowDownward,
   ArrowUpward,
-  Home as HomeIcon,
+  Dashboard,
 } from '@material-ui/icons';
 import dashify from 'dashify';
 import React, { SFC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { NavItems } from './models/NavItems';
 
-const Home = 'Home';
+const Home = 'Dashboard';
 const Increment = 'Increment';
 const Decrement = 'Decrement';
+
+export interface NavItem {
+  text: string;
+  icon: JSX.Element;
+  path: string;
+}
+export type NavItems = NavItem[];
 
 export const navItems: NavItems = [
   {
     text: Home,
-    icon: <HomeIcon />,
+    icon: <Dashboard />,
     path: '',
   },
   {
