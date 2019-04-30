@@ -4,7 +4,9 @@ import React, { FC } from 'react';
 import * as yup from 'yup';
 import { Count, CreateDecrementByAction } from './store/slices/count';
 
-export type Values = { amount: Count };
+export interface Values {
+  amount: Count;
+}
 
 const initialValues: Values = {
   amount: 1,

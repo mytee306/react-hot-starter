@@ -4,9 +4,9 @@ export const initialCount = 0;
 
 export const incrementActionType = 'Count -> Increment';
 
-export type IncrementAction = {
+export interface IncrementAction {
   type: typeof incrementActionType;
-};
+}
 
 export type CreateIncrementAction = () => IncrementAction;
 
@@ -16,10 +16,10 @@ export const createIncrementAction: CreateIncrementAction = () => ({
 
 export const decrementByActionType = 'Count -> Decrement';
 
-export type DecrementByAction = {
+export interface DecrementByAction {
   type: typeof decrementByActionType;
   payload: Count;
-};
+}
 
 export type CreateDecrementByAction = (payload: Count) => DecrementByAction;
 

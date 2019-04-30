@@ -5,10 +5,10 @@ import { createSelector, defaultMemoize } from 'reselect';
 import count, { Count } from './slices/count';
 import theme from './slices/theme';
 
-export type State = {
+export interface State {
   count: Count;
   theme: ThemeOptions;
-};
+}
 
 export default combineReducers<State>({
   count,
