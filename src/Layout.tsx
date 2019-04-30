@@ -9,11 +9,11 @@ import {
   withStyles,
   WithStyles,
 } from '@material-ui/core';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
+import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery'; // eslint-disable-line
 import { ChevronLeft } from '@material-ui/icons';
 import React, { FC, useState } from 'react';
-import Header from '../Header';
-import Nav from '../Nav';
+import Header from './Header';
+import Nav from './Nav';
 
 const minWidth = 240;
 
