@@ -1,5 +1,6 @@
 import logger from 'redux-logger';
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
+import { Module } from '../models/Module';
 import reducer from './reducer';
 
 export default () => {
@@ -11,7 +12,7 @@ export default () => {
       middleware: [logger, ...getDefaultMiddleware()],
     });
 
-    (module as any).hot.accept('./reducer', () =>
+    (module as Module).hot.accept('./reducer', () =>
       store.replaceReducer(reducer),
     );
 
