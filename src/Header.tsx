@@ -14,9 +14,9 @@ import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { selectDarkThemeFlag, State } from './store/reducer';
 import {
-  TogglePaletteTypeActionCreator,
-  togglePaletteTypeActionCreator,
+  createToggleTypeAction,
 } from './store/slices/theme/palette/type';
+import { CreateSimpleAction } from './models/actions';
 
 const HeaderStyles = createStyles({
   header: {
@@ -34,7 +34,7 @@ const HeaderStyles = createStyles({
 export interface HeaderProps extends WithStyles<typeof HeaderStyles> {
   toggle: () => void;
   isDark: boolean;
-  togglePaletteType: TogglePaletteTypeActionCreator;
+  togglePaletteType: CreateSimpleAction;
 }
 
 const Header: FC<HeaderProps> = ({
@@ -59,7 +59,7 @@ const Header: FC<HeaderProps> = ({
         <Typography className={expand} variant="h6" color="inherit">
           App Name
         </Typography>
-        <Button color="inherit" onClick={togglePaletteType}>
+        <Button color="inherit" onClick={() => togglePaletteType()}>
           {isDark ? <WbSunny /> : <WbSunnyOutlined />}
         </Button>
       </Toolbar>
@@ -72,7 +72,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  togglePaletteType: togglePaletteTypeActionCreator,
+  togglePaletteType: createToggleTypeAction,
 };
 
 export default connect(
