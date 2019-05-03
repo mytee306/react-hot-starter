@@ -15,17 +15,17 @@ import Layout from './Layout';
 import { selectCount, selectTheme, State } from './store/reducer';
 import {
   Count,
-  CreateDecrementByAction,
   createDecrementByAction,
-  CreateIncrementAction,
   createIncrementAction,
+  CreateDecrementByAction,
 } from './store/slices/count';
 import Login from './Login';
+import { CreateSimpleAction } from './models/actions';
 
 export interface AppProps {
   isLoggedIn: boolean;
   count: Count;
-  increment: CreateIncrementAction;
+  increment: CreateSimpleAction;
   decrementBy: CreateDecrementByAction;
   theme: ThemeOptions;
 }
@@ -52,7 +52,7 @@ const App: FC<AppProps> = ({
       <br />
       <Switch>
         <Route path="/login" component={Login} />
-        {isLoggedIn && <Route component={() => <Redirect to="/login" />} />}
+        {isLoggedIn ? null : <Redirect to="/login" />}
         <Route
           path="/increment"
           component={() => <Increment increment={increment} />}

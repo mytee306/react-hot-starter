@@ -12,7 +12,7 @@ const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App isLoggedIn={false} />
+      <App isLoggedIn={true} />
     </Router>
   </Provider>,
   document.getElementById('root'),
