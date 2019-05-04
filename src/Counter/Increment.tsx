@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import React, { FC } from 'react';
-import { CreateSimpleAction } from './models/actions';
+import { CreateSimpleAction } from '../models/actions';
 
 export interface IncrementProps {
   increment: CreateSimpleAction;

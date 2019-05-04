@@ -2,7 +2,7 @@ import { Button, Divider, FormControl, TextField } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import React, { FC } from 'react';
 import * as yup from 'yup';
-import { Count, CreateDecrementByAction } from './store/slices/count';
+import { Count, CreateDecrementByAction } from '../store/slices/count';
 
 export interface Values {
   amount: Count;
@@ -41,7 +41,7 @@ const Decrement: FC<DecrementProps> = ({ decrementBy }) => (
             value={values.amount}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={Boolean(errors.amount)}
+            error={!!errors.amount}
             helperText={errors.amount}
           />
         </FormControl>
