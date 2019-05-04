@@ -12,7 +12,12 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Decrement from './Decrement';
 import Increment from './Increment';
 import Layout from './Layout';
-import { selectCount, selectTheme, State } from './store/reducer';
+import {
+  selectCount,
+  selectTheme,
+  State,
+  selectLoggedInFlag,
+} from './store/reducer';
 import {
   Count,
   createDecrementByAction,
@@ -45,7 +50,7 @@ const App: FC<AppProps> = ({
       },
     })}
   >
-    <Layout>
+    <Layout isLoggedIn={isLoggedIn}>
       <Typography variant="h1">Count: {count}</Typography>
       <br />
       <Divider />
@@ -69,6 +74,7 @@ const App: FC<AppProps> = ({
 export const mapStateToProps = (state: State) => ({
   count: selectCount(state),
   theme: selectTheme(state),
+  isLoggedIn: selectLoggedInFlag(state),
 });
 
 export const mapDispatchToProps = {

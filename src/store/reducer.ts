@@ -18,6 +18,8 @@ export const selectCount = defaultMemoize((state: State) => state.count);
 
 export const selectTheme = defaultMemoize((state: State) => state.theme);
 
+export const selectAccount = defaultMemoize((state: State) => state.account);
+
 export const selectPaletteType = createSelector(
   selectTheme,
   ({ palette }) => palette.type,
@@ -26,4 +28,14 @@ export const selectPaletteType = createSelector(
 export const selectDarkThemeFlag = createSelector(
   selectPaletteType,
   type => type === 'dark',
+);
+
+export const selectDisplayName = createSelector(
+  selectAccount,
+  ({ displayName }) => displayName,
+);
+
+export const selectLoggedInFlag = createSelector(
+  selectDisplayName,
+  Boolean,
 );
