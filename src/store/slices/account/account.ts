@@ -4,70 +4,49 @@ import { prefixActionType } from '../../../utils/prefixActionType';
 
 const prefixWithSlice = prefixActionType('account');
 
-export const createSetLoadingAction = createAction(prefixWithSlice('loading'));
+const initialAccount = {
+  displayName: '',
+  email: '',
+  uid: '',
+  photoURL: '',
+};
 
-export type SetLoadingAction = ReturnType<typeof createSetLoadingAction>;
+export type Account = typeof initialAccount;
 
-export const loading = createReducer(false, {
-  [createSetLoadingAction.toString()]: (_, { payload }: SetLoadingAction) =>
-    payload,
-});
+export const createGetAccountAction = createAction(prefixWithSlice('get'));
 
-const createSetErrorAction = createAction(prefixWithSlice('error'));
-
-export type SetErrorAction = ReturnType<typeof createSetErrorAction>;
-
-export const error = createReducer('', {
-  [createSetErrorAction.toString()]: (_, { payload }: SetErrorAction) =>
-    payload,
-});
-
-export const createSetDisplayNameAction = createAction(
-  prefixWithSlice('display name'),
+export const createSetAccountAction = createAction<Account>(
+  prefixWithSlice('set'),
 );
 
-export type SetDisplayNameAction = ReturnType<
-  typeof createSetDisplayNameAction
+export type SetAccountAction = ReturnType<typeof createSetAccountAction>;
+
+export const core = createReducer(initialAccount, {
+  [createSetAccountAction.toString()]: (_, { payload }: SetAccountAction) =>
+    payload,
+});
+
+const createSetAccountErrorAction = createAction(prefixWithSlice('error'));
+
+export type SetAccountErrorAction = ReturnType<
+  typeof createSetAccountErrorAction
 >;
 
-export const displayName = createReducer('', {
-  [createSetDisplayNameAction.toString()]: (
+export const error = createReducer('', {
+  [createSetAccountErrorAction.toString()]: (
     _,
-    { payload }: SetDisplayNameAction,
+    { payload }: SetAccountErrorAction,
   ) => payload,
 });
 
-export const createSetEmailAction = createAction(prefixWithSlice('email'));
-
-export type SetEmailAction = ReturnType<typeof createSetEmailAction>;
-
-export const email = createReducer('', {
-  [createSetEmailAction.toString()]: (_, { payload }: SetEmailAction) =>
-    payload,
-});
-
-export const createSetUIDAction = createAction(prefixWithSlice('uid'));
-
-export type SetUIDAction = ReturnType<typeof createSetUIDAction>;
-
-export const uid = createReducer('', {
-  [createSetUIDAction.toString()]: (_, { payload }: SetUIDAction) => payload,
-});
-
-export const createSetPhotoURLAction = createAction(
-  prefixWithSlice('photo URL'),
-);
-
-export type SetPhotoURLAction = ReturnType<typeof createSetUIDAction>;
-export const photoURL = createReducer('', {
-  [createSetPhotoURLAction.toString()]: (_, { payload }: SetPhotoURLAction) =>
-    payload,
+export const loading = createReducer<Boolean>(false, {
+  [createGetAccountAction.toString()]: () => true,
+  [createSetAccountAction.toString()]: () => false,
+  [createSetAccountErrorAction.toString()]: () => false,
 });
 
 export default combineReducers({
   loading,
   error,
-  displayName,
-  uid,
-  photoURL,
+  core,
 });
