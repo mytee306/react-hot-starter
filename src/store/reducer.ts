@@ -18,8 +18,6 @@ export const selectCount = defaultMemoize((state: State) => state.count);
 
 export const selectTheme = defaultMemoize((state: State) => state.theme);
 
-export const selectAccount = defaultMemoize((state: State) => state.account);
-
 export const selectPaletteType = createSelector(
   selectTheme,
   ({ palette }) => palette.type,
@@ -30,6 +28,14 @@ export const selectDarkThemeFlag = createSelector(
   type => type === 'dark',
 );
 
+export const selectAccountSlice = defaultMemoize(
+  (state: State) => state.account,
+);
+
+export const selectAccount = createSelector(
+  selectAccountSlice,
+  ({ core }) => core,
+);
 export const selectDisplayName = createSelector(
   selectAccount,
   ({ displayName }) => displayName,
