@@ -2,10 +2,12 @@ import { combineReducers } from 'redux';
 import { createSelector, defaultMemoize } from 'reselect';
 import count from './slices/count';
 import theme from './slices/theme';
+import account from './slices/account';
 
 const reducer = combineReducers({
   count,
   theme,
+  account,
 });
 
 export default reducer;
