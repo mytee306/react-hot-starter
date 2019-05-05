@@ -6,11 +6,10 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-  withStyles,
+  Collapse,
+  Theme,
   WithStyles,
+  withStyles,
 } from '@material-ui/core';
 import {
   ArrowDownward,
@@ -19,116 +18,144 @@ import {
   Person,
   BarChart,
   ExpandMore,
+  ExpandLess,
 } from '@material-ui/icons';
 import dashify from 'dashify';
 import join from 'url-join';
-import React, { SFC } from 'react';
+import React, { SFC, useState, ReactElement, CSSProperties } from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 import { Omit } from 'utility-types'; // eslint-disable-line import/no-extraneous-dependencies
 
-export interface NavItem {
+interface NavItem {
   text: string;
-  icon: JSX.Element;
+  icon: ReactElement;
   path: string;
-  children: NavItem[];
+  childNavItems: NavItems;
 }
-export type NavItems = NavItem[];
+type NavItems = NavItem[];
 
 const Login = 'Login';
-
-const Home = 'Dashboard';
-const Count = 'Count';
-const Increment = 'Increment';
-const Decrement = 'Decrement';
-
-export const privateNavItems: NavItems = [
-  {
-    text: Home,
-    icon: <Dashboard />,
-    path: '',
-    children: [],
-  },
-  {
-    text: Count,
-    path: dashify(Count),
-    icon: <BarChart />,
-    children: [
-      {
-        text: Increment,
-        icon: <ArrowUpward />,
-        path: dashify(Increment),
-        children: [],
-      },
-      {
-        text: Decrement,
-        icon: <ArrowDownward />,
-        path: dashify(Decrement),
-        children: [],
-      },
-    ],
-  },
-];
 
 const publicNavItems: NavItems = [
   {
     text: Login,
     icon: <Person />,
     path: dashify(Login),
-    children: [],
+    childNavItems: [],
   },
 ];
 
-interface NavItemProps extends Omit<NavItem, 'children'> {
+const Home = 'Dashboard';
+const Count = 'Count';
+const Increment = 'Increment';
+const Decrement = 'Decrement';
+
+const privateNavItems: NavItems = [
+  {
+    text: Home,
+    icon: <Dashboard />,
+    path: '',
+    childNavItems: [],
+  },
+  {
+    text: Count,
+    path: dashify(Count),
+    icon: <BarChart />,
+    childNavItems: [
+      {
+        text: Increment,
+        icon: <ArrowUpward />,
+        path: dashify(Increment),
+        childNavItems: [],
+      },
+      {
+        text: Decrement,
+        icon: <ArrowDownward />,
+        path: dashify(Decrement),
+        childNavItems: [],
+      },
+    ],
+  },
+];
+
+interface NavItemProps extends Omit<NavItem, 'childNavItems'> {
   onNavigate: () => void;
 }
 
-const NavItem: SFC<NavItemProps> = ({ onNavigate, text, path, icon }) => (
-  <Link
-    key={text}
-    onClick={onNavigate}
-    component={(props: Omit<NavLinkProps, 'to'>) => (
-      <NavLink {...props} to={path} />
-    )}
-  >
-    <ListItem button>
-      <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText>{text}</ListItemText>
+const NavItem: SFC<NavItemProps> = ({
+  onNavigate,
+  text,
+  path,
+  icon,
+  children,
+}) => (
+  <>
+    <ListItem>
+      <Link
+        onClick={onNavigate}
+        style={{ flexGrow: 1, display: 'flex' }}
+        component={(props: Omit<NavLinkProps, 'to'>) => (
+          <NavLink {...props} to={path} />
+        )}
+      >
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText>{text}</ListItemText>
+      </Link>
+      {children}
     </ListItem>
-  </Link>
+  </>
 );
 
-interface NestedNavItemProps extends NavItem, WithStyles {
+interface ParentNavItemProps extends NavItem, WithStyles {
   onNavigate: () => void;
+  theme: Theme;
 }
 
-const summaryStyles = {
-  expanded: {
-    '&$expanded': {
-      marginBottom: 0,
-    },
-  },
+const expandStyles: CSSProperties = {
+  cursor: 'pointer',
 };
 
-const UnstyledNestedNavItem: SFC<NestedNavItemProps> = ({
-  classes,
-  children,
+const ParentNavItemWithoutTheme: SFC<ParentNavItemProps> = ({
+  childNavItems,
   onNavigate,
+  theme,
   ...navItemProps
-}) => (
-  <ExpansionPanel style={{ boxShadow: 'none' }}>
-    <ExpansionPanelSummary
-      expandIcon={<ExpandMore />}
-      classes={{ expanded: classes.expanded }}
-    >
-      <NavItem {...navItemProps} onNavigate={onNavigate} />
-    </ExpansionPanelSummary>
-    <ExpansionPanelDetails>
-      <NavItems navItems={children} onNavigate={onNavigate} />
-    </ExpansionPanelDetails>
-  </ExpansionPanel>
-);
+}) => {
+  const [isOpen, setOpen] = useState(false);
+  const toggleOpen = () => setOpen(open => !open);
 
-const NestedNavItem = withStyles(summaryStyles)(UnstyledNestedNavItem);
+  const absolutePath = join('/', navItemProps.path);
+  const level = absolutePath.split('/').filter(Boolean).length;
+
+  return (
+    <>
+      <NavItem {...navItemProps} onNavigate={onNavigate}>
+        {isOpen ? (
+          <ExpandLess onClick={toggleOpen} style={expandStyles} />
+        ) : (
+          <ExpandMore onClick={toggleOpen} style={expandStyles} />
+        )}
+      </NavItem>
+      <Collapse
+        in={isOpen}
+        timeout="auto"
+        style={{ marginLeft: theme.spacing.unit * level }}
+      >
+        <NavItems
+          navItems={childNavItems.map(({ path, ...childItem }) => ({
+            ...childItem,
+            path: join(absolutePath, path),
+          }))}
+          onNavigate={onNavigate}
+        />
+      </Collapse>
+    </>
+  );
+};
+
+const ParentNavItem = withStyles({}, { withTheme: true })(
+  ParentNavItemWithoutTheme,
+);
 
 interface NavItemsProps {
   navItems: NavItems;
@@ -138,25 +165,13 @@ interface NavItemsProps {
 const NavItems: SFC<NavItemsProps> = ({ navItems, onNavigate }) => (
   <List>
     {navItems.map(navItem => {
-      const { children, ...withoutChildren } = navItem;
+      const { childNavItems, text } = navItem;
+      const navItemProps = { ...navItem, key: text, onNavigate };
 
-      return children.length ? (
-        <NestedNavItem
-          {...withoutChildren}
-          key={navItem.text}
-          onNavigate={onNavigate}
-        >
-          {children.map(({ path, ...rest }) => ({
-            ...rest,
-            path: join('/', navItem.path, path),
-          }))}
-        </NestedNavItem>
+      return childNavItems.length ? (
+        <ParentNavItem {...navItemProps} />
       ) : (
-        <NavItem
-          {...withoutChildren}
-          key={navItem.text}
-          onNavigate={onNavigate}
-        />
+        <NavItem {...navItemProps} />
       );
     })}
   </List>
