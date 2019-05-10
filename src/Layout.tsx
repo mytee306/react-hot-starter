@@ -6,19 +6,13 @@ import {
   Hidden,
   IconButton,
   Theme,
-  Typography,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { ChevronLeft } from '@material-ui/icons';
-import { Breadcrumbs } from '@material-ui/lab';
-import { startCase } from 'lodash';
-import { init, last } from 'ramda';
 import React, { FC, useState } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import join from 'url-join';
-import Link from './components/Link';
+import Breadcrumbs from './components/Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';
 
@@ -52,9 +46,7 @@ export const LayoutStyles = (theme: Theme) =>
     },
   });
 
-export interface LayoutProps
-  extends RouteComponentProps,
-    WithStyles<typeof LayoutStyles> {
+export interface LayoutProps extends WithStyles<typeof LayoutStyles> {
   theme: Theme;
   isLoggedIn: boolean;
 }
@@ -64,7 +56,6 @@ const Layout: FC<LayoutProps> = ({
   children,
   theme,
   isLoggedIn,
-  location: { pathname },
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -74,26 +65,10 @@ const Layout: FC<LayoutProps> = ({
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
 
-  const pathnames = pathname
-    .split('/')
-    .filter(Boolean)
-    .map(startCase);
-
   return (
     <section>
       <CssBaseline />
       <Header toggle={handleDrawerToggle} />
-      <Breadcrumbs separator="›" style={{ marginLeft: 10, marginTop: 10 }}>
-        <Link to="/" color="inherit">
-          Dashboard
-        </Link>
-        {init(pathnames).map(name => (
-          <Link key={name} to={join('/', name)}>
-            {name}
-          </Link>
-        ))}
-        <Typography color="textPrimary">{last(pathnames)}</Typography>
-      </Breadcrumbs>
       <Drawer
         variant={isLargeScreen ? 'permanent' : 'temporary'}
         open={open}
@@ -113,11 +88,10 @@ const Layout: FC<LayoutProps> = ({
         <Divider />
         <Nav isLoggedIn={isLoggedIn} onNavigate={handleDrawerToggle} />
       </Drawer>
+      <Breadcrumbs className={content} />
       <main className={content}>{children}</main>
     </section>
   );
 };
 
-export default withStyles(LayoutStyles, { withTheme: true })(
-  withRouter(Layout),
-);
+export default withStyles(LayoutStyles, { withTheme: true })(Layout);
