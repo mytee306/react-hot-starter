@@ -5,13 +5,19 @@ import {
   Drawer,
   Hidden,
   IconButton,
+  Link,
   Theme,
+  Typography,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery'; // eslint-disable-line
 import { ChevronLeft } from '@material-ui/icons';
+import { Breadcrumbs } from '@material-ui/lab';
+import { startCase } from 'lodash';
+import { init, last } from 'ramda';
 import React, { FC, useState } from 'react';
+import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import Header from './Header';
 import Nav from './Nav';
 
@@ -45,7 +51,9 @@ export const LayoutStyles = (theme: Theme) =>
     },
   });
 
-export interface LayoutProps extends WithStyles<typeof LayoutStyles> {
+export interface LayoutProps
+  extends RouteComponentProps,
+    WithStyles<typeof LayoutStyles> {
   theme: Theme;
   isLoggedIn: boolean;
 }
@@ -55,6 +63,7 @@ const Layout: FC<LayoutProps> = ({
   children,
   theme,
   isLoggedIn,
+  location: { pathname },
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -64,10 +73,24 @@ const Layout: FC<LayoutProps> = ({
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
 
+  const pathnames = pathname.split('/').filter(Boolean);
+
   return (
     <section>
       <CssBaseline />
       <Header toggle={handleDrawerToggle} />
+      <Breadcrumbs separator="›">
+        <Link component={() => <NavLink to="/" />} color="inherit">
+          Dashboard
+        </Link>
+        {init(pathnames).map(name => (
+          <Link
+            key={name}
+            component={() => <NavLink to={name}>{startCase(name)}</NavLink>}
+          />
+        ))}
+        <Typography color="textPrimary">{last(pathnames)}</Typography>
+      </Breadcrumbs>
       <Drawer
         variant={isLargeScreen ? 'permanent' : 'temporary'}
         open={open}
@@ -92,4 +115,6 @@ const Layout: FC<LayoutProps> = ({
   );
 };
 
-export default withStyles(LayoutStyles, { withTheme: true })(Layout);
+export default withStyles(LayoutStyles, { withTheme: true })(
+  withRouter(Layout),
+);
