@@ -1,22 +1,10 @@
-import {
-  AppBar,
-  Button,
-  createStyles,
-  Hidden,
-  IconButton,
-  Toolbar,
-  Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+import { AppBar, Button, createStyles, Hidden, IconButton, Toolbar, Typography, WithStyles, withStyles } from '@material-ui/core';
 import { Menu, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import { selectDarkThemeFlag, State } from './store/reducer';
-import {
-  createToggleTypeAction,
-} from './store/slices/theme/palette/type';
 import { CreateSimpleAction } from './models/actions';
+import { selectDarkThemeFlag, State } from './store/reducer';
+import { createToggleTypeAction } from './store/slices/theme/palette/type';
 
 const HeaderStyles = createStyles({
   header: {
@@ -43,8 +31,7 @@ const Header: FC<HeaderProps> = ({
   isDark,
   togglePaletteType,
 }) => (
-  <header className={header}>
-    <AppBar position="static">
+    <AppBar position="static" className={header}>
       <Toolbar>
         <Hidden lgUp>
           <IconButton
@@ -64,7 +51,6 @@ const Header: FC<HeaderProps> = ({
         </Button>
       </Toolbar>
     </AppBar>
-  </header>
 );
 
 const mapStateToProps = (state: State) => ({

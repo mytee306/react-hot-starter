@@ -1,5 +1,5 @@
 import { Card, CardActions, CardHeader } from '@material-ui/core';
-import React, { SFC } from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import join from 'url-join';
@@ -23,7 +23,7 @@ export interface CountProps {
   };
 }
 
-const Counter: SFC<CountProps> = ({
+const Counter: FC<CountProps> = ({
   match: { path },
   count,
   increment,

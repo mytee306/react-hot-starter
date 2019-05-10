@@ -1,15 +1,15 @@
-import React, { SFC } from 'react';
 import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
   Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
 } from '@material-ui/core';
+import React, { FC } from 'react';
 
 export interface LoginProps {}
 
-const Login: SFC<LoginProps> = () => (
+const Login: FC<LoginProps> = () => (
   <Card>
     <CardContent>
       <Typography variant="h2">Welcome</Typography>

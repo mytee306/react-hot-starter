@@ -1,12 +1,9 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import {
-  Link,
+  Collapse,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Collapse,
   Theme,
   WithStyles,
   withStyles,
@@ -14,17 +11,17 @@ import {
 import {
   ArrowDownward,
   ArrowUpward,
-  Dashboard,
-  Person,
   BarChart,
-  ExpandMore,
+  Dashboard,
   ExpandLess,
+  ExpandMore,
+  Person,
 } from '@material-ui/icons';
 import dashify from 'dashify';
+import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import join from 'url-join';
-import React, { SFC, useState, ReactElement, CSSProperties } from 'react';
-import { NavLink, NavLinkProps } from 'react-router-dom';
-import { Omit } from 'utility-types'; // eslint-disable-line import/no-extraneous-dependencies
+import { Omit } from 'utility-types';
+import Link from './components/Link';
 
 interface NavItem {
   text: string;
@@ -82,7 +79,7 @@ interface NavItemProps extends Omit<NavItem, 'childNavItems'> {
   onNavigate: () => void;
 }
 
-const NavItem: SFC<NavItemProps> = ({
+const NavItem: FC<NavItemProps> = ({
   onNavigate,
   text,
   path,
@@ -94,9 +91,7 @@ const NavItem: SFC<NavItemProps> = ({
       <Link
         onClick={onNavigate}
         style={{ flexGrow: 1, display: 'flex' }}
-        component={(props: Omit<NavLinkProps, 'to'>) => (
-          <NavLink {...props} to={path} />
-        )}
+        to={path}
       >
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText>{text}</ListItemText>
@@ -115,7 +110,7 @@ const expandStyles: CSSProperties = {
   cursor: 'pointer',
 };
 
-const ParentNavItemWithoutTheme: SFC<ParentNavItemProps> = ({
+const ParentNavItemWithoutTheme: FC<ParentNavItemProps> = ({
   childNavItems,
   onNavigate,
   theme,
@@ -162,7 +157,7 @@ interface NavItemsProps {
   onNavigate: () => void;
 }
 
-const NavItems: SFC<NavItemsProps> = ({ navItems, onNavigate }) => (
+const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
   <List>
     {navItems.map(navItem => {
       const { childNavItems, text } = navItem;
@@ -182,7 +177,7 @@ export interface NavProps {
   onNavigate: () => void;
 }
 
-const Nav: SFC<NavProps> = ({ isLoggedIn, onNavigate }) => (
+const Nav: FC<NavProps> = ({ isLoggedIn, onNavigate }) => (
   <nav>
     <NavItems
       onNavigate={onNavigate}

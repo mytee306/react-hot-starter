@@ -61,7 +61,7 @@
     "csstype": "^2.6.4",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-ts-react": "^0.2.16",
+    "eslint-config-ts-react": "^0.2.17",
     "eslint-plugin-html": "^5.0.3",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jest": "^22.4.1",

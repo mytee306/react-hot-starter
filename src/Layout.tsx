@@ -5,19 +5,20 @@ import {
   Drawer,
   Hidden,
   IconButton,
-  Link,
   Theme,
   Typography,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery'; // eslint-disable-line
+import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { ChevronLeft } from '@material-ui/icons';
 import { Breadcrumbs } from '@material-ui/lab';
 import { startCase } from 'lodash';
 import { init, last } from 'ramda';
 import React, { FC, useState } from 'react';
-import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import join from 'url-join';
+import Link from './components/Link';
 import Header from './Header';
 import Nav from './Nav';
 
@@ -73,21 +74,23 @@ const Layout: FC<LayoutProps> = ({
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
 
-  const pathnames = pathname.split('/').filter(Boolean);
+  const pathnames = pathname
+    .split('/')
+    .filter(Boolean)
+    .map(startCase);
 
   return (
     <section>
       <CssBaseline />
       <Header toggle={handleDrawerToggle} />
-      <Breadcrumbs separator="›">
-        <Link component={() => <NavLink to="/" />} color="inherit">
+      <Breadcrumbs separator="›" style={{ marginLeft: 10, marginTop: 10 }}>
+        <Link to="/" color="inherit">
           Dashboard
         </Link>
         {init(pathnames).map(name => (
-          <Link
-            key={name}
-            component={() => <NavLink to={name}>{startCase(name)}</NavLink>}
-          />
+          <Link key={name} to={join('/', name)}>
+            {name}
+          </Link>
         ))}
         <Typography color="textPrimary">{last(pathnames)}</Typography>
       </Breadcrumbs>
