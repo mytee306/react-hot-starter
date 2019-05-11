@@ -4,9 +4,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Theme,
-  WithStyles,
-  withStyles,
+  withTheme,
+  WithTheme,
 } from '@material-ui/core';
 import {
   ArrowDownward,
@@ -101,9 +100,8 @@ const NavItem: FC<NavItemProps> = ({
   </>
 );
 
-interface ParentNavItemProps extends NavItem, WithStyles {
+interface ParentNavItemProps extends NavItem, WithTheme {
   onNavigate: () => void;
-  theme: Theme;
 }
 
 const expandStyles: CSSProperties = {
@@ -148,9 +146,7 @@ const ParentNavItemWithoutTheme: FC<ParentNavItemProps> = ({
   );
 };
 
-const ParentNavItem = withStyles({}, { withTheme: true })(
-  ParentNavItemWithoutTheme,
-);
+const ParentNavItem = withTheme()(ParentNavItemWithoutTheme);
 
 interface NavItemsProps {
   navItems: NavItems;
