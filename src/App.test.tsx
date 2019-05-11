@@ -1,11 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
-import configureStore from './store';
-
-const store = configureStore();
+import Provider from './components/Provider';
 
 window.matchMedia = jest.fn().mockImplementation(query => ({
   matches: false,
@@ -18,10 +14,8 @@ window.matchMedia = jest.fn().mockImplementation(query => ({
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+    <Provider>
+      <App />
     </Provider>,
     div,
   );
