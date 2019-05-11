@@ -59,6 +59,7 @@
     "@types/yup": "^0.26.12",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
+    "cross-env": "^5.2.0",
     "csstype": "^2.6.4",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
