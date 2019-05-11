@@ -2,7 +2,7 @@ import { Card, CardActions, CardHeader } from '@material-ui/core';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import join from 'url-join';
+import urlJoin from 'url-join';
 import { CreateSimpleAction } from '../models/actions';
 import { selectCount, State } from '../store/reducer';
 import {
@@ -34,11 +34,11 @@ const Counter: FC<CountProps> = ({
     <CardActions>
       <Switch>
         <Route
-          path={join(path, 'increment')}
+          path={urlJoin(path, 'increment')}
           component={() => <Increment increment={increment} />}
         />
         <Route
-          path={join(path, 'decrement')}
+          path={urlJoin(path, 'decrement')}
           component={() => <Decrement decrementBy={decrementBy} />}
         />
       </Switch>
