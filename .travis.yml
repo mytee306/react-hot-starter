@@ -2,8 +2,11 @@ language: node_js
 node_js:
   - stable
 
-script:
-  - CI=true yarn test
-  - CI=true yarn build
+env:
+  - CI=true
 
-cache: yarn
+script:
+  - npm test
+  - npm run build
+
+cache: npm
