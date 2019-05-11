@@ -6,7 +6,7 @@ env:
   - CI=true
 
 script:
-  - npm test
-  - npm run build
+  - yarn test
+  - yarn run build
 
-cache: npm
+cache: yarn
