@@ -19,7 +19,7 @@ import {
 } from '@material-ui/icons';
 import dashify from 'dashify';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
-import join from 'url-join';
+import urlJoin from 'url-join';
 import { Omit } from 'utility-types';
 import Link from './components/Link';
 
@@ -119,7 +119,7 @@ const ParentNavItemWithoutTheme: FC<ParentNavItemProps> = ({
   const [isOpen, setOpen] = useState(false);
   const toggleOpen = () => setOpen(open => !open);
 
-  const absolutePath = join('/', navItemProps.path);
+  const absolutePath = urlJoin('/', navItemProps.path);
   const level = absolutePath.split('/').filter(Boolean).length;
 
   return (
@@ -139,7 +139,7 @@ const ParentNavItemWithoutTheme: FC<ParentNavItemProps> = ({
         <NavItems
           navItems={childNavItems.map(({ path, ...childItem }) => ({
             ...childItem,
-            path: join(absolutePath, path),
+            path: urlJoin(absolutePath, path),
           }))}
           onNavigate={onNavigate}
         />
