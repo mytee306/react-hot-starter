@@ -3,11 +3,9 @@ import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import React, { FC } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import Counter from '../Counter';
 import Layout from '../Layout';
-import Login from '../Login';
 import { selectLoggedInFlag, selectTheme, State } from '../store/reducer';
+import Routes from './Routes';
 
 export interface AppProps {
   isLoggedIn: boolean;
@@ -24,11 +22,7 @@ const App: FC<AppProps> = ({ isLoggedIn, theme }) => (
     })}
   >
     <Layout isLoggedIn={isLoggedIn}>
-      <Switch>
-        <Route path="/login" component={Login} />
-        {isLoggedIn ? null : <Redirect to="/login" />}
-        <Route path="/count" component={Counter} />
-      </Switch>
+      <Routes isLoggedIn={isLoggedIn} />
     </Layout>
   </MuiThemeProvider>
 );
