@@ -74,7 +74,7 @@
     "prettier": "^1.16.4",
     "react-app-rewired": "^2.1.1",
     "react-scripts": "^2.1.8",
-    "typescript": "^3.4.3",
+    "typescript": "^3.5.0-dev.20190523",
     "utility-types": "^3.5.0"
   },
   "browserslist": [
