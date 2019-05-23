@@ -1,6 +1,6 @@
 import { Button, Divider, FormControl, TextField } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import * as yup from 'yup';
 import { Count, CreateDecrementByAction } from '../store/slices/count';
 
@@ -27,7 +27,11 @@ export interface DecrementProps {
 const Decrement: FC<DecrementProps> = ({ decrementBy }) => (
   <Formik
     initialValues={initialValues}
-    onSubmit={({ amount }) => decrementBy(amount)}
+    onSubmit={values => {
+      const { amount } = values;
+
+      decrementBy(amount);
+    }}
     validationSchema={schema}
   >
     {({ values, errors, handleChange, handleBlur }) => (
@@ -57,4 +61,4 @@ const Decrement: FC<DecrementProps> = ({ decrementBy }) => (
   </Formik>
 );
 
-export default Decrement;
+export default memo(Decrement, () => true);
