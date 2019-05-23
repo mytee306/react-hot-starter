@@ -8,5 +8,3 @@ env:
 script:
   - npm test
   - npm run build
-
-cache: npm
