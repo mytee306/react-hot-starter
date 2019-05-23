@@ -1,4 +1,14 @@
-import { AppBar, Button, createStyles, Hidden, IconButton, Toolbar, Typography, WithStyles, withStyles } from '@material-ui/core';
+import {
+  AppBar,
+  Button,
+  createStyles,
+  Hidden,
+  IconButton,
+  Toolbar,
+  Typography,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
 import { Menu, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
@@ -31,26 +41,26 @@ const Header: FC<HeaderProps> = ({
   isDark,
   togglePaletteType,
 }) => (
-    <AppBar position="static" className={header}>
-      <Toolbar>
-        <Hidden lgUp>
-          <IconButton
-            className={menuButton}
-            color="inherit"
-            aria-label="Menu"
-            onClick={toggle}
-          >
-            <Menu />
-          </IconButton>
-        </Hidden>
-        <Typography className={expand} variant="h6" color="inherit">
-          App Name
-        </Typography>
-        <Button color="inherit" onClick={() => togglePaletteType()}>
-          {isDark ? <WbSunny /> : <WbSunnyOutlined />}
-        </Button>
-      </Toolbar>
-    </AppBar>
+  <AppBar position="static" className={header}>
+    <Toolbar>
+      <Hidden lgUp>
+        <IconButton
+          className={menuButton}
+          color="inherit"
+          aria-label="Menu"
+          onClick={toggle}
+        >
+          <Menu />
+        </IconButton>
+      </Hidden>
+      <Typography className={expand} variant="h6" color="inherit">
+        App Name
+      </Typography>
+      <Button color="inherit" onClick={() => togglePaletteType()}>
+        {isDark ? <WbSunny /> : <WbSunnyOutlined />}
+      </Button>
+    </Toolbar>
+  </AppBar>
 );
 
 const mapStateToProps = (state: State) => ({
