@@ -4,10 +4,10 @@ import React, { FC } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Counter from './Counter';
-import Layout from './Layout/Layout';
-import Login from './Login';
-import { selectLoggedInFlag, selectTheme, State } from './store/reducer';
+import Counter from '../Counter';
+import Layout from '../Layout/Layout';
+import Login from '../Login';
+import { selectLoggedInFlag, selectTheme, State } from '../store/reducer';
 
 export interface AppProps {
   isLoggedIn: boolean;

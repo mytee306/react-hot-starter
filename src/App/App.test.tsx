@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import Provider from './components/Provider';
+import App from '.';
+import Provider from './Provider';
 
 window.matchMedia = jest.fn().mockImplementation(query => ({
   matches: false,
