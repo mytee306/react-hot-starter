@@ -19,7 +19,6 @@ import {
 import dashify from 'dashify';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
-import { Omit } from 'utility-types';
 import Link from './components/Link';
 
 interface NavItem {
