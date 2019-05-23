@@ -12,7 +12,7 @@ import {
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { ChevronLeft } from '@material-ui/icons';
 import React, { FC, useState } from 'react';
-import Breadcrumbs from './components/Breadcrumbs';
+import Breadcrumbs from './Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';
 

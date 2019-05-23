@@ -5,7 +5,7 @@ import { init, last } from 'ramda';
 import React, { FC } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import urlJoin from 'url-join';
-import Link from './Link';
+import Link from '../components/Link';
 
 const Breadcrumbs: FC<RouteComponentProps & { className: string }> = ({
   location: { pathname },

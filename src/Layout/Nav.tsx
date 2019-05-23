@@ -20,7 +20,7 @@ import dashify from 'dashify';
 import { Omit } from 'ramda';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
-import Link from './components/Link';
+import Link from '../components/Link';
 
 interface NavItem {
   text: string;
