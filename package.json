@@ -50,6 +50,7 @@
     "@types/react-router-dom": "^4.3.2",
     "@types/redux-logger": "^3.0.7",
     "@types/url-join": "^4.0.0",
+    "@types/why-did-you-update": "0.0.10",
     "@types/yup": "^0.26.12",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
@@ -67,7 +68,8 @@
     "prettier": "^1.16.4",
     "react-app-rewired": "^2.1.1",
     "react-scripts": "^3.0.1",
-    "typescript": "^3.5.0-dev.20190523"
+    "typescript": "^3.5.0-dev.20190523",
+    "why-did-you-update": "^1.0.6"
   },
   "browserslist": [
     ">0.2%",
