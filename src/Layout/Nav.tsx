@@ -74,8 +74,10 @@ const privateNavItems: NavItems = [
   },
 ];
 
+type OnNavigate = () => void;
+
 interface NavItemProps extends Omit<NavItem, 'childNavItems'> {
-  onNavigate: () => void;
+  onNavigate: OnNavigate;
 }
 
 const NavItem: FC<NavItemProps> = ({
@@ -101,7 +103,7 @@ const NavItem: FC<NavItemProps> = ({
 );
 
 interface ParentNavItemProps extends NavItem, WithTheme {
-  onNavigate: () => void;
+  onNavigate: OnNavigate;
 }
 
 const expandStyles: CSSProperties = {
@@ -150,7 +152,7 @@ const ParentNavItem = withTheme()(ParentNavItemWithoutTheme);
 
 interface NavItemsProps {
   navItems: NavItems;
-  onNavigate: () => void;
+  onNavigate: OnNavigate;
 }
 
 const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
@@ -170,7 +172,7 @@ const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
 
 export interface NavProps {
   isLoggedIn: boolean;
-  onNavigate: () => void;
+  onNavigate: OnNavigate;
 }
 
 const Nav: FC<NavProps> = ({ isLoggedIn, onNavigate }) => (
