@@ -4,7 +4,7 @@ import { prefixActionType } from '../../../utils/prefixActionType';
 
 const prefixWithSlice = prefixActionType('account');
 
-const initialAccount = {
+export const initialAccount = {
   displayName: '',
   email: '',
   uid: '',
@@ -26,7 +26,7 @@ export const core = createReducer(initialAccount, {
     payload,
 });
 
-const createSetAccountErrorAction = createAction(prefixWithSlice('error'));
+export const createSetAccountErrorAction = createAction(prefixWithSlice('error'));
 
 export type SetAccountErrorAction = ReturnType<
   typeof createSetAccountErrorAction
