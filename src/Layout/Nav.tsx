@@ -159,10 +159,10 @@ const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
   <List>
     {navItems.map(navItem => {
       const { childNavItems, text } = navItem;
-      const navItemProps = { ...navItem, onNavigate };
+      const navItemProps = { ...navItem, key: text, onNavigate };
 
       return childNavItems.length ? (
-        <ParentNavItem key={text} {...navItemProps} />
+        <NavItem {...navItemProps} />
       ) : (
         <NavItem {...navItemProps} />
       );
