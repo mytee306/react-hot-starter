@@ -17,6 +17,7 @@ import {
   Person,
 } from '@material-ui/icons';
 import dashify from 'dashify';
+import { countBy } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
 import Link from '../components/Link';
@@ -121,7 +122,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
   const toggleOpen = () => setOpen(open => !open);
 
   const absolutePath = urlJoin('/', navItemProps.path);
-  const level = absolutePath.split('/').filter(Boolean).length;
+  const { '/': level } = countBy(absolutePath);
 
   return (
     <>
