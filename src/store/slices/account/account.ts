@@ -39,10 +39,12 @@ export const error = createReducer('', {
   ) => payload,
 });
 
+const setToFalse = () => false;
+
 export const loading = createReducer<Boolean>(false, {
   [createGetAccountAction.toString()]: () => true,
-  [createSetAccountAction.toString()]: () => false,
-  [createSetAccountErrorAction.toString()]: () => false,
+  [createSetAccountAction.toString()]: setToFalse,
+  [createSetAccountErrorAction.toString()]: setToFalse,
 });
 
 export default combineReducers({
