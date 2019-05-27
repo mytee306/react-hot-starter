@@ -17,17 +17,20 @@ import {
   Person,
 } from '@material-ui/icons';
 import dashify from 'dashify';
-import { Omit } from 'ramda';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
 import Link from '../components/Link';
 
-interface NavItem {
+interface ChildNavItem {
   text: string;
   icon: ReactElement;
   path: string;
+}
+
+interface NavItem extends ChildNavItem {
   childNavItems: NavItems;
 }
+
 type NavItems = NavItem[];
 
 const Login = 'Login';
@@ -76,33 +79,31 @@ const privateNavItems: NavItems = [
 
 type OnNavigate = () => void;
 
-interface NavItemProps extends Omit<NavItem, 'childNavItems'> {
+interface ChildNavItemProps extends ChildNavItem {
   onNavigate: OnNavigate;
 }
 
-const NavItem: FC<NavItemProps> = ({
+const ChildNavItem: FC<ChildNavItemProps> = ({
   onNavigate,
   text,
   path,
   icon,
   children,
 }) => (
-  <>
-    <ListItem>
-      <Link
-        onClick={onNavigate}
-        style={{ flexGrow: 1, display: 'flex' }}
-        to={path}
-      >
-        <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText>{text}</ListItemText>
-      </Link>
-      {children}
-    </ListItem>
-  </>
+  <ListItem>
+    <Link
+      onClick={onNavigate}
+      style={{ flexGrow: 1, display: 'flex' }}
+      to={path}
+    >
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText>{text}</ListItemText>
+    </Link>
+    {children}
+  </ListItem>
 );
 
-interface ParentNavItemProps extends NavItem, WithTheme {
+interface NavItemProps extends NavItem, WithTheme {
   onNavigate: OnNavigate;
 }
 
@@ -110,7 +111,7 @@ const expandStyles: CSSProperties = {
   cursor: 'pointer',
 };
 
-const ParentNavItemWithoutTheme: FC<ParentNavItemProps> = ({
+const NavItemWithoutTheme: FC<NavItemProps> = ({
   childNavItems,
   onNavigate,
   theme,
@@ -124,13 +125,13 @@ const ParentNavItemWithoutTheme: FC<ParentNavItemProps> = ({
 
   return (
     <>
-      <NavItem {...navItemProps} onNavigate={onNavigate}>
+      <ChildNavItem {...navItemProps} onNavigate={onNavigate}>
         {isOpen ? (
           <ExpandLess onClick={toggleOpen} style={expandStyles} />
         ) : (
           <ExpandMore onClick={toggleOpen} style={expandStyles} />
         )}
-      </NavItem>
+      </ChildNavItem>
       <Collapse
         in={isOpen}
         timeout="auto"
@@ -148,7 +149,7 @@ const ParentNavItemWithoutTheme: FC<ParentNavItemProps> = ({
   );
 };
 
-const ParentNavItem = withTheme()(ParentNavItemWithoutTheme);
+const NavItem = withTheme()(NavItemWithoutTheme);
 
 interface NavItemsProps {
   navItems: NavItems;
@@ -164,7 +165,7 @@ const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
       return childNavItems.length ? (
         <NavItem {...navItemProps} />
       ) : (
-        <NavItem {...navItemProps} />
+        <ChildNavItem {...navItemProps} />
       );
     })}
   </List>
