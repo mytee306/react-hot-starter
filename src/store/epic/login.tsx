@@ -1,6 +1,8 @@
 import { Epic, ofType } from 'redux-observable';
 import { empty, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { authState } from 'rxfire/auth';
+import { collectionData } from 'rxfire/firestore';
 import {
   createGetAccountAction,
   createSetAccountAction,
