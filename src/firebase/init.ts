@@ -5,9 +5,9 @@ import 'firebase/firestore';
 export default () => {
   const config = process.env.REACT_APP_FIREBASE_CONFIG;
 
-  const parsedConfig = JSON.parse(config || '{}');
+  const parsedConfig = JSON.parse(config || '');
 
-  const app = initializeApp(parsedConfig);
+  const app = initializeApp(parsedConfig || {});
 
   app.firestore().settings({ timestampsInSnapshots: true });
 
