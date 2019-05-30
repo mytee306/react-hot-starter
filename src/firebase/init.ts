@@ -1,18 +1,15 @@
 import { initializeApp } from 'firebase/app';
-// import firebaseFirestore from 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 export default () => {
   const config = process.env.REACT_APP_FIREBASE_CONFIG;
-  
-  if (config) {
-    const parsedConfig = JSON.parse(config);
 
-    if (parsedConfig) {
-      initializeApp(parsedConfig);
+  const parsedConfig = JSON.parse(config || '{}');
 
-      // const firestore = firebaseFirestore();
+  const app = initializeApp(parsedConfig);
 
-      // firestore.settings({ timestampsInSnapshots: true });
-    }
-  }
+  app.firestore().settings({ timestampsInSnapshots: true });
+
+  return app;
 };
