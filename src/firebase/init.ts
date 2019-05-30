@@ -8,6 +8,4 @@ const parsedConfig = JSON.parse(config || '');
 
 const app = initializeApp(parsedConfig || {});
 
-app.firestore().settings({ timestampsInSnapshots: true });
-
 export default app;
