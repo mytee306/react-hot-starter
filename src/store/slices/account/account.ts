@@ -13,27 +13,27 @@ export const initialAccount = {
 
 export type Account = typeof initialAccount;
 
-export const createGetAccountAction = createAction(prefixWithSlice('get'));
+export const createGetAccount = createAction(prefixWithSlice('get'));
 
-export const createSetAccountAction = createAction<Account>(
+export const createSetAccount = createAction<Account>(
   prefixWithSlice('set'),
 );
 
-export type SetAccountAction = ReturnType<typeof createSetAccountAction>;
+export type SetAccountAction = ReturnType<typeof createSetAccount>;
 
 export const core = createReducer(initialAccount, {
-  [createSetAccountAction.toString()]: (_, { payload }: SetAccountAction) =>
+  [createSetAccount.toString()]: (_, { payload }: SetAccountAction) =>
     payload,
 });
 
-export const createSetAccountErrorAction = createAction(prefixWithSlice('error'));
+export const createSetAccountError = createAction(prefixWithSlice('error'));
 
 export type SetAccountErrorAction = ReturnType<
-  typeof createSetAccountErrorAction
+  typeof createSetAccountError
 >;
 
 export const error = createReducer('', {
-  [createSetAccountErrorAction.toString()]: (
+  [createSetAccountError.toString()]: (
     _,
     { payload }: SetAccountErrorAction,
   ) => payload,
@@ -42,9 +42,9 @@ export const error = createReducer('', {
 const setToFalse = () => false;
 
 export const loading = createReducer<Boolean>(false, {
-  [createGetAccountAction.toString()]: () => true,
-  [createSetAccountAction.toString()]: setToFalse,
-  [createSetAccountErrorAction.toString()]: setToFalse,
+  [createGetAccount.toString()]: () => true,
+  [createSetAccount.toString()]: setToFalse,
+  [createSetAccountError.toString()]: setToFalse,
 });
 
 export default combineReducers({

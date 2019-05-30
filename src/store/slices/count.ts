@@ -14,8 +14,8 @@ export const {
   slice,
   reducer,
   actions: {
-    increment: createIncrementAction,
-    decrementBy: createDecrementByAction,
+    increment: createIncrement,
+    decrementBy: createDecrementBy,
   },
   selectors: { getCount },
 } = createSlice({

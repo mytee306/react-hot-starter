@@ -6,18 +6,18 @@ const prefixWithSlice = prefixActionType(
   prefixActionType('theme')(prefixActionType('palette')('type')),
 );
 
-export const createSetTypeAction = createAction<PaletteType>(
+export const createSetType = createAction<PaletteType>(
   prefixWithSlice('set'),
 );
 
-export type CreateSetTypeAction = typeof createSetTypeAction;
+export type CreateSetTypeAction = typeof createSetType;
 
-export type SetTypeAction = ReturnType<typeof createSetTypeAction>;
+export type SetTypeAction = ReturnType<typeof createSetType>;
 
-export const createToggleTypeAction = createAction(prefixWithSlice('toggle'));
+export const createToggleType = createAction(prefixWithSlice('toggle'));
 
 export default createReducer<PaletteType, SetTypeAction>('light', {
-  [createSetTypeAction.toString()]: (_, { payload }) => payload,
-  [createToggleTypeAction.toString()]: type =>
+  [createSetType.toString()]: (_, { payload }) => payload,
+  [createToggleType.toString()]: type =>
     type === 'light' ? 'dark' : 'light',
 });

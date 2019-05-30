@@ -14,7 +14,7 @@ import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { CreateSimpleAction } from '../models/actions';
 import { selectDarkThemeFlag, State } from '../store/reducer';
-import { createToggleTypeAction } from '../store/slices/theme/palette/type';
+import { createToggleType } from '../store/slices/theme/palette/type';
 
 const HeaderStyles = createStyles({
   header: {
@@ -68,7 +68,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  togglePaletteType: createToggleTypeAction,
+  togglePaletteType: createToggleType,
 };
 
 export default connect(

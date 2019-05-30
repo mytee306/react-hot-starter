@@ -15,10 +15,10 @@ export type State = ReturnType<typeof reducer>;
 
 export type Reducer = typeof reducer;
 
-export const createResetAction = createAction('RESET');
+export const createReset = createAction('RESET');
 
 const reducerWithReset: Reducer = (state, action) =>
-  action.type === createResetAction.toString()
+  action.type === createReset.toString()
     ? reducer(undefined, action)
     : reducer(state, action);
 

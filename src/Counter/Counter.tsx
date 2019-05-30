@@ -7,9 +7,9 @@ import { CreateSimpleAction } from '../models/actions';
 import { selectCount, State } from '../store/reducer';
 import {
   Count,
+  createDecrementBy,
   CreateDecrementByAction,
-  createDecrementByAction,
-  createIncrementAction,
+  createIncrement,
 } from '../store/slices/count';
 import Decrement from './Decrement';
 import Increment from './Increment';
@@ -51,7 +51,7 @@ export default connect(
     count: selectCount(state),
   }),
   {
-    increment: createIncrementAction,
-    decrementBy: createDecrementByAction,
+    increment: createIncrement,
+    decrementBy: createDecrementBy,
   },
 )(Counter);
