@@ -1,14 +1,22 @@
 import logger from 'redux-logger';
+import { createEpicMiddleware } from 'redux-observable';
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import { Module } from '../models/Module';
+import epic from './epic';
 import reducer from './reducer';
+
+const epicMiddleware = createEpicMiddleware();
+
+const middleware = [...getDefaultMiddleware(), epicMiddleware];
 
 export default () => {
   if (process.env.NODE_ENV === 'development') {
     const store = configureStore({
       reducer,
-      middleware: [logger, ...getDefaultMiddleware()],
+      middleware: [...middleware, logger],
     });
+
+    epicMiddleware.run(epic);
 
     (module as Module).hot.accept('./reducer', () =>
       store.replaceReducer(reducer),
@@ -16,6 +24,10 @@ export default () => {
 
     return store;
   } else {
-    return configureStore({ reducer });
+    const store = configureStore({ reducer, middleware });
+
+    epicMiddleware.run(epic);
+
+    return store;
   }
 };
