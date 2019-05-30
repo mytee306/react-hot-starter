@@ -1,8 +1,8 @@
 import { createLocation } from 'history';
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
-import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { merge, of } from 'rxjs';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
 import firebase from '../../firebase';
 import { createReset } from '../reducer';
 // import { collectionData } from 'rxfire/firestore';
@@ -12,13 +12,25 @@ import {
   createSetAccountError,
 } from '../slices/account';
 
-const logIn: Epic = action$ =>
-  action$.pipe(
+const logIn: Epic = action$ => {
+  const state$ = action$.pipe(
     ofType(createGetAccount.toString()),
     switchMap(() => authState(firebase.auth())),
-    map(account => createSetAccount(account)),
     catchError(({ message }) => of(createSetAccountError(message))),
   );
+
+  const loggedIn$ = state$.pipe(
+    filter(Boolean),
+    map(account => createSetAccount(account)),
+  );
+
+  const loggedOut$ = state$.pipe(
+    filter(account => !account),
+    map(() => createReset()),
+  );
+
+  return merge(loggedIn$, loggedOut$);
+};
 
 const logOut: Epic = action$ =>
   action$.pipe(

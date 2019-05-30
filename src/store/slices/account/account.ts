@@ -1,17 +1,20 @@
+import { UserInfo } from 'firebase';
 import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
 import { prefixActionType } from '../../../utils/prefixActionType';
 
 const prefixWithSlice = prefixActionType('account');
 
-export const initialAccount = {
+export type Account = UserInfo;
+
+export const initialAccount: Account = {
   displayName: '',
   email: '',
   uid: '',
   photoURL: '',
+  phoneNumber: '',
+  providerId: '',
 };
-
-export type Account = typeof initialAccount;
 
 export const createGetAccount = createAction(prefixWithSlice('get'));
 
