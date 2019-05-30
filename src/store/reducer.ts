@@ -54,5 +54,5 @@ export const selectDisplayName = createSelector(
 export const selectLoggedInFlag = createSelector(
   selectDisplayName,
   Boolean,
-  () => true, // todo remove line
+  // () => true,
 );
