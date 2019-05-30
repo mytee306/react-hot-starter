@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
+import { AnyAction, combineReducers } from 'redux';
 import { createSelector, defaultMemoize } from 'reselect';
+import account from './slices/account';
 import count from './slices/count';
 import theme from './slices/theme';
-import account from './slices/account';
 
 const reducer = combineReducers({
   count,
@@ -10,9 +10,12 @@ const reducer = combineReducers({
   account,
 });
 
-export default reducer;
-
 export type State = ReturnType<typeof reducer>;
+
+export const RESET = 'RESET';
+
+export default (state: State, action: AnyAction) =>
+  action.type === RESET ? reducer(undefined, action) : reducer(state, action);
 
 export const selectCount = defaultMemoize((state: State) => state.count);
 
