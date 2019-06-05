@@ -15,7 +15,7 @@ import {
   User,
 } from '../slices/user';
 
-const getUser = pipe(
+const getUserFromAuthState = pipe(
   ofType<AuthStateChange>(createAuthStateChange.toString()),
   map(({ payload }) => payload),
 );
@@ -28,16 +28,16 @@ const logIn: Epic = action$ =>
     catchError(({ message }) => of(createSetUserError(message))),
   );
 
-const loggedIn: Epic = action$ =>
+const updated: Epic = action$ =>
   action$.pipe(
-    getUser,
+    getUserFromAuthState,
     filter<User>(Boolean),
     map(user => createSetUser(user)),
   );
 
 const loggedOut: Epic = action$ =>
   action$.pipe(
-    getUser,
+    getUserFromAuthState,
     filter(user => !user),
     map(() => createReset()),
   );
@@ -49,4 +49,4 @@ const logOut: Epic = action$ =>
     catchError(({ message }) => of(createSetUserError(message))),
   );
 
-export default [logIn, loggedIn, loggedOut, logOut];
+export default [logIn, updated, loggedOut, logOut];
