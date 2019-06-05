@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
-import account from './slices/account';
 import count from './slices/count';
 import theme from './slices/theme';
+import user from './slices/user';
 
 const reducer = combineReducers({
   count,
   theme,
-  account,
+  user,
 });
 
 export type State = ReturnType<typeof reducer>;
@@ -38,16 +38,14 @@ export const selectDarkThemeFlag = createSelector(
   type => type === 'dark',
 );
 
-export const selectAccountSlice = defaultMemoize(
-  (state: State) => state.account,
-);
+export const selectUserSlice = defaultMemoize((state: State) => state.user);
 
-export const selectAccount = createSelector(
-  selectAccountSlice,
+export const selectUser = createSelector(
+  selectUserSlice,
   ({ core }) => core,
 );
 export const selectDisplayName = createSelector(
-  selectAccount,
+  selectUser,
   ({ displayName }) => displayName,
 );
 

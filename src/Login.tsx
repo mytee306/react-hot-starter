@@ -8,7 +8,7 @@ import {
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { CreateSimpleAction } from './models/actions';
-import { createGetAccount } from './store/slices/account';
+import { createGetUser } from './store/slices/user';
 
 export interface LoginProps {
   logIn: CreateSimpleAction;
@@ -29,5 +29,5 @@ const Login: FC<LoginProps> = ({ logIn }) => (
 
 export default connect(
   null,
-  { logIn: createGetAccount },
+  { logIn: createGetUser },
 )(Login);

@@ -7,38 +7,38 @@ import firebase from '../../firebase';
 import { createReset } from '../reducer';
 // import { collectionData } from 'rxfire/firestore';
 import {
-  Account,
   AuthStateChange,
   createAuthStateChange,
-  createGetAccount,
-  createSetAccount,
-  createSetAccountError,
-} from '../slices/account';
+  createGetUser,
+  createSetUser,
+  createSetUserError,
+  User,
+} from '../slices/user';
 
-const getAccount = pipe(
+const getUser = pipe(
   ofType<AuthStateChange>(createAuthStateChange.toString()),
   map(({ payload }) => payload),
 );
 
 const logIn: Epic = action$ =>
   action$.pipe(
-    ofType(createGetAccount.toString()),
+    ofType(createGetUser.toString()),
     switchMap(() => authState(firebase.auth())),
-    map(account => createAuthStateChange(account)),
-    catchError(({ message }) => of(createSetAccountError(message))),
+    map(user => createAuthStateChange(user)),
+    catchError(({ message }) => of(createSetUserError(message))),
   );
 
 const loggedIn: Epic = action$ =>
   action$.pipe(
-    getAccount,
-    filter<Account>(Boolean),
-    map(account => createSetAccount(account)),
+    getUser,
+    filter<User>(Boolean),
+    map(user => createSetUser(user)),
   );
 
 const loggedOut: Epic = action$ =>
   action$.pipe(
-    getAccount,
-    filter(account => !account),
+    getUser,
+    filter(user => !user),
     map(() => createReset()),
   );
 
@@ -46,7 +46,7 @@ const logOut: Epic = action$ =>
   action$.pipe(
     ofType(createLocation.toString()),
     map(() => createReset()),
-    catchError(({ message }) => of(createSetAccountError(message))),
+    catchError(({ message }) => of(createSetUserError(message))),
   );
 
 export default [logIn, loggedIn, loggedOut, logOut];
