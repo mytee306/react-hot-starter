@@ -1,7 +1,7 @@
 const development = {
-  REACT_APP_PUBLIC_URL: 'http://react-hot-starter-dev.firebaseapp.com',
+  publicUrl: 'http://react-hot-starter-dev.firebaseapp.com',
 
-  REACT_APP_FIREBASE_CONFIG: {
+  firebaseConfig: {
     apiKey: 'AIzaSyDF9z3Z4LO-KP8IqUqV00_2MY-L-YGdbRg',
     authDomain: 'react-hot-starter-dev.firebaseapp.com',
     databaseURL: 'https://react-hot-starter-dev.firebaseio.com',

@@ -1,11 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import env from '../.env';
 
-const config = process.env.REACT_APP_FIREBASE_CONFIG;
+const { firebaseConfig } = env;
 
-const parsedConfig = JSON.parse(config || '{}');
-
-const app = initializeApp(parsedConfig);
+const app = initializeApp(firebaseConfig);
 
 export default app;
