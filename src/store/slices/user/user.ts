@@ -16,7 +16,7 @@ export const initialUser: User = {
   providerId: '',
 };
 
-export const createGetUser = createAction(prefixWithUser('get'));
+export const createLogin = createAction(prefixWithUser('get'));
 
 export const createAuthStateChange = createAction<User>(
   prefixWithUser('auth state change'),
@@ -44,7 +44,7 @@ export const error = createReducer('', {
 const setToFalse = () => false;
 
 export const loading = createReducer<Boolean>(false, {
-  [createGetUser.toString()]: () => true,
+  [createLogin.toString()]: () => true,
   [createSetUser.toString()]: setToFalse,
   [createSetUserError.toString()]: setToFalse,
 });

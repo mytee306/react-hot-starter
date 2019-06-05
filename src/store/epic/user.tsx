@@ -9,20 +9,20 @@ import { createReset } from '../reducer';
 import {
   AuthStateChange,
   createAuthStateChange,
-  createGetUser,
+  createLogin,
   createSetUser,
   createSetUserError,
   User,
 } from '../slices/user';
 
-const getUserFromAuthState = pipe(
+const mapAuthStateChangeToUser = pipe(
   ofType<AuthStateChange>(createAuthStateChange.toString()),
   map(({ payload }) => payload),
 );
 
 const logIn: Epic = action$ =>
   action$.pipe(
-    ofType(createGetUser.toString()),
+    ofType(createLogin.toString()),
     switchMap(() => authState(firebase.auth())),
     map(user => createAuthStateChange(user)),
     catchError(({ message }) => of(createSetUserError(message))),
@@ -30,14 +30,14 @@ const logIn: Epic = action$ =>
 
 const updated: Epic = action$ =>
   action$.pipe(
-    getUserFromAuthState,
+    mapAuthStateChangeToUser,
     filter<User>(Boolean),
     map(user => createSetUser(user)),
   );
 
 const loggedOut: Epic = action$ =>
   action$.pipe(
-    getUserFromAuthState,
+    mapAuthStateChangeToUser,
     filter(user => !user),
     map(() => createReset()),
   );
