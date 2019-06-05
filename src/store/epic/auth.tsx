@@ -10,8 +10,8 @@ import {
   createAuthStateChange,
   createLogin,
   createLogout,
+  createSetAuthError,
   createSetUser,
-  createSetUserError,
   User,
 } from '../slices/auth';
 
@@ -25,7 +25,7 @@ const logIn: Epic = action$ =>
     ofType(createLogin.toString()),
     switchMap(() => authState(firebase.auth())),
     map(user => createAuthStateChange(user)),
-    catchError(({ message }) => of(createSetUserError(message))),
+    catchError(({ message }) => of(createSetAuthError(message))),
   );
 
 const userUpdated: Epic = action$ =>
@@ -46,7 +46,7 @@ const logOut: Epic = action$ =>
   action$.pipe(
     ofType(createLogout.toString()),
     map(() => createReset()),
-    catchError(({ message }) => of(createSetUserError(message))),
+    catchError(({ message }) => of(createSetAuthError(message))),
   );
 
 export default [logIn, userUpdated, loggedOut, logOut];

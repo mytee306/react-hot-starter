@@ -32,12 +32,12 @@ export const core = createReducer(initialUser, {
   [createSetUser.toString()]: (_, { payload }: SetUserAction) => payload,
 });
 
-export const createSetUserError = createAction(prefixWithUser('error'));
+export const createSetAuthError = createAction(prefixWithUser('error'));
 
-export type SetUserErrorAction = ReturnType<typeof createSetUserError>;
+export type SetAuthErrorAction = ReturnType<typeof createSetAuthError>;
 
 export const error = createReducer('', {
-  [createSetUserError.toString()]: (_, { payload }: SetUserErrorAction) =>
+  [createSetAuthError.toString()]: (_, { payload }: SetAuthErrorAction) =>
     payload,
 });
 
@@ -46,7 +46,7 @@ const setToFalse = () => false;
 export const loading = createReducer<Boolean>(false, {
   [createLogin.toString()]: () => true,
   [createSetUser.toString()]: setToFalse,
-  [createSetUserError.toString()]: setToFalse,
+  [createSetAuthError.toString()]: setToFalse,
 });
 
 export default combineReducers({
