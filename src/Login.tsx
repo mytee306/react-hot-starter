@@ -8,7 +8,7 @@ import {
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { CreateSimpleAction } from './models/actions';
-import { createLogin } from './store/slices/user';
+import { createLogin } from './store/slices/auth';
 
 export interface LoginProps {
   logIn: CreateSimpleAction;

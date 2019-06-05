@@ -13,7 +13,7 @@ import {
   createSetUser,
   createSetUserError,
   User,
-} from '../slices/user';
+} from '../slices/auth';
 
 const mapAuthStateChangeToUser = pipe(
   ofType<AuthStateChange>(createAuthStateChange.toString()),

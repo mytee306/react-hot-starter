@@ -3,7 +3,7 @@ import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
 import count from './slices/count';
 import theme from './slices/theme';
-import user from './slices/user';
+import user from './slices/auth';
 
 const reducer = combineReducers({
   count,
