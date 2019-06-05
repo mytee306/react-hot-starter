@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
 import { prefixActionType } from '../../../utils/prefixActionType';
 
-const prefixWithSlice = prefixActionType('account');
+const prefixWithAccount = prefixActionType('account');
 
 export type Account = UserInfo;
 
@@ -16,9 +16,15 @@ export const initialAccount: Account = {
   providerId: '',
 };
 
-export const createGetAccount = createAction(prefixWithSlice('get'));
+export const createGetAccount = createAction(prefixWithAccount('get'));
 
-export const createSetAccount = createAction<Account>(prefixWithSlice('set'));
+export const createAuthStateChange = createAction<Account>(
+  prefixWithAccount('auth state change'),
+);
+
+export type AuthStateChange = ReturnType<typeof createAuthStateChange>;
+
+export const createSetAccount = createAction<Account>(prefixWithAccount('set'));
 
 export type SetAccountAction = ReturnType<typeof createSetAccount>;
 
@@ -26,7 +32,7 @@ export const core = createReducer(initialAccount, {
   [createSetAccount.toString()]: (_, { payload }: SetAccountAction) => payload,
 });
 
-export const createSetAccountError = createAction(prefixWithSlice('error'));
+export const createSetAccountError = createAction(prefixWithAccount('error'));
 
 export type SetAccountErrorAction = ReturnType<typeof createSetAccountError>;
 
@@ -49,4 +55,4 @@ export default combineReducers({
   core,
 });
 
-export const createLogout = createAction(prefixWithSlice('logout'));
+export const createLogout = createAction(prefixWithAccount('logout'));
