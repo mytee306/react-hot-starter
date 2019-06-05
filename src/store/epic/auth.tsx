@@ -1,4 +1,3 @@
-import { createLocation } from 'history';
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
 import { of, pipe } from 'rxjs';
@@ -10,6 +9,7 @@ import {
   AuthStateChange,
   createAuthStateChange,
   createLogin,
+  createLogout,
   createSetUser,
   createSetUserError,
   User,
@@ -28,7 +28,7 @@ const logIn: Epic = action$ =>
     catchError(({ message }) => of(createSetUserError(message))),
   );
 
-const updated: Epic = action$ =>
+const userUpdated: Epic = action$ =>
   action$.pipe(
     mapAuthStateChangeToUser,
     filter<User>(Boolean),
@@ -44,9 +44,9 @@ const loggedOut: Epic = action$ =>
 
 const logOut: Epic = action$ =>
   action$.pipe(
-    ofType(createLocation.toString()),
+    ofType(createLogout.toString()),
     map(() => createReset()),
     catchError(({ message }) => of(createSetUserError(message))),
   );
 
-export default [logIn, updated, loggedOut, logOut];
+export default [logIn, userUpdated, loggedOut, logOut];
