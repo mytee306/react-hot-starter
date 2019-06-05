@@ -1,7 +1,7 @@
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
-import { of, pipe } from 'rxjs';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { empty, of, pipe } from 'rxjs';
+import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import firebase from '../../firebase';
 import { createReset } from '../reducer';
 // import { collectionData } from 'rxfire/firestore';
@@ -12,6 +12,7 @@ import {
   createLogout,
   createSetAuthError,
   createSetUser,
+  SetAuthErrorAction,
   User,
 } from '../slices/auth';
 
@@ -49,4 +50,11 @@ const logOut: Epic = action$ =>
     catchError(({ message }) => of(createSetAuthError(message))),
   );
 
-export default [logIn, userUpdated, loggedOut, logOut];
+const authError: Epic = action$ =>
+  action$.pipe(
+    ofType<SetAuthErrorAction>(createSetAuthError.toString()),
+    tap(console.error),
+    map(() => empty()),
+  );
+
+export default [logIn, userUpdated, loggedOut, logOut, authError];
