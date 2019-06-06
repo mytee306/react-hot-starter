@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
 import { prefixActionType } from '../../../utils/prefixActionType';
 
-const prefixWithUser = prefixActionType('user');
+const prefixWithUser = prefixActionType('auth');
 
 export type User = UserInfo;
 
