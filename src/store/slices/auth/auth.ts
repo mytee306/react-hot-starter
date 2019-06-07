@@ -1,4 +1,5 @@
 import { UserInfo } from 'firebase';
+import { Dispatch, SetStateAction } from 'react';
 import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
 import { prefixActionType } from '../../../utils/prefixActionType';
@@ -16,7 +17,11 @@ export const initialUser: User = {
   providerId: '',
 };
 
-export const createLogin = createAction(prefixWithUser('get'));
+export const createLogin = createAction<Dispatch<SetStateAction<string>>>(
+  prefixWithUser('get'),
+);
+
+export type CreateLogin = typeof createLogin;
 
 export const createAuthStateChange = createAction<User>(
   prefixWithUser('auth state change'),
