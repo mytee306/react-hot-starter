@@ -10,7 +10,7 @@ export type Count = typeof initialState;
 
 export type DecrementByAction = PayloadAction<Count>;
 
-export type CreateDecrementByAction = SliceActionCreator<Count>;
+export type CreateDecrementBy = SliceActionCreator<Count>;
 
 export const {
   slice,

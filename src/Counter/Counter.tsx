@@ -8,7 +8,7 @@ import { selectCount, State } from '../store/reducer';
 import {
   Count,
   createDecrementBy,
-  CreateDecrementByAction,
+  CreateDecrementBy,
   createIncrement,
 } from '../store/slices/count';
 import Decrement from './Decrement';
@@ -17,7 +17,7 @@ import Increment from './Increment';
 export interface CountProps {
   count: Count;
   increment: CreateSimpleAction;
-  decrementBy: CreateDecrementByAction;
+  decrementBy: CreateDecrementBy;
   match: {
     path: string;
   };
