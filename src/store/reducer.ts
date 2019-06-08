@@ -24,8 +24,6 @@ const reducerWithReset: Reducer = (state, action) =>
 
 export default reducerWithReset;
 
-export const selectCount = defaultMemoize((state: State) => state.count);
-
 export const selectTheme = defaultMemoize((state: State) => state.theme);
 
 export const selectPaletteType = createSelector(

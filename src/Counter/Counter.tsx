@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import urlJoin from 'url-join';
 import { CreateSimpleAction } from '../models/actions';
-import { selectCount, State } from '../store/reducer';
+import { State } from '../store/reducer';
 import {
   Count,
   createDecrementBy,
   CreateDecrementBy,
   createIncrement,
+  selectCount,
 } from '../store/slices/count';
 import Decrement from './Decrement';
 import Increment from './Increment';

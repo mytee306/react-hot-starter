@@ -17,7 +17,7 @@ export const {
     createIncrement,
     createDecrementBy,
   },
-  selectors: { getCount },
+  selectors: { getCount: selectCount },
 } = createSlice({
   slice: 'count',
   initialState: 0,
