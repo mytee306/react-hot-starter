@@ -16,16 +16,19 @@
   // 	"description": "Log output to console"
   // }
   "component": {
-    "scope": "typescriptreact",
     "prefix": "component",
     "body": [
-      "import React, { SFC } from 'react';",
+      "import React from 'react';",
       "",
-      "export interface ${0:$TM_FILENAME_BASE}Props {$1}",
+      "export interface ${1:${TM_FILENAME_BASE}}Props {",
+      "  $2",
+      "}",
       "",
-      "const ${0:$TM_FILENAME_BASE}: SFC<${0:$TM_FILENAME_BASE}Props> = ($2) => (<div$3>${0:$TM_FILENAME_BASE}</div>);",
+      "const $1: React.FC<$1Props>  = ({ $3 }) => (",
+      "  <$4div />",
+      ");",
       "",
-      "export default ${0:$TM_FILENAME_BASE};$4",
+      "export default $1;",
       ""
     ]
   }
