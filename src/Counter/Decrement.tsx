@@ -45,7 +45,7 @@ const Decrement: FC<DecrementProps> = ({ decrementBy }) => (
             value={values.amount}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={!!errors.amount}
+            error={Boolean(errors.amount)}
             helperText={errors.amount}
           />
         </FormControl>
