@@ -3,12 +3,12 @@ import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
 import count from './slices/count';
 import theme from './slices/theme';
-import user from './slices/auth';
+import auth from './slices/auth';
 
 const reducer = combineReducers({
   count,
   theme,
-  user,
+  auth,
 });
 
 export type State = ReturnType<typeof reducer>;
@@ -38,11 +38,11 @@ export const selectDarkThemeFlag = createSelector(
   type => type === 'dark',
 );
 
-export const selectUserSlice = defaultMemoize((state: State) => state.user);
+export const selectUserSlice = defaultMemoize((state: State) => state.auth);
 
 export const selectUser = createSelector(
   selectUserSlice,
-  ({ core }) => core,
+  ({ user }) => user,
 );
 export const selectDisplayName = createSelector(
   selectUser,
@@ -52,5 +52,5 @@ export const selectDisplayName = createSelector(
 export const selectLoggedInFlag = createSelector(
   selectDisplayName,
   Boolean,
-  // () => true,
+  // () => true, // * always logged in
 );

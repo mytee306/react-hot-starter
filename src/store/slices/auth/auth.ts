@@ -1,5 +1,4 @@
 import { UserInfo } from 'firebase';
-import { Dispatch, SetStateAction } from 'react';
 import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
 import { prefixActionType } from '../../../utils/prefixActionType';
@@ -17,11 +16,11 @@ export const initialUser: User = {
   providerId: '',
 };
 
-export const createLogin = createAction<Dispatch<SetStateAction<string>>>(
-  prefixWithUser('get'),
-);
+export const createLogin = createAction(prefixWithUser('get'));
 
 export type CreateLogin = typeof createLogin;
+
+export const createLogout = createAction(prefixWithUser('logout'));
 
 export const createAuthStateChange = createAction<User>(
   prefixWithUser('auth state change'),
@@ -33,7 +32,7 @@ export const createSetUser = createAction<User>(prefixWithUser('set'));
 
 export type SetUserAction = ReturnType<typeof createSetUser>;
 
-export const core = createReducer(initialUser, {
+export const user = createReducer(initialUser, {
   [createSetUser.toString()]: (_, { payload }: SetUserAction) => payload,
 });
 
@@ -57,7 +56,5 @@ export const loading = createReducer<Boolean>(false, {
 export default combineReducers({
   loading,
   error,
-  core,
+  user,
 });
-
-export const createLogout = createAction(prefixWithUser('logout'));
