@@ -1,7 +1,4 @@
-import {
-  createSlice,
-  PayloadAction,
-} from 'redux-starter-kit';
+import { createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 
 export type Count = number;
@@ -13,17 +10,14 @@ export type CreateDecrementBy = SliceActionCreator<Count>;
 export const {
   slice,
   reducer,
-  actions: {
-    createIncrement,
-    createDecrementBy,
-  },
+  actions: { increment: createIncrement, decrementBy: createDecrementBy },
   selectors: { getCount: selectCount },
 } = createSlice({
   slice: 'count',
   initialState: 0,
   reducers: {
-    createIncrement: count => count + 1,
-    createDecrementBy: (count, { payload: amount }: DecrementByAction) =>
+    increment: count => count + 1,
+    decrementBy: (count, { payload: amount }: DecrementByAction) =>
       count - amount,
   },
 });
