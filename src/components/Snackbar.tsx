@@ -40,7 +40,7 @@ const getVariants: GetVariants = ({ palette }) => ({
   },
 });
 
-const SnackbarStyles = (theme: Theme) =>
+const snackbarStyles = (theme: Theme) =>
   createStyles({
     close: {
       padding: theme.spacing.unit,
@@ -89,7 +89,7 @@ const Snackbar: React.FC<SnackbarProps> = ({
   );
 };
 
-export default withStyles(SnackbarStyles, { withTheme: true })(
+export default withStyles(snackbarStyles, { withTheme: true })(
   connect(
     (state: State) => selectSnackbar(state),
     { resetSnackbar: createResetSnackbar },

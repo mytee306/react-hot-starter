@@ -20,7 +20,7 @@ const minWidth = 240;
 
 const margin = 20;
 
-export const LayoutStyles = (theme: Theme) =>
+export const layoutStyles = (theme: Theme) =>
   createStyles({
     drawer: {
       minWidth,
@@ -46,7 +46,7 @@ export const LayoutStyles = (theme: Theme) =>
     },
   });
 
-export interface LayoutProps extends WithStyles<typeof LayoutStyles> {
+export interface LayoutProps extends WithStyles<typeof layoutStyles> {
   theme: Theme;
   isLoggedIn: boolean;
 }
@@ -94,4 +94,4 @@ const Layout: FC<LayoutProps> = ({
   );
 };
 
-export default withStyles(LayoutStyles, { withTheme: true })(Layout);
+export default withStyles(layoutStyles, { withTheme: true })(Layout);

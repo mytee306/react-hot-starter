@@ -16,7 +16,7 @@ import { CreateSimpleAction } from '../models/actions';
 import { selectDarkThemeFlag, State } from '../store/reducer';
 import { createToggleType } from '../store/slices/theme/palette/type';
 
-const HeaderStyles = createStyles({
+const headerStyles = createStyles({
   header: {
     flexGrow: 1,
   },
@@ -29,7 +29,7 @@ const HeaderStyles = createStyles({
   },
 });
 
-export interface HeaderProps extends WithStyles<typeof HeaderStyles> {
+export interface HeaderProps extends WithStyles<typeof headerStyles> {
   toggle: () => void;
   isDark: boolean;
   togglePaletteType: CreateSimpleAction;
@@ -74,4 +74,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(HeaderStyles)(Header));
+)(withStyles(headerStyles)(Header));
