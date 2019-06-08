@@ -4,11 +4,15 @@ import { createSelector, defaultMemoize } from 'reselect';
 import count from './slices/count';
 import theme from './slices/theme';
 import auth from './slices/auth';
+import snackbar, {
+  selectSnackbar as selectSnackbarState,
+} from './slices/snackbar';
 
 const reducer = combineReducers({
   count,
   theme,
   auth,
+  snackbar,
 });
 
 export type State = ReturnType<typeof reducer>;
@@ -50,5 +54,13 @@ export const selectDisplayName = createSelector(
 export const selectLoggedInFlag = createSelector(
   selectDisplayName,
   Boolean,
-  // () => true, // * always logged in
+);
+
+export const selectSnackbar = createSelector(
+  selectSnackbarState,
+  snackbarState => {
+    const { message } = snackbarState;
+
+    return { ...snackbarState, open: Boolean(message) };
+  },
 );

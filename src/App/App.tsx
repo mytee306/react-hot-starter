@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Layout from '../Layout';
 import { selectLoggedInFlag, selectTheme, State } from '../store/reducer';
 import Routes from './Routes';
+import Snackbar from '../components/Snackbar';
 
 export interface AppProps {
   isLoggedIn: boolean;
@@ -24,6 +25,7 @@ const App: FC<AppProps> = ({ isLoggedIn, theme }) => (
     <Layout isLoggedIn={isLoggedIn}>
       <Routes isLoggedIn={isLoggedIn} />
     </Layout>
+    <Snackbar />
   </MuiThemeProvider>
 );
 
