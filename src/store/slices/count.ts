@@ -14,16 +14,16 @@ export const {
   slice,
   reducer,
   actions: {
-    increment: createIncrement,
-    decrementBy: createDecrementBy,
+    createIncrement,
+    createDecrementBy,
   },
   selectors: { getCount },
 } = createSlice({
   slice: 'count',
   initialState: 0,
   reducers: {
-    increment: count => count + 1,
-    decrementBy: (count, { payload: amount }: DecrementByAction) =>
+    createIncrement: count => count + 1,
+    createDecrementBy: (count, { payload: amount }: DecrementByAction) =>
       count - amount,
   },
 });
