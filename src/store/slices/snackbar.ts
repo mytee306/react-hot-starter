@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from 'redux-starter-kit';
+import { createSlice } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 
 export interface SnackbarState {
@@ -11,13 +11,13 @@ const initialState: SnackbarState = {
   duration: 0,
 };
 
-export type SetSnackbarAction = PayloadAction<SnackbarState>;
-
 export type CreateSetSnackbar = SliceActionCreator<SnackbarState>;
 
-export type ResetSnackbarAction = PayloadAction<SnackbarState>;
+export type SetSnackbarAction = ReturnType<CreateSetSnackbar>;
 
 export type CreateResetSnackbar = SliceActionCreator<SnackbarState>;
+
+export type ResetSnackbarAction = ReturnType<CreateResetSnackbar>;
 
 export const {
   slice,
