@@ -1,12 +1,12 @@
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
 import { empty, of, pipe } from 'rxjs';
-import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap, mergeMap } from 'rxjs/operators';
 import firebase from '../../firebase';
 import { createReset } from '../reducer';
 // import { collectionData } from 'rxfire/firestore';
 import {
-  AuthStateChange,
+  AuthStateChangeAction,
   createAuthStateChange,
   createLogin,
   createLogout,
@@ -17,7 +17,7 @@ import {
 } from '../slices/auth';
 
 const mapAuthStateChangeToUser = pipe(
-  ofType<AuthStateChange>(createAuthStateChange.toString()),
+  ofType<AuthStateChangeAction>(createAuthStateChange.toString()),
   map(({ payload }) => payload),
 );
 
@@ -54,7 +54,7 @@ const authError: Epic = action$ =>
   action$.pipe(
     ofType<SetAuthErrorAction>(createSetAuthError.toString()),
     tap(console.error),
-    map(() => empty()),
+    mergeMap(() => empty()),
   );
 
 export default [logIn, userUpdated, loggedOut, logOut, authError];

@@ -26,7 +26,7 @@ export const createAuthStateChange = createAction<User>(
   prefixWithUser('auth state change'),
 );
 
-export type AuthStateChange = ReturnType<typeof createAuthStateChange>;
+export type AuthStateChangeAction = ReturnType<typeof createAuthStateChange>;
 
 export const createSetUser = createAction<User>(prefixWithUser('set'));
 
