@@ -4,9 +4,7 @@ import {
 } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 
-const initialState = 0;
-
-export type Count = typeof initialState;
+export type Count = number;
 
 export type DecrementByAction = PayloadAction<Count>;
 
@@ -22,7 +20,7 @@ export const {
   selectors: { getCount },
 } = createSlice({
   slice: 'count',
-  initialState,
+  initialState: 0,
   reducers: {
     increment: count => count + 1,
     decrementBy: (count, { payload: amount }: DecrementByAction) =>
