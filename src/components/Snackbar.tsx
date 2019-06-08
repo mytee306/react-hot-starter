@@ -36,7 +36,7 @@ const Snackbar: React.FC<SnackbarProps> = ({
     if (duration) {
       setTimeout(() => {
         resetSnackbar();
-      }, duration);
+      }, duration, resetSnackbar);
     }
   }, [duration]);
 

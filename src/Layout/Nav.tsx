@@ -22,21 +22,21 @@ import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
 import Link from '../components/Link';
 
-interface ChildNavItem {
+interface IChildNavItem {
   text: string;
   icon: ReactElement;
   path: string;
 }
 
-interface NavItem extends ChildNavItem {
-  childNavItems: NavItems;
+interface INavItem extends IChildNavItem {
+  childNavItems: INavItems; // eslint-disable-line no-use-before-define
 }
 
-type NavItems = NavItem[];
+type INavItems = INavItem[];
 
 const Login = 'Login';
 
-const publicNavItems: NavItems = [
+const publicNavItems: INavItems = [
   {
     text: Login,
     icon: <Person />,
@@ -50,7 +50,7 @@ const Count = 'Count';
 const Increment = 'Increment';
 const Decrement = 'Decrement';
 
-const privateNavItems: NavItems = [
+const privateNavItems: INavItems = [
   {
     text: Home,
     icon: <Dashboard />,
@@ -80,7 +80,7 @@ const privateNavItems: NavItems = [
 
 type OnNavigate = () => void;
 
-interface ChildNavItemProps extends ChildNavItem {
+interface ChildNavItemProps extends IChildNavItem {
   onNavigate: OnNavigate;
 }
 
@@ -104,7 +104,7 @@ const ChildNavItem: FC<ChildNavItemProps> = ({
   </ListItem>
 );
 
-interface NavItemProps extends NavItem, WithTheme {
+interface NavItemProps extends INavItem, WithTheme {
   onNavigate: OnNavigate;
 }
 
@@ -153,7 +153,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
 const NavItem = withTheme()(NavItemWithoutTheme);
 
 interface NavItemsProps {
-  navItems: NavItems;
+  navItems: INavItems;
   onNavigate: OnNavigate;
 }
 
