@@ -36,7 +36,7 @@ export const user = createReducer(initialUser, {
   [createSetUser.toString()]: (_, { payload }: SetUserAction) => payload,
 });
 
-export const createSetAuthError = createAction(prefixWithUser('error'));
+export const createSetAuthError = createAction<string>(prefixWithUser('error'));
 
 export type SetAuthErrorAction = ReturnType<typeof createSetAuthError>;
 
