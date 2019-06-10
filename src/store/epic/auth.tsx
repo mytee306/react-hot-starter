@@ -1,7 +1,7 @@
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
 import { of, pipe } from 'rxjs';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import firebase from '../../firebase';
 import { createReset } from '../reducer';
 // import { collectionData } from 'rxfire/firestore';
@@ -25,6 +25,11 @@ const mapAuthStateChangeToUser = pipe(
 const logIn: Epic = action$ =>
   action$.pipe(
     ofType(createLogin.toString()),
+    switchMap(() => {
+      const provider = new (firebase.auth as any).GoogleAuthProvider();
+
+      return firebase.auth().signInWithPopup(provider);
+    }),
     switchMap(() => authState(firebase.auth())),
     map(user => createAuthStateChange(user)),
     catchError(({ message }) => of(createSetAuthError(message))),
@@ -47,6 +52,7 @@ const loggedOut: Epic = action$ =>
 const logOut: Epic = action$ =>
   action$.pipe(
     ofType(createLogout.toString()),
+    switchMap(() => firebase.auth().signOut()),
     map(() => createReset()),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
@@ -55,7 +61,7 @@ const authError: Epic = action$ =>
   action$.pipe(
     ofType<SetAuthErrorAction>(createSetAuthError.toString()),
     map(({ payload }) => payload),
-    map(({ message }) => createSetSnackbar({ message })),
+    map(message => createSetSnackbar({ message })),
   );
 
 export default [logIn, userUpdated, loggedOut, logOut, authError];
