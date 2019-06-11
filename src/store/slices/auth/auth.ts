@@ -16,11 +16,11 @@ export const initialUser: User = {
   providerId: '',
 };
 
-export const createLogin = createAction(prefixWithUser('get'));
+export const createSignin = createAction(prefixWithUser('get'));
 
-export type CreateLogin = typeof createLogin;
+export type CreateSignin = typeof createSignin;
 
-export const createLogout = createAction(prefixWithUser('logout'));
+export const createSignout = createAction(prefixWithUser('signout'));
 
 export const createAuthStateChange = createAction<User>(
   prefixWithUser('auth state change'),
@@ -48,7 +48,7 @@ export const error = createReducer('', {
 const setToFalse = () => false;
 
 export const loading = createReducer<Boolean>(false, {
-  [createLogin.toString()]: () => true,
+  [createSignin.toString()]: () => true,
   [createSetUser.toString()]: setToFalse,
   [createSetAuthError.toString()]: setToFalse,
 });

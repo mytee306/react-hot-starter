@@ -51,7 +51,7 @@ export const selectDisplayName = createSelector(
   ({ displayName }) => displayName,
 );
 
-export const selectLoggedInFlag = createSelector(
+export const selectSignedInFlag = createSelector(
   selectDisplayName,
   Boolean,
 );

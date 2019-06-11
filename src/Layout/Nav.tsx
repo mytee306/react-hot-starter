@@ -34,13 +34,13 @@ interface INavItem extends IChildNavItem {
 
 type INavItems = INavItem[];
 
-const Login = 'Login';
+const Signin = 'Signin';
 
 const publicNavItems: INavItems = [
   {
-    text: Login,
+    text: Signin,
     icon: <Person />,
-    path: dashify(Login),
+    path: dashify(Signin),
     childNavItems: [],
   },
 ];
@@ -173,15 +173,15 @@ const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
 );
 
 export interface NavProps {
-  isLoggedIn: boolean;
+  isSignedIn: boolean;
   onNavigate: OnNavigate;
 }
 
-const Nav: FC<NavProps> = ({ isLoggedIn, onNavigate }) => (
+const Nav: FC<NavProps> = ({ isSignedIn, onNavigate }) => (
   <nav>
     <NavItems
       onNavigate={onNavigate}
-      navItems={isLoggedIn ? privateNavItems : publicNavItems}
+      navItems={isSignedIn ? privateNavItems : publicNavItems}
     />
   </nav>
 );

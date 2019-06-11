@@ -1,16 +1,16 @@
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Counter from '../Counter';
-import Login from '../Login';
+import Signin from '../Signin';
 
 export interface RoutesProps {
-  isLoggedIn: boolean;
+  isSignedIn: boolean;
 }
 
-const Routes: FC<RoutesProps> = ({ isLoggedIn }) => (
+const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
   <Switch>
-    <Route path="/login" component={Login} />
-    {isLoggedIn ? null : <Redirect to="/login" />}
+    <Route path="/signin" component={Signin} />
+    {isSignedIn ? null : <Redirect to="/signin" />}
     <Route path="/count" component={Counter} />
   </Switch>
 );

@@ -8,8 +8,8 @@ import { createReset } from '../reducer';
 import {
   AuthStateChangeAction,
   createAuthStateChange,
-  createLogin,
-  createLogout,
+  createSignin,
+  createSignout,
   createSetAuthError,
   createSetUser,
   SetAuthErrorAction,
@@ -22,9 +22,9 @@ const mapAuthStateChangeToUser = pipe(
   map(({ payload }) => payload),
 );
 
-const logIn: Epic = action$ =>
+const signIn: Epic = action$ =>
   action$.pipe(
-    ofType(createLogin.toString()),
+    ofType(createSignin.toString()),
     switchMap(() => {
       const provider = new auth.GoogleAuthProvider();
 
@@ -42,16 +42,16 @@ const userUpdated: Epic = action$ =>
     map(user => createSetUser(user)),
   );
 
-const loggedOut: Epic = action$ =>
+const signedOut: Epic = action$ =>
   action$.pipe(
     mapAuthStateChangeToUser,
     filter(user => !user),
     map(() => createReset()),
   );
 
-const logOut: Epic = action$ =>
+const signOut: Epic = action$ =>
   action$.pipe(
-    ofType(createLogout.toString()),
+    ofType(createSignout.toString()),
     switchMap(() => auth().signOut()),
     map(() => createReset()),
     catchError(({ message }) => of(createSetAuthError(message))),
@@ -64,4 +64,4 @@ const authError: Epic = action$ =>
     map(message => createSetSnackbar({ message })),
   );
 
-export default [logIn, userUpdated, loggedOut, logOut, authError];
+export default [signIn, userUpdated, signedOut, signOut, authError];

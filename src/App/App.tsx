@@ -4,16 +4,16 @@ import React, { FC } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import Layout from '../Layout';
-import { selectLoggedInFlag, selectTheme, State } from '../store/reducer';
+import { selectSignedInFlag, selectTheme, State } from '../store/reducer';
 import Routes from './Routes';
 import Snackbar from '../components/Snackbar';
 
 export interface AppProps {
-  isLoggedIn: boolean;
+  isSignedIn: boolean;
   theme: ThemeOptions;
 }
 
-const App: FC<AppProps> = ({ isLoggedIn, theme }) => (
+const App: FC<AppProps> = ({ isSignedIn, theme }) => (
   <MuiThemeProvider
     theme={createMuiTheme({
       ...theme,
@@ -22,8 +22,8 @@ const App: FC<AppProps> = ({ isLoggedIn, theme }) => (
       },
     })}
   >
-    <Layout isLoggedIn={isLoggedIn}>
-      <Routes isLoggedIn={isLoggedIn} />
+    <Layout isSignedIn={isSignedIn}>
+      <Routes isSignedIn={isSignedIn} />
     </Layout>
     <Snackbar />
   </MuiThemeProvider>
@@ -32,6 +32,6 @@ const App: FC<AppProps> = ({ isLoggedIn, theme }) => (
 export default hot(module)(
   connect((state: State) => ({
     theme: selectTheme(state),
-    isLoggedIn: selectLoggedInFlag(state),
+    isSignedIn: selectSignedInFlag(state),
   }))(App),
 );

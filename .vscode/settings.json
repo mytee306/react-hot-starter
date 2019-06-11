@@ -9,5 +9,10 @@
   "prettier.semi": true,
   "prettier.singleQuote": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "search.usePCRE2": true
+  "search.usePCRE2": true,
+  "cSpell.words": [
+    "Emptiable",
+    "Signin",
+    "Signout"
+  ]
 }

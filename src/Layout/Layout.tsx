@@ -48,14 +48,14 @@ export const layoutStyles = (theme: Theme) =>
 
 export interface LayoutProps extends WithStyles<typeof layoutStyles> {
   theme: Theme;
-  isLoggedIn: boolean;
+  isSignedIn: boolean;
 }
 
 const Layout: FC<LayoutProps> = ({
   classes: { toolbar, drawer, drawerPaper, content },
   children,
   theme,
-  isLoggedIn,
+  isSignedIn,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -86,7 +86,7 @@ const Layout: FC<LayoutProps> = ({
           </Hidden>
         </div>
         <Divider />
-        <Nav isLoggedIn={isLoggedIn} onNavigate={handleDrawerToggle} />
+        <Nav isSignedIn={isSignedIn} onNavigate={handleDrawerToggle} />
       </Drawer>
       <Breadcrumbs className={content} />
       <main className={content}>{children}</main>
