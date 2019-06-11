@@ -43,6 +43,6 @@ export const {
 export const createSetSnackbar = ({
   variant = 'default',
   ...snackbar
-}: Optional<SnackbarState,'variant'>) => set({ ...snackbar, variant });
+}: Optional<SnackbarState, 'variant'>) => set({ ...snackbar, variant });
 
 export default reducer;
