@@ -39,7 +39,7 @@
     "redux-logger": "^3.0.6",
     "redux-observable": "^1.1.0",
     "redux-starter-kit": "^0.4.3",
-    "rxfire": "^3.4.0",
+    "rxfire": "^3.5.1",
     "rxjs": "^6.4.0",
     "url-join": "^4.0.0",
     "yup": "^0.27.0"
