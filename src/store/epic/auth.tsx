@@ -1,8 +1,8 @@
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
 import { of, pipe } from 'rxjs';
-import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
-import firebase from '../../firebase';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { auth } from 'firebase/app';
 import { createReset } from '../reducer';
 // import { collectionData } from 'rxfire/firestore';
 import {
@@ -26,11 +26,11 @@ const logIn: Epic = action$ =>
   action$.pipe(
     ofType(createLogin.toString()),
     switchMap(() => {
-      const provider = new (firebase.auth as any).GoogleAuthProvider();
+      const provider = new auth.GoogleAuthProvider();
 
-      return firebase.auth().signInWithPopup(provider);
+      return auth().signInWithPopup(provider);
     }),
-    switchMap(() => authState(firebase.auth())),
+    switchMap(() => authState(auth())),
     map(user => createAuthStateChange(user)),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
@@ -52,7 +52,7 @@ const loggedOut: Epic = action$ =>
 const logOut: Epic = action$ =>
   action$.pipe(
     ofType(createLogout.toString()),
-    switchMap(() => firebase.auth().signOut()),
+    switchMap(() => auth().signOut()),
     map(() => createReset()),
     catchError(({ message }) => of(createSetAuthError(message))),
   );

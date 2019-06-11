@@ -9,8 +9,6 @@ const epicMiddleware = createEpicMiddleware();
 
 const middleware = [...getDefaultMiddleware(), epicMiddleware];
 
-declare var module: Module;
-
 export default () => {
   if (process.env.NODE_ENV === 'development') {
     const store = configureStore({
@@ -20,7 +18,7 @@ export default () => {
 
     epicMiddleware.run(epic);
 
-    module.hot.accept('./reducer', () => store.replaceReducer(reducer));
+    (module as Module).hot.accept('./reducer', () => store.replaceReducer(reducer));
 
     return store;
   } else {
