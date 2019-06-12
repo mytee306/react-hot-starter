@@ -2,7 +2,7 @@ import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
 import { of, pipe } from 'rxjs';
 import { catchError, filter, map, switchMap } from 'rxjs/operators';
-import { auth } from 'firebase/app';
+import { auth, User as FirebaseUser } from 'firebase/app';
 import { createReset } from '../reducer';
 // import { collectionData } from 'rxfire/firestore';
 import {
@@ -31,7 +31,6 @@ const signIn: Epic = action$ =>
       return auth().signInWithPopup(provider);
     }),
     switchMap(() => authState(auth())),
-    map(user => user.toJSON() as User),
     map(user => createAuthStateChange(user)),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
@@ -39,7 +38,8 @@ const signIn: Epic = action$ =>
 const userUpdated: Epic = action$ =>
   action$.pipe(
     mapAuthStateChangeToUser,
-    filter<User>(Boolean),
+    filter<FirebaseUser>(Boolean),
+    map(user => user.toJSON() as User),
     map(user => createSetUser(user)),
   );
 

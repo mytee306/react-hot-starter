@@ -1,4 +1,4 @@
-import { UserInfo } from 'firebase/app';
+import { UserInfo, User as FirebaseUser } from 'firebase/app';
 import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
 import { prefixActionType } from '../../../utils/prefixActionType';
@@ -21,7 +21,7 @@ export type CreateSignin = typeof createSignin;
 
 export const createSignout = createAction(prefixWithUser('signout'));
 
-export const createAuthStateChange = createAction<User>(
+export const createAuthStateChange = createAction<FirebaseUser>(
   prefixWithUser('auth state change'),
 );
 
