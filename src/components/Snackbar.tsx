@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import {
   IconButton,
   Snackbar as MaterialSnackbar,
@@ -48,7 +48,7 @@ const snackbarStyles = (theme: Theme) =>
     ...getVariants(theme),
   });
 
-const Snackbar: React.FC<SnackbarProps> = ({
+const Snackbar: FC<SnackbarProps> = ({
   classes,
   open,
   message,
