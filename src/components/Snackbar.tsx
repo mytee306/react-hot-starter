@@ -77,7 +77,6 @@ const Snackbar: FC<SnackbarProps> = ({
           <IconButton
             key={IconButton.displayName}
             aria-label="Close"
-            color="inherit"
             className={classes.close}
             onClick={() => resetSnackbar()}
           >

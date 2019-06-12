@@ -56,8 +56,8 @@ const Header: FC<HeaderProps> = ({
       <Typography className={expand} variant="h6" color="inherit">
         App Name
       </Typography>
-      <Button color="inherit">Log out</Button>
-      <Button color="inherit" onClick={() => togglePaletteType()}>
+      <Button>Log out</Button>
+      <Button onClick={() => togglePaletteType()}>
         {isDark ? <WbSunny /> : <WbSunnyOutlined />}
       </Button>
     </Toolbar>
