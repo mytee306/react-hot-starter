@@ -1,8 +1,9 @@
-import { Button, Divider, FormControl, TextField } from '@material-ui/core';
+import { Divider, FormControl, TextField } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import React, { FC, memo } from 'react';
 import * as yup from 'yup';
 import { Count, CreateDecrementBy } from '../store/slices/count';
+import Button from '../components/Button';
 
 export interface Values {
   amount: Count;

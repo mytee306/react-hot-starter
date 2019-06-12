@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Button,
   createStyles,
   Hidden,
   IconButton,
@@ -15,6 +14,7 @@ import { connect } from 'react-redux';
 import { CreateSimpleAction } from '../models/actions';
 import { selectDarkThemeFlag, State } from '../store/reducer';
 import { createToggleType } from '../store/slices/theme/palette/type';
+import Button from '../components/Button';
 
 const headerStyles = createStyles({
   header: {
@@ -56,6 +56,7 @@ const Header: FC<HeaderProps> = ({
       <Typography className={expand} variant="h6" color="inherit">
         App Name
       </Typography>
+      <Button color="inherit">Log out</Button>
       <Button color="inherit" onClick={() => togglePaletteType()}>
         {isDark ? <WbSunny /> : <WbSunnyOutlined />}
       </Button>

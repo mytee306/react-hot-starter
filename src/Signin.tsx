@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -8,6 +7,7 @@ import {
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { createSignin, CreateSignin } from './store/slices/auth';
+import Button from './components/Button';
 
 export interface SigninProps {
   signIn: CreateSignin;
