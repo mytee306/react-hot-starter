@@ -1,11 +1,11 @@
-import { UserInfo } from 'firebase';
+import { UserInfo } from 'firebase/app';
 import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
 import { prefixActionType } from '../../../utils/prefixActionType';
 
 const prefixWithUser = prefixActionType('auth');
 
-export type User = UserInfo;
+export type User = Omit<UserInfo, 'providerId'>;
 
 export const initialUser: User = {
   displayName: '',
@@ -13,7 +13,6 @@ export const initialUser: User = {
   uid: '',
   photoURL: '',
   phoneNumber: '',
-  providerId: '',
 };
 
 export const createSignin = createAction(prefixWithUser('get'));

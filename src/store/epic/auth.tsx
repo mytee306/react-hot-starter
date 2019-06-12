@@ -31,6 +31,7 @@ const signIn: Epic = action$ =>
       return auth().signInWithPopup(provider);
     }),
     switchMap(() => authState(auth())),
+    map(user => user.toJSON() as User),
     map(user => createAuthStateChange(user)),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
