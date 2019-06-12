@@ -21,9 +21,10 @@ export type CreateSignin = typeof createSignin;
 
 export const createSignout = createAction(prefixWithUser('signout'));
 
-export const createAuthStateChange = createAction<FirebaseUser>(
-  prefixWithUser('auth state change'),
-);
+export const createAuthStateChange = (user: FirebaseUser) =>
+  createAction(prefixWithUser('auth state change'))(
+    user ? (user.toJSON() as User) : null,
+  );
 
 export type AuthStateChangeAction = ReturnType<typeof createAuthStateChange>;
 

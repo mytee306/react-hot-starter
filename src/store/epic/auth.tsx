@@ -39,7 +39,6 @@ const userUpdated: Epic = action$ =>
   action$.pipe(
     mapAuthStateChangeToUser,
     filter<FirebaseUser>(Boolean),
-    map(user => user.toJSON() as User),
     map(user => createSetUser(user)),
   );
 
