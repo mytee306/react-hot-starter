@@ -5,10 +5,12 @@ import { NavLink, NavLinkProps } from 'react-router-dom';
 
 const Link: FC<Omit<LinkProps, 'component'> & NavLinkProps> = ({
   to,
+  color = 'inherit',
   ...props
 }) => (
   <MaterialLink
     {...props}
+    color={color}
     component={(navLinkProps: Omit<NavLinkProps, 'to'>) => (
       <NavLink {...navLinkProps} to={to} />
     )}

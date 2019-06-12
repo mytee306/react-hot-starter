@@ -18,7 +18,7 @@ const Breadcrumbs: FC<RouteComponentProps & { className: string }> = ({
 
   return (
     <MaterialBreadcrumbs className={className} separator="›">
-      <Link to="/" color="inherit">
+      <Link to="/">
         Dashboard
       </Link>
       {init(pathnames).map(name => (
