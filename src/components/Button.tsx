@@ -4,7 +4,6 @@ import { ButtonProps as MaterialButtonProps } from '@material-ui/core/Button';
 
 export interface ButtonProps extends MaterialButtonProps {
   textTransform?: CSSProperties['textTransform'];
-  color?: MaterialButtonProps['color'];
 }
 
 const Button: FC<ButtonProps> = ({
