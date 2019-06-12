@@ -40,10 +40,10 @@ export const selectDarkThemeFlag = createSelector(
   type => type === 'dark',
 );
 
-export const selectUserSlice = defaultMemoize((state: State) => state.auth);
+export const selectAuth = defaultMemoize((state: State) => state.auth);
 
 export const selectUser = createSelector(
-  selectUserSlice,
+  selectAuth,
   ({ user }) => user,
 );
 
@@ -69,4 +69,9 @@ export const selectSnackbar = createSelector(
 
     return { ...snackbarState, open: Boolean(message) };
   },
+);
+
+export const selectAuthLoadingFlag = createSelector(
+  selectAuth,
+  ({ loading }) => loading,
 );

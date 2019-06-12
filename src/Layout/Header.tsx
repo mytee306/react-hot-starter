@@ -15,6 +15,7 @@ import {
   selectDarkThemeFlag,
   State,
   selectSignedInFlag,
+  selectAuthLoadingFlag,
 } from '../store/reducer';
 import { createToggleType } from '../store/slices/theme/palette/type';
 import Button from '../components/Button';
@@ -40,6 +41,7 @@ export interface HeaderProps extends WithStyles<typeof headerStyles> {
   togglePaletteType: CreateSimpleAction;
   isSignedIn: boolean;
   signOut: CreateSimpleAction;
+  authLoading: boolean;
 }
 
 const Header: FC<HeaderProps> = ({
@@ -49,6 +51,7 @@ const Header: FC<HeaderProps> = ({
   togglePaletteType,
   isSignedIn,
   signOut,
+  authLoading,
 }) => (
   <AppBar position="static" className={header}>
     <Toolbar>
@@ -60,10 +63,14 @@ const Header: FC<HeaderProps> = ({
       <Typography className={expand} variant="h6" color="inherit">
         App Name
       </Typography>
-      {isSignedIn && <Button onClick={signOut}>Log out</Button>}
-      <Button onClick={() => togglePaletteType()}>
+      {(isSignedIn || authLoading) && (
+        <Button onClick={signOut} loading={authLoading}>
+          Log out
+        </Button>
+      )}
+      <IconButton onClick={() => togglePaletteType()}>
         {isDark ? <WbSunny /> : <WbSunnyOutlined />}
-      </Button>
+      </IconButton>
     </Toolbar>
   </AppBar>
 );
@@ -71,6 +78,7 @@ const Header: FC<HeaderProps> = ({
 const mapStateToProps = (state: State) => ({
   isDark: selectDarkThemeFlag(state),
   isSignedIn: selectSignedInFlag(state),
+  authLoading: selectAuthLoadingFlag(state),
 });
 
 const mapDispatchToProps = {

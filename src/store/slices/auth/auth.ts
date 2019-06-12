@@ -44,10 +44,12 @@ export const error = createReducer('', {
     payload,
 });
 
+const setToTrue = () => true;
 const setToFalse = () => false;
 
-export const loading = createReducer<Boolean>(false, {
-  [createSignin.toString()]: () => true,
+export const loading = createReducer<boolean>(false, {
+  [createSignin.toString()]: setToTrue,
+  [createSignout.toString()]: setToTrue,
   [createSetUser.toString()]: setToFalse,
   [createSetAuthError.toString()]: setToFalse,
 });

@@ -8,18 +8,20 @@ import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { createSignin, CreateSignin } from './store/slices/auth';
 import Button from './components/Button';
+import { State, selectAuthLoadingFlag } from './store/reducer';
 
 export interface SigninProps {
   signIn: CreateSignin;
+  authLoading: boolean;
 }
 
-const Signin: FC<SigninProps> = ({ signIn }) => (
+const Signin: FC<SigninProps> = ({ signIn, authLoading }) => (
   <Card>
     <CardContent>
       <Typography variant="h2">Welcome</Typography>
     </CardContent>
     <CardActions>
-      <Button variant="contained" onClick={() => signIn()}>
+      <Button variant="contained" onClick={() => signIn()} loading={authLoading}>
         Signin
       </Button>
     </CardActions>
@@ -27,6 +29,6 @@ const Signin: FC<SigninProps> = ({ signIn }) => (
 );
 
 export default connect(
-  null,
+  (state: State) => ({ authLoading: selectAuthLoadingFlag(state) }),
   { signIn: createSignin },
 )(Signin);
