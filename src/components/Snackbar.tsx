@@ -1,6 +1,5 @@
 import React, { useEffect, FC } from 'react';
 import {
-  IconButton,
   Snackbar as MaterialSnackbar,
   createStyles,
   Theme,
@@ -19,6 +18,7 @@ import {
   SnackbarState,
   Variant,
 } from '../store/slices/snackbar';
+import IconButton from './IconButton';
 
 export interface SnackbarProps extends WithStyles, SnackbarState {
   open: boolean;

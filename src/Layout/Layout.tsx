@@ -4,7 +4,6 @@ import {
   Divider,
   Drawer,
   Hidden,
-  IconButton,
   Theme,
   withStyles,
   WithStyles,
@@ -15,6 +14,7 @@ import React, { FC, useState } from 'react';
 import Breadcrumbs from './Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';
+import IconButton from '../components/IconButton';
 
 const minWidth = 240;
 
@@ -80,6 +80,7 @@ const Layout: FC<LayoutProps> = ({
       >
         <div className={toolbar}>
           <Hidden lgUp>
+            {/* IconButton does not change color when palette type is toggled */}
             <IconButton onClick={handleDrawerToggle}>
               <ChevronLeft />
             </IconButton>
