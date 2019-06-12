@@ -46,13 +46,19 @@ export const selectUser = createSelector(
   selectUserSlice,
   ({ user }) => user,
 );
+
 export const selectDisplayName = createSelector(
   selectUser,
   ({ displayName }) => displayName,
 );
 
+export const selectUid = createSelector(
+  selectUser,
+  ({ uid }) => uid,
+);
+
 export const selectSignedInFlag = createSelector(
-  selectDisplayName,
+  selectUid,
   Boolean,
 );
 
