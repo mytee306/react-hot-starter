@@ -21,7 +21,7 @@ import {
 import IconButton from './IconButton';
 
 export interface SnackbarProps extends WithStyles, SnackbarState {
-  open: boolean;
+  open: ReturnType<typeof selectSnackbar>['open'];
   resetSnackbar: CreateSimpleAction;
 }
 

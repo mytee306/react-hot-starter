@@ -12,8 +12,8 @@ import { createSignin, CreateSignin } from './store/slices/auth';
 
 export interface SigninProps {
   signIn: CreateSignin;
-  authLoading: boolean;
-  isSignedIn: boolean;
+  authLoading: ReturnType<typeof selectAuthLoadingFlag>;
+  isSignedIn: ReturnType<typeof selectSignedInFlag>;
 }
 
 const Signin: FC<SigninProps> = ({ signIn, authLoading, isSignedIn }) => (

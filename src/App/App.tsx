@@ -9,7 +9,7 @@ import Routes from './Routes';
 import Snackbar from '../components/Snackbar';
 
 export interface AppProps {
-  isSignedIn: boolean;
+  isSignedIn: ReturnType<typeof selectSignedInFlag>;
   theme: ThemeOptions;
 }
 

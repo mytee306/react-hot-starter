@@ -10,17 +10,17 @@ import {
 import { Menu, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
+import Button from '../components/Button';
+import IconButton from '../components/IconButton';
 import { CreateSimpleAction } from '../models/actions';
 import {
-  selectDarkThemeFlag,
-  State,
-  selectSignedInFlag,
   selectAuthLoadingFlag,
+  selectDarkThemeFlag,
+  selectSignedInFlag,
+  State,
 } from '../store/reducer';
-import { createToggleType } from '../store/slices/theme/palette/type';
-import Button from '../components/Button';
 import { createSignout } from '../store/slices/auth';
-import IconButton from '../components/IconButton';
+import { createToggleType } from '../store/slices/theme/palette/type';
 
 const headerStyles = createStyles({
   header: {
@@ -37,11 +37,11 @@ const headerStyles = createStyles({
 
 export interface HeaderProps extends WithStyles<typeof headerStyles> {
   toggle: () => void;
-  isDark: boolean;
+  isDark: ReturnType<typeof selectDarkThemeFlag>;
   togglePaletteType: CreateSimpleAction;
-  isSignedIn: boolean;
+  isSignedIn: ReturnType<typeof selectSignedInFlag>;
   signOut: CreateSimpleAction;
-  authLoading: boolean;
+  authLoading: ReturnType<typeof selectAuthLoadingFlag>;
 }
 
 const Header: FC<HeaderProps> = ({
