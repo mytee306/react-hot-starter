@@ -31,7 +31,7 @@ const signIn: Epic = action$ =>
       return auth().signInWithPopup(provider);
     }),
     switchMap(() => authState(auth())),
-    map(user => createAuthStateChange(user)),
+    map(createAuthStateChange),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
 
@@ -39,7 +39,7 @@ const userUpdated: Epic = action$ =>
   action$.pipe(
     mapAuthStateChangeToUser,
     filter<User>(Boolean),
-    map(user => createSetUser(user)),
+    map(createSetUser),
   );
 
 const signedOut: Epic = action$ =>
