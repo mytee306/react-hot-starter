@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
-import count from './slices/count';
-import theme from './slices/theme';
 import auth from './slices/auth';
+import count from './slices/count';
 import snackbar, {
   selectSnackbar as selectSnackbarState,
 } from './slices/snackbar';
+import theme from './slices/theme';
 
 const reducer = combineReducers({
   count,
@@ -27,6 +27,8 @@ const reducerWithReset: Reducer = (state, action) =>
     : reducer(state, action);
 
 export default reducerWithReset;
+
+export const initialState = reducer(undefined, { type: 'TEST' });
 
 export const selectTheme = defaultMemoize((state: State) => state.theme);
 
