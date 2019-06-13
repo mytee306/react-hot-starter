@@ -4,7 +4,6 @@ import { authState } from 'rxfire/auth';
 import { of, pipe } from 'rxjs';
 import { catchError, filter, map, switchMap } from 'rxjs/operators';
 import { createReset } from '../reducer';
-// import { collectionData } from 'rxfire/firestore';
 import {
   AuthStateChangeAction,
   authStateChangeType,
