@@ -1,6 +1,6 @@
 import { PaletteType } from '@material-ui/core';
 import { createAction, createReducer } from 'redux-starter-kit';
-import { prefixActionType } from '../../../../utils/prefixActionType';
+import { prefixActionType } from '../../../../utils';
 
 const prefixWithSlice = prefixActionType(
   prefixActionType('theme')(prefixActionType('palette')('type')),
