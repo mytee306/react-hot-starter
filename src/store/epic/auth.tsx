@@ -13,7 +13,6 @@ import {
   createSetAuthError,
   createSetUser,
   SetAuthErrorAction,
-  User,
 } from '../slices/auth';
 import { createSetSnackbar } from '../slices/snackbar';
 
