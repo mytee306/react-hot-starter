@@ -1,7 +1,7 @@
 import { Card, CardActions, CardHeader } from '@material-ui/core';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, match } from 'react-router-dom';
+import { match, Route, Switch } from 'react-router-dom';
 import urlJoin from 'url-join';
 import { CreateSimpleAction } from '../models/actions';
 import { State } from '../store/reducer';
@@ -9,6 +9,7 @@ import {
   Count,
   createDecrementBy,
   CreateDecrementBy,
+  createGetCount,
   createIncrement,
   selectCount,
 } from '../store/slices/count';
@@ -20,6 +21,7 @@ export interface CountProps {
   increment: CreateSimpleAction;
   decrementBy: CreateDecrementBy;
   match: match;
+  getCount: CreateSimpleAction;
 }
 
 const Counter: FC<CountProps> = ({
@@ -27,23 +29,30 @@ const Counter: FC<CountProps> = ({
   count,
   increment,
   decrementBy,
-}) => (
-  <Card>
-    <CardHeader title={`Count: ${count}`} />
-    <CardActions>
-      <Switch>
-        <Route
-          path={urlJoin(path, 'increment')}
-          component={() => <Increment increment={increment} />}
-        />
-        <Route
-          path={urlJoin(path, 'decrement')}
-          component={() => <Decrement decrementBy={decrementBy} />}
-        />
-      </Switch>
-    </CardActions>
-  </Card>
-);
+  getCount,
+}) => {
+  useEffect(() => {
+    getCount();
+  }, [getCount]);
+
+  return (
+    <Card>
+      <CardHeader title={`Count: ${count}`} />
+      <CardActions>
+        <Switch>
+          <Route
+            path={urlJoin(path, 'increment')}
+            component={() => <Increment increment={increment} />}
+          />
+          <Route
+            path={urlJoin(path, 'decrement')}
+            component={() => <Decrement decrementBy={decrementBy} />}
+          />
+        </Switch>
+      </CardActions>
+    </Card>
+  );
+};
 
 export default connect(
   (state: State) => ({
@@ -52,5 +61,6 @@ export default connect(
   {
     increment: createIncrement,
     decrementBy: createDecrementBy,
+    getCount: createGetCount,
   },
 )(Counter);
