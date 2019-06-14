@@ -1,14 +1,14 @@
-import { firestore } from 'firebase/app';
 import 'firebase/firestore';
 import { Epic, ofType } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
 import { of } from 'rxjs';
 import { catchError, first, map, mergeMap, switchMap } from 'rxjs/operators';
+import firebase from '../../firebase';
 import { selectUid } from '../reducer';
 import { createSetAuthError } from '../slices/auth';
 import { Count, createGetCount, createSetCount } from '../slices/count';
 
-const countsCollection = firestore().collection('counts');
+const countsCollection = firebase.firestore().collection('counts');
 
 const getCount: Epic = (action$, state$) =>
   action$.pipe(

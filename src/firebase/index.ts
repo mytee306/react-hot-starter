@@ -3,4 +3,4 @@ import env from '../.env';
 
 const { firebaseConfig } = env;
 
-export const init = () => initializeApp(firebaseConfig);
+export default initializeApp(firebaseConfig);

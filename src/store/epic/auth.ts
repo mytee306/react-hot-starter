@@ -1,4 +1,5 @@
 import { auth } from 'firebase/app';
+import 'firebase/auth';
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
 import { of, pipe } from 'rxjs';
