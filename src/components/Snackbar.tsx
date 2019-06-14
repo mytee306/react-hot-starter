@@ -1,18 +1,19 @@
-import React, { useEffect, FC } from 'react';
 import {
-  Snackbar as MaterialSnackbar,
+  colors,
   createStyles,
+  Snackbar as MaterialSnackbar,
+  SnackbarContent,
   Theme,
   WithStyles,
   withStyles,
-  colors,
-  SnackbarContent,
 } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
 import { CSSProperties } from '@material-ui/core/styles/withStyles';
+import { Close } from '@material-ui/icons';
+import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { State, selectSnackbar } from '../store/reducer';
+import uuid from 'uuid/v4';
 import { CreateSimpleAction } from '../models/actions';
+import { selectSnackbar, State } from '../store/reducer';
 import {
   createResetSnackbar,
   SnackbarState,
@@ -75,7 +76,7 @@ const Snackbar: FC<SnackbarProps> = ({
         className={classes[variant]}
         action={[
           <IconButton
-            key={IconButton.displayName}
+            key={uuid()}
             aria-label="Close"
             className={classes.close}
             onClick={() => resetSnackbar()}
