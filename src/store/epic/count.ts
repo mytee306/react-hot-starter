@@ -1,4 +1,5 @@
 import { firestore } from 'firebase/app';
+import 'firebase/firestore';
 import { Epic, ofType } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
 import { of } from 'rxjs';
