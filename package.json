@@ -42,6 +42,7 @@
     "redux-starter-kit": "^0.4.3",
     "rxfire": "^3.5.1",
     "rxjs": "^6.4.0",
+    "rxjs-compat": "^6.5.2",
     "url-join": "^4.0.0",
     "yup": "^0.27.0"
   },
