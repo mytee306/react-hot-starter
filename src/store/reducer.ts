@@ -62,7 +62,7 @@ export const selectUid = createSelector(
 export const selectSignedInFlag = createSelector(
   selectUid,
   Boolean,
-  () => true,
+  // () => true,
 );
 
 export const selectSnackbar = createSelector(
