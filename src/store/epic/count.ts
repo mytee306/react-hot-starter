@@ -14,11 +14,8 @@ const getCount: Epic = (action$, state$) =>
     ofType(createGetCount.toString()),
     mergeMap(() => state$.pipe(first())),
     map(selectUid),
-    switchMap(uid => {
-      const countDoc = countsCollection.doc(uid);
-
-      return docData<{ count: Count }>(countDoc);
-    }),
+    map(uid => countsCollection.doc(uid)),
+    switchMap(doc => docData<{ count: Count }>(doc)),
     map(({ count }) => count),
     map(createSetCount),
     catchError(({ message }) => of(createSetAuthError(message))),
