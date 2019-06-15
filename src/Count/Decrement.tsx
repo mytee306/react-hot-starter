@@ -23,9 +23,10 @@ export const schema = yup.object().shape({
 
 export interface DecrementProps {
   decrementBy: CreateDecrementBy;
+  isLoading: CountState['isLoading'];
 }
 
-const Decrement: FC<DecrementProps> = ({ decrementBy }) => (
+const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => (
   <Formik
     initialValues={initialValues}
     onSubmit={values => {
@@ -54,7 +55,7 @@ const Decrement: FC<DecrementProps> = ({ decrementBy }) => (
         <br />
         <Divider />
         <br />
-        <Button color="secondary" variant="contained" type="submit">
+        <Button color="secondary" variant="contained" type="submit" isLoading={isLoading}>
           Decrement
         </Button>
       </Form>

@@ -7,7 +7,7 @@ import { empty, of, pipe } from 'rxjs';
 import { catchError, first, map, mergeMap, mergeMapTo, switchMap, withLatestFrom } from 'rxjs/operators';
 import firebase from '../../firebase';
 import { selectUid, State } from '../reducer';
-import { CountState, createGetCount, createIncrement, createSetCount, initialState, selectCountValue } from '../slices/count';
+import { CountState, createGetCount, createIncrement, createSetCount, initialState, selectCountValue, createDecrementBy } from '../slices/count';
 import { createSetSnackbar } from '../slices/snackbar';
 
 export const selectState = <R>(selector: Selector<State, R>) => (
@@ -19,6 +19,13 @@ export const selectState = <R>(selector: Selector<State, R>) => (
   );
 
 const countsCollection = firebase.firestore().collection('counts');
+
+const setCount = (state$: StateObservable<State>) => pipe(
+  withLatestFrom(state$.pipe(map(selectUid))),
+  switchMap(([value, uid]) => countsCollection.doc(uid).set({ value })),
+  mergeMapTo(empty()),
+  catchError(({ message }) => of(createSetSnackbar({ message }))),
+);
 
 const getCount: Epic = (action$, state$) =>
   action$.pipe(
@@ -36,10 +43,16 @@ const increment: Epic = (action$, state$) =>
     ofType(createIncrement.toString()),
     selectState(selectCountValue)(state$),
     map(inc),
-    withLatestFrom(state$.pipe(map(selectUid))),
-    switchMap(([value, uid]) => countsCollection.doc(uid).set({ value })),
-    mergeMapTo(empty()),
-    catchError(({ message }) => of(createSetSnackbar({ message }))),
+    setCount(state$),
   );
 
-export default [getCount, increment];
+const decrementBy: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(createDecrementBy.toString()),
+    map(({ payload }) => payload),
+    withLatestFrom(state$.pipe(map(selectCountValue))),
+    map(([amount, value]) => value - amount),
+    setCount(state$),
+  );
+
+export default [getCount, increment, decrementBy];

@@ -1,4 +1,4 @@
-import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
+import { createAction, createSlice, PayloadAction, Reducer } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
 import { prefixActionType } from '../../utils';
@@ -22,6 +22,8 @@ export type DecrementByAction = ReturnType<CreateDecrementBy>;
 
 export type CreateSetCountAction = PayloadAction<CountState['value']>;
 
+const setLoading = (state: CountState) => ({ ...state, isLoading: true });
+
 export const {
   reducer,
   actions: {
@@ -40,12 +42,8 @@ export const {
       value: payload,
       isLoading: false,
     }),
-    increment: state => ({ ...state, isLoading: true }),
-    decrementBy: (state, { payload: amount }: DecrementByAction) => {
-      const { value } = state;
-
-      return { ...state, value: value - amount };
-    },
+    increment: setLoading,
+    decrementBy: setLoading as Reducer<CountState, DecrementByAction>,
   },
 });
 

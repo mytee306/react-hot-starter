@@ -57,7 +57,7 @@ const Count: FC<CountProps> = ({
           />
           <Route
             path={urlJoin(path, 'decrement')}
-            component={() => <Decrement decrementBy={decrementBy} />}
+            component={() => <Decrement decrementBy={decrementBy} isLoading={isLoading} />}
           />
         </Switch>
       </CardActions>
