@@ -25,8 +25,8 @@ export type CreateSetCountAction = PayloadAction<CountState['count']>;
 export const {
   reducer,
   actions: {
-    getCount: createGetCount,
-    setCount: createSetCount,
+    get: createGetCount,
+    set: createSetCount,
     increment: createIncrement,
     decrementBy: createDecrementBy,
   },
@@ -35,8 +35,8 @@ export const {
   slice,
   initialState,
   reducers: {
-    getCount: state => ({ ...state, isLoading: true }),
-    setCount: (_, { payload }: CreateSetCountAction) => ({
+    get: state => ({ ...state, isLoading: true }),
+    set: (_, { payload }: CreateSetCountAction) => ({
       count: payload,
       isLoading: false,
     }),
