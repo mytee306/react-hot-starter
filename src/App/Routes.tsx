@@ -1,3 +1,4 @@
+import dashify from 'dashify';
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Count from '../Count';
@@ -7,11 +8,11 @@ export interface RoutesProps {
   isSignedIn: boolean;
 }
 
-const pathnames = ['count', 'signin', 'error'] as const;
+const pathnames = ['error', 'signin', 'count', 'imageUpload'] as const;
 
 export const rootPaths = {
   ...pathnames.reduce(
-    (paths, path) => ({ ...paths, [path]: `/${path}` }),
+    (paths, path) => ({ ...paths, [path]: `/${dashify(path)}` }),
     {} as { [key in typeof pathnames[number]]: string },
   ),
   dashboard: '/',
@@ -27,6 +28,10 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
       render={() => <Redirect to={rootPaths.dashboard} />}
     />
     <Route exact path={rootPaths.dashboard} component={Dashboard} />
+    <Route
+      path={rootPaths.imageUpload}
+      render={() => <input type="upload" />}
+    />
     <Route path={rootPaths.count} component={Count} />
     <Route
       path={rootPaths.error}

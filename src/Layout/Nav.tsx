@@ -11,6 +11,7 @@ import {
   ArrowDownward,
   ArrowUpward,
   BarChart,
+  CloudUpload,
   Dashboard,
   ExpandLess,
   ExpandMore,
@@ -49,6 +50,7 @@ const Home = 'Dashboard';
 const Count = 'Count';
 const Increment = 'Increment';
 const Decrement = 'Decrement';
+const ImageUpload = 'Image Upload';
 
 const privateNavItems: INavItems = [
   {
@@ -75,6 +77,12 @@ const privateNavItems: INavItems = [
         childNavItems: [],
       },
     ],
+  },
+  {
+    text: ImageUpload,
+    path: dashify(ImageUpload),
+    icon: <CloudUpload />,
+    childNavItems: [],
   },
 ];
 

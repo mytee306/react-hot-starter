@@ -1,6 +1,7 @@
 import { Typography, withTheme, WithTheme } from '@material-ui/core';
 import { Breadcrumbs as MaterialBreadcrumbs } from '@material-ui/lab';
 import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/lab/Breadcrumbs';
+import dashify from 'dashify';
 import { startCase } from 'lodash';
 import { head, init, last } from 'ramda';
 import React, { FC } from 'react';
@@ -27,11 +28,14 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
   theme,
 }) => {
   const pathnames = pathname.split('/').filter(Boolean);
-  const formattedPathnames = pathnames.map(startCase);
 
   const rootPath = head(pathnames);
 
-  const disabled = rootPath && !Object.keys(rootPaths).includes(rootPath);
+  const disabled =
+    rootPath &&
+    !Object.keys(rootPaths)
+      .map(path => dashify(path))
+      .includes(rootPath);
 
   const color = disabled ? theme.palette.error.dark : 'inherit';
 
@@ -40,17 +44,17 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
       <Link to="/" disabled={!isSignedIn}>
         Dashboard
       </Link>
-      {init(formattedPathnames).map(name => (
+      {init(pathnames).map(name => (
         <Link
           key={name}
           to={urlJoin('/', name)}
           disabled={!!disabled}
           style={{ color }}
         >
-          {name}
+          {startCase(name)}
         </Link>
       ))}
-      <Typography style={{ color }}>{last(formattedPathnames)}</Typography>
+      <Typography style={{ color }}>{startCase(last(pathnames))}</Typography>
     </MaterialBreadcrumbs>
   );
 };
