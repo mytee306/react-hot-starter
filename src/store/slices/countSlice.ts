@@ -14,8 +14,6 @@ const initialState = {
 
 export type CountState = typeof initialState;
 
-export const createGetCount = createAction(prefix('get'));
-
 export const createUpdateCount = createAction(prefix('update'));
 
 export type CreateDecrementBy = SliceActionCreator<CountState['count']>;
@@ -27,6 +25,7 @@ export type CreateSetCountAction = PayloadAction<CountState['count']>;
 export const {
   reducer,
   actions: {
+    getCount: createGetCount,
     setCount: createSetCount,
     increment: createIncrement,
     decrementBy: createDecrementBy,
@@ -36,6 +35,7 @@ export const {
   slice,
   initialState,
   reducers: {
+    getCount: state => ({ ...state, isLoading: true }),
     setCount: (_, { payload }: CreateSetCountAction) => ({
       count: payload,
       isLoading: false,
