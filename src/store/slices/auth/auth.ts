@@ -21,7 +21,11 @@ export type CreateSignin = typeof createSignin;
 
 export const createSignout = createAction(prefix('signout'));
 
-export const authStateChangeType = prefix('auth state change');
+const prefixWithAuthState = prefixActionType(prefix('state'));
+
+export const createGetAuthState = createAction(prefixWithAuthState('get'));
+
+export const authStateChangeType = prefixWithAuthState('change');
 
 export const createAuthStateChange = (user: FirebaseUser) =>
   createAction(authStateChangeType)(user ? (user.toJSON() as User) : null);
@@ -49,6 +53,7 @@ const setToTrue = () => true;
 const setToFalse = () => false;
 
 export const isLoading = createReducer<boolean>(false, {
+  [createGetAuthState.toString()]: setToTrue,
   [createSignin.toString()]: setToTrue,
   [createSignout.toString()]: setToTrue,
   [createSetUser.toString()]: setToFalse,

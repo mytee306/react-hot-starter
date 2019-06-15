@@ -9,6 +9,7 @@ import {
   AuthStateChangeAction,
   authStateChangeType,
   createAuthStateChange,
+  createGetAuthState,
   createSetAuthError,
   createSetUser,
   createSignin,
@@ -17,6 +18,13 @@ import {
   User,
 } from '../slices/auth';
 import { createSetSnackbar } from '../slices/snackbar';
+
+const authState$: Epic = action$ =>
+  action$.pipe(
+    ofType(createGetAuthState.toString()),
+    switchMap(() => authState(auth())),
+    map(createAuthStateChange),
+  );
 
 const mapAuthStateChangeToUser = pipe(
   ofType<AuthStateChangeAction>(authStateChangeType),
@@ -31,8 +39,6 @@ const signIn: Epic = action$ =>
 
       return auth().signInWithPopup(provider);
     }),
-    switchMap(() => authState(auth())),
-    map(createAuthStateChange),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
 
@@ -65,4 +71,4 @@ const authError: Epic = action$ =>
     map(message => createSetSnackbar({ message })),
   );
 
-export default [signIn, userUpdated, signedOut, signOut, authError];
+export default [authState$, signIn, userUpdated, signedOut, signOut, authError];
