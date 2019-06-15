@@ -8,6 +8,13 @@ const prefixActionTypeWithSeparator = (separator: string) => (
 
 export const prefixActionType = prefixActionTypeWithSeparator('/');
 
+export const getPathFromComponent = <Component extends React.FC<any>>(
+  component: Component,
+) => {
+  const { name, displayName } = component;
+  return (name || displayName!).toLowerCase();
+};
+
 export const mapStateToProps = <
   Map extends { [key: string]: Selector<State, any> }
 >(
