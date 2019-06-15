@@ -3,6 +3,7 @@
   "plugins": ["prefer-arrow", "prettier", "html"],
   "rules": {
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react/jsx-wrap-multilines": "off",
     "react/prop-types": "off",
     "arrow-parens": "off",
     "object-curly-newline": "off",

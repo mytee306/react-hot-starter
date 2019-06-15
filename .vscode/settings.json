@@ -15,6 +15,9 @@
     "Signin",
     "Signout",
     "immer",
-    "multilines"
+    "linebreak",
+    "multilines",
+    "paren",
+    "parens"
   ]
 }
