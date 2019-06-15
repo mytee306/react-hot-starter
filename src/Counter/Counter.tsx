@@ -3,21 +3,24 @@ import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { match, Route, Switch } from 'react-router-dom';
 import urlJoin from 'url-join';
+import Loader from '../components/Loader';
 import { CreateSimpleAction } from '../models/actions';
 import { State } from '../store/reducer';
 import {
-  Count,
+  CountState,
   createDecrementBy,
   CreateDecrementBy,
   createGetCount,
   createIncrement,
   selectCount,
-} from '../store/slices/count';
+  selectCountLoadingFlag,
+} from '../store/slices/countSlice';
 import Decrement from './Decrement';
 import Increment from './Increment';
 
 export interface CountProps {
-  count: Count;
+  count: CountState['count'];
+  isLoading: CountState['isLoading'];
   increment: CreateSimpleAction;
   decrementBy: CreateDecrementBy;
   match: match;
@@ -27,6 +30,7 @@ export interface CountProps {
 const Counter: FC<CountProps> = ({
   match: { path },
   count,
+  isLoading,
   increment,
   decrementBy,
   getCount,
@@ -37,7 +41,13 @@ const Counter: FC<CountProps> = ({
 
   return (
     <Card>
-      <CardHeader title={`Count: ${count}`} />
+      <CardHeader
+        title={
+          <>
+            Count: <Loader isLoading={isLoading}>{count}</Loader>
+          </>
+        }
+      />
       <CardActions>
         <Switch>
           <Route
@@ -57,6 +67,7 @@ const Counter: FC<CountProps> = ({
 export default connect(
   (state: State) => ({
     count: selectCount(state),
+    isLoading: selectCountLoadingFlag(state),
   }),
   {
     increment: createIncrement,
