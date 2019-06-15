@@ -2,8 +2,8 @@ import { auth } from 'firebase/app';
 import 'firebase/auth';
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
-import { of, pipe } from 'rxjs';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { of, pipe, empty } from 'rxjs';
+import { catchError, filter, map, switchMap, mergeMapTo } from 'rxjs/operators';
 import { createReset } from '../reducer';
 import {
   AuthStateChangeAction,
@@ -60,7 +60,7 @@ const signOut: Epic = action$ =>
   action$.pipe(
     ofType(createSignout.toString()),
     switchMap(() => auth().signOut()),
-    map(() => createReset()),
+    mergeMapTo(empty()),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
 
