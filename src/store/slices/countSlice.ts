@@ -9,7 +9,7 @@ const prefix = prefixActionType(slice);
 
 const initialState = {
   count: 0,
-  loading: false,
+  isLoading: false,
 };
 
 export type CountState = typeof initialState;
@@ -38,9 +38,9 @@ export const {
   reducers: {
     setCount: (_, { payload }: CreateSetCountAction) => ({
       count: payload,
-      loading: false,
+      isLoading: false,
     }),
-    increment: state => ({ ...state, loading: true }),
+    increment: state => ({ ...state, isLoading: true }),
     decrementBy: (state, { payload: amount }: DecrementByAction) => {
       const { count } = state;
 
@@ -55,7 +55,7 @@ export const selectCount = createSelector(
   selectCountSlice,
   ({ count }) => count,
 );
-export const selectCountLoading = createSelector(
+export const selectCountLoadingFlag = createSelector(
   selectCountSlice,
-  ({ loading }) => loading,
+  ({ isLoading }) => isLoading,
 );

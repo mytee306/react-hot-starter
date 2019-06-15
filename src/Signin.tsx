@@ -12,11 +12,11 @@ import { createSignin, CreateSignin } from './store/slices/auth';
 
 export interface SigninProps {
   signIn: CreateSignin;
-  authLoading: ReturnType<typeof selectAuthLoadingFlag>;
+  isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
   isSignedIn: ReturnType<typeof selectSignedInFlag>;
 }
 
-const Signin: FC<SigninProps> = ({ signIn, authLoading, isSignedIn }) => (
+const Signin: FC<SigninProps> = ({ signIn, isAuthLoading, isSignedIn }) => (
   <>
     {isSignedIn && <Redirect to="/" />}
     <Card>
@@ -27,7 +27,7 @@ const Signin: FC<SigninProps> = ({ signIn, authLoading, isSignedIn }) => (
         <Button
           variant="contained"
           onClick={() => signIn()}
-          loading={authLoading}
+          isLoading={isAuthLoading}
         >
           Signin
         </Button>
@@ -38,7 +38,7 @@ const Signin: FC<SigninProps> = ({ signIn, authLoading, isSignedIn }) => (
 
 export default connect(
   (state: State) => ({
-    authLoading: selectAuthLoadingFlag(state),
+    isAuthLoading: selectAuthLoadingFlag(state),
     isSignedIn: selectSignedInFlag(state),
   }),
   { signIn: createSignin },

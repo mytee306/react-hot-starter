@@ -41,7 +41,7 @@ export interface HeaderProps extends WithStyles<typeof headerStyles> {
   togglePaletteType: CreateSimpleAction;
   isSignedIn: ReturnType<typeof selectSignedInFlag>;
   signOut: CreateSimpleAction;
-  authLoading: ReturnType<typeof selectAuthLoadingFlag>;
+  isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
 }
 
 const Header: FC<HeaderProps> = ({
@@ -51,7 +51,7 @@ const Header: FC<HeaderProps> = ({
   togglePaletteType,
   isSignedIn,
   signOut,
-  authLoading,
+  isAuthLoading,
 }) => (
   <AppBar position="static" className={header}>
     <Toolbar>
@@ -63,8 +63,8 @@ const Header: FC<HeaderProps> = ({
       <Typography className={expand} variant="h6" color="inherit">
         App Name
       </Typography>
-      {(isSignedIn || authLoading) && (
-        <Button onClick={signOut} loading={authLoading}>
+      {(isSignedIn || isAuthLoading) && (
+        <Button onClick={signOut} isLoading={isAuthLoading}>
           Log out
         </Button>
       )}
@@ -78,7 +78,7 @@ const Header: FC<HeaderProps> = ({
 const mapStateToProps = (state: State) => ({
   isDark: selectDarkThemeFlag(state),
   isSignedIn: selectSignedInFlag(state),
-  authLoading: selectAuthLoadingFlag(state),
+  isAuthLoading: selectAuthLoadingFlag(state),
 });
 
 const mapDispatchToProps = {

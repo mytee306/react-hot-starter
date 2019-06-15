@@ -1,19 +1,19 @@
-import React, { CSSProperties, FC } from 'react';
 import {
   Button as MaterialButton,
   WithTheme,
   withTheme,
 } from '@material-ui/core';
 import { ButtonProps as MaterialButtonProps } from '@material-ui/core/Button';
+import React, { CSSProperties, FC } from 'react';
 import Spinner from './Spinner';
 
 export interface ButtonProps extends MaterialButtonProps, WithTheme {
   textTransform?: CSSProperties['textTransform'];
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
-  loading,
+  isLoading,
   theme,
   textTransform = 'uppercase',
   color = 'inherit',
@@ -26,9 +26,9 @@ const Button: FC<ButtonProps> = ({
       {...props}
       color={color}
       style={{ ...style, textTransform }}
-      disabled={disabled || loading}
+      disabled={disabled || isLoading}
     >
-      {loading ? (
+      {isLoading ? (
         <div
           style={{
             position: 'relative',

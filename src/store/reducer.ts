@@ -76,5 +76,5 @@ export const selectSnackbar = createSelector(
 
 export const selectAuthLoadingFlag = createSelector(
   selectAuth,
-  ({ loading }) => loading,
+  ({ isLoading }) => isLoading,
 );

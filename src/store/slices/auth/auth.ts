@@ -48,7 +48,7 @@ export const error = createReducer('', {
 const setToTrue = () => true;
 const setToFalse = () => false;
 
-export const loading = createReducer<boolean>(false, {
+export const isLoading = createReducer<boolean>(false, {
   [createSignin.toString()]: setToTrue,
   [createSignout.toString()]: setToTrue,
   [createSetUser.toString()]: setToFalse,
@@ -56,7 +56,7 @@ export const loading = createReducer<boolean>(false, {
 });
 
 export default combineReducers({
-  loading,
+  isLoading,
   error,
   user,
 });
