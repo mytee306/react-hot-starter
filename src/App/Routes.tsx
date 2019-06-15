@@ -9,7 +9,7 @@ export interface RoutesProps {
 
 const pathnames = ['count', 'signin', 'error'] as const;
 
-const rootPaths = {
+export const rootPaths = {
   ...pathnames.reduce(
     (paths, path) => ({ ...paths, [path]: `/${path}` }),
     {} as { [key in typeof pathnames[number]]: string },

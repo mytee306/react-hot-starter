@@ -7,6 +7,12 @@ const prefix = prefixActionType('auth');
 
 export type User = Omit<UserInfo, 'providerId'>;
 
+export interface AuthState {
+  user: User;
+  loading: boolean;
+  error: string;
+}
+
 export const initialUser: User = {
   displayName: 'John Doe',
   email: 'john.doe@example.com',
@@ -44,15 +50,15 @@ export const createSetAuthError = createAction<string>(prefix('error'));
 
 export type SetAuthErrorAction = ReturnType<typeof createSetAuthError>;
 
-export const error = createReducer('', {
-  [createSetAuthError.toString()]: (_, { payload }: SetAuthErrorAction) =>
+export const error = createReducer<AuthState['error'], SetAuthErrorAction>('', {
+  [createSetAuthError.toString()]: (_, { payload }) =>
     payload,
 });
 
 const setToTrue = () => true;
 const setToFalse = () => false;
 
-export const isLoading = createReducer<boolean>(false, {
+export const isLoading = createReducer<AuthState['loading']>(false, {
   [createGetAuthState.toString()]: setToTrue,
   [createSignin.toString()]: setToTrue,
   [createSignout.toString()]: setToTrue,
