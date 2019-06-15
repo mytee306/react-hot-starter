@@ -52,7 +52,9 @@ const Counter: FC<CountProps> = ({
         <Switch>
           <Route
             path={urlJoin(path, 'increment')}
-            component={() => <Increment increment={increment} />}
+            component={() => (
+              <Increment isLoading={isLoading} increment={increment} />
+            )}
           />
           <Route
             path={urlJoin(path, 'decrement')}
