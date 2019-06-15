@@ -4,24 +4,10 @@ import { Selector } from 'react-redux';
 import { Epic, ofType, StateObservable } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
 import { empty, of, pipe } from 'rxjs';
-import {
-  catchError,
-  first,
-  map,
-  mergeMap,
-  mergeMapTo,
-  switchMap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { catchError, first, map, mergeMap, mergeMapTo, switchMap, withLatestFrom } from 'rxjs/operators';
 import firebase from '../../firebase';
 import { selectUid, State } from '../reducer';
-import {
-  CountState,
-  createGetCount,
-  createIncrement,
-  createSetCount,
-  selectCountValue,
-} from '../slices/count';
+import { CountState, createGetCount, createIncrement, createSetCount, initialState, selectCountValue } from '../slices/count';
 import { createSetSnackbar } from '../slices/snackbar';
 
 export const selectState = <R>(selector: Selector<State, R>) => (
@@ -40,7 +26,7 @@ const getCount: Epic = (action$, state$) =>
     selectState(selectUid)(state$),
     map(uid => countsCollection.doc(uid)),
     switchMap(doc => docData<Pick<CountState, 'value'>>(doc)),
-    map(({ value }) => value),
+    map(({ value = initialState.value }) => value),
     map(createSetCount),
     catchError(({ message }) => of(createSetSnackbar({ message }))),
   );

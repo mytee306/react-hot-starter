@@ -7,7 +7,7 @@ export const slice = 'count';
 
 const prefix = prefixActionType(slice);
 
-const initialState = {
+export const initialState = {
   value: 0,
   isLoading: false,
 };
