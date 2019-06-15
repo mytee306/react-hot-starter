@@ -2,8 +2,8 @@ import { auth } from 'firebase/app';
 import 'firebase/auth';
 import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
-import { of, pipe, empty } from 'rxjs';
-import { catchError, filter, map, switchMap, mergeMapTo } from 'rxjs/operators';
+import { empty, of, pipe } from 'rxjs';
+import { catchError, filter, map, mergeMapTo, switchMap } from 'rxjs/operators';
 import { createReset } from '../reducer';
 import {
   AuthStateChangeAction,
@@ -39,6 +39,7 @@ const signIn: Epic = action$ =>
 
       return auth().signInWithPopup(provider);
     }),
+    mergeMapTo(empty()),
     catchError(({ message }) => of(createSetAuthError(message))),
   );
 

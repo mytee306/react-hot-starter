@@ -15,7 +15,7 @@ export const initialUser: User = {
   phoneNumber: '541-012-3456',
 };
 
-export const createSignin = createAction(prefix('get'));
+export const createSignin = createAction(prefix('signin'));
 
 export type CreateSignin = typeof createSignin;
 
