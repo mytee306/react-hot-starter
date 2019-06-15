@@ -2,14 +2,14 @@ import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
 import auth from './slices/auth';
-import countSlice from './slices/countSlice';
+import count from './slices/count';
 import snackbar, {
   selectSnackbar as selectSnackbarState,
 } from './slices/snackbar';
 import theme from './slices/theme';
 
 const reducer = combineReducers({
-  countSlice,
+  count,
   theme,
   auth,
   snackbar,
@@ -62,7 +62,6 @@ export const selectUid = createSelector(
 export const selectSignedInFlag = createSelector(
   selectUid,
   Boolean,
-  // () => true,
 );
 
 export const selectSnackbar = createSelector(

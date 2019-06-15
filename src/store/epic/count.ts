@@ -20,8 +20,8 @@ import {
   createGetCount,
   createIncrement,
   createSetCount,
-  selectCount,
-} from '../slices/countSlice';
+  selectCountValue,
+} from '../slices/count';
 import { createSetSnackbar } from '../slices/snackbar';
 
 export const selectState = <R>(selector: Selector<State, R>) => (
@@ -39,8 +39,8 @@ const getCount: Epic = (action$, state$) =>
     ofType(createGetCount.toString()),
     selectState(selectUid)(state$),
     map(uid => countsCollection.doc(uid)),
-    switchMap(doc => docData<{ count: CountState['count'] }>(doc)),
-    map(({ count }) => count),
+    switchMap(doc => docData<Pick<CountState, 'value'>>(doc)),
+    map(({ value }) => value),
     map(createSetCount),
     catchError(({ message }) => of(createSetSnackbar({ message }))),
   );
@@ -48,10 +48,10 @@ const getCount: Epic = (action$, state$) =>
 const increment: Epic = (action$, state$) =>
   action$.pipe(
     ofType(createIncrement.toString()),
-    selectState(selectCount)(state$),
+    selectState(selectCountValue)(state$),
     map(inc),
     withLatestFrom(state$.pipe(map(selectUid))),
-    switchMap(([count, uid]) => countsCollection.doc(uid).set({ count })),
+    switchMap(([value, uid]) => countsCollection.doc(uid).set({ value })),
     mergeMapTo(empty()),
     catchError(({ message }) => of(createSetSnackbar({ message }))),
   );

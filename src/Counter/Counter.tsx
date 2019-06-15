@@ -6,20 +6,12 @@ import urlJoin from 'url-join';
 import Loader from '../components/Loader';
 import { CreateSimpleAction } from '../models/actions';
 import { State } from '../store/reducer';
-import {
-  CountState,
-  createDecrementBy,
-  CreateDecrementBy,
-  createGetCount,
-  createIncrement,
-  selectCount,
-  selectCountLoadingFlag,
-} from '../store/slices/countSlice';
+import { CountState, createDecrementBy, CreateDecrementBy, createGetCount, createIncrement, selectCountLoadingFlag, selectCountValue } from '../store/slices/count';
 import Decrement from './Decrement';
 import Increment from './Increment';
 
 export interface CountProps {
-  count: CountState['count'];
+  value: CountState['value'];
   isLoading: CountState['isLoading'];
   increment: CreateSimpleAction;
   decrementBy: CreateDecrementBy;
@@ -29,7 +21,7 @@ export interface CountProps {
 
 const Counter: FC<CountProps> = ({
   match: { path },
-  count,
+  value,
   isLoading,
   increment,
   decrementBy,
@@ -44,7 +36,7 @@ const Counter: FC<CountProps> = ({
       <CardHeader
         title={
           <>
-            Count: <Loader isLoading={isLoading}>{count}</Loader>
+            Count: <Loader isLoading={isLoading}>{value}</Loader>
           </>
         }
       />
@@ -68,7 +60,7 @@ const Counter: FC<CountProps> = ({
 
 export default connect(
   (state: State) => ({
-    count: selectCount(state),
+    value: selectCountValue(state),
     isLoading: selectCountLoadingFlag(state),
   }),
   {

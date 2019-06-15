@@ -3,12 +3,12 @@ import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
 import { prefixActionType } from '../../utils';
 
-export const slice = 'countSlice';
+export const slice = 'count';
 
 const prefix = prefixActionType(slice);
 
 const initialState = {
-  count: 0,
+  value: 0,
   isLoading: false,
 };
 
@@ -16,11 +16,11 @@ export type CountState = typeof initialState;
 
 export const createUpdateCount = createAction(prefix('update'));
 
-export type CreateDecrementBy = SliceActionCreator<CountState['count']>;
+export type CreateDecrementBy = SliceActionCreator<CountState['value']>;
 
 export type DecrementByAction = ReturnType<CreateDecrementBy>;
 
-export type CreateSetCountAction = PayloadAction<CountState['count']>;
+export type CreateSetCountAction = PayloadAction<CountState['value']>;
 
 export const {
   reducer,
@@ -30,32 +30,32 @@ export const {
     increment: createIncrement,
     decrementBy: createDecrementBy,
   },
-  selectors: { getCountSlice: selectCountSlice },
+  selectors: { getCount: selectCount },
 } = createSlice({
   slice,
   initialState,
   reducers: {
     get: state => ({ ...state, isLoading: true }),
     set: (_, { payload }: CreateSetCountAction) => ({
-      count: payload,
+      value: payload,
       isLoading: false,
     }),
     increment: state => ({ ...state, isLoading: true }),
     decrementBy: (state, { payload: amount }: DecrementByAction) => {
-      const { count } = state;
+      const { value } = state;
 
-      return { ...state, count: count - amount };
+      return { ...state, value: value - amount };
     },
   },
 });
 
 export default reducer;
 
-export const selectCount = createSelector(
-  selectCountSlice,
-  ({ count }) => count,
+export const selectCountValue = createSelector(
+  selectCount,
+  ({ value }) => value,
 );
 export const selectCountLoadingFlag = createSelector(
-  selectCountSlice,
+  selectCount,
   ({ isLoading }) => isLoading,
 );

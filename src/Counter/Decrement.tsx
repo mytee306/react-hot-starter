@@ -3,10 +3,10 @@ import { Form, Formik } from 'formik';
 import React, { FC, memo } from 'react';
 import * as yup from 'yup';
 import Button from '../components/Button';
-import { CountState, CreateDecrementBy } from '../store/slices/countSlice';
+import { CountState, CreateDecrementBy } from '../store/slices/count';
 
 export interface Values {
-  amount: CountState['count'];
+  amount: CountState['value'];
 }
 
 const initialValues: Values = {
