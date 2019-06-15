@@ -26,7 +26,7 @@ export type AllEnvironments = {
 const allEnvironments: AllEnvironments = {
   development,
   production: {},
-  test: {},
+  test: development,
 };
 
 export default allEnvironments[process.env.NODE_ENV];
