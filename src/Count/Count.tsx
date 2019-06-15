@@ -1,25 +1,32 @@
 import { Card, CardActions, CardHeader } from '@material-ui/core';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { match, Route, Switch } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import urlJoin from 'url-join';
 import Loader from '../components/Loader';
 import { CreateSimpleAction } from '../models/actions';
 import { State } from '../store/reducer';
-import { CountState, createDecrementBy, CreateDecrementBy, createGetCount, createIncrement, selectCountLoadingFlag, selectCountValue } from '../store/slices/count';
+import {
+  CountState,
+  createDecrementBy,
+  CreateDecrementBy,
+  createGetCount,
+  createIncrement,
+  selectCountLoadingFlag,
+  selectCountValue,
+} from '../store/slices/count';
 import Decrement from './Decrement';
 import Increment from './Increment';
 
-export interface CountProps {
+export interface CountProps extends RouteComponentProps {
   value: CountState['value'];
   isLoading: CountState['isLoading'];
   increment: CreateSimpleAction;
   decrementBy: CreateDecrementBy;
-  match: match;
   getCount: CreateSimpleAction;
 }
 
-const Counter: FC<CountProps> = ({
+const Count: FC<CountProps> = ({
   match: { path },
   value,
   isLoading,
@@ -68,4 +75,4 @@ export default connect(
     decrementBy: createDecrementBy,
     getCount: createGetCount,
   },
-)(Counter);
+)(Count);
