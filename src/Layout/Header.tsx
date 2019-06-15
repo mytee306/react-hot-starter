@@ -64,7 +64,7 @@ const Header: FC<HeaderProps> = ({
         App Name
       </Typography>
       {(isSignedIn || isAuthLoading) && (
-        <Button onClick={signOut} isLoading={isAuthLoading}>
+        <Button onClick={() => signOut()} isLoading={isAuthLoading}>
           Log out
         </Button>
       )}
