@@ -15,6 +15,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     {isSignedIn ? null : <Route component={Signin} />}
     <Route path={signinPath} component={Signin} />
     <Route path={countPath} component={Count} />
+    <Route path="/" component={() => <>Dashboard</>} />
   </Switch>
 );
 
