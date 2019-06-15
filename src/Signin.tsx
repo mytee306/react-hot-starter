@@ -26,12 +26,8 @@ const Signin: FC<SigninProps> = ({
   location: { pathname },
 }) => {
   useEffect(() => {
-    if (isSignedIn) {
-      if (pathname === signinPath) {
-        history.push('/');
-      } else {
-        history.goBack();
-      }
+    if (isSignedIn && pathname === signinPath) {
+      history.push('/');
     }
   }, [isSignedIn, pathname, history]);
 
