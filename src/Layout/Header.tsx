@@ -3,6 +3,7 @@ import {
   createStyles,
   Hidden,
   Toolbar,
+  Tooltip,
   Typography,
   WithStyles,
   withStyles,
@@ -68,9 +69,11 @@ const Header: FC<HeaderProps> = ({
           Log out
         </Button>
       )}
-      <IconButton onClick={() => togglePaletteType()}>
-        {isDark ? <WbSunny /> : <WbSunnyOutlined />}
-      </IconButton>
+      <Tooltip title="Toggle dark theme">
+        <IconButton onClick={() => togglePaletteType()}>
+          {isDark ? <WbSunny /> : <WbSunnyOutlined />}
+        </IconButton>
+      </Tooltip>
     </Toolbar>
   </AppBar>
 );
