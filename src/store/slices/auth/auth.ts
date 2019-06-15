@@ -8,11 +8,11 @@ const prefix = prefixActionType('auth');
 export type User = Omit<UserInfo, 'providerId'>;
 
 export const initialUser: User = {
-  displayName: '',
-  email: '',
+  displayName: 'John Doe',
+  email: 'john.doe@example.com',
   uid: '',
   photoURL: '',
-  phoneNumber: '',
+  phoneNumber: '541-012-3456',
 };
 
 export const createSignin = createAction(prefix('get'));
