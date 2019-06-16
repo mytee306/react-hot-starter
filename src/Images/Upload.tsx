@@ -2,40 +2,51 @@
 
 import {
   Button,
+  LinearProgress,
   List,
   ListItem,
+  ListItemText,
+  Tooltip,
   Typography,
   withTheme,
   WithTheme,
 } from '@material-ui/core';
-import { AddToPhotos } from '@material-ui/icons';
-import React, { createRef, CSSProperties, useState } from 'react';
-import { Box } from 'rebass';
+import { AddToPhotos, CheckCircleOutline } from '@material-ui/icons';
+import React, { createRef } from 'react';
+import { connect } from 'react-redux';
+import { Box, Flex } from 'rebass';
+import { State } from '../store/reducer';
+import {
+  createAddImage,
+  CreateAddImage,
+  CreateUpload,
+  createUpload,
+  Image,
+  selectImages,
+} from '../store/slices/images';
 
-export interface UploadProps extends WithTheme {}
+export interface UploadProps extends WithTheme {
+  addImage: CreateAddImage;
+  upload: CreateUpload;
+  images: Image[];
+}
 
 const uploadInputRef = createRef<HTMLInputElement>();
 
 const Upload: React.FC<UploadProps> = ({
-  theme: {
-    palette: { error },
-    spacing: { unit },
-  },
+  theme: { palette, spacing, colors },
+  addImage,
+  upload,
+  images,
 }) => {
-  const [files, setFiles] = useState<File[]>([]);
-
   const appropriate = true;
-
-  const listItemStyle: { style?: CSSProperties } = appropriate
-    ? {}
-    : { style: { color: error.dark } };
 
   return (
     <form
       onSubmit={e => {
         e.preventDefault();
 
-        console.log(files);
+        upload();
       }}
     >
       <input
@@ -43,9 +54,16 @@ const Upload: React.FC<UploadProps> = ({
         type="file"
         multiple
         accept="image/*"
-        onChange={({ target: { files: newFiles } }) => {
-          if (newFiles && newFiles.length) {
-            setFiles(Array.from(newFiles));
+        onChange={({ target: { files } }) => {
+          if (files && files.length) {
+            Array.from(files).forEach((file, i) => {
+              const { name } = file;
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = () => {
+                addImage({ name, dataUrl: reader.result as string });
+              };
+            });
           }
         }}
         hidden
@@ -54,22 +72,52 @@ const Upload: React.FC<UploadProps> = ({
         onClick={() => uploadInputRef.current!.click()}
         variant="contained"
       >
-        <AddToPhotos style={{ marginRight: 2 * unit }} />
+        <AddToPhotos style={{ marginRight: 2 * spacing.unit }} />
         Choose image files
       </Button>
       <br />
       <br />
       <Typography variant="h4">Chosen Files</Typography>
       <List>
-        {files.map(file => {
-          const { name } = file;
+        {images.map(image => {
+          const { name, dataUrl, uploadProgress } = image;
+
+          const isUploaded = uploadProgress === 100;
 
           return (
             <Box key={name}>
               <ListItem>
-                <Typography {...listItemStyle}>{name}</Typography>
+                <ListItemText>
+                  <Flex>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        marginRight: spacing.unit,
+                        color: appropriate ? 'initial' : palette.error.dark,
+                      }}
+                    >
+                      {name}
+                    </Typography>
+                    {isUploaded && (
+                      <Tooltip title="Successfully Uploaded">
+                        <CheckCircleOutline
+                          style={{ color: colors!.success }}
+                        />
+                      </Tooltip>
+                    )}
+                  </Flex>
+                  <br />
+                  <LinearProgress
+                    hidden={isUploaded}
+                    title="Upload Progress"
+                    variant="determinate"
+                    value={uploadProgress}
+                  />
+                </ListItemText>
               </ListItem>
-              <img src={URL.createObjectURL(file)} alt={name} height={200} />
+              <br />
+              <br />
+              <img src={dataUrl} alt={name} height={150} />
             </Box>
           );
         })}
@@ -80,4 +128,10 @@ const Upload: React.FC<UploadProps> = ({
     </form>
   );
 };
-export default withTheme()(Upload);
+
+export default withTheme()(
+  connect(
+    (state: State) => ({ images: selectImages(state) }),
+    { upload: createUpload, addImage: createAddImage },
+  )(Upload),
+);
