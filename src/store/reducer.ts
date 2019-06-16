@@ -7,12 +7,14 @@ import snackbar, {
   selectSnackbar as selectSnackbarState,
 } from './slices/snackbar';
 import theme from './slices/theme';
+import images from './slices/images';
 
 const reducer = combineReducers({
   count,
   theme,
   auth,
   snackbar,
+  images,
 });
 
 export type State = ReturnType<typeof reducer>;
