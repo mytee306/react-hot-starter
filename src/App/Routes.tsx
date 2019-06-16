@@ -3,13 +3,13 @@ import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Count from '../Count';
 import Signin from '../Signin';
-import ImageUpload from '../ImageUpload';
+import Images from '../Images';
 
 export interface RoutesProps {
   isSignedIn: boolean;
 }
 
-const pathnames = ['error', 'signin', 'count', 'imageUpload'] as const;
+const pathnames = ['error', 'signin', 'count', 'images'] as const;
 
 export const rootPaths = {
   ...pathnames.reduce(
@@ -30,8 +30,8 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     />
     <Route exact path={rootPaths.dashboard} component={Dashboard} />
     <Route
-      path={rootPaths.imageUpload}
-      component={ImageUpload}
+      path={rootPaths.images}
+      component={Images}
     />
     <Route path={rootPaths.count} component={Count} />
     <Route

@@ -50,7 +50,7 @@ const Home = 'Dashboard';
 const Count = 'Count';
 const Increment = 'Increment';
 const Decrement = 'Decrement';
-const ImageUpload = 'Image Upload';
+const Images = 'Images';
 
 const privateNavItems: INavItems = [
   {
@@ -79,8 +79,8 @@ const privateNavItems: INavItems = [
     ],
   },
   {
-    text: ImageUpload,
-    path: dashify(ImageUpload),
+    text: Images,
+    path: dashify(Images),
     icon: <CloudUpload />,
     childNavItems: [],
   },

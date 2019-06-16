@@ -1,21 +1,22 @@
+/* eslint-disable indent */
+
 import {
   Button,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   Typography,
   withTheme,
   WithTheme,
 } from '@material-ui/core';
-import { AddToPhotos, Photo } from '@material-ui/icons';
+import { AddToPhotos } from '@material-ui/icons';
 import React, { createRef, CSSProperties, useState } from 'react';
+import { Box } from 'rebass';
 
-export interface ImageUploadProps extends WithTheme {}
+export interface UploadProps extends WithTheme {}
 
-const imageUploadInputRef = createRef<HTMLInputElement>();
+const uploadInputRef = createRef<HTMLInputElement>();
 
-const ImageUpload: React.FC<ImageUploadProps> = ({
+const Upload: React.FC<UploadProps> = ({
   theme: {
     palette: { error },
     spacing: { unit },
@@ -38,7 +39,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       }}
     >
       <input
-        ref={imageUploadInputRef}
+        ref={uploadInputRef}
         type="file"
         multiple
         accept="image/*"
@@ -50,7 +51,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         hidden
       />
       <Button
-        onClick={() => imageUploadInputRef.current!.click()}
+        onClick={() => uploadInputRef.current!.click()}
         variant="contained"
       >
         <AddToPhotos style={{ marginRight: 2 * unit }} />
@@ -60,16 +61,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       <br />
       <Typography variant="h4">Chosen Files</Typography>
       <List>
-        {files.map(({ name }) => (
-          <ListItem>
-            <ListItemIcon {...listItemStyle}>
-              <Photo />
-            </ListItemIcon>
-            <ListItemText>
-              <Typography {...listItemStyle}>{name}</Typography>
-            </ListItemText>
-          </ListItem>
-        ))}
+        {files.map(file => {
+          const { name } = file;
+
+          return (
+            <Box key={name}>
+              <ListItem>
+                <Typography {...listItemStyle}>{name}</Typography>
+              </ListItem>
+              <img src={URL.createObjectURL(file)} alt={name} height={200} />
+            </Box>
+          );
+        })}
       </List>
       <Button type="submit" variant="contained" color="primary">
         Upload
@@ -77,4 +80,4 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     </form>
   );
 };
-export default withTheme()(ImageUpload);
+export default withTheme()(Upload);
