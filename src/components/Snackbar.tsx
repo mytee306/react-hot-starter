@@ -1,9 +1,7 @@
 import {
-  colors,
   createStyles,
   Snackbar as MaterialSnackbar,
   SnackbarContent,
-  Theme,
   WithStyles,
   withStyles,
 } from '@material-ui/core';
@@ -12,6 +10,7 @@ import { Close } from '@material-ui/icons';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid/v4';
+import { EnhancedTheme } from '../models';
 import { CreateSimpleAction } from '../models/actions';
 import { selectSnackbar, State } from '../store/reducer';
 import {
@@ -26,22 +25,24 @@ export interface SnackbarProps extends WithStyles, SnackbarState {
   resetSnackbar: CreateSimpleAction;
 }
 
-type GetVariants = (theme: Theme) => { [key in Variant]: CSSProperties };
+type GetVariants = (
+  theme: EnhancedTheme,
+) => { [key in Variant]: CSSProperties };
 
-const getVariants: GetVariants = ({ palette }) => ({
+const getVariants: GetVariants = ({ palette, colors }) => ({
   default: {},
   error: {
     backgroundColor: palette.error.main,
   },
   success: {
-    backgroundColor: colors.green[600],
+    backgroundColor: colors!.success,
   },
   info: {
     backgroundColor: palette.primary.light,
   },
 });
 
-const snackbarStyles = (theme: Theme) =>
+const snackbarStyles = (theme: EnhancedTheme) =>
   createStyles({
     close: {
       padding: theme.spacing.unit,

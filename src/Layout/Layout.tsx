@@ -4,23 +4,23 @@ import {
   Divider,
   Drawer,
   Hidden,
-  Theme,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { ChevronLeft } from '@material-ui/icons';
 import React, { FC, useState } from 'react';
+import IconButton from '../components/IconButton';
+import { EnhancedTheme } from '../models';
 import Breadcrumbs from './Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';
-import IconButton from '../components/IconButton';
 
 const minWidth = 240;
 
 const margin = 20;
 
-export const layoutStyles = (theme: Theme) =>
+export const layoutStyles = (theme: EnhancedTheme) =>
   createStyles({
     drawer: {
       minWidth,
@@ -47,7 +47,7 @@ export const layoutStyles = (theme: Theme) =>
   });
 
 export interface LayoutProps extends WithStyles<typeof layoutStyles> {
-  theme: Theme;
+  theme: EnhancedTheme;
   isSignedIn: boolean;
 }
 
