@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Count from '../Count';
 import Signin from '../Signin';
+import ImageUpload from '../ImageUpload';
 
 export interface RoutesProps {
   isSignedIn: boolean;
@@ -30,7 +31,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     <Route exact path={rootPaths.dashboard} component={Dashboard} />
     <Route
       path={rootPaths.imageUpload}
-      render={() => <input type="upload" />}
+      component={ImageUpload}
     />
     <Route path={rootPaths.count} component={Count} />
     <Route
