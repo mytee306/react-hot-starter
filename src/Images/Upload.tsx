@@ -2,7 +2,6 @@
 
 import {
   Button,
-  LinearProgress,
   List,
   ListItem,
   ListItemText,
@@ -15,6 +14,7 @@ import { AddToPhotos, CheckCircleOutline } from '@material-ui/icons';
 import React, { createRef } from 'react';
 import { connect } from 'react-redux';
 import { Box, Flex } from 'rebass';
+import Spinner from '../components/Spinner';
 import { State } from '../store/reducer';
 import {
   createAddImage,
@@ -34,7 +34,7 @@ export interface UploadProps extends WithTheme {
 const uploadInputRef = createRef<HTMLInputElement>();
 
 const Upload: React.FC<UploadProps> = ({
-  theme: { palette, spacing, colors },
+  theme: { palette, spacing, colors, typography },
   addImage,
   upload,
   images,
@@ -61,7 +61,11 @@ const Upload: React.FC<UploadProps> = ({
               const reader = new FileReader();
               reader.readAsDataURL(file);
               reader.onload = () => {
-                addImage({ name, dataUrl: reader.result as string });
+                addImage({
+                  name,
+                  dataUrl: reader.result as string,
+                  uploadStatus: 'not started',
+                });
               };
             });
           }
@@ -80,15 +84,12 @@ const Upload: React.FC<UploadProps> = ({
       <Typography variant="h4">Chosen Files</Typography>
       <List>
         {images.map(image => {
-          const { name, dataUrl, uploadProgress } = image;
-
-          const isUploaded = uploadProgress === 100;
-
+          const { name, dataUrl, uploadStatus } = image;
           return (
             <Box key={name}>
               <ListItem>
                 <ListItemText>
-                  <Flex>
+                  <Flex alignItems="center">
                     <Typography
                       variant="h5"
                       style={{
@@ -98,24 +99,25 @@ const Upload: React.FC<UploadProps> = ({
                     >
                       {name}
                     </Typography>
-                    {isUploaded && (
-                      <Tooltip title="Successfully Uploaded">
-                        <CheckCircleOutline
-                          style={{ color: colors!.success }}
-                        />
-                      </Tooltip>
-                    )}
+                    {(() => {
+                      switch (uploadStatus) {
+                        case 'in progress':
+                          return <Spinner size={typography.fontSize} />;
+                        case 'completed':
+                          return (
+                            <Tooltip title="Successfully Uploaded">
+                              <CheckCircleOutline
+                                style={{ color: colors!.success }}
+                              />
+                            </Tooltip>
+                          );
+                        default:
+                          return null;
+                      }
+                    })()}
                   </Flex>
-                  <br />
-                  <LinearProgress
-                    hidden={isUploaded}
-                    title="Upload Progress"
-                    variant="determinate"
-                    value={uploadProgress}
-                  />
                 </ListItemText>
               </ListItem>
-              <br />
               <br />
               <img src={dataUrl} alt={name} height={150} />
             </Box>

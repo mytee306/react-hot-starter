@@ -39,7 +39,7 @@ const upload: Epic = (action$, state$) =>
       ({ bytesTransferred, totalBytes, metadata: { customMetadata } }) =>
         createUpdateProgress({
           id: customMetadata!.id,
-          uploadProgress: (bytesTransferred / totalBytes) * 100,
+          uploadStatus: bytesTransferred / totalBytes ? 'completed' : 'in progress',
         }),
     ),
     catchError(({ message }) =>

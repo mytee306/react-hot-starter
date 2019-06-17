@@ -8,16 +8,15 @@ export const slice = 'images';
 
 const prefix = prefixActionType(slice);
 
-export interface ImageWithoutProgress {
+const uploadStatuses = ['not started', 'in progress', 'completed'] as const;
+
+type UploadStatus = typeof uploadStatuses[number];
+
+export interface Image {
   dataUrl: string;
   name: string;
+  uploadStatus: UploadStatus;
 }
-
-export interface Image extends ImageWithoutProgress {
-  uploadProgress: number;
-}
-
-export type Files = Image[];
 
 export interface Images {
   ids: string[];
@@ -30,13 +29,13 @@ export const createUpload = createAction(prefix('upload'));
 
 export type CreateUpload = typeof createUpload;
 
-export type CreateAddImage = SliceActionCreator<ImageWithoutProgress>;
+export type CreateAddImage = SliceActionCreator<Image>;
 
 export type AddImage = ReturnType<CreateAddImage>;
 
 export type UpdateProgress = PayloadAction<{
   id: string;
-  uploadProgress: Image['uploadProgress'];
+  uploadStatus: Image['uploadStatus'];
 }>;
 
 export type CreateSetImages = SliceActionCreator<File[]>;
@@ -59,15 +58,15 @@ export const {
       const id = uuid();
       return {
         ids: ids.concat(id),
-        entities: { ...entities, [id]: { ...image, uploadProgress: 0 } },
+        entities: { ...entities, [id]: image },
       };
     },
     updateProgress: (
       { ids, entities },
-      { payload: { id, uploadProgress } }: UpdateProgress,
+      { payload: { id, uploadStatus } }: UpdateProgress,
     ) => ({
       ids,
-      entities: { ...entities, [id]: { ...entities[id], uploadProgress } },
+      entities: { ...entities, [id]: { ...entities[id], uploadStatus } },
     }),
     set: (_, { payload: images }: SetImages) => {
       const ids = images.map(() => uuid());
@@ -77,7 +76,7 @@ export const {
         entities: images.reduce(
           (allImages, image, i) => ({
             ...allImages,
-            [ids[i]]: { ...image, uploadProgress: 0 },
+            [ids[i]]: { ...image, uploadStatus: 0 },
           }),
           {},
         ),
