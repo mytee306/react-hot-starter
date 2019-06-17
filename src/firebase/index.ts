@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import env from '../.env';
+import env from '../env';
 
 const { firebaseConfig } = env;
 
