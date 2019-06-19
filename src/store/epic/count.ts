@@ -1,31 +1,38 @@
 import 'firebase/firestore';
 import { inc } from 'ramda';
-import { Selector } from 'react-redux';
 import { Epic, ofType, StateObservable } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
 import { empty, of, pipe } from 'rxjs';
-import { catchError, first, map, mergeMap, mergeMapTo, switchMap, withLatestFrom } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  mergeMapTo,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 import firebase from '../../firebase';
+import { selectState } from '../../utils/operators';
 import { selectUid, State } from '../reducer';
-import { CountState, createGetCount, createIncrement, createSetCount, initialState, selectCountValue, createDecrementBy } from '../slices/count';
+import {
+  CountState,
+  createDecrementBy,
+  createGetCount,
+  createIncrement,
+  createSetCount,
+  initialState,
+  selectCountValue,
+} from '../slices/count';
 import { createSetSnackbar } from '../slices/snackbar';
-
-export const selectState = <R>(selector: Selector<State, R>) => (
-  state$: StateObservable<State>,
-) =>
-  pipe(
-    mergeMap(() => state$.pipe(first())),
-    map(selector),
-  );
 
 const countsCollection = firebase.firestore().collection('counts');
 
-const setCount = (state$: StateObservable<State>) => pipe(
-  withLatestFrom(state$.pipe(map(selectUid))),
-  switchMap(([value, uid]) => countsCollection.doc(uid).set({ value })),
-  mergeMapTo(empty()),
-  catchError(({ message }) => of(createSetSnackbar({ message }))),
-);
+const setCount = (state$: StateObservable<State>) =>
+  pipe(
+    withLatestFrom(state$.pipe(map(selectUid))),
+    switchMap(([value, uid]) => countsCollection.doc(uid).set({ value })),
+    mergeMapTo(empty()),
+    catchError(({ message }) => of(createSetSnackbar({ message }))),
+  );
 
 const getCount: Epic = (action$, state$) =>
   action$.pipe(
