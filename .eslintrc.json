@@ -1,10 +1,7 @@
 {
   "extends": ["react-app", "airbnb"],
-  "plugins": ["prefer-arrow", "prettier", "html"],
+  "plugins": ["immutable", "prefer-arrow", "prettier", "html"],
   "rules": {
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
-    "react/jsx-wrap-multilines": "off",
-    "react/prop-types": "off",
     "arrow-parens": "off",
     "object-curly-newline": "off",
     "operator-linebreak": "off",
@@ -13,10 +10,16 @@
     "no-confusing-arrow": "off",
     "implicit-arrow-linebreak": "off",
     "function-paren-newline": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react/jsx-wrap-multilines": "off",
+    "react/prop-types": "off",
     "react/jsx-one-expression-per-line": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "import/no-extraneous-dependencies": "off",
     "import/no-unresolved": "off",
+    "immutable/no-let": 2,
+    "immutable/no-this": 2,
+    "immutable/no-mutation": 2,
     "prefer-arrow/prefer-arrow-functions": [
       "warn",
       {

@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+/* eslint-disable immutable/no-mutation */
 
 import {
   Button,

@@ -1,4 +1,5 @@
 /* eslint-disable no-console, no-param-reassign */
+/* eslint-disable immutable/no-mutation */
 
 // This optional code is used to register a service worker.
 // register() is not called by default.
