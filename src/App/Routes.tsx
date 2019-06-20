@@ -1,9 +1,10 @@
 import dashify from 'dashify';
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import NotFound from '../components/NotFound';
 import Count from '../Count';
-import Signin from '../Signin';
 import Images from '../Images';
+import Signin from '../Signin';
 
 export interface RoutesProps {
   isSignedIn: boolean;
@@ -29,10 +30,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
       render={() => <Redirect to={rootPaths.dashboard} />}
     />
     <Route exact path={rootPaths.dashboard} component={Dashboard} />
-    <Route
-      path={rootPaths.images}
-      component={Images}
-    />
+    <Route path={rootPaths.images} component={Images} />
     <Route path={rootPaths.count} component={Count} />
     <Route
       path={rootPaths.error}
@@ -45,7 +43,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
         </>
       )}
     />
-    <Route render={() => <>404</>} />
+    <Route component={NotFound} />
   </Switch>
 );
 
