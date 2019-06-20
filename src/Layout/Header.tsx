@@ -64,16 +64,16 @@ const Header: FC<HeaderProps> = ({
       <Typography className={expand} variant="h6" color="inherit">
         App Name
       </Typography>
-      {(isSignedIn || isAuthLoading) && (
-        <Button onClick={() => signOut()} isLoading={isAuthLoading}>
-          Log out
-        </Button>
-      )}
       <Tooltip title="Toggle dark theme">
         <IconButton onClick={() => togglePaletteType()}>
           {isDark ? <WbSunny /> : <WbSunnyOutlined />}
         </IconButton>
       </Tooltip>
+      {(isSignedIn || isAuthLoading) && (
+        <Button onClick={() => signOut()} isLoading={isAuthLoading}>
+          Log out
+        </Button>
+      )}
     </Toolbar>
   </AppBar>
 );

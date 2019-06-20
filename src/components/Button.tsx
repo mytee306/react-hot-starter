@@ -39,7 +39,6 @@ const Button: FC<ButtonProps> = ({
         >
           <span style={{ visibility: 'hidden' }}>{children}</span>
           <Spinner
-            color="inherit"
             size={theme.typography.fontSize}
             style={{ position: 'absolute' }}
           />
