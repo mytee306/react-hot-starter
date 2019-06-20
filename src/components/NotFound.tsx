@@ -14,7 +14,7 @@ const NotFound: React.FC = () => (
     <br />
     <br />
     <Link to="/">
-      <Typography variant="h5">Back to Dashboard</Typography>
+      <Typography variant="h5">Go back to Dashboard</Typography>
     </Link>
   </div>
 );
