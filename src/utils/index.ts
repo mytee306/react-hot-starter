@@ -1,5 +1,7 @@
 /* eslint-disable indent */
+import { useTheme as useMaterialTheme } from '@material-ui/styles';
 import { Selector } from 'react-redux';
+import { EnhancedTheme } from '../models';
 import { State } from '../store/reducer';
 
 const prefixActionTypeWithSeparator = (separator: string) => (
@@ -7,6 +9,8 @@ const prefixActionTypeWithSeparator = (separator: string) => (
 ) => (actionType: string) => prefix.concat(separator).concat(actionType);
 
 export const prefixActionType = prefixActionTypeWithSeparator('/');
+
+export const useTheme = () => useMaterialTheme<EnhancedTheme>();
 
 export const getPathFromComponent = <Component extends React.FC<any>>(
   component: Component,

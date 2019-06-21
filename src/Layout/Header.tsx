@@ -8,10 +8,9 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
-import { Menu, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
+import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import Button from '../components/Button';
 import IconButton from '../components/IconButton';
 import { CreateSimpleAction } from '../models/actions';
 import {
@@ -70,9 +69,11 @@ const Header: FC<HeaderProps> = ({
         </IconButton>
       </Tooltip>
       {(isSignedIn || isAuthLoading) && (
-        <Button onClick={() => signOut()} isLoading={isAuthLoading}>
-          Log out
-        </Button>
+        <Tooltip title="Profile">
+          <IconButton onClick={() => signOut()} loading={isAuthLoading}>
+            <Person />
+          </IconButton>
+        </Tooltip>
       )}
     </Toolbar>
   </AppBar>

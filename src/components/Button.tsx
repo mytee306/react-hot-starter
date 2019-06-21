@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { ButtonProps as MaterialButtonProps } from '@material-ui/core/Button';
 import React, { CSSProperties, FC } from 'react';
-import Spinner from './Spinner';
+import WithLoader from './WithLoader';
 
 export interface ButtonProps extends MaterialButtonProps, WithTheme {
   textTransform?: CSSProperties['textTransform'];
@@ -28,24 +28,7 @@ const Button: FC<ButtonProps> = ({
       style={{ ...style, textTransform }}
       disabled={disabled || isLoading}
     >
-      {isLoading ? (
-        <div
-          style={{
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <span style={{ visibility: 'hidden' }}>{children}</span>
-          <Spinner
-            size={theme.typography.fontSize}
-            style={{ position: 'absolute' }}
-          />
-        </div>
-      ) : (
-        children
-      )}
+      <WithLoader loading={!!isLoading}>{children}</WithLoader>
     </MaterialButton>
   );
 };

@@ -1,5 +1,6 @@
 import { colors, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+import { ThemeProvider } from '@material-ui/styles';
 import React, { FC, useEffect } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
@@ -27,21 +28,23 @@ const App: FC<AppProps> = ({ getAuthState, isSignedIn, themeOptions }) => {
     getAuthState();
   }, [getAuthState]);
 
+  const theme = createMuiTheme({
+    ...themeOptions,
+    colors: { success: colors.green[600] },
+    typography: {
+      useNextVariants: true,
+    },
+  });
+
   return (
-    <MuiThemeProvider
-      theme={createMuiTheme({
-        ...themeOptions,
-        colors: { success: colors.green[600] },
-        typography: {
-          useNextVariants: true,
-        },
-      })}
-    >
-      <Layout isSignedIn={isSignedIn}>
-        <Routes isSignedIn={isSignedIn} />
-      </Layout>
-      <Snackbar />
-    </MuiThemeProvider>
+    <ThemeProvider theme={theme}>
+      <MuiThemeProvider theme={theme}>
+        <Layout isSignedIn={isSignedIn}>
+          <Routes isSignedIn={isSignedIn} />
+        </Layout>
+        <Snackbar />
+      </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 
