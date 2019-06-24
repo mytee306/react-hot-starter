@@ -5,16 +5,13 @@ export type WithSpinner = {
   loading?: boolean;
 };
 
-const withSpinner = <Props extends {}>(Component: ComponentType<Props>) => (
-  props: Props & WithSpinner,
-) => {
-  const { loading } = props;
-
-  return (
-    <WithLoader loading={!!loading}>
-      <Component {...props} />
-    </WithLoader>
-  );
-};
+const withSpinner = <Props extends {}>(Component: ComponentType<Props>) => ({
+  loading,
+  ...props
+}: Props & WithSpinner) => (
+  <WithLoader loading={!!loading}>
+    <Component {...props as Props} />
+  </WithLoader>
+);
 
 export default withSpinner;
