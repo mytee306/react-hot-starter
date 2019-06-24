@@ -10,7 +10,7 @@ export interface RoutesProps {
   isSignedIn: boolean;
 }
 
-const pathnames = ['error', 'signin', 'count', 'images'] as const;
+const pathnames = ['signin', 'count', 'images'] as const;
 
 export const rootPaths = {
   ...pathnames.reduce(
@@ -32,17 +32,6 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     <Route exact path={rootPaths.dashboard} component={Dashboard} />
     <Route path={rootPaths.images} component={Images} />
     <Route path={rootPaths.count} component={Count} />
-    <Route
-      path={rootPaths.error}
-      render={() => (
-        <>
-          Error{' '}
-          <button type="button" onClick={() => window.location.reload()}>
-            Reload
-          </button>
-        </>
-      )}
-    />
     <Route component={NotFound} />
   </Switch>
 );
