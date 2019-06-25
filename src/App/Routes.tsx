@@ -5,12 +5,13 @@ import NotFound from '../components/NotFound';
 import Count from '../Count';
 import Images from '../Images';
 import Signin from '../Signin';
+import { Store } from '../Store';
 
 export interface RoutesProps {
   isSignedIn: boolean;
 }
 
-const pathnames = ['signin', 'count', 'images'] as const;
+const pathnames = ['store', 'signin', 'count', 'images'] as const;
 
 export const rootPaths = {
   ...pathnames.reduce(
@@ -32,6 +33,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     <Route exact path={rootPaths.dashboard} component={Dashboard} />
     <Route path={rootPaths.images} component={Images} />
     <Route path={rootPaths.count} component={Count} />
+    <Route path={rootPaths.store} component={Store} />
     <Route component={NotFound} />
   </Switch>
 );
