@@ -15,10 +15,13 @@
     "HOCS",
     "Signin",
     "Signout",
+    "crossorigin",
     "immer",
     "linebreak",
     "multilines",
     "paren",
-    "parens"
+    "parens",
+    "paypal",
+    "xstate"
   ]
 }
