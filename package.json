@@ -8,7 +8,7 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
-    "ci": "cross-env CI=true run-s test build"
+    "ci": "cross-env CI=true run-p lint test build"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",

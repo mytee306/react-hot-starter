@@ -25,9 +25,7 @@ export interface SnackbarProps extends WithStyles, SnackbarState {
   resetSnackbar: CreateSimpleAction;
 }
 
-type GetVariants = (
-  theme: EnhancedTheme,
-) => { [key in Variant]: CSSProperties };
+type GetVariants = (theme: EnhancedTheme) => Record<Variant, CSSProperties>;
 
 const getVariants: GetVariants = ({ palette, colors }) => ({
   default: {},

@@ -16,7 +16,7 @@ const pathnames = ['store', 'signin', 'count', 'images'] as const;
 export const rootPaths = {
   ...pathnames.reduce(
     (paths, path) => ({ ...paths, [path]: `/${dashify(path)}` }),
-    {} as { [key in typeof pathnames[number]]: string },
+    {} as Record<typeof pathnames[number], string>,
   ),
   dashboard: '/',
 };

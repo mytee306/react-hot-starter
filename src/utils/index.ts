@@ -20,7 +20,7 @@ export const getPathFromComponent = <Component extends React.FC<any>>(
 };
 
 export const mapStateToProps = <
-  Map extends { [key: string]: Selector<State, any> }
+  Map extends Record<string, Selector<State, any>>
 >(
   map: Map,
 ) => (state: State) => {
