@@ -1,17 +1,15 @@
-import { withTheme, WithTheme } from '@material-ui/core';
-import React from 'react';
+import React, { FC } from 'react';
+import { useTheme } from '../utils';
 import Spinner from './Spinner';
 
-export interface WithSpinnerProps extends WithTheme {
+export interface WithLoaderProps {
   loading: boolean;
 }
 
-const WithSpinner: React.FC<WithSpinnerProps> = ({
-  children,
-  theme,
-  loading,
-}) =>
-  loading ? (
+const WithSpinner: FC<WithLoaderProps> = ({ loading, children }) => {
+  const theme = useTheme();
+
+  return loading ? (
     <div
       style={{
         position: 'relative',
@@ -27,7 +25,8 @@ const WithSpinner: React.FC<WithSpinnerProps> = ({
       />
     </div>
   ) : (
-    <>children</>
+    <>{children}</>
   );
+};
 
-export default withTheme()(WithSpinner);
+export default WithSpinner;

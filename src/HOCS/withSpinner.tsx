@@ -1,17 +1,17 @@
 import React, { ComponentType } from 'react';
-import WithLoader from '../components/WithLoader';
+import WithSpinner from '../components/WithSpinner';
 
-export type WithSpinner = {
+export type WithSpinnerProps = {
   loading?: boolean;
 };
 
 const withSpinner = <Props extends {}>(Component: ComponentType<Props>) => ({
   loading,
   ...props
-}: Props & WithSpinner) => (
-  <WithLoader loading={!!loading}>
+}: Props & WithSpinnerProps) => (
+  <WithSpinner loading={!!loading}>
     <Component {...props as Props} />
-  </WithLoader>
+  </WithSpinner>
 );
 
 export default withSpinner;
