@@ -85,6 +85,8 @@ const privateNavItems: INavItems = [
   },
 ];
 
+const makeAbsolute = (path: string) => urlJoin('/', path);
+
 type OnNavigate = () => void;
 
 interface ChildNavItemProps extends IChildNavItem {
@@ -128,7 +130,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
   const [isOpen, setOpen] = useState(false);
   const toggleOpen = () => setOpen(open => !open);
 
-  const absolutePath = urlJoin('/', navItemProps.path);
+  const absolutePath = makeAbsolute(navItemProps.path);
   const { '/': level } = countBy(absolutePath);
 
   return (
@@ -167,8 +169,13 @@ interface NavItemsProps {
 const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
   <List>
     {navItems.map(navItem => {
-      const { childNavItems, text } = navItem;
-      const navItemProps = { ...navItem, key: text, onNavigate };
+      const { childNavItems, text, path } = navItem;
+      const navItemProps = {
+        ...navItem,
+        key: text,
+        onNavigate,
+        path: makeAbsolute(path),
+      };
 
       return childNavItems.length ? (
         <NavItem {...navItemProps} />

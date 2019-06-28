@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import { kebabCase } from 'lodash';
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -21,7 +22,7 @@ export const rootPaths = {
   dashboard: '/',
 };
 
-const Dashboard: FC = () => <>Dashboard</>;
+const Dashboard: FC = () => <Typography>Dashboard</Typography>;
 
 const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
   <Switch>
