@@ -1,5 +1,5 @@
 import React, { ComponentType } from 'react';
-import WithSpinner from '../components/WithSpinner';
+import WithSpinner from '../WithSpinner';
 
 export type WithSpinnerProps = {
   loading?: boolean;
