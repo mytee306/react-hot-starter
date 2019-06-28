@@ -1,8 +1,7 @@
 import { Typography, withTheme, WithTheme } from '@material-ui/core';
 import { Breadcrumbs as MaterialBreadcrumbs } from '@material-ui/lab';
 import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/lab/Breadcrumbs';
-import dashify from 'dashify';
-import { startCase } from 'lodash';
+import { kebabCase, startCase } from 'lodash';
 import { head, init, last } from 'ramda';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
@@ -34,7 +33,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
   const disabled =
     rootPath &&
     !Object.keys(rootPaths)
-      .map(path => dashify(path))
+      .map(path => kebabCase(path))
       .includes(rootPath);
 
   const color = disabled ? theme.palette.error.dark : 'inherit';

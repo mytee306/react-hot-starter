@@ -1,4 +1,4 @@
-import dashify from 'dashify';
+import { kebabCase } from 'lodash';
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from '../components/NotFound';
@@ -15,7 +15,7 @@ const pathnames = ['store', 'signin', 'count', 'images'] as const;
 
 export const rootPaths = {
   ...pathnames.reduce(
-    (paths, path) => ({ ...paths, [path]: `/${dashify(path)}` }),
+    (paths, path) => ({ ...paths, [path]: `/${kebabCase(path)}` }),
     {} as Record<typeof pathnames[number], string>,
   ),
   dashboard: '/',

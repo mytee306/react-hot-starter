@@ -17,8 +17,7 @@ import {
   ExpandMore,
   Person,
 } from '@material-ui/icons';
-import dashify from 'dashify';
-import { countBy } from 'lodash';
+import { countBy, kebabCase } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
 import Link from '../components/Link';
@@ -41,7 +40,7 @@ const publicNavItems: INavItems = [
   {
     text: Signin,
     icon: <Person />,
-    path: dashify(Signin),
+    path: kebabCase(Signin),
     childNavItems: [],
   },
 ];
@@ -61,26 +60,26 @@ const privateNavItems: INavItems = [
   },
   {
     text: Count,
-    path: dashify(Count),
+    path: kebabCase(Count),
     icon: <BarChart />,
     childNavItems: [
       {
         text: Increment,
         icon: <ArrowUpward />,
-        path: dashify(Increment),
+        path: kebabCase(Increment),
         childNavItems: [],
       },
       {
         text: Decrement,
         icon: <ArrowDownward />,
-        path: dashify(Decrement),
+        path: kebabCase(Decrement),
         childNavItems: [],
       },
     ],
   },
   {
     text: Images,
-    path: dashify(Images),
+    path: kebabCase(Images),
     icon: <CloudUpload />,
     childNavItems: [],
   },
