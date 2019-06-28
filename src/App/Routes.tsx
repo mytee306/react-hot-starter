@@ -3,10 +3,10 @@ import { kebabCase } from 'lodash';
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from '../components/NotFound';
-import Count from '../Count';
-import Images from '../Images';
-import Signin from '../Signin';
-import { Store } from '../Store';
+import Count from '../pages/Count';
+import Images from '../pages/Images';
+import Signin from '../pages/Signin';
+import { Store } from '../pages/Store';
 
 export interface RoutesProps {
   isSignedIn: boolean;

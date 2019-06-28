@@ -3,9 +3,9 @@ import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import urlJoin from 'url-join';
-import Loader from '../components/Loader';
-import { CreateSimpleAction } from '../models/actions';
-import { State } from '../store/reducer';
+import Loader from '../../components/Loader';
+import { CreateSimpleAction } from '../../models/actions';
+import { State } from '../../store/reducer';
 import {
   CountState,
   createDecrementBy,
@@ -14,7 +14,7 @@ import {
   createIncrement,
   selectCountLoadingFlag,
   selectCountValue,
-} from '../store/slices/count';
+} from '../../store/slices/count';
 import Decrement from './Decrement';
 import Increment from './Increment';
 
@@ -57,7 +57,9 @@ const Count: FC<CountProps> = ({
           />
           <Route
             path={urlJoin(path, 'decrement')}
-            component={() => <Decrement decrementBy={decrementBy} isLoading={isLoading} />}
+            component={() => (
+              <Decrement decrementBy={decrementBy} isLoading={isLoading} />
+            )}
           />
         </Switch>
       </CardActions>

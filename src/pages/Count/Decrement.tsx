@@ -2,8 +2,8 @@ import { Divider, FormControl, TextField } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import React, { FC, memo } from 'react';
 import * as yup from 'yup';
-import Button from '../components/Button';
-import { CountState, CreateDecrementBy } from '../store/slices/count';
+import Button from '../../components/Button';
+import { CountState, CreateDecrementBy } from '../../store/slices/count';
 
 export interface Values {
   amount: CountState['value'];
@@ -55,7 +55,12 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => (
         <br />
         <Divider />
         <br />
-        <Button color="secondary" variant="contained" type="submit" isLoading={isLoading}>
+        <Button
+          color="secondary"
+          variant="contained"
+          type="submit"
+          isLoading={isLoading}
+        >
           Decrement
         </Button>
       </Form>

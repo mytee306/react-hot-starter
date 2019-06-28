@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import Button from '../components/Button';
-import { CreateSimpleAction } from '../models/actions';
-import { CountState } from '../store/slices/count';
+import Button from '../../components/Button';
+import { CreateSimpleAction } from '../../models/actions';
+import { CountState } from '../../store/slices/count';
 
 export interface IncrementProps {
   increment: CreateSimpleAction;

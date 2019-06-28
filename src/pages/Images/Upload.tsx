@@ -15,8 +15,8 @@ import { AddToPhotos, CheckCircleOutline } from '@material-ui/icons';
 import React, { createRef } from 'react';
 import { connect } from 'react-redux';
 import { Box, Flex } from 'rebass';
-import Spinner from '../components/Spinner';
-import { State } from '../store/reducer';
+import Spinner from '../../components/Spinner';
+import { State } from '../../store/reducer';
 import {
   createAddImage,
   CreateAddImage,
@@ -24,7 +24,7 @@ import {
   createUpload,
   Image,
   selectImages,
-} from '../store/slices/images';
+} from '../../store/slices/images';
 
 export interface UploadProps extends WithTheme {
   addImage: CreateAddImage;
