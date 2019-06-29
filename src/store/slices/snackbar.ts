@@ -7,10 +7,13 @@ export const variants = ['default', 'error', 'success', 'info'] as const;
 
 export type Variant = typeof variants[number];
 
-export interface SnackbarConfig {
+export interface SimpleSnackbarConfig {
   message: string;
-  variant: Variant;
   duration?: number;
+}
+
+export interface SnackbarConfig extends SimpleSnackbarConfig {
+  variant: Variant;
 }
 
 export interface SnackbarState {
@@ -55,4 +58,8 @@ export const createSetSnackbar = ({
 
 export const createSetErrorSnackbar = ({
   ...snackbar
-}: Omit<SnackbarConfig, 'variant'>) => set({ ...snackbar, variant: 'error' });
+}: SimpleSnackbarConfig) => set({ ...snackbar, variant: 'error' });
+
+export const createSetSuccessSnackbar = ({
+  ...snackbar
+}: SimpleSnackbarConfig) => set({ ...snackbar, variant: 'success' });
