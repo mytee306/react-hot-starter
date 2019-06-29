@@ -1,7 +1,7 @@
 import { Divider, FormControl, TextField } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import React, { FC, memo } from 'react';
-import * as yup from 'yup';
+import { number, object } from 'yup';
 import Button from '../../components/Button';
 import { CountState, CreateDecrementBy } from '../../store/slices/count';
 
@@ -13,9 +13,8 @@ const initialValues: Values = {
   amount: 1,
 };
 
-export const schema = yup.object().shape({
-  amount: yup
-    .number()
+export const schema = object().shape({
+  amount: number()
     .min(-5)
     .max(5)
     .required(),
