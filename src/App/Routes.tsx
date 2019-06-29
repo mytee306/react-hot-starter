@@ -12,7 +12,7 @@ export interface RoutesProps {
   isSignedIn: boolean;
 }
 
-const pathnames = ['store', 'signin', 'count', 'images'] as const;
+const pathnames = ['signin', 'dashboard', 'count', 'images', 'store'] as const;
 
 export const rootPaths = {
   ...pathnames.reduce(
