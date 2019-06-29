@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+
 import {
   createStyles,
   Snackbar as MaterialSnackbar,
@@ -14,7 +16,7 @@ import { EnhancedTheme } from '../models';
 import { CreateSimpleAction } from '../models/actions';
 import { selectSnackbar, State } from '../store/reducer';
 import {
-  createResetSnackbar,
+  createCloseSnackbar,
   SnackbarState,
   Variant,
 } from '../store/slices/snackbar';
@@ -22,7 +24,7 @@ import IconButton from './IconButton';
 
 export interface SnackbarProps extends WithStyles, SnackbarState {
   open: ReturnType<typeof selectSnackbar>['open'];
-  resetSnackbar: CreateSimpleAction;
+  closeSnackbar: CreateSimpleAction;
 }
 
 type GetVariants = (theme: EnhancedTheme) => Record<Variant, CSSProperties>;
@@ -51,22 +53,22 @@ const snackbarStyles = (theme: EnhancedTheme) =>
 const Snackbar: FC<SnackbarProps> = ({
   classes,
   open,
-  message,
-  duration,
-  resetSnackbar,
-  variant,
+  closeSnackbar,
+  queue,
 }) => {
+  const [{ duration, message, variant }] = queue;
+
   useEffect(() => {
     if (duration) {
-      setTimeout(
-        () => {
-          resetSnackbar();
-        },
-        duration,
-        resetSnackbar,
-      );
+      const timeout = setTimeout(() => {
+        closeSnackbar();
+      }, duration);
+
+      return () => {
+        clearTimeout(timeout);
+      };
     }
-  }, [duration, resetSnackbar]);
+  });
 
   return (
     <MaterialSnackbar open={open}>
@@ -78,7 +80,7 @@ const Snackbar: FC<SnackbarProps> = ({
             key={uuid()}
             aria-label="Close"
             className={classes.close}
-            onClick={() => resetSnackbar()}
+            onClick={() => closeSnackbar()}
           >
             <Close />
           </IconButton>,
@@ -91,6 +93,6 @@ const Snackbar: FC<SnackbarProps> = ({
 export default withStyles(snackbarStyles, { withTheme: true })(
   connect(
     (state: State) => selectSnackbar(state),
-    { resetSnackbar: createResetSnackbar },
+    { closeSnackbar: createCloseSnackbar },
   )(Snackbar),
 );

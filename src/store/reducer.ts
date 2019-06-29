@@ -1,13 +1,12 @@
+import { isEmpty } from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
 import auth from './slices/auth';
 import count from './slices/count';
-import snackbar, {
-  selectSnackbar as selectSnackbarState,
-} from './slices/snackbar';
-import theme from './slices/theme';
 import images from './slices/images';
+import snackbar, { selectSnackbar as selectSnackbarState } from './slices/snackbar';
+import theme from './slices/theme';
 
 const reducer = combineReducers({
   count,
@@ -68,10 +67,15 @@ export const selectSignedInFlag = createSelector(
 
 export const selectSnackbar = createSelector(
   selectSnackbarState,
-  snackbarState => {
-    const { message } = snackbarState;
+  ({ queue }) => {
+    const isQueueEmpty = isEmpty(queue);
 
-    return { ...snackbarState, open: Boolean(message) };
+    return {
+      queue: isQueueEmpty
+        ? queue.concat({ message: '', variant: 'default' })
+        : queue,
+      open: !isQueueEmpty,
+    };
   },
 );
 
