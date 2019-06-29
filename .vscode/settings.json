@@ -15,6 +15,7 @@
     "HOCS",
     "Signin",
     "Signout",
+    "Storyshots",
     "crossorigin",
     "immer",
     "linebreak",
