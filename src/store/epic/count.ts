@@ -22,7 +22,7 @@ import {
   initialState,
   selectCountValue,
 } from '../slices/count';
-import { createSetSnackbar } from '../slices/snackbar';
+import { createSetErrorSnackbar } from '../slices/snackbar';
 
 const countsCollection = firebase.firestore().collection('counts');
 
@@ -31,7 +31,7 @@ const setCount = (state$: StateObservable<State>) =>
     withLatestFrom(state$.pipe(map(selectUid))),
     switchMap(([value, uid]) => countsCollection.doc(uid).set({ value })),
     mergeMapTo(empty()),
-    catchError(({ message }) => of(createSetSnackbar({ message }))),
+    catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
   );
 
 const getCount: Epic = (action$, state$) =>
@@ -42,7 +42,7 @@ const getCount: Epic = (action$, state$) =>
     switchMap(doc => docData<Pick<CountState, 'value'>>(doc)),
     map(({ value = initialState.value }) => value),
     map(createSetCount),
-    catchError(({ message }) => of(createSetSnackbar({ message }))),
+    catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
   );
 
 const increment: Epic = (action$, state$) =>

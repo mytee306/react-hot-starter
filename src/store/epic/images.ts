@@ -13,7 +13,7 @@ import {
   selectImageEntities,
   slice,
 } from '../slices/images';
-import { createSetSnackbar } from '../slices/snackbar';
+import { createSetErrorSnackbar } from '../slices/snackbar';
 
 const upload: Epic = (action$, state$) =>
   action$.pipe(
@@ -37,7 +37,7 @@ const upload: Epic = (action$, state$) =>
       }),
     ),
     catchError(({ message }) =>
-      of(createSetSnackbar({ message, variant: 'error', duration: 3000 })),
+      of(createSetErrorSnackbar({ message, duration: 3000 })),
     ),
   );
 

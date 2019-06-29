@@ -46,9 +46,13 @@ export const {
   },
 });
 
+export default reducer;
+
 export const createSetSnackbar = ({
   variant = 'default',
   ...snackbar
 }: Optional<SnackbarConfig, 'variant'>) => set({ ...snackbar, variant });
 
-export default reducer;
+export const createSetErrorSnackbar = ({
+  ...snackbar
+}: Omit<SnackbarConfig, 'variant'>) => set({ ...snackbar, variant: 'error' });

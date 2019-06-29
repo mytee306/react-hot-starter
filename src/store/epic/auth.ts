@@ -17,7 +17,7 @@ import {
   SetAuthErrorAction,
   User,
 } from '../slices/auth';
-import { createSetSnackbar } from '../slices/snackbar';
+import { createSetErrorSnackbar } from '../slices/snackbar';
 
 const authState$: Epic = action$ =>
   action$.pipe(
@@ -69,7 +69,7 @@ const authError: Epic = action$ =>
   action$.pipe(
     ofType<SetAuthErrorAction>(createSetAuthError.toString()),
     map(({ payload }) => payload),
-    map(message => createSetSnackbar({ message })),
+    map(message => createSetErrorSnackbar({ message })),
   );
 
 export default [authState$, signIn, userUpdated, signedOut, signOut, authError];
