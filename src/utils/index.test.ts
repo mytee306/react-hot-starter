@@ -1,4 +1,3 @@
-import 'polyfill-object.fromentries';
 import { mapStateToProps } from '.';
 import { initialState, selectSignedInFlag } from '../store/reducer';
 
