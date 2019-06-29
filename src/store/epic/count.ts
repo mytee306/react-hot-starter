@@ -11,7 +11,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import firebase from '../../firebase';
-import { selectState } from '../../utils/operators';
+import { selectState, takeUntilSignedOut } from '../../utils/operators';
 import { selectUid, State } from '../reducer';
 import {
   CountState,
@@ -19,7 +19,6 @@ import {
   createGetCount,
   createIncrement,
   createSetCount,
-  initialState,
   selectCountValue,
 } from '../slices/count';
 import { createSetErrorSnackbar } from '../slices/snackbar';
@@ -39,8 +38,10 @@ const getCount: Epic = (action$, state$) =>
     ofType(createGetCount.toString()),
     selectState(selectUid)(state$),
     map(uid => countsCollection.doc(uid)),
-    switchMap(doc => docData<Pick<CountState, 'value'>>(doc)),
-    map(({ value = initialState.value }) => value),
+    switchMap(doc =>
+      docData<Pick<CountState, 'value'>>(doc).pipe(takeUntilSignedOut(state$)),
+    ),
+    map(({ value }) => value),
     map(createSetCount),
     catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
   );
