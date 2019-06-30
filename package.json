@@ -5,6 +5,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:serve": "serve build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
@@ -119,6 +120,7 @@
     "react-app-rewire-hot-loader": "^2.0.1",
     "react-app-rewired": "^2.1.1",
     "react-scripts": "^3.0.1",
+    "serve": "^11.0.2",
     "surge": "^0.21.3",
     "typescript": "^3.5.1",
     "utility-types": "^3.7.0",
