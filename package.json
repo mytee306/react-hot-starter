@@ -5,7 +5,6 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "build:serve": "serve build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
@@ -15,7 +14,8 @@
     "storybook:build": "build-storybook -c .storybook -o .out",
     "storybook:preview": "http-server .out",
     "storybook:deploy": "storybook-to-ghpages",
-    "deploy": "surge build"
+    "deploy": "surge build",
+    "serve:build": "serve build"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
