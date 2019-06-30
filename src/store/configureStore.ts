@@ -1,3 +1,4 @@
+import LogRocket from 'logrocket';
 import logger from 'redux-logger';
 import { createEpicMiddleware } from 'redux-observable';
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
@@ -7,7 +8,11 @@ import reducer from './reducer';
 
 const epicMiddleware = createEpicMiddleware();
 
-const middleware = [...getDefaultMiddleware(), epicMiddleware];
+const middleware = [
+  ...getDefaultMiddleware(),
+  epicMiddleware,
+  LogRocket.reduxMiddleware(),
+];
 
 export default () => {
   if (process.env.NODE_ENV === 'development') {
