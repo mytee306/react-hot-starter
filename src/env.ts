@@ -23,7 +23,7 @@ export type AllEnvironments = {
 
 const allEnvironments: AllEnvironments = {
   development,
-  production: {},
+  production: development,
   test: development,
 };
 
