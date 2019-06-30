@@ -4,6 +4,7 @@ module.exports = ({ config }) => {
     loader: require.resolve('babel-loader'),
     options: {
       presets: [['react-app', { flow: false, typescript: true }]],
+      // plugins: ['require-context-hook'], // ? does not work
     },
   });
 
