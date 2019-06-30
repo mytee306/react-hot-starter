@@ -13,7 +13,8 @@
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -c .storybook -o .out",
     "storybook:preview": "http-server .out",
-    "storybook:deploy": "storybook-to-ghpages"
+    "storybook:deploy": "storybook-to-ghpages",
+    "deploy": "surge build"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
@@ -118,6 +119,7 @@
     "react-app-rewire-hot-loader": "^2.0.1",
     "react-app-rewired": "^2.1.1",
     "react-scripts": "^3.0.1",
+    "surge": "^0.21.3",
     "typescript": "^3.5.1",
     "utility-types": "^3.7.0",
     "with-knobs": "^0.2.3"
