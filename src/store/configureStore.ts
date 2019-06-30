@@ -8,17 +8,13 @@ import reducer from './reducer';
 
 const epicMiddleware = createEpicMiddleware();
 
-const middleware = [
-  ...getDefaultMiddleware(),
-  epicMiddleware,
-  LogRocket.reduxMiddleware(),
-];
+const middleware = [...getDefaultMiddleware(), epicMiddleware];
 
 export default () => {
   if (process.env.NODE_ENV === 'development') {
     const store = configureStore({
       reducer,
-      middleware: [...middleware, logger],
+      middleware: middleware.concat(logger),
     });
 
     epicMiddleware.run(epic);
@@ -29,7 +25,10 @@ export default () => {
 
     return store;
   } else {
-    const store = configureStore({ reducer, middleware });
+    const store = configureStore({
+      reducer,
+      middleware: middleware.concat(LogRocket.reduxMiddleware()),
+    });
 
     epicMiddleware.run(epic);
 
