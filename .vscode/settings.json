@@ -16,6 +16,7 @@
     "Signin",
     "Signout",
     "Storyshots",
+    "commitlint",
     "crossorigin",
     "displayname",
     "immer",
