@@ -19,6 +19,7 @@
     "commitlint",
     "crossorigin",
     "displayname",
+    "disqus",
     "immer",
     "linebreak",
     "logrocket",
@@ -26,6 +27,7 @@
     "paren",
     "parens",
     "paypal",
+    "shortname",
     "storysource",
     "xstate"
   ]

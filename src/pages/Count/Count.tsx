@@ -3,6 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import urlJoin from 'url-join';
+import Disqus from '../../components/Disqus';
 import Loader from '../../components/Loader';
 import { CreateSimpleAction } from '../../models/actions';
 import { State } from '../../store/reducer';
@@ -39,31 +40,34 @@ const Count: FC<CountProps> = ({
   }, [getCount]);
 
   return (
-    <Card>
-      <CardHeader
-        title={
-          <>
-            Count: <Loader isLoading={isLoading}>{value}</Loader>
-          </>
-        }
-      />
-      <CardActions>
-        <Switch>
-          <Route
-            path={urlJoin(path, 'increment')}
-            component={() => (
-              <Increment isLoading={isLoading} increment={increment} />
-            )}
-          />
-          <Route
-            path={urlJoin(path, 'decrement')}
-            component={() => (
-              <Decrement decrementBy={decrementBy} isLoading={isLoading} />
-            )}
-          />
-        </Switch>
-      </CardActions>
-    </Card>
+    <>
+      <Card>
+        <CardHeader
+          title={
+            <>
+              Count: <Loader isLoading={isLoading}>{value}</Loader>
+            </>
+          }
+        />
+        <CardActions>
+          <Switch>
+            <Route
+              path={urlJoin(path, 'increment')}
+              component={() => (
+                <Increment isLoading={isLoading} increment={increment} />
+              )}
+            />
+            <Route
+              path={urlJoin(path, 'decrement')}
+              component={() => (
+                <Decrement decrementBy={decrementBy} isLoading={isLoading} />
+              )}
+            />
+          </Switch>
+        </CardActions>
+      </Card>
+      <Disqus />
+    </>
   );
 };
 
