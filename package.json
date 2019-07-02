@@ -15,7 +15,8 @@
     "storybook:preview": "http-server .out",
     "storybook:deploy": "storybook-to-ghpages",
     "deploy": "surge build",
-    "serve:build": "serve build"
+    "serve:build": "serve build",
+    "commitlint": "commitlint --from HEAD~1"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
