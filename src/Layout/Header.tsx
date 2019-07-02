@@ -1,24 +1,10 @@
-import {
-  AppBar,
-  createStyles,
-  Hidden,
-  Toolbar,
-  Tooltip,
-  Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+import { AppBar, createStyles, Hidden, Toolbar, Tooltip, Typography, WithStyles, withStyles } from '@material-ui/core';
 import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import IconButton from '../components/IconButton';
 import { CreateSimpleAction } from '../models/actions';
-import {
-  selectAuthLoadingFlag,
-  selectDarkThemeFlag,
-  selectSignedInFlag,
-  State,
-} from '../store/reducer';
+import { selectAuthLoadingFlag, selectDarkThemeFlag, selectSignedInFlag, State } from '../store/reducer';
 import { createSignout } from '../store/slices/auth';
 import { createToggleType } from '../store/slices/theme/palette/type';
 
@@ -69,7 +55,7 @@ const Header: FC<HeaderProps> = ({
         </IconButton>
       </Tooltip>
       {(isSignedIn || isAuthLoading) && (
-        <Tooltip title="Profile">
+        <Tooltip title="Sign out">
           <IconButton onClick={() => signOut()} loading={isAuthLoading}>
             <Person />
           </IconButton>
