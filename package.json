@@ -16,6 +16,7 @@
     "storybook:deploy": "storybook-to-ghpages",
     "deploy:surge": "surge build",
     "deploy": "firebase deploy --only hosting",
+    "deploy:firebase": "firebase deploy",
     "serve:build": "serve build",
     "commitlint": "commitlint --from HEAD~1"
   },
