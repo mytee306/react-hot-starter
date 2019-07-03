@@ -14,7 +14,8 @@
     "storybook:build": "build-storybook -c .storybook -o .out",
     "storybook:preview": "http-server .out",
     "storybook:deploy": "storybook-to-ghpages",
-    "deploy": "surge build",
+    "deploy:surge": "surge build",
+    "deploy": "firebase deploy",
     "serve:build": "serve build",
     "commitlint": "commitlint --from HEAD~1"
   },
