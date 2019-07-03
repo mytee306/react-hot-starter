@@ -1,4 +1,8 @@
+import 'matchmedia-polyfill';
+import 'matchmedia-polyfill/matchMedia.addListener';
 import React from 'react';
+// // @ts-ignore
+// import { render } from 'react-snapshot';
 import { render } from 'react-dom';
 import App from './App';
 import './index.scss';
