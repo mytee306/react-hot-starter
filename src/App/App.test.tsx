@@ -1,17 +1,11 @@
 /* eslint-disable immutable/no-mutation */
 
+import 'matchmedia-polyfill';
+import 'matchmedia-polyfill/matchMedia.addListener';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '.';
 import Provider from './Provider';
-
-window.matchMedia = jest.fn().mockImplementation(query => ({
-  matches: false,
-  media: query,
-  onchange: null,
-  addListener: jest.fn(),
-  removeListener: jest.fn(),
-}));
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

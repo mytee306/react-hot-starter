@@ -36,6 +36,7 @@
     "lodash": "^4.17.11",
     "logrocket": "^1.0.1",
     "logrocket-react": "^3.0.0",
+    "matchmedia-polyfill": "^0.3.2",
     "ramda": "^0.26.1",
     "react": "^16.8.6",
     "react-content-loader": "^4.2.1",
