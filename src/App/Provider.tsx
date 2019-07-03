@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from '../store';
 
 if (process.env.NODE_ENV === 'production') {
-  LogRocket.init('7lfo0w/react-hot-starter');
+  LogRocket.init('7lfo0w/react-hot-starter-dev');
 
   setupLogRocketReact(LogRocket);
 
