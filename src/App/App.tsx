@@ -1,4 +1,4 @@
-import { colors, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
 import React, { FC, useEffect } from 'react';
@@ -30,20 +30,15 @@ const App: FC<AppProps> = ({ getAuthState, isSignedIn, themeOptions }) => {
 
   const theme = createMuiTheme({
     ...themeOptions,
-    colors: { success: colors.green[600] },
-    typography: {
-      useNextVariants: true,
-    },
+    // colors: { success: colors.green[600] },
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <MuiThemeProvider theme={theme}>
-        <Layout isSignedIn={isSignedIn}>
-          <Routes isSignedIn={isSignedIn} />
-        </Layout>
-        <Snackbar />
-      </MuiThemeProvider>
+      <Layout isSignedIn={isSignedIn}>
+        <Routes isSignedIn={isSignedIn} />
+      </Layout>
+      <Snackbar />
     </ThemeProvider>
   );
 };

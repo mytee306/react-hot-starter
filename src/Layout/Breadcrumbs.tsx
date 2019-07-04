@@ -60,4 +60,4 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 
 export default connect((state: State) => ({
   isSignedIn: selectSignedInFlag(state),
-}))(withRouter(withTheme()(Breadcrumbs)));
+}))(withRouter(withTheme(Breadcrumbs)));

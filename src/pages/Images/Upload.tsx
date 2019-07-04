@@ -77,7 +77,7 @@ const Upload: React.FC<UploadProps> = ({
         onClick={() => uploadInputRef.current!.click()}
         variant="contained"
       >
-        <AddToPhotos style={{ marginRight: 2 * spacing.unit }} />
+        <AddToPhotos style={{ marginRight: spacing(2) }} />
         Choose image files
       </Button>
       <br />
@@ -94,7 +94,7 @@ const Upload: React.FC<UploadProps> = ({
                     <Typography
                       variant="h5"
                       style={{
-                        marginRight: spacing.unit,
+                        marginRight: spacing(1),
                         color: appropriate ? 'initial' : palette.error.dark,
                       }}
                     >
@@ -132,7 +132,7 @@ const Upload: React.FC<UploadProps> = ({
   );
 };
 
-export default withTheme()(
+export default withTheme(
   connect(
     (state: State) => ({ images: selectImages(state) }),
     { upload: createUpload, addImage: createAddImage },
