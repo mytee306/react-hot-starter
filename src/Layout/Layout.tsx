@@ -20,8 +20,10 @@ const minWidth = 240;
 
 const margin = 20;
 
-export const layoutStyles = (theme: EnhancedTheme) =>
-  createStyles({
+export const layoutStyles = (theme: EnhancedTheme) => {
+  const lg = theme.breakpoints.up('lg');
+
+  return createStyles({
     drawer: {
       minWidth,
     },
@@ -36,7 +38,7 @@ export const layoutStyles = (theme: EnhancedTheme) =>
     },
     content: {
       margin,
-      [theme.breakpoints.up('lg')]: {
+      [lg]: {
         marginLeft: margin + minWidth,
       },
       transition: theme.transitions.create(['margin'], {
@@ -44,15 +46,20 @@ export const layoutStyles = (theme: EnhancedTheme) =>
         duration: theme.transitions.duration.standard,
       }),
     },
+    header: {
+      [lg]: {
+        marginLeft: minWidth,
+      },
+    },
   });
-
+};
 export interface LayoutProps extends WithStyles<typeof layoutStyles> {
   theme: EnhancedTheme;
   isSignedIn: boolean;
 }
 
 const Layout: FC<LayoutProps> = ({
-  classes: { toolbar, drawer, drawerPaper, content },
+  classes: { toolbar, drawer, drawerPaper, content, header },
   children,
   theme,
   isSignedIn,
@@ -68,7 +75,7 @@ const Layout: FC<LayoutProps> = ({
   return (
     <section>
       <CssBaseline />
-      <Header toggle={handleDrawerToggle} />
+      <Header toggle={handleDrawerToggle} className={header} />
       <Drawer
         variant={isLargeScreen ? 'permanent' : 'temporary'}
         open={open}

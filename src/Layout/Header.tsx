@@ -1,16 +1,32 @@
-import { AppBar, createStyles, Hidden, Toolbar, Tooltip, Typography, WithStyles, withStyles } from '@material-ui/core';
+import {
+  AppBar,
+  createStyles,
+  Hidden,
+  Toolbar,
+  Tooltip,
+  Typography,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
 import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
+import classnames from 'classnames';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import IconButton from '../components/IconButton';
 import { CreateSimpleAction } from '../models/actions';
-import { selectAuthLoadingFlag, selectDarkThemeFlag, selectSignedInFlag, State } from '../store/reducer';
+import {
+  selectAuthLoadingFlag,
+  selectDarkThemeFlag,
+  selectSignedInFlag,
+  State,
+} from '../store/reducer';
 import { createSignout } from '../store/slices/auth';
 import { createToggleType } from '../store/slices/theme/palette/type';
 
 const headerStyles = createStyles({
   header: {
     flexGrow: 1,
+    width: 'auto',
   },
   expand: {
     flexGrow: 1,
@@ -28,6 +44,7 @@ export interface HeaderProps extends WithStyles<typeof headerStyles> {
   isSignedIn: ReturnType<typeof selectSignedInFlag>;
   signOut: CreateSimpleAction;
   isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
+  className: string;
 }
 
 const Header: FC<HeaderProps> = ({
@@ -38,8 +55,9 @@ const Header: FC<HeaderProps> = ({
   isSignedIn,
   signOut,
   isAuthLoading,
+  className,
 }) => (
-  <AppBar position="static" className={header}>
+  <AppBar position="static" className={classnames(header, className)}>
     <Toolbar>
       <Hidden lgUp>
         <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
