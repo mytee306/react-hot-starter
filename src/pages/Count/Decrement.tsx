@@ -35,7 +35,7 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => (
     }}
     validationSchema={schema}
   >
-    {({ values, errors, handleChange, handleBlur, isValid }) => (
+    {({ values, errors, handleChange, handleBlur }) => (
       <Form>
         <FormControl>
           <TextField
@@ -59,7 +59,7 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => (
           variant="contained"
           type="submit"
           isLoading={isLoading}
-          disabled={!isValid}
+          disabled={!isEmpty(errors)}
         >
           Decrement
         </Button>
