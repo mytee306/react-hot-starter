@@ -1,6 +1,5 @@
-import { Typography, withTheme, WithTheme } from '@material-ui/core';
-import { Breadcrumbs as MaterialBreadcrumbs } from '@material-ui/lab';
-import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/lab/Breadcrumbs';
+import { Breadcrumbs as MaterialBreadcrumbs, Typography, withTheme, WithTheme } from '@material-ui/core';
+import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/core/Breadcrumbs';
 import { kebabCase, startCase } from 'lodash';
 import { head, init, last } from 'ramda';
 import React, { FC } from 'react';
