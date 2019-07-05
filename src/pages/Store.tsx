@@ -12,7 +12,7 @@ import {
 import { startCase } from 'lodash';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import ghost from '../img/ghost.svg';
+import ghost from '../assets/img/ghost.svg';
 
 const product = {
   description: 'Ghostly sigh',
