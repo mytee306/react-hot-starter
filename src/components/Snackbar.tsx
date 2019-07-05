@@ -43,13 +43,16 @@ const getVariants: GetVariants = ({ palette, colors }) => ({
   },
 });
 
-const snackbarStyles = (theme: EnhancedTheme) =>
-  createStyles({
+const snackbarStyles = (theme: EnhancedTheme) => {
+  console.log('CONSUMED THEME', theme);
+
+  return createStyles({
     close: {
       padding: theme.spacing(1),
     },
     ...getVariants(theme),
   });
+};
 
 const Snackbar: FC<SnackbarProps> = ({
   classes,
