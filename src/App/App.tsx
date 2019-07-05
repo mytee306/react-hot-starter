@@ -1,5 +1,5 @@
-// @ts-ignore
-import { colors, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { colors, createMuiTheme } from '@material-ui/core';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
 import React, { FC, useEffect } from 'react';
