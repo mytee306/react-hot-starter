@@ -66,7 +66,7 @@ const Count: FC<CountProps> = ({
           </Switch>
         </CardActions>
       </Card>
-      <Disqus />
+      {process.env.NODE_ENV === 'production' && <Disqus />}
     </>
   );
 };
