@@ -1,11 +1,11 @@
 import 'firebase/storage';
+import firebase from 'my-firebase';
 import { Epic, ofType } from 'redux-observable';
 import { putString } from 'rxfire/storage';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import urlJoin from 'url-join';
-import firebase from '../../firebase';
-import { selectState } from '../../utils/operators';
+import { selectState } from 'utils/operators';
 import { selectUid } from '../reducer';
 import {
   createUpdateProgress,

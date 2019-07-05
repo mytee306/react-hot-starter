@@ -1,12 +1,11 @@
 import { Card, CardActions, CardHeader } from '@material-ui/core';
+import Disqus from 'components/Disqus';
+import Loader from 'components/Loader';
+import { CreateSimpleAction } from 'models/actions';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
-import urlJoin from 'url-join';
-import Disqus from '../../components/Disqus';
-import Loader from '../../components/Loader';
-import { CreateSimpleAction } from '../../models/actions';
-import { State } from '../../store/reducer';
+import { State } from 'store/reducer';
 import {
   CountState,
   createDecrementBy,
@@ -15,7 +14,8 @@ import {
   createIncrement,
   selectCountLoadingFlag,
   selectCountValue,
-} from '../../store/slices/count';
+} from 'store/slices/count';
+import urlJoin from 'url-join';
 import Decrement from './Decrement';
 import Increment from './Increment';
 

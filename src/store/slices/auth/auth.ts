@@ -1,7 +1,7 @@
 import { User as FirebaseUser, UserInfo } from 'firebase/app';
 import { combineReducers } from 'redux';
 import { createAction, createReducer } from 'redux-starter-kit';
-import { prefixActionType } from '../../../utils';
+import { prefixActionType } from 'utils';
 
 const prefix = prefixActionType('auth');
 
@@ -51,8 +51,7 @@ export const createSetAuthError = createAction<string>(prefix('error'));
 export type SetAuthErrorAction = ReturnType<typeof createSetAuthError>;
 
 export const error = createReducer<AuthState['error'], SetAuthErrorAction>('', {
-  [createSetAuthError.toString()]: (_, { payload }) =>
-    payload,
+  [createSetAuthError.toString()]: (_, { payload }) => payload,
 });
 
 const setToTrue = () => true;

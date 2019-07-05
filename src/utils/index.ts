@@ -1,8 +1,8 @@
 /* eslint-disable indent */
 import { useTheme as useMaterialTheme } from '@material-ui/styles';
+import { EnhancedTheme } from 'models';
 import { Selector } from 'react-redux';
-import { EnhancedTheme } from '../models';
-import { State } from '../store/reducer';
+import { State } from 'store/reducer';
 
 const prefixActionTypeWithSeparator = (separator: string) => (
   prefix: string,

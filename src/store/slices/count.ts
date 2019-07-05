@@ -1,7 +1,7 @@
 import { createAction, createSlice, PayloadAction, Reducer } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
-import { prefixActionType } from '../../utils';
+import { prefixActionType } from 'utils';
 
 export const slice = 'count';
 

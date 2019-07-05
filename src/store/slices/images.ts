@@ -1,8 +1,8 @@
 import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
+import { prefixActionType } from 'utils';
 import uuid from 'uuid/v4';
-import { prefixActionType } from '../../utils';
 
 export const slice = 'images';
 

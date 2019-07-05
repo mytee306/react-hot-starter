@@ -1,4 +1,5 @@
 import 'firebase/firestore';
+import firebase from 'my-firebase';
 import { inc } from 'ramda';
 import { Epic, ofType, StateObservable } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
@@ -10,8 +11,7 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs/operators';
-import firebase from '../../firebase';
-import { selectState, takeUntilSignedOut } from '../../utils/operators';
+import { selectState, takeUntilSignedOut } from 'utils/operators';
 import { selectUid, State } from '../reducer';
 import {
   CountState,
