@@ -18,7 +18,7 @@ import {
   Person,
 } from '@material-ui/icons';
 import Link from 'components/Link';
-import { countBy, kebabCase } from 'lodash';
+import { capitalize, countBy, kebabCase } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
 import { makeAbsolute } from 'utils';
@@ -35,52 +35,52 @@ interface INavItem extends IChildNavItem {
 
 type INavItems = INavItem[];
 
-const Signin = 'Signin';
+const signin = 'signin';
 
 const publicNavItems: INavItems = [
   {
-    text: Signin,
+    text: signin,
     icon: <Person />,
-    path: kebabCase(Signin),
+    path: makeAbsolute(kebabCase(signin)),
     childNavItems: [],
   },
 ];
 
-const Home = 'Dashboard';
-const Count = 'Count';
-const Increment = 'Increment';
-const Decrement = 'Decrement';
-const Images = 'Images';
+const home = 'dashboard';
+const count = 'count';
+const increment = 'increment';
+const decrement = 'decrement';
+const images = 'images';
 
 const privateNavItems: INavItems = [
   {
-    text: Home,
+    text: capitalize(home),
     icon: <Dashboard />,
     path: '',
     childNavItems: [],
   },
   {
-    text: Count,
-    path: kebabCase(Count),
+    text: capitalize(count),
+    path: makeAbsolute(kebabCase(count)),
     icon: <BarChart />,
     childNavItems: [
       {
-        text: Increment,
+        text: capitalize(increment),
         icon: <ArrowUpward />,
-        path: kebabCase(Increment),
+        path: makeAbsolute(kebabCase(increment)),
         childNavItems: [],
       },
       {
-        text: Decrement,
+        text: capitalize(decrement),
         icon: <ArrowDownward />,
-        path: kebabCase(Decrement),
+        path: makeAbsolute(kebabCase(decrement)),
         childNavItems: [],
       },
     ],
   },
   {
-    text: Images,
-    path: kebabCase(Images),
+    text: capitalize(images),
+    path: makeAbsolute(kebabCase(images)),
     icon: <CloudUpload />,
     childNavItems: [],
   },
@@ -129,8 +129,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
   const [isOpen, setOpen] = useState(false);
   const toggleOpen = () => setOpen(open => !open);
 
-  const absolutePath = makeAbsolute(navItemProps.path);
-  const { '/': level } = countBy(absolutePath);
+  const { '/': level } = countBy(navItemProps.path);
 
   return (
     <>
@@ -149,7 +148,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
         <NavItems
           navItems={childNavItems.map(({ path, ...childItem }) => ({
             ...childItem,
-            path: urlJoin(absolutePath, path),
+            path: urlJoin(navItemProps.path, path),
           }))}
           onNavigate={onNavigate}
         />
@@ -173,7 +172,7 @@ const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
         ...navItem,
         key: text,
         onNavigate,
-        path: makeAbsolute(path),
+        path,
       };
 
       return childNavItems.length ? (
