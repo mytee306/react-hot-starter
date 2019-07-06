@@ -34,8 +34,6 @@ const App: FC<AppProps> = ({ getAuthState, isSignedIn, themeOptions }) => {
     colors: { success: colors.green[600] },
   });
 
-  console.log('PROVIDED THEME', theme);
-
   return (
     <ThemeProvider theme={theme}>
       <MuiThemeProvider theme={theme}>

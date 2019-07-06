@@ -35,24 +35,20 @@ const getVariants: GetVariants = ({ palette, colors }) => ({
     backgroundColor: palette.error.main,
   },
   success: {
-    // backgroundColor: colors!.success,
-    backgroundColor: 'lightgreen',
+    backgroundColor: colors!.success,
   },
   info: {
     backgroundColor: palette.primary.light,
   },
 });
 
-const snackbarStyles = (theme: EnhancedTheme) => {
-  console.log('CONSUMED THEME', theme);
-
-  return createStyles({
+const snackbarStyles = (theme: EnhancedTheme) =>
+  createStyles({
     close: {
       padding: theme.spacing(1),
     },
     ...getVariants(theme),
   });
-};
 
 const Snackbar: FC<SnackbarProps> = ({
   classes,
