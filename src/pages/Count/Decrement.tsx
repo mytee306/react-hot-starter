@@ -1,14 +1,18 @@
 import { Typography } from '@material-ui/core';
 import { Slider } from '@material-ui/lab';
 import Button from 'components/Button';
-import React, { FC, useState } from 'react';
-import { Box } from 'rebass';
+import React, { ComponentProps, FC, useState } from 'react';
 import { CountState, CreateDecrementBy } from 'store/slices/count';
 
 export interface DecrementProps {
   decrementBy: CreateDecrementBy;
   isLoading: CountState['isLoading'];
 }
+
+export const marks: ComponentProps<typeof Slider>['marks'] = [
+  { value: 1, label: 'Minimum' },
+  { value: 10, label: 'Maximum' },
+];
 
 const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
   const [amount, setAmount] = useState(1);
@@ -21,26 +25,19 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
         decrementBy(amount);
       }}
     >
-      <Box
-        style={{
-          display: 'grid',
-          gridAutoFlow: 'column',
-          alignItems: 'center',
-          gridGap: 10,
-        }}
-      >
-        <Typography>Decrement By Amount</Typography>
-        <Typography variant="title">{amount}</Typography>
-      </Box>
+      <Typography>Decrement By Amount</Typography>
+      <br />
       <br />
       <br />
       <Slider
         min={1}
         max={10}
         value={amount}
-        onChange={(_, value) => setAmount(value)}
+        valueLabelDisplay="on"
+        onChange={(_, value) => setAmount(value as number)}
         step={1}
-        style={{ marginLeft: 5 }}
+        marks={marks}
+        style={{ marginLeft: 30 }}
       />
 
       <br />
