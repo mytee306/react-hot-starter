@@ -9,10 +9,6 @@ import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { makeAbsolute } from 'utils';
 
-export interface RoutesProps {
-  isSignedIn: boolean;
-}
-
 const pathnames = ['signin', 'dashboard', 'count', 'images', 'store'] as const;
 
 export const rootPaths = {
@@ -22,6 +18,10 @@ export const rootPaths = {
   ),
   dashboard: '/',
 };
+
+export interface RoutesProps {
+  isSignedIn: boolean;
+}
 
 const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
   <Switch>

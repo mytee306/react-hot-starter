@@ -18,10 +18,16 @@ import {
   Person,
 } from '@material-ui/icons';
 import Link from 'components/Link';
-import { capitalize, countBy, kebabCase } from 'lodash';
+import { countBy, kebabCase } from 'lodash';
+import { pipe } from 'ramda';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
 import { makeAbsolute } from 'utils';
+
+const toPath = pipe(
+  makeAbsolute,
+  kebabCase,
+);
 
 interface IChildNavItem {
   text: string;
@@ -41,46 +47,46 @@ const publicNavItems: INavItems = [
   {
     text: signin,
     icon: <Person />,
-    path: makeAbsolute(kebabCase(signin)),
+    path: toPath(signin),
     childNavItems: [],
   },
 ];
 
-const home = 'dashboard';
-const count = 'count';
-const increment = 'increment';
-const decrement = 'decrement';
-const images = 'images';
+const home = 'Dashboard';
+const count = 'Count';
+const increment = 'Increment';
+const decrement = 'Decrement';
+const images = 'Images';
 
 const privateNavItems: INavItems = [
   {
-    text: capitalize(home),
+    text: home,
     icon: <Dashboard />,
     path: '',
     childNavItems: [],
   },
   {
-    text: capitalize(count),
-    path: makeAbsolute(kebabCase(count)),
+    text: count,
+    path: toPath(count),
     icon: <BarChart />,
     childNavItems: [
       {
-        text: capitalize(increment),
+        text: increment,
         icon: <ArrowUpward />,
-        path: makeAbsolute(kebabCase(increment)),
+        path: toPath(increment),
         childNavItems: [],
       },
       {
-        text: capitalize(decrement),
+        text: decrement,
         icon: <ArrowDownward />,
-        path: makeAbsolute(kebabCase(decrement)),
+        path: toPath(decrement),
         childNavItems: [],
       },
     ],
   },
   {
-    text: capitalize(images),
-    path: makeAbsolute(kebabCase(images)),
+    text: images,
+    path: toPath(images),
     icon: <CloudUpload />,
     childNavItems: [],
   },
