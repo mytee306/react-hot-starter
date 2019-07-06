@@ -1,10 +1,11 @@
 import { Card, CardActions, CardHeader } from '@material-ui/core';
 import Disqus from 'components/Disqus';
 import Loader from 'components/Loader';
+import Switch from 'components/Switch';
 import { CreateSimpleAction } from 'models/actions';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { Route, RouteComponentProps } from 'react-router-dom';
 import { State } from 'store/reducer';
 import {
   CountState,

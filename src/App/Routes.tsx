@@ -1,12 +1,12 @@
 import { Typography } from '@material-ui/core';
-import NotFound from 'components/NotFound';
+import Switch from 'components/Switch';
 import { kebabCase } from 'lodash';
 import Count from 'pages/Count';
 import Images from 'pages/Images';
 import Signin from 'pages/Signin';
 import { Store } from 'pages/Store';
 import React, { FC } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 export interface RoutesProps {
   isSignedIn: boolean;
@@ -35,7 +35,6 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     <Route path={rootPaths.images} component={Images} />
     <Route path={rootPaths.count} component={Count} />
     <Route path={rootPaths.store} component={Store} />
-    <Route component={NotFound} />
   </Switch>
 );
 
