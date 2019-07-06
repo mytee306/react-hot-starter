@@ -6,7 +6,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Tooltip,
   Typography,
   withTheme,
   WithTheme,
@@ -16,6 +15,7 @@ import React, { createRef } from 'react';
 import { connect } from 'react-redux';
 import { Box, Flex } from 'rebass';
 import Spinner from '../../components/Spinner';
+import Tooltip from '../../components/Tooltip';
 import { State } from '../../store/reducer';
 import {
   createAddImage,

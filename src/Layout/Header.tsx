@@ -3,7 +3,6 @@ import {
   createStyles,
   Hidden,
   Toolbar,
-  Tooltip,
   Typography,
   WithStyles,
   withStyles,
@@ -13,6 +12,7 @@ import classnames from 'classnames';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import IconButton from '../components/IconButton';
+import Tooltip from '../components/Tooltip';
 import { CreateSimpleAction } from '../models/actions';
 import {
   selectAuthLoadingFlag,
