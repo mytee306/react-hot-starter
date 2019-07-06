@@ -11,7 +11,7 @@
     "test": "npm run test:all -- --testPathIgnorePatterns puppeteer",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
-    "cpd": "jscpd src --ignore src/img/*",
+    "cpd": "jscpd src --ignore src/assets/img/*",
     "ci": "cross-env CI=true run-p cpd lint test build",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -c .storybook -o .out",
