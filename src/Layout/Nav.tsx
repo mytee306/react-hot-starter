@@ -21,6 +21,7 @@ import Link from 'components/Link';
 import { countBy, kebabCase } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
+import { makeAbsolute } from 'utils';
 
 interface IChildNavItem {
   text: string;
@@ -84,8 +85,6 @@ const privateNavItems: INavItems = [
     childNavItems: [],
   },
 ];
-
-const makeAbsolute = (path: string) => urlJoin('/', path);
 
 type OnNavigate = () => void;
 

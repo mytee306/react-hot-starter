@@ -3,6 +3,7 @@ import { useTheme as useMaterialTheme } from '@material-ui/styles';
 import { EnhancedTheme } from 'models';
 import { Selector } from 'react-redux';
 import { State } from 'store/reducer';
+import urlJoin from 'url-join';
 
 const prefixActionTypeWithSeparator = (separator: string) => (
   prefix: string,
@@ -11,6 +12,8 @@ const prefixActionTypeWithSeparator = (separator: string) => (
 export const prefixActionType = prefixActionTypeWithSeparator('/');
 
 export const useTheme = () => useMaterialTheme<EnhancedTheme>();
+
+export const makeAbsolute = (path: string) => urlJoin('/', path);
 
 export const getPathFromComponent = <Component extends React.FC<any>>(
   component: Component,
