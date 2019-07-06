@@ -19,6 +19,7 @@ const Link: FC<LinkProps> = ({
   color = 'inherit',
   to,
   match: { path },
+  staticContext: _,
   ...props
 }) => {
   const [hovered, setHovered] = useState(false);
