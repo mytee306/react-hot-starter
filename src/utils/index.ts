@@ -1,6 +1,8 @@
 /* eslint-disable indent */
 import { useTheme as useMaterialTheme } from '@material-ui/styles';
+import { kebabCase } from 'lodash';
 import { EnhancedTheme } from 'models';
+import { pipe } from 'ramda';
 import { Selector } from 'react-redux';
 import { State } from 'store';
 import urlJoin from 'url-join';
@@ -14,6 +16,24 @@ export const prefixActionType = prefixActionTypeWithSeparator('/');
 export const useTheme = () => useMaterialTheme<EnhancedTheme>();
 
 export const makeAbsolute = (path: string) => urlJoin('/', path);
+
+export const toAbsolutePath = pipe(
+  kebabCase,
+  makeAbsolute,
+);
+
+export const toObject = <A extends readonly any[]>(array: A) =>
+  ({
+    ...array.reduce((as, a) => ({ ...as, [a]: a }), {}),
+  } as { [a in A[number]]: a });
+
+export const objectMap = <V, R>(f: (v: V) => R) => <K extends string>(
+  o: Record<K, V>,
+) =>
+  Object.entries<V>(o).reduce(
+    (object, [key, value]) => ({ ...object, [key]: f(value) }),
+    {},
+  ) as Record<K, R>;
 
 export const getPathFromComponent = <Component extends React.FC<any>>(
   component: Component,

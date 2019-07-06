@@ -23,7 +23,7 @@ const NotFound: React.FC<NotFoundProps> = ({ togglePageFound }) => {
     <div
       style={{ display: 'grid', alignItems: 'center', justifyItems: 'center' }}
     >
-      <img style={{ width: '10vw' }} src={notFoundImgSrc} alt="not found" />
+      <img style={{ width: 140 }} src={notFoundImgSrc} alt="not found" />
       <br />
       <br />
       <Typography variant="h4">Page not found</Typography>

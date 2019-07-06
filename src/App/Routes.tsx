@@ -1,19 +1,8 @@
 import { Switch } from 'components';
-import { kebabCase } from 'lodash';
+import { absoluteRootPaths } from 'Layout/Nav';
 import { Count, Dashboard, Images, Signin, Store } from 'pages';
 import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { makeAbsolute } from 'utils';
-
-const pathnames = ['signin', 'dashboard', 'count', 'images', 'store'] as const;
-
-export const rootPaths = {
-  ...pathnames.reduce(
-    (paths, path) => ({ ...paths, [path]: makeAbsolute(kebabCase(path)) }),
-    {} as Record<typeof pathnames[number], string>,
-  ),
-  dashboard: '/',
-};
 
 export interface RoutesProps {
   isSignedIn: boolean;
@@ -23,13 +12,22 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
   <Switch>
     {isSignedIn ? null : <Route component={Signin} />}
     <Route
-      path={rootPaths.signin}
-      render={() => <Redirect to={rootPaths.dashboard} />}
+      path={absoluteRootPaths.signin}
+      render={() => <Redirect to={absoluteRootPaths.dashboard} />}
     />
-    <Route exact path={rootPaths.dashboard} component={Dashboard} />
-    <Route path={rootPaths.images} component={Images} />
-    <Route path={rootPaths.count} component={Count} />
-    <Route path={rootPaths.store} component={Store} />
+    <Route exact path={absoluteRootPaths.dashboard} component={Dashboard} />
+    <Route path={absoluteRootPaths.count} component={Count} />
+    <Route path={absoluteRootPaths.images} component={Images} />
+    <Route path={absoluteRootPaths.store} component={Store} />
+    {/* {absoluteRootPathnames
+      .filter(path => path === absoluteRootPaths.dashboard)
+      .map((path, i) => (
+        <Route
+          key={path}
+          path={path}
+          component={pages[textRootPathnames[i] as any]}
+        />
+      ))} */}
   </Switch>
 );
 

@@ -18,16 +18,10 @@ import {
   Person,
 } from '@material-ui/icons';
 import { Link } from 'components';
-import { countBy, kebabCase } from 'lodash';
-import { pipe } from 'ramda';
+import { capitalize, countBy } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
-import { makeAbsolute } from 'utils';
-
-const toPath = pipe(
-  makeAbsolute,
-  kebabCase,
-);
+import { objectMap, toAbsolutePath, toObject } from 'utils';
 
 interface IChildNavItem {
   text: string;
@@ -41,52 +35,82 @@ interface INavItem extends IChildNavItem {
 
 type INavItems = INavItem[];
 
-const signin = 'signin';
+const rootPathnames = [
+  'signin',
+  'dashboard',
+  'count',
+  'images',
+  'store',
+] as const;
+
+export const absoluteRootPathnames = rootPathnames.map(toAbsolutePath);
+
+export const textRootPathnames = rootPathnames.map(capitalize);
+
+type RootPathnames = typeof rootPathnames[number];
+
+const secondaryPathnames = ['increment', 'decrement'] as const;
+
+type SecondaryPathnames = typeof secondaryPathnames[number];
+
+const pathnames: Array<RootPathnames | SecondaryPathnames> = [
+  ...rootPathnames,
+  ...secondaryPathnames,
+];
+
+const toAbsolutePathObject = objectMap(toAbsolutePath);
+
+const rootPaths = toObject(rootPathnames);
+
+export const absoluteRootPaths: Record<keyof typeof rootPaths, string> = {
+  ...toAbsolutePathObject(rootPaths),
+  dashboard: '/',
+};
+
+const paths = toObject(pathnames);
+
+export const textPaths = objectMap(capitalize)(paths);
+
+const absolutePaths = toAbsolutePathObject(paths);
 
 const publicNavItems: INavItems = [
   {
-    text: signin,
+    text: textPaths.signin,
     icon: <Person />,
-    path: toPath(signin),
+    path: absolutePaths.signin,
     childNavItems: [],
   },
 ];
 
-const home = 'Dashboard';
-const count = 'Count';
-const increment = 'Increment';
-const decrement = 'Decrement';
-const images = 'Images';
-
 const privateNavItems: INavItems = [
   {
-    text: home,
+    text: textPaths.dashboard,
     icon: <Dashboard />,
     path: '',
     childNavItems: [],
   },
   {
-    text: count,
-    path: toPath(count),
+    text: textPaths.count,
+    path: absolutePaths.count,
     icon: <BarChart />,
     childNavItems: [
       {
-        text: increment,
+        text: textPaths.increment,
         icon: <ArrowUpward />,
-        path: toPath(increment),
+        path: absolutePaths.increment,
         childNavItems: [],
       },
       {
-        text: decrement,
+        text: textPaths.decrement,
         icon: <ArrowDownward />,
-        path: toPath(decrement),
+        path: absolutePaths.decrement,
         childNavItems: [],
       },
     ],
   },
   {
-    text: images,
-    path: toPath(images),
+    text: textPaths.images,
+    path: absolutePaths.images,
     icon: <CloudUpload />,
     childNavItems: [],
   },
