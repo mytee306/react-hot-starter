@@ -1,12 +1,13 @@
-import { Typography } from '@material-ui/core';
 import Switch from 'components/Switch';
 import { kebabCase } from 'lodash';
 import Count from 'pages/Count';
+import Dashboard from 'pages/Dashboard';
 import Images from 'pages/Images';
 import Signin from 'pages/Signin';
 import { Store } from 'pages/Store';
 import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import { makeAbsolute } from 'utils';
 
 export interface RoutesProps {
   isSignedIn: boolean;
@@ -16,13 +17,11 @@ const pathnames = ['signin', 'dashboard', 'count', 'images', 'store'] as const;
 
 export const rootPaths = {
   ...pathnames.reduce(
-    (paths, path) => ({ ...paths, [path]: `/${kebabCase(path)}` }),
+    (paths, path) => ({ ...paths, [path]: makeAbsolute(kebabCase(path)) }),
     {} as Record<typeof pathnames[number], string>,
   ),
   dashboard: '/',
 };
-
-const Dashboard: FC = () => <Typography>Dashboard</Typography>;
 
 const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
   <Switch>
