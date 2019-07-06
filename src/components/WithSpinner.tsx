@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useTheme } from '../utils';
+import { useTheme } from 'utils';
 import Spinner from './Spinner';
 
 export interface WithLoaderProps {

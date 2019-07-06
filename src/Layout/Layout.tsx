@@ -10,8 +10,8 @@ import {
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { ChevronLeft } from '@material-ui/icons';
 import React, { FC, useState } from 'react';
-import IconButton from '../components/IconButton';
-import { EnhancedTheme } from '../models';
+import IconButton from 'components/IconButton';
+import { EnhancedTheme } from 'models';
 import Breadcrumbs from './Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';

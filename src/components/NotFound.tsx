@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
+import notFoundImgSrc from 'assets/img/ghost.svg';
 import React from 'react';
-import notFoundImgSrc from '../assets/img/ghost.svg';
 import Link from './Link';
 
 const NotFound: React.FC = () => (

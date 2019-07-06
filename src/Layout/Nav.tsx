@@ -17,10 +17,10 @@ import {
   ExpandMore,
   Person,
 } from '@material-ui/icons';
+import Link from 'components/Link';
 import { countBy, kebabCase } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
-import Link from '../components/Link';
 
 interface IChildNavItem {
   text: string;

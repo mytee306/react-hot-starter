@@ -1,12 +1,12 @@
 import { Typography } from '@material-ui/core';
+import NotFound from 'components/NotFound';
 import { kebabCase } from 'lodash';
+import Count from 'pages/Count';
+import Images from 'pages/Images';
+import Signin from 'pages/Signin';
+import { Store } from 'pages/Store';
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import NotFound from '../components/NotFound';
-import Count from '../pages/Count';
-import Images from '../pages/Images';
-import Signin from '../pages/Signin';
-import { Store } from '../pages/Store';
 
 export interface RoutesProps {
   isSignedIn: boolean;

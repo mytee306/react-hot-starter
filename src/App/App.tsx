@@ -1,15 +1,15 @@
 import { colors, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
+import Snackbar from 'components/Snackbar';
+import Layout from 'Layout';
+import { WithColors } from 'models';
+import { CreateSimpleAction } from 'models/actions';
 import React, { FC, useEffect } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import Snackbar from '../components/Snackbar';
-import Layout from '../Layout';
-import { WithColors } from '../models';
-import { CreateSimpleAction } from '../models/actions';
-import { selectSignedInFlag, selectTheme, State } from '../store/reducer';
-import { createGetAuthState } from '../store/slices/auth';
+import { selectSignedInFlag, selectTheme, State } from 'store/reducer';
+import { createGetAuthState } from 'store/slices/auth';
 import Routes from './Routes';
 
 declare module '@material-ui/core/styles/createMuiTheme' {

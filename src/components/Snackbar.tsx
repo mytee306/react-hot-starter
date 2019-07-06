@@ -9,17 +9,17 @@ import {
 } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/core/styles/withStyles';
 import { Close } from '@material-ui/icons';
+import { EnhancedTheme } from 'models';
+import { CreateSimpleAction } from 'models/actions';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import uuid from 'uuid/v4';
-import { EnhancedTheme } from '../models';
-import { CreateSimpleAction } from '../models/actions';
-import { selectSnackbar, State } from '../store/reducer';
+import { selectSnackbar, State } from 'store/reducer';
 import {
   createCloseSnackbar,
   SnackbarState,
   Variant,
-} from '../store/slices/snackbar';
+} from 'store/slices/snackbar';
+import uuid from 'uuid/v4';
 import IconButton from './IconButton';
 
 export interface SnackbarProps extends WithStyles, SnackbarState {

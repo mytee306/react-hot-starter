@@ -9,10 +9,10 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import ghost from 'assets/img/ghost.svg';
 import { startCase } from 'lodash';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import ghost from '../assets/img/ghost.svg';
 
 const product = {
   description: 'Ghostly sigh',

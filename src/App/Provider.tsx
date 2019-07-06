@@ -3,7 +3,7 @@ import setupLogRocketReact from 'logrocket-react';
 import React, { SFC } from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import configureStore from '../store';
+import configureStore from 'store';
 
 if (process.env.NODE_ENV === 'production') {
   LogRocket.init('7lfo0w/react-hot-starter-dev');
