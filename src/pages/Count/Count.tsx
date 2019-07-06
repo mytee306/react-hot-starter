@@ -1,5 +1,6 @@
-import { Card, CardActions, CardHeader } from '@material-ui/core';
+import { Card, CardActions, CardHeader, Typography } from '@material-ui/core';
 import Disqus from 'components/Disqus';
+import Link from 'components/Link';
 import Loader from 'components/Loader';
 import Switch from 'components/Switch';
 import { CreateSimpleAction } from 'models/actions';
@@ -52,6 +53,23 @@ const Count: FC<CountProps> = ({
         />
         <CardActions>
           <Switch>
+            <Route
+              path={urlJoin(path, '/')}
+              exact
+              render={() => (
+                <Typography>
+                  You may{' '}
+                  <Link to="increment" style={{ textDecoration: 'underline' }}>
+                    increment
+                  </Link>{' '}
+                  or{' '}
+                  <Link to="decrement" style={{ textDecoration: 'underline' }}>
+                    decrement
+                  </Link>{' '}
+                  your count
+                </Typography>
+              )}
+            />
             <Route
               path={urlJoin(path, 'increment')}
               render={() => (

@@ -5,7 +5,10 @@ import { createSelector, defaultMemoize } from 'reselect';
 import auth from './slices/auth';
 import count from './slices/count';
 import images from './slices/images';
-import snackbar, { selectSnackbar as selectSnackbarState } from './slices/snackbar';
+import router from './slices/router';
+import snackbar, {
+  selectSnackbar as selectSnackbarState,
+} from './slices/snackbar';
 import theme from './slices/theme';
 
 const reducer = combineReducers({
@@ -14,6 +17,7 @@ const reducer = combineReducers({
   auth,
   snackbar,
   images,
+  router,
 });
 
 export type State = ReturnType<typeof reducer>;

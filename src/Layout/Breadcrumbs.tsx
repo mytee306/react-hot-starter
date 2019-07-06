@@ -5,55 +5,40 @@ import {
   WithTheme,
 } from '@material-ui/core';
 import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/core/Breadcrumbs';
-import { rootPaths } from 'App/Routes';
 import Link from 'components/Link';
-import { kebabCase, startCase } from 'lodash';
-import { head, init, last } from 'ramda';
+import { startCase } from 'lodash';
+import { init, last } from 'ramda';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { selectSignedInFlag, State } from 'store/reducer';
-import { AuthState } from 'store/slices/auth';
-import urlJoin from 'url-join';
+import { State } from 'store/reducer';
+import { RouterState, selectPageFound } from 'store/slices/router';
 
 export interface BreadcrumbsProps
   extends MaterialBreadcrumbsProps,
     RouteComponentProps,
     WithTheme {
   className: string;
-  isSignedIn: AuthState['loading'];
+  pageFound: RouterState['pageFound'];
 }
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({
   location: { pathname },
   className,
-  isSignedIn,
   theme,
+  pageFound,
 }) => {
   const pathnames = pathname.split('/').filter(Boolean);
 
-  const rootPath = head(pathnames);
-
-  const disabled =
-    rootPath &&
-    !Object.keys(rootPaths)
-      .map(path => kebabCase(path))
-      .includes(rootPath);
+  const disabled = !pageFound;
 
   const color = disabled ? theme.palette.error.dark : 'inherit';
 
   return (
     <MaterialBreadcrumbs className={className} separator="›">
-      <Link to="/" disabled={!isSignedIn}>
-        Dashboard
-      </Link>
+      <Link to="/">Dashboard</Link>
       {init(pathnames).map(name => (
-        <Link
-          key={name}
-          to={urlJoin('/', name)}
-          disabled={!!disabled}
-          style={{ color }}
-        >
+        <Link key={name} to={name} disabled={!!disabled} color={color}>
           {startCase(name)}
         </Link>
       ))}
@@ -63,5 +48,5 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 };
 
 export default connect((state: State) => ({
-  isSignedIn: selectSignedInFlag(state),
+  pageFound: selectPageFound(state),
 }))(withRouter(withTheme(Breadcrumbs)));

@@ -9,9 +9,9 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
-import React, { FC, useState } from 'react';
 import IconButton from 'components/IconButton';
 import { EnhancedTheme } from 'models';
+import React, { FC, useState } from 'react';
 import Breadcrumbs from './Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';
@@ -96,7 +96,7 @@ const Layout: FC<LayoutProps> = ({
         <Divider />
         <Nav isSignedIn={isSignedIn} onNavigate={handleDrawerToggle} />
       </Drawer>
-      <Breadcrumbs className={content} />
+      {isSignedIn && <Breadcrumbs className={content} />}
       <main className={content}>{children}</main>
     </section>
   );
