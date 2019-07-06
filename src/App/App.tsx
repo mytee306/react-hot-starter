@@ -1,4 +1,5 @@
-import { colors, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { colors, createMuiTheme } from '@material-ui/core';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import { ThemeProvider } from '@material-ui/styles';
 import Snackbar from 'components/Snackbar';
@@ -31,9 +32,6 @@ const App: FC<AppProps> = ({ getAuthState, isSignedIn, themeOptions }) => {
   const theme = createMuiTheme({
     ...themeOptions,
     colors: { success: colors.green[600] },
-    typography: {
-      useNextVariants: true,
-    },
   });
 
   return (
@@ -42,8 +40,8 @@ const App: FC<AppProps> = ({ getAuthState, isSignedIn, themeOptions }) => {
         <Layout isSignedIn={isSignedIn}>
           <Routes isSignedIn={isSignedIn} />
         </Layout>
-        <Snackbar />
       </MuiThemeProvider>
+      <Snackbar />
     </ThemeProvider>
   );
 };

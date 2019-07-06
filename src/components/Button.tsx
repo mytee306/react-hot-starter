@@ -33,4 +33,4 @@ const Button: FC<ButtonProps> = ({
   );
 };
 
-export default withTheme()(Button);
+export default withTheme(Button);

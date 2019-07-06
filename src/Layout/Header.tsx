@@ -3,7 +3,6 @@ import {
   createStyles,
   Hidden,
   Toolbar,
-  Tooltip,
   Typography,
   WithStyles,
   withStyles,
@@ -11,6 +10,7 @@ import {
 import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import classnames from 'classnames';
 import IconButton from 'components/IconButton';
+import Tooltip from 'components/Tooltip';
 import { CreateSimpleAction } from 'models/actions';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';

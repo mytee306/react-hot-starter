@@ -145,7 +145,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
       <Collapse
         in={isOpen}
         timeout="auto"
-        style={{ marginLeft: theme.spacing.unit * level }}
+        style={{ marginLeft: theme.spacing(level) }}
       >
         <NavItems
           navItems={childNavItems.map(({ path, ...childItem }) => ({
@@ -159,7 +159,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
   );
 };
 
-const NavItem = withTheme()(NavItemWithoutTheme);
+const NavItem = withTheme(NavItemWithoutTheme);
 
 interface NavItemsProps {
   navItems: INavItems;

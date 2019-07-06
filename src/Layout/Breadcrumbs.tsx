@@ -1,6 +1,10 @@
-import { Typography, withTheme, WithTheme } from '@material-ui/core';
-import { Breadcrumbs as MaterialBreadcrumbs } from '@material-ui/lab';
-import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/lab/Breadcrumbs';
+import {
+  Breadcrumbs as MaterialBreadcrumbs,
+  Typography,
+  withTheme,
+  WithTheme,
+} from '@material-ui/core';
+import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/core/Breadcrumbs';
 import { rootPaths } from 'App/Routes';
 import Link from 'components/Link';
 import { kebabCase, startCase } from 'lodash';
@@ -60,4 +64,4 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 
 export default connect((state: State) => ({
   isSignedIn: selectSignedInFlag(state),
-}))(withRouter(withTheme()(Breadcrumbs)));
+}))(withRouter(withTheme(Breadcrumbs)));

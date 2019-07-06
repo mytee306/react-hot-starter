@@ -4,10 +4,10 @@ import {
   Divider,
   Drawer,
   Hidden,
+  useMediaQuery,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 import { ChevronLeft } from '@material-ui/icons';
 import React, { FC, useState } from 'react';
 import IconButton from 'components/IconButton';

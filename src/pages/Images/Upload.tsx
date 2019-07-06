@@ -1,14 +1,30 @@
 /* eslint-disable indent */
 /* eslint-disable immutable/no-mutation */
 
-import { Button, List, ListItem, ListItemText, Tooltip, Typography, withTheme, WithTheme } from '@material-ui/core';
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Tooltip,
+  Typography,
+  withTheme,
+  WithTheme,
+} from '@material-ui/core';
 import { AddToPhotos, CheckCircleOutline } from '@material-ui/icons';
 import Spinner from 'components/Spinner';
 import React, { createRef } from 'react';
 import { connect } from 'react-redux';
 import { Box, Flex } from 'rebass';
 import { State } from 'store/reducer';
-import { createAddImage, CreateAddImage, CreateUpload, createUpload, Image, selectImages } from 'store/slices/images';
+import {
+  createAddImage,
+  CreateAddImage,
+  CreateUpload,
+  createUpload,
+  Image,
+  selectImages,
+} from 'store/slices/images';
 
 export interface UploadProps extends WithTheme {
   addImage: CreateAddImage;
@@ -61,7 +77,7 @@ const Upload: React.FC<UploadProps> = ({
         onClick={() => uploadInputRef.current!.click()}
         variant="contained"
       >
-        <AddToPhotos style={{ marginRight: 2 * spacing.unit }} />
+        <AddToPhotos style={{ marginRight: spacing(2) }} />
         Choose image files
       </Button>
       <br />
@@ -78,7 +94,7 @@ const Upload: React.FC<UploadProps> = ({
                     <Typography
                       variant="h5"
                       style={{
-                        marginRight: spacing.unit,
+                        marginRight: spacing(1),
                         color: appropriate ? 'initial' : palette.error.dark,
                       }}
                     >
@@ -116,7 +132,7 @@ const Upload: React.FC<UploadProps> = ({
   );
 };
 
-export default withTheme()(
+export default withTheme(
   connect(
     (state: State) => ({ images: selectImages(state) }),
     { upload: createUpload, addImage: createAddImage },
