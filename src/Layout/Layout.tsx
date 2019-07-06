@@ -9,7 +9,7 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
-import IconButton from 'components/IconButton';
+import { IconButton } from 'components';
 import { EnhancedTheme } from 'models';
 import React, { FC, useState } from 'react';
 import Breadcrumbs from './Breadcrumbs';

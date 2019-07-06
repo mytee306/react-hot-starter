@@ -11,13 +11,13 @@ import {
   createAuthStateChange,
   createGetAuthState,
   createSetAuthError,
+  createSetErrorSnackbar,
   createSetUser,
   createSignin,
   createSignout,
   SetAuthErrorAction,
   User,
-} from '../slices/auth';
-import { createSetErrorSnackbar } from '../slices/snackbar';
+} from '../slices';
 
 const authState$: Epic = action$ =>
   action$.pipe(

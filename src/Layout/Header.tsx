@@ -1,26 +1,12 @@
-import {
-  AppBar,
-  createStyles,
-  Hidden,
-  Toolbar,
-  Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+import { AppBar, createStyles, Hidden, Toolbar, Typography, WithStyles, withStyles } from '@material-ui/core';
 import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import classnames from 'classnames';
-import IconButton from 'components/IconButton';
-import Tooltip from 'components/Tooltip';
+import { IconButton, Tooltip } from 'components';
 import { CreateSimpleAction } from 'models/actions';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import {
-  selectAuthLoadingFlag,
-  selectDarkThemeFlag,
-  selectSignedInFlag,
-  State,
-} from 'store/reducer';
-import { createSignout } from 'store/slices/auth';
+import { selectAuthLoadingFlag, selectDarkThemeFlag, selectSignedInFlag, State } from 'store';
+import { createSignout } from 'store/slices';
 import { createToggleType } from 'store/slices/theme/palette/type';
 
 const headerStyles = createStyles({

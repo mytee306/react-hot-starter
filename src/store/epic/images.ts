@@ -8,12 +8,12 @@ import urlJoin from 'url-join';
 import { selectState } from 'utils/operators';
 import { selectUid } from '../reducer';
 import {
+  createSetErrorSnackbar,
   createUpdateProgress,
   createUpload,
+  imagesSliceName,
   selectImageEntities,
-  slice,
-} from '../slices/images';
-import { createSetErrorSnackbar } from '../slices/snackbar';
+} from '../slices';
 
 const upload: Epic = (action$, state$) =>
   action$.pipe(
@@ -23,7 +23,7 @@ const upload: Epic = (action$, state$) =>
     withLatestFrom(state$.pipe(map(selectUid))),
     mergeMap(([[id, { name, dataUrl }], uid]) =>
       putString(
-        firebase.storage().ref(urlJoin(slice, uid, id)),
+        firebase.storage().ref(urlJoin(imagesSliceName, uid, id)),
         dataUrl,
         'data_url',
         { customMetadata: { name, id } },

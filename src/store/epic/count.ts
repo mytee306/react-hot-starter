@@ -19,9 +19,9 @@ import {
   createGetCount,
   createIncrement,
   createSetCount,
+  createSetErrorSnackbar,
   selectCountValue,
-} from '../slices/count';
-import { createSetErrorSnackbar } from '../slices/snackbar';
+} from '../slices';
 
 const countsCollection = firebase.firestore().collection('counts');
 

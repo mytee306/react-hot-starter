@@ -17,7 +17,7 @@ import {
   ExpandMore,
   Person,
 } from '@material-ui/icons';
-import Link from 'components/Link';
+import { Link } from 'components';
 import { countBy, kebabCase } from 'lodash';
 import { pipe } from 'ramda';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';

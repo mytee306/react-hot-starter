@@ -1,30 +1,14 @@
 /* eslint-disable indent */
 /* eslint-disable immutable/no-mutation */
 
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Tooltip,
-  Typography,
-  withTheme,
-  WithTheme,
-} from '@material-ui/core';
+import { Button, List, ListItem, ListItemText, Tooltip, Typography, withTheme, WithTheme } from '@material-ui/core';
 import { AddToPhotos, CheckCircleOutline } from '@material-ui/icons';
-import Spinner from 'components/Spinner';
+import { Spinner } from 'components';
 import React, { createRef } from 'react';
 import { connect } from 'react-redux';
 import { Box, Flex } from 'rebass';
-import { State } from 'store/reducer';
-import {
-  createAddImage,
-  CreateAddImage,
-  CreateUpload,
-  createUpload,
-  Image,
-  selectImages,
-} from 'store/slices/images';
+import { State } from 'store';
+import { createAddImage, CreateAddImage, CreateUpload, createUpload, Image, selectImages } from 'store/slices';
 
 export interface UploadProps extends WithTheme {
   addImage: CreateAddImage;

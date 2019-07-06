@@ -2,7 +2,7 @@
 import { useTheme as useMaterialTheme } from '@material-ui/styles';
 import { EnhancedTheme } from 'models';
 import { Selector } from 'react-redux';
-import { State } from 'store/reducer';
+import { State } from 'store';
 import urlJoin from 'url-join';
 
 const prefixActionTypeWithSeparator = (separator: string) => (

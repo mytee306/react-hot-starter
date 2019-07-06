@@ -3,7 +3,7 @@ import notFoundImgSrc from 'assets/img/ghost.svg';
 import { CreateSimpleAction } from 'models/actions';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { createTogglePageFound } from 'store/slices/router';
+import { createTogglePageFound } from 'store/slices';
 import Link from './Link';
 
 export interface NotFoundProps {

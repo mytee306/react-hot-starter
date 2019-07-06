@@ -4,9 +4,9 @@ import { createSelector } from 'reselect';
 import { prefixActionType } from 'utils';
 import uuid from 'uuid/v4';
 
-export const slice = 'images';
+export const imagesSliceName = 'images';
 
-const prefix = prefixActionType(slice);
+const prefix = prefixActionType(imagesSliceName);
 
 const uploadStatuses = ['not started', 'in progress', 'completed'] as const;
 
@@ -42,16 +42,8 @@ export type CreateSetImages = SliceActionCreator<File[]>;
 
 export type SetImages = ReturnType<CreateSetImages>;
 
-export const {
-  reducer,
-  actions: {
-    add: createAddImage,
-    updateProgress: createUpdateProgress,
-    set: createSetImages,
-  },
-  selectors: { getImages },
-} = createSlice<Images>({
-  slice,
+const imagesSlice = createSlice<Images>({
+  slice: imagesSliceName,
   initialState: { ids: [], entities: {} },
   reducers: {
     add: ({ ids, entities }, { payload: image }: AddImage) => {
@@ -85,7 +77,16 @@ export const {
   },
 });
 
-export default reducer;
+export const {
+  actions: {
+    add: createAddImage,
+    updateProgress: createUpdateProgress,
+    set: createSetImages,
+  },
+  selectors: { getImages },
+} = imagesSlice;
+
+export default imagesSlice.reducer;
 
 export const selectImages = createSelector(
   getImages,

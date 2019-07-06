@@ -1,10 +1,6 @@
-import Switch from 'components/Switch';
+import { Switch } from 'components';
 import { kebabCase } from 'lodash';
-import Count from 'pages/Count';
-import Dashboard from 'pages/Dashboard';
-import Images from 'pages/Images';
-import Signin from 'pages/Signin';
-import { Store } from 'pages/Store';
+import { Count, Dashboard, Images, Signin, Store } from 'pages';
 import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { makeAbsolute } from 'utils';

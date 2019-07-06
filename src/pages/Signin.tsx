@@ -1,9 +1,9 @@
 import { Card, CardActions, CardContent, Typography } from '@material-ui/core';
-import Button from 'components/Button';
+import { Button } from 'components';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import { selectAuthLoadingFlag, State } from 'store/reducer';
-import { createSignin, CreateSignin } from 'store/slices/auth';
+import { selectAuthLoadingFlag, State } from 'store';
+import { createSignin, CreateSignin } from 'store/slices';
 
 export interface SigninProps {
   signIn: CreateSignin;

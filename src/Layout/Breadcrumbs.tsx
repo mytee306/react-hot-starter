@@ -1,18 +1,13 @@
-import {
-  Breadcrumbs as MaterialBreadcrumbs,
-  Typography,
-  withTheme,
-  WithTheme,
-} from '@material-ui/core';
+import { Breadcrumbs as MaterialBreadcrumbs, Typography, withTheme, WithTheme } from '@material-ui/core';
 import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/core/Breadcrumbs';
-import Link from 'components/Link';
+import { Link } from 'components';
 import { startCase } from 'lodash';
 import { init, last } from 'ramda';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { State } from 'store/reducer';
-import { RouterState, selectPageFound } from 'store/slices/router';
+import { State } from 'store';
+import { RouterState, selectPageFound } from 'store/slices';
 
 export interface BreadcrumbsProps
   extends MaterialBreadcrumbsProps,

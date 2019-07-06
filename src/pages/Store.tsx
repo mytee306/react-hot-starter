@@ -57,7 +57,7 @@ const ItemsTable = <Props extends { items: Record<string, any>[] }>({
 
 export interface StoreProps {}
 
-export const Store: FC<StoreProps> = () => {
+const Store: FC<StoreProps> = () => {
   const paypalRef = useRef<HTMLDivElement>(null);
   const [paidFor, setPaidFor] = useState(false);
   const [order, setOrder] = useState({});
@@ -107,3 +107,5 @@ export const Store: FC<StoreProps> = () => {
     </div>
   );
 };
+
+export default Store;

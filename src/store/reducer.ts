@@ -2,14 +2,15 @@ import { isEmpty } from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
-import auth from './slices/auth';
-import count from './slices/count';
-import images from './slices/images';
-import router from './slices/router';
-import snackbar, {
+import {
+  auth,
+  count,
+  images,
+  router,
   selectSnackbar as selectSnackbarState,
-} from './slices/snackbar';
-import theme from './slices/theme';
+  snackbar,
+  theme,
+} from './slices';
 
 const reducer = combineReducers({
   count,

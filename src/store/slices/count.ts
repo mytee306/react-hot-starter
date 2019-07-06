@@ -1,11 +1,16 @@
-import { createAction, createSlice, PayloadAction, Reducer } from 'redux-starter-kit';
+import {
+  createAction,
+  createSlice,
+  PayloadAction,
+  Reducer,
+} from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
 import { prefixActionType } from 'utils';
 
-export const slice = 'count';
+export const countSliceName = 'count';
 
-const prefix = prefixActionType(slice);
+const prefix = prefixActionType(countSliceName);
 
 export const initialState = {
   value: 0,
@@ -24,17 +29,8 @@ export type CreateSetCountAction = PayloadAction<CountState['value']>;
 
 const setLoading = (state: CountState) => ({ ...state, isLoading: true });
 
-export const {
-  reducer,
-  actions: {
-    get: createGetCount,
-    set: createSetCount,
-    increment: createIncrement,
-    decrementBy: createDecrementBy,
-  },
-  selectors: { getCount: selectCount },
-} = createSlice({
-  slice,
+const countSlice = createSlice({
+  slice: countSliceName,
   initialState,
   reducers: {
     get: state => ({ ...state, isLoading: true }),
@@ -47,7 +43,17 @@ export const {
   },
 });
 
-export default reducer;
+export const {
+  actions: {
+    get: createGetCount,
+    set: createSetCount,
+    increment: createIncrement,
+    decrementBy: createDecrementBy,
+  },
+  selectors: { getCount: selectCount },
+} = countSlice;
+
+export default countSlice.reducer;
 
 export const selectCountValue = createSelector(
   selectCount,

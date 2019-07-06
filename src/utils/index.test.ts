@@ -1,4 +1,4 @@
-import { initialState, selectSignedInFlag } from 'store/reducer';
+import { initialState, selectSignedInFlag } from 'store';
 import { mapStateToProps } from '.';
 
 const mappedState = mapStateToProps({ isSignedIn: selectSignedInFlag })(
