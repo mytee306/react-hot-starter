@@ -16,6 +16,7 @@
     "Signin",
     "Signout",
     "Storyshots",
+    "bgcolor",
     "commitlint",
     "crossorigin",
     "displayname",

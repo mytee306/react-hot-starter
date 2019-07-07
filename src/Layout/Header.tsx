@@ -1,12 +1,37 @@
-import { AppBar, createStyles, Hidden, Toolbar, Typography, WithStyles, withStyles } from '@material-ui/core';
+import {
+  AppBar,
+  Box,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  createStyles,
+  Hidden,
+  Popover,
+  Toolbar,
+  Typography,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
 import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import classnames from 'classnames';
-import { IconButton, Tooltip } from 'components';
+import { Button, IconButton, Tooltip } from 'components';
 import { CreateSimpleAction } from 'models/actions';
-import React, { FC } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { selectAuthLoadingFlag, selectDarkThemeFlag, selectSignedInFlag, State } from 'store';
-import { createSignout } from 'store/slices';
+import {
+  DisplayName,
+  PhotoURL,
+  selectAuthLoadingFlag,
+  selectDarkThemeFlag,
+  selectDisplayName,
+  selectEmail,
+  selectPhotoURL,
+  selectSignedInFlag,
+  State,
+} from 'store';
+import { createSignout, User } from 'store/slices';
 import { createToggleType } from 'store/slices/theme/palette/type';
 
 const headerStyles = createStyles({
@@ -23,6 +48,8 @@ const headerStyles = createStyles({
   },
 });
 
+const avatarWidth = 140;
+
 export interface HeaderProps extends WithStyles<typeof headerStyles> {
   toggle: () => void;
   isDark: ReturnType<typeof selectDarkThemeFlag>;
@@ -31,6 +58,9 @@ export interface HeaderProps extends WithStyles<typeof headerStyles> {
   signOut: CreateSimpleAction;
   isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
   className: string;
+  displayName: DisplayName;
+  email: User['email'];
+  photoURL: PhotoURL;
 }
 
 const Header: FC<HeaderProps> = ({
@@ -42,37 +72,101 @@ const Header: FC<HeaderProps> = ({
   signOut,
   isAuthLoading,
   className,
-}) => (
-  <AppBar position="static" className={classnames(header, className)}>
-    <Toolbar>
-      <Hidden lgUp>
-        <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
-          <Menu />
-        </IconButton>
-      </Hidden>
-      <Typography className={expand} variant="h6" color="inherit">
-        App Name
-      </Typography>
-      <Tooltip title="Toggle dark theme">
-        <IconButton onClick={() => togglePaletteType()}>
-          {isDark ? <WbSunny /> : <WbSunnyOutlined />}
-        </IconButton>
-      </Tooltip>
-      {(isSignedIn || isAuthLoading) && (
-        <Tooltip title="Sign out">
-          <IconButton onClick={() => signOut()} loading={isAuthLoading}>
-            <Person />
+  displayName,
+  email,
+  photoURL,
+}) => {
+  const [open, setOpen] = useState(false);
+  const profileButtonRef = useRef<HTMLDivElement>(null);
+
+  const toggleOpen = () => setOpen(!open);
+
+  return (
+    <AppBar position="static" className={classnames(header, className)}>
+      <Toolbar>
+        <Hidden lgUp>
+          <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
+            <Menu />
+          </IconButton>
+        </Hidden>
+        <Typography className={expand} variant="h6" color="inherit">
+          App Name
+        </Typography>
+        <Tooltip title="Toggle dark theme">
+          <IconButton onClick={() => togglePaletteType()}>
+            {isDark ? <WbSunny /> : <WbSunnyOutlined />}
           </IconButton>
         </Tooltip>
-      )}
-    </Toolbar>
-  </AppBar>
-);
+        {(isSignedIn || isAuthLoading) && (
+          <Tooltip title="Profile">
+            <div ref={profileButtonRef}>
+              <IconButton onClick={toggleOpen} loading={isAuthLoading}>
+                <Person />
+              </IconButton>
+            </div>
+          </Tooltip>
+        )}
+        <Popover
+          anchorEl={profileButtonRef.current}
+          open={open}
+          onClose={toggleOpen}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <Card>
+            <CardActionArea>
+              <Box mt={2} style={{ display: 'grid', justifyItems: 'center' }}>
+                <CardMedia
+                  image={photoURL}
+                  title={displayName}
+                  style={{
+                    height: avatarWidth,
+                    width: avatarWidth,
+                    borderRadius: '50%',
+                  }}
+                />
+              </Box>
+              <CardContent>
+                <Typography gutterBottom variant="h5">
+                  {displayName}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {email}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => {
+                  signOut();
+                  toggleOpen();
+                }}
+              >
+                Sign out
+              </Button>
+            </CardActions>
+          </Card>
+        </Popover>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 const mapStateToProps = (state: State) => ({
   isDark: selectDarkThemeFlag(state),
   isSignedIn: selectSignedInFlag(state),
   isAuthLoading: selectAuthLoadingFlag(state),
+  displayName: selectDisplayName(state),
+  email: selectEmail(state),
+  photoURL: selectPhotoURL(state),
 });
 
 const mapDispatchToProps = {

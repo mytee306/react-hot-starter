@@ -55,11 +55,6 @@ export const selectUser = createSelector(
   ({ user }) => user,
 );
 
-export const selectDisplayName = createSelector(
-  selectUser,
-  ({ displayName }) => displayName,
-);
-
 export const selectUid = createSelector(
   selectUser,
   ({ uid }) => uid,
@@ -69,6 +64,25 @@ export const selectSignedInFlag = createSelector(
   selectUid,
   Boolean,
 );
+
+export const selectDisplayName = createSelector(
+  selectUser,
+  ({ displayName }) => displayName || '',
+);
+
+export type DisplayName = ReturnType<typeof selectDisplayName>;
+
+export const selectEmail = createSelector(
+  selectUser,
+  ({ email }) => email,
+);
+
+export const selectPhotoURL = createSelector(
+  selectUser,
+  ({ photoURL }) => photoURL || '',
+);
+
+export type PhotoURL = ReturnType<typeof selectPhotoURL>;
 
 export const selectSnackbar = createSelector(
   selectSnackbarState,
