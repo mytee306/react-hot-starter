@@ -9,9 +9,13 @@ export interface DecrementProps {
   isLoading: CountState['isLoading'];
 }
 
+const min = 1;
+const max = 9;
+
 export const marks: ComponentProps<typeof Slider>['marks'] = [
-  { value: 1, label: 'Minimum' },
-  { value: 10, label: 'Maximum' },
+  { value: min, label: 'Minimum' },
+  { value: 5, label: 'Middle' },
+  { value: max, label: 'Maximum' },
 ];
 
 const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
@@ -30,8 +34,8 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
       <br />
       <br />
       <Slider
-        min={1}
-        max={10}
+        min={min}
+        max={max}
         value={amount}
         valueLabelDisplay="on"
         onChange={(_, value) => setAmount(value as number)}
