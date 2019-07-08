@@ -4,5 +4,5 @@
     "types": ["cypress"],
     "isolatedModules": false
   },
-  "include": ["integration/*.ts"]
+  "include": ["./**/*"]
 }
