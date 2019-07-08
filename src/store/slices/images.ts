@@ -1,3 +1,4 @@
+import { pick } from 'ramda';
 import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
@@ -25,6 +26,8 @@ export interface Images {
   };
 }
 
+export const initialImages: Images = { ids: [], entities: {} };
+
 export const createUpload = createAction(prefix('upload'));
 
 export type CreateUpload = typeof createUpload;
@@ -42,12 +45,15 @@ export type CreateSetImages = SliceActionCreator<File[]>;
 
 export type SetImages = ReturnType<CreateSetImages>;
 
-const imagesSlice = createSlice<Images>({
+export type RemoveImageAction = PayloadAction<Images['ids'][0]>;
+
+const imagesSlice = createSlice({
   slice: imagesSliceName,
-  initialState: { ids: [], entities: {} },
+  initialState: initialImages,
   reducers: {
     add: ({ ids, entities }, { payload: image }: AddImage) => {
       const id = uuid();
+
       return {
         ids: ids.concat(id),
         entities: { ...entities, [id]: image },
@@ -74,6 +80,15 @@ const imagesSlice = createSlice<Images>({
         ),
       };
     },
+    remove: (state, { payload }: RemoveImageAction) => {
+      const { ids, entities } = state;
+      const newIds = ids.filter(id => id !== payload);
+
+      return {
+        ids: newIds,
+        entities: pick(newIds, entities),
+      };
+    },
   },
 });
 
@@ -82,18 +97,51 @@ export const {
     add: createAddImage,
     updateProgress: createUpdateProgress,
     set: createSetImages,
+    remove: createRemoveImage,
   },
   selectors: { getImages },
 } = imagesSlice;
 
 export default imagesSlice.reducer;
 
+export type CreateRemoveImage = typeof createRemoveImage;
+
 export const selectImages = createSelector(
   getImages,
   ({ ids, entities }) => ids.map(id => entities[id]),
+);
+
+export const selectImageIds = createSelector(
+  getImages,
+  ({ ids }) => ids,
 );
 
 export const selectImageEntities = createSelector(
   getImages,
   ({ entities }) => entities,
 );
+
+export interface ImageWIthId extends Image {
+  id: Images['ids'][0];
+}
+
+export type ImagesWIthId = ImageWIthId[];
+
+export const selectImagesWithIds = createSelector(
+  selectImageIds,
+  selectImages,
+  (ids, images) => ids.map((id, i) => ({ ...images[i], id })),
+);
+
+export const selectImagesUploading = createSelector(
+  getImages,
+  ({ entities }) => {
+    const uploadingImage = Object.values(entities).find(
+      ({ uploadStatus }) => uploadStatus === 'in progress',
+    );
+
+    return Boolean(uploadingImage);
+  },
+);
+
+export type ImagesUploading = ReturnType<typeof selectImagesUploading>;
