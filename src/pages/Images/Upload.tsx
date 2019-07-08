@@ -62,7 +62,7 @@ export const ImageComponent: FC<ImageProps> = ({
           position: 'absolute',
           top: 0,
           right: 0,
-          // display: hovered ? 'initial' : 'none',
+          opacity: 0.7,
         }}
         onClick={remove}
       >
