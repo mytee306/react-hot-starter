@@ -22,7 +22,9 @@
     "deploy:firebase": "firebase deploy",
     "serve:build": "serve build",
     "http-serve:build": "http-server build",
-    "commitlint": "commitlint --from HEAD~1"
+    "commitlint": "commitlint --from HEAD~1",
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@material-ui/core": "^4.1.3",
@@ -121,8 +123,10 @@
     "concurrently": "^4.1.1",
     "cross-env": "^5.2.0",
     "customize-cra": "^0.2.14",
+    "cypress": "^3.3.2",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-cypress": "^2.2.1",
     "eslint-plugin-html": "^5.0.3",
     "eslint-plugin-immutable": "^1.0.0",
     "eslint-plugin-import": "^2.16.0",

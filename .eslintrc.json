@@ -1,6 +1,6 @@
 {
   "extends": ["react-app", "airbnb"],
-  "plugins": ["immutable", "prefer-arrow", "prettier", "html"],
+  "plugins": ["immutable", "prefer-arrow", "prettier", "html", "cypress"],
   "rules": {
     "arrow-parens": "off",
     "object-curly-newline": "off",
@@ -30,7 +30,8 @@
   },
   "env": {
     "browser": true,
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   },
   "overrides": [
     {
