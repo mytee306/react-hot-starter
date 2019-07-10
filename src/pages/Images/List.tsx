@@ -55,7 +55,7 @@ const ImageList: React.FC<ImagesProps> = () => {
       />
       <br />
       <br />
-      <WindowScroller ref={scrollerRef} scrollElement={window}>
+      <WindowScroller ref={scrollerRef}>
         {({
           height,
           isScrolling,
