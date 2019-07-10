@@ -14,12 +14,7 @@ const development = {
 
 export type Env = typeof development;
 
-// TODO remove before deployment
-export type GenericEnv = Record<string, string | Record<string, string>>;
-
-export type AllEnvironments = {
-  [envName in typeof process.env.NODE_ENV]: Env | GenericEnv
-};
+export type AllEnvironments = { [envName in typeof process.env.NODE_ENV]: Env };
 
 const allEnvironments: AllEnvironments = {
   development,
