@@ -1,14 +1,20 @@
 import { Input, Typography } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
-import { AutoSizer, List, WindowScroller } from 'react-virtualized';
+import {
+  AutoSizer,
+  List,
+  ListRowRenderer,
+  WindowScroller,
+} from 'react-virtualized';
 import { list, List as ListItems } from './list';
 
-const rowRenderer = (listItems: ListItems) => ({
-  index,
-  isScrolling,
+const createRowRenderer = (listItems: ListItems): ListRowRenderer => ({
   key,
+  index,
   style,
-}: any) => {
+  isScrolling,
+  isVisible,
+}) => {
   const row = listItems[index];
 
   return (
@@ -17,7 +23,7 @@ const rowRenderer = (listItems: ListItems) => ({
       style={{
         ...style,
         borderBottom: '1px solid #ccc',
-        display: 'flex',
+        display: isVisible ? 'flex' : 'none',
         alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20,
@@ -31,6 +37,8 @@ const rowRenderer = (listItems: ListItems) => ({
   );
 };
 
+const rowRenderer = createRowRenderer(list);
+
 export interface ImagesProps {}
 
 const ImageList: React.FC<ImagesProps> = () => {
@@ -43,7 +51,7 @@ const ImageList: React.FC<ImagesProps> = () => {
       <Input
         type="number"
         value={indexToScrollTo}
-        onChange={({ target: { value } }) => setIndexToScrollTo(Number(value))}
+        onChange={({ target: { value } }) => setIndexToScrollTo(Number(value))} // TODO fix gap
       />
       <br />
       <br />
@@ -64,10 +72,9 @@ const ImageList: React.FC<ImagesProps> = () => {
                     autoHeight
                     height={height}
                     width={width}
-                    overscanRowCount={2}
                     rowCount={list.length}
                     rowHeight={40}
-                    rowRenderer={rowRenderer(list)}
+                    rowRenderer={rowRenderer}
                     isScrolling={isScrolling}
                     onScroll={onChildScroll}
                     scrollToIndex={indexToScrollTo}
