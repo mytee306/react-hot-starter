@@ -12,6 +12,7 @@ import {
   ArrowUpward,
   BarChart,
   CloudUpload,
+  Collections,
   Dashboard,
   ExpandLess,
   ExpandMore,
@@ -49,7 +50,7 @@ export const textRootPathnames = rootPathnames.map(capitalize);
 
 type RootPathnames = typeof rootPathnames[number];
 
-const secondaryPathnames = ['increment', 'decrement'] as const;
+const secondaryPathnames = ['increment', 'decrement', 'upload'] as const;
 
 type SecondaryPathnames = typeof secondaryPathnames[number];
 
@@ -111,8 +112,15 @@ const privateNavItems: INavItems = [
   {
     text: textPaths.images,
     path: absolutePaths.images,
-    icon: <CloudUpload />,
-    childNavItems: [],
+    icon: <Collections />,
+    childNavItems: [
+      {
+        text: textPaths.upload,
+        path: absolutePaths.upload,
+        icon: <CloudUpload />,
+        childNavItems: [],
+      },
+    ],
   },
 ];
 
@@ -173,7 +181,10 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
       <Collapse
         in={isOpen}
         timeout="auto"
-        style={{ marginLeft: theme.spacing(level) }}
+        style={{
+          marginLeft: theme.spacing(level),
+          borderLeft: '1px solid #eee',
+        }}
       >
         <NavItems
           navItems={childNavItems.map(({ path, ...childItem }) => ({
