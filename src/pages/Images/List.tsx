@@ -54,14 +54,25 @@ const rowRenderer = createRowRenderer(list);
 
 export interface ImagesProps {}
 
+const initialIndexToScrollTo = 0;
+
 const ImageList: React.FC<ImagesProps> = () => {
   const [value, setValue] = useState('');
-  const [indexToScrollTo, setIndexToScrollTo] = useState(-1);
+  const [indexToScrollTo, setIndexToScrollTo] = useState(
+    initialIndexToScrollTo,
+  );
 
   const scrollerRef = useRef(null);
 
   return (
     <div>
+      <Button
+        variant="contained"
+        style={{ position: 'fixed', right: 20, zIndex: 2 }}
+        onClick={() => setIndexToScrollTo(initialIndexToScrollTo)}
+      >
+        Scroll to top
+      </Button>
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -102,6 +113,7 @@ const ImageList: React.FC<ImagesProps> = () => {
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
                     scrollToIndex={indexToScrollTo}
+                    scrollToAlignment="start"
                   />
                 </div>
               )}
