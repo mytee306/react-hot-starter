@@ -3,6 +3,7 @@ import { Button } from 'components';
 import React, { useState } from 'react';
 import {
   AutoSizer,
+  InfiniteLoader,
   List,
   ListRowRenderer,
   WindowScroller,
@@ -87,19 +88,22 @@ const ImageList: React.FC<ImagesProps> = () => {
       </form>
       <br />
       <br />
-      <WindowScroller>
-        {({
-          height,
-          isScrolling,
-          registerChild,
-          onChildScroll,
-          scrollTop,
-        }: any) => (
-          <div style={{ flexGrow: 1 }}>
-            <AutoSizer disableHeight>
-              {({ width }) => (
-                <div ref={registerChild}>
+      <InfiniteLoader
+        isRowLoaded={() => true}
+        loadMoreRows={() =>
+          new Promise(resolve => {
+            console.log('laodMoreRows');
+            resolve();
+          })
+        }
+      >
+        {({ registerChild, onRowsRendered }) => (
+          <WindowScroller>
+            {({ height, isScrolling, onChildScroll, scrollTop }) => (
+              <AutoSizer disableHeight>
+                {({ width }) => (
                   <List
+                    ref={registerChild}
                     autoHeight
                     style={{ border: '1px solid #ccc' }}
                     height={height}
@@ -107,17 +111,18 @@ const ImageList: React.FC<ImagesProps> = () => {
                     rowCount={list.length}
                     rowHeight={40}
                     rowRenderer={rowRenderer}
+                    onRowsRendered={onRowsRendered}
                     isScrolling={isScrolling}
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
                     scrollToIndex={indexToScrollTo}
                   />
-                </div>
-              )}
-            </AutoSizer>
-          </div>
+                )}
+              </AutoSizer>
+            )}
+          </WindowScroller>
         )}
-      </WindowScroller>
+      </InfiniteLoader>
     </div>
   );
 };
