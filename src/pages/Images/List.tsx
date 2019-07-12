@@ -1,4 +1,5 @@
 import { Input, Typography } from '@material-ui/core';
+import { Button } from 'components';
 import React, { useRef, useState } from 'react';
 import {
   AutoSizer,
@@ -54,17 +55,27 @@ const rowRenderer = createRowRenderer(list);
 export interface ImagesProps {}
 
 const ImageList: React.FC<ImagesProps> = () => {
+  const [value, setValue] = useState('');
   const [indexToScrollTo, setIndexToScrollTo] = useState(-1);
 
   const scrollerRef = useRef(null);
 
   return (
     <div>
-      <Input
-        type="number"
-        value={indexToScrollTo}
-        onChange={({ target: { value } }) => setIndexToScrollTo(Number(value))} // TODO fix gap
-      />
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+
+          setIndexToScrollTo(Number(value));
+        }}
+      >
+        <Input
+          type="number"
+          value={value}
+          onChange={({ target: { value: newValue } }) => setValue(newValue)}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
       <br />
       <br />
       <WindowScroller ref={scrollerRef}>
