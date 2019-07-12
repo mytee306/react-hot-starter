@@ -8,6 +8,8 @@ import {
 } from 'react-virtualized';
 import { list, List as ListItems } from './list';
 
+const circleWidth = 10;
+
 const createRowRenderer = (listItems: ListItems): ListRowRenderer => ({
   key,
   index,
@@ -23,13 +25,23 @@ const createRowRenderer = (listItems: ListItems): ListRowRenderer => ({
       style={{
         ...style,
         borderBottom: '1px solid #ccc',
-        display: isVisible ? 'flex' : 'none',
+        display: 'flex',
         alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20,
       }}
     >
-      <Typography style={{ flexGrow: 1 }}>{row.name}</Typography>
+      <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+        <Typography style={{ marginRight: 10 }}>{row.name}</Typography>
+        <div
+          style={{
+            width: circleWidth,
+            height: circleWidth,
+            background: isVisible ? 'royalblue' : 'tomato',
+            borderRadius: '50%',
+          }}
+        />
+      </div>
       {isScrolling ? (
         <Typography variant="caption">Scrolling...</Typography>
       ) : null}
@@ -68,17 +80,17 @@ const ImageList: React.FC<ImagesProps> = () => {
               {({ width }) => (
                 <div ref={registerChild}>
                   <List
-                    style={{ border: '1px solid #ccc' }}
                     autoHeight
+                    style={{ border: '1px solid #ccc' }}
                     height={height}
                     width={width}
                     rowCount={list.length}
                     rowHeight={40}
                     rowRenderer={rowRenderer}
                     isScrolling={isScrolling}
+                    scrollTop={scrollTop}
                     onScroll={onChildScroll}
                     scrollToIndex={indexToScrollTo}
-                    scrollTop={scrollTop}
                   />
                 </div>
               )}
