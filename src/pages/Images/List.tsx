@@ -1,6 +1,6 @@
 import { Input, Typography } from '@material-ui/core';
 import { Button } from 'components';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   AutoSizer,
   List,
@@ -62,8 +62,6 @@ const ImageList: React.FC<ImagesProps> = () => {
     initialIndexToScrollTo,
   );
 
-  const scrollerRef = useRef(null);
-
   return (
     <div>
       <Button
@@ -89,7 +87,7 @@ const ImageList: React.FC<ImagesProps> = () => {
       </form>
       <br />
       <br />
-      <WindowScroller ref={scrollerRef}>
+      <WindowScroller>
         {({
           height,
           isScrolling,
@@ -113,7 +111,6 @@ const ImageList: React.FC<ImagesProps> = () => {
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
                     scrollToIndex={indexToScrollTo}
-                    scrollToAlignment="start"
                   />
                 </div>
               )}
