@@ -8,18 +8,18 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from 'react-virtualized';
-import { list, List as ListItems } from './list';
+import { list as listItems, List as ListItems } from './list';
 
 const circleWidth = 10;
 
-const createRowRenderer = (listItems: ListItems): ListRowRenderer => ({
+const createRowRenderer = (list: ListItems): ListRowRenderer => ({
   key,
   index,
   style,
   isScrolling,
   isVisible,
 }) => {
-  const row = listItems[index];
+  const row = list[index];
 
   return (
     <div
@@ -29,8 +29,7 @@ const createRowRenderer = (listItems: ListItems): ListRowRenderer => ({
         borderBottom: '1px solid #ccc',
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: 20,
-        paddingRight: 20,
+        padding: '0 20',
       }}
     >
       <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
@@ -51,17 +50,20 @@ const createRowRenderer = (listItems: ListItems): ListRowRenderer => ({
   );
 };
 
-const rowRenderer = createRowRenderer(list);
-
 export interface ImagesProps {}
 
 const initialIndexToScrollTo = 0;
 
 const ImageList: React.FC<ImagesProps> = () => {
   const [value, setValue] = useState('');
+
+  const [list, setList] = useState(listItems.slice(0, listItems.length / 2));
+
   const [indexToScrollTo, setIndexToScrollTo] = useState(
     initialIndexToScrollTo,
   );
+
+  const rowRenderer = createRowRenderer(list);
 
   return (
     <div>
@@ -89,10 +91,13 @@ const ImageList: React.FC<ImagesProps> = () => {
       <br />
       <br />
       <InfiniteLoader
-        isRowLoaded={() => true}
+        isRowLoaded={({ index }) => Boolean(list[index])}
         loadMoreRows={() =>
           new Promise(resolve => {
-            console.log('laodMoreRows');
+            console.log('loadMoreRows');
+
+            setList(list.concat(listItems.slice(listItems.length / 2)));
+
             resolve();
           })
         }
@@ -116,6 +121,7 @@ const ImageList: React.FC<ImagesProps> = () => {
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
                     scrollToIndex={indexToScrollTo}
+                    scrollToAlignment="start"
                   />
                 )}
               </AutoSizer>
