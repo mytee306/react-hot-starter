@@ -1,6 +1,8 @@
 import { Input, Typography } from '@material-ui/core';
-import { Button } from 'components';
+import { ArrowUpward } from '@material-ui/icons';
+import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
+import { insertAll } from 'ramda';
 import React, { useState } from 'react';
 import {
   AutoSizer,
@@ -9,7 +11,7 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from 'react-virtualized';
-import { People, people } from './people';
+import { People } from './people';
 
 const circleWidth = 10;
 
@@ -20,7 +22,7 @@ const createRowRenderer = (list: People): ListRowRenderer => ({
   isScrolling,
   isVisible,
 }) => {
-  const row = list[index];
+  const { name: personsName = 'Loading...' } = list[index] || {};
 
   return (
     <div
@@ -34,7 +36,9 @@ const createRowRenderer = (list: People): ListRowRenderer => ({
       }}
     >
       <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-        <Typography style={{ marginRight: 10 }}>{row.name}</Typography>
+        <Typography style={{ marginRight: 10 }}>
+          {index + 1}. {personsName}
+        </Typography>
         <div
           style={{
             width: circleWidth,
@@ -44,52 +48,65 @@ const createRowRenderer = (list: People): ListRowRenderer => ({
           }}
         />
       </div>
-      {isScrolling ? (
-        <Typography variant="caption">Scrolling...</Typography>
-      ) : null}
+      {isScrolling && <Typography variant="caption">Scrolling...</Typography>}
     </div>
   );
 };
 
 const initialIndexToScrollTo = -1;
 
+const pageSize = 100;
+
+const rowCount = 2000;
+
+const scrollTopIconBottom = 20;
+
+const loadMorePeople = () =>
+  Array.from(Array(pageSize)).map(() => ({ name: name.findName() }));
+
 export interface ImagesProps {}
 
 const ImageList: React.FC<ImagesProps> = () => {
   const [value, setValue] = useState('');
 
-  const [list, setList] = useState(people);
+  const [list, setList] = useState<People>([]);
 
   const [indexToScrollTo, setIndexToScrollTo] = useState(
     initialIndexToScrollTo,
   );
 
+  React.useEffect(() => {
+    insertAll(0, loadMorePeople(), list);
+  }, []); // eslint-disable-line
+
   const rowRenderer = createRowRenderer(list);
 
   const loadMoreRows = () =>
     new Promise(resolve => {
-      console.log('loadMoreRows');
-
-      setList(
-        list.concat(
-          Array.from(Array(100)).map(() => ({ name: name.findName() })),
-        ),
-      );
+      setList(list.concat(loadMorePeople()));
 
       resolve();
     });
 
-  const rowCount = 2000;
-
   return (
     <div>
-      <Button
-        variant="contained"
-        style={{ position: 'fixed', right: 20, zIndex: 2 }}
-        onClick={() => setIndexToScrollTo(0)}
+      <Tooltip
+        style={{
+          position: 'fixed',
+          bottom: scrollTopIconBottom,
+          right: scrollTopIconBottom,
+          zIndex: 2,
+          opacity: 0.7,
+        }}
+        title="Scroll to top"
       >
-        Scroll to top
-      </Button>
+        <IconButton
+          onClick={() => setIndexToScrollTo(0)}
+          style={{ background: '#eee' }}
+        >
+          <ArrowUpward />
+        </IconButton>
+      </Tooltip>
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -132,7 +149,6 @@ const ImageList: React.FC<ImagesProps> = () => {
                     rowRenderer={rowRenderer}
                     scrollToIndex={indexToScrollTo}
                     style={{ border: '1px solid #ccc' }}
-                    scrollToAlignment="start"
                   />
                 )}
               </AutoSizer>
