@@ -4,14 +4,7 @@ import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
 import { range } from 'ramda';
 import React, { useState } from 'react';
-import {
-  AutoSizer,
-  InfiniteLoader,
-  InfiniteLoaderProps,
-  List,
-  ListRowRenderer,
-  WindowScroller,
-} from 'react-virtualized';
+import { AutoSizer, InfiniteLoader, InfiniteLoaderProps, List, ListRowRenderer, WindowScroller } from 'react-virtualized';
 
 export interface Person {
   name: string;
@@ -100,11 +93,11 @@ const ImageList: React.FC<ImagesProps> = () => {
 
   const loadMoreRows: LoadMoreRows = ({ startIndex, stopIndex }) =>
     new Promise(resolve => {
-      console.log('list', list);
-
       setList({
         ...list,
-        ...loadMorePeople(range(startIndex)(stopIndex).filter(i => !list[i])),
+        ...loadMorePeople(
+          range(startIndex)(stopIndex + 1).filter(i => !list[i]),
+        ),
       });
 
       resolve();
