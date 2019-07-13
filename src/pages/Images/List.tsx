@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import {
   AutoSizer,
   InfiniteLoader,
+  InfiniteLoaderProps,
   List,
   ListRowRenderer,
   WindowScroller,
@@ -69,7 +70,7 @@ export interface ImagesProps {}
 const ImageList: React.FC<ImagesProps> = () => {
   const [value, setValue] = useState('');
 
-  const [list, setList] = useState<People>([]);
+  const [list, setList] = useState<People>(Array.from(Array(rowCount)));
 
   const [indexToScrollTo, setIndexToScrollTo] = useState(
     initialIndexToScrollTo,
@@ -81,9 +82,9 @@ const ImageList: React.FC<ImagesProps> = () => {
 
   const rowRenderer = createRowRenderer(list);
 
-  const loadMoreRows = () =>
+  const loadMoreRows: InfiniteLoaderProps['loadMoreRows'] = ({ startIndex }) =>
     new Promise(resolve => {
-      setList(list.concat(loadMorePeople()));
+      setList(insertAll(startIndex, loadMorePeople(), list));
 
       resolve();
     });
@@ -124,6 +125,7 @@ const ImageList: React.FC<ImagesProps> = () => {
       <br />
       <br />
       <InfiniteLoader
+        minimumBatchSize={pageSize}
         rowCount={rowCount}
         isRowLoaded={({ index }) => Boolean(list[index])}
         loadMoreRows={loadMoreRows}
