@@ -2,9 +2,16 @@ import { Input, Typography } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
-import { range } from 'ramda';
+import { merge, range } from 'ramda';
 import React, { useState } from 'react';
-import { AutoSizer, InfiniteLoader, InfiniteLoaderProps, List, ListRowRenderer, WindowScroller } from 'react-virtualized';
+import {
+  AutoSizer,
+  InfiniteLoader,
+  InfiniteLoaderProps,
+  List,
+  ListRowRenderer,
+  WindowScroller,
+} from 'react-virtualized';
 
 export interface Person {
   name: string;
@@ -21,7 +28,7 @@ const createRowRenderer = (list: People): ListRowRenderer => ({
   isScrolling,
   isVisible,
 }) => {
-  const { name: personsName = 'Loading...' } = list[index] || {};
+  const { name: personsName = '🚧 Not loaded' } = list[index] || {};
 
   return (
     <div
@@ -62,14 +69,20 @@ const scrollTopIconBottom = 20;
 
 type LoadMoreRows = InfiniteLoaderProps['loadMoreRows'];
 
-const loadMorePeople = (rangeToLoad: ReturnType<ReturnType<typeof range>>) =>
+const loadMore = (getName: () => Person['name']) => (
+  rangeToLoad: ReturnType<ReturnType<typeof range>>,
+) =>
   rangeToLoad.reduce(
     (people, i) => ({
       ...people,
-      [i]: { name: name.findName() },
+      [i]: { name: getName() },
     }),
     {} as People,
   );
+
+const loadMorePlaceholders = loadMore(() => 'Loading...');
+
+const loadMorePeople = loadMore(() => name.findName());
 
 export interface ImagesProps {}
 
@@ -83,25 +96,34 @@ const ImageList: React.FC<ImagesProps> = () => {
   );
 
   React.useEffect(() => {
-    setList({
-      ...list,
-      ...loadMorePeople(range(0)(pageSize)),
-    });
+    setList(merge(list, loadMorePeople(range(0)(pageSize))));
   }, []); // eslint-disable-line
+
+  console.log('LIST', list);
 
   const rowRenderer = createRowRenderer(list);
 
-  const loadMoreRows: LoadMoreRows = ({ startIndex, stopIndex }) =>
-    new Promise(resolve => {
-      setList({
-        ...list,
-        ...loadMorePeople(
-          range(startIndex)(stopIndex + 1).filter(i => !list[i]),
-        ),
-      });
+  const loadMoreRows: LoadMoreRows = ({ startIndex, stopIndex }) => {
+    console.log('load rows from', startIndex, 'to', stopIndex);
 
-      resolve();
+    const rangeToLoad = range(startIndex)(stopIndex + 1).filter(i => !list[i]);
+
+    const rowsBeingLoaded = loadMorePlaceholders(rangeToLoad);
+
+    console.log('rowsBeingLoaded', rowsBeingLoaded);
+
+    setList(merge(list, rowsBeingLoaded));
+
+    return new Promise(resolve => {
+      setTimeout(() => {
+        console.log('loaded rows from', startIndex, 'to', stopIndex);
+
+        setList(oldList => merge(oldList, loadMorePeople(rangeToLoad)));
+
+        resolve();
+      });
     });
+  };
 
   return (
     <div>
