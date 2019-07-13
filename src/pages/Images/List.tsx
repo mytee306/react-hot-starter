@@ -20,7 +20,7 @@ const createRowRenderer = (list: People): ListRowRenderer => ({
   isScrolling,
   isVisible,
 }) => {
-  const row = list[index] || {};
+  const row = list[index];
 
   return (
     <div
@@ -79,12 +79,14 @@ const ImageList: React.FC<ImagesProps> = () => {
       resolve();
     });
 
+  const rowCount = 2000;
+
   return (
     <div>
       <Button
         variant="contained"
         style={{ position: 'fixed', right: 20, zIndex: 2 }}
-        onClick={() => setIndexToScrollTo(initialIndexToScrollTo)}
+        onClick={() => setIndexToScrollTo(0)}
       >
         Scroll to top
       </Button>
@@ -105,6 +107,7 @@ const ImageList: React.FC<ImagesProps> = () => {
       <br />
       <br />
       <InfiniteLoader
+        rowCount={rowCount}
         isRowLoaded={({ index }) => Boolean(list[index])}
         loadMoreRows={loadMoreRows}
       >
@@ -125,7 +128,7 @@ const ImageList: React.FC<ImagesProps> = () => {
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
                     rowHeight={40}
-                    rowCount={2000}
+                    rowCount={rowCount}
                     rowRenderer={rowRenderer}
                     scrollToIndex={indexToScrollTo}
                     style={{ border: '1px solid #ccc' }}
