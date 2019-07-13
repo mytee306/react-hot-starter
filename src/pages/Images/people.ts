@@ -1,10 +1,10 @@
-export interface ListItem {
+export interface Person {
   name: string;
 }
 
-export type List = ListItem[];
+export type People = Person[];
 
-export const list: List = [
+export const people: People = [
   {
     name: 'Dr. Stanford Spinka',
   },

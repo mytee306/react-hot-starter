@@ -1,5 +1,6 @@
 import { Input, Typography } from '@material-ui/core';
 import { Button } from 'components';
+import { name } from 'faker';
 import React, { useState } from 'react';
 import {
   AutoSizer,
@@ -8,18 +9,18 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from 'react-virtualized';
-import { list as listItems, List as ListItems } from './list';
+import { People, people } from './people';
 
 const circleWidth = 10;
 
-const createRowRenderer = (list: ListItems): ListRowRenderer => ({
+const createRowRenderer = (list: People): ListRowRenderer => ({
   key,
   index,
   style,
   isScrolling,
   isVisible,
 }) => {
-  const row = list[index];
+  const row = list[index] || {};
 
   return (
     <div
@@ -29,7 +30,7 @@ const createRowRenderer = (list: ListItems): ListRowRenderer => ({
         borderBottom: '1px solid #ccc',
         display: 'flex',
         alignItems: 'center',
-        padding: '0 20',
+        padding: '0 20px',
       }}
     >
       <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
@@ -50,20 +51,33 @@ const createRowRenderer = (list: ListItems): ListRowRenderer => ({
   );
 };
 
-export interface ImagesProps {}
+const initialIndexToScrollTo = -1;
 
-const initialIndexToScrollTo = 0;
+export interface ImagesProps {}
 
 const ImageList: React.FC<ImagesProps> = () => {
   const [value, setValue] = useState('');
 
-  const [list, setList] = useState(listItems.slice(0, listItems.length / 2));
+  const [list, setList] = useState(people);
 
   const [indexToScrollTo, setIndexToScrollTo] = useState(
     initialIndexToScrollTo,
   );
 
   const rowRenderer = createRowRenderer(list);
+
+  const loadMoreRows = () =>
+    new Promise(resolve => {
+      console.log('loadMoreRows');
+
+      setList(
+        list.concat(
+          Array.from(Array(100)).map(() => ({ name: name.findName() })),
+        ),
+      );
+
+      resolve();
+    });
 
   return (
     <div>
@@ -92,35 +106,29 @@ const ImageList: React.FC<ImagesProps> = () => {
       <br />
       <InfiniteLoader
         isRowLoaded={({ index }) => Boolean(list[index])}
-        loadMoreRows={() =>
-          new Promise(resolve => {
-            console.log('loadMoreRows');
-
-            setList(list.concat(listItems.slice(listItems.length / 2)));
-
-            resolve();
-          })
-        }
+        loadMoreRows={loadMoreRows}
       >
         {({ registerChild, onRowsRendered }) => (
-          <WindowScroller>
+          <WindowScroller
+            onScroll={() => setIndexToScrollTo(initialIndexToScrollTo)}
+          >
             {({ height, isScrolling, onChildScroll, scrollTop }) => (
               <AutoSizer disableHeight>
                 {({ width }) => (
                   <List
                     ref={registerChild}
                     autoHeight
-                    style={{ border: '1px solid #ccc' }}
                     height={height}
                     width={width}
-                    rowCount={list.length}
-                    rowHeight={40}
-                    rowRenderer={rowRenderer}
                     onRowsRendered={onRowsRendered}
                     isScrolling={isScrolling}
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
+                    rowHeight={40}
+                    rowCount={2000}
+                    rowRenderer={rowRenderer}
                     scrollToIndex={indexToScrollTo}
+                    style={{ border: '1px solid #ccc' }}
                     scrollToAlignment="start"
                   />
                 )}
