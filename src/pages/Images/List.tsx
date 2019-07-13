@@ -2,7 +2,7 @@ import { Input, Typography } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
-import { insertAll, remove } from 'ramda';
+import { range } from 'ramda';
 import React, { useState } from 'react';
 import {
   AutoSizer,
@@ -17,7 +17,7 @@ export interface Person {
   name: string;
 }
 
-export type People = Person[];
+export type People = { [index: number]: Person };
 
 const circleWidth = 10;
 
@@ -67,37 +67,45 @@ const rowCount = 2000;
 
 const scrollTopIconBottom = 20;
 
-const loadMorePeople = () =>
-  Array.from(Array(pageSize)).map(() => ({ name: name.findName() }));
+type LoadMoreRows = InfiniteLoaderProps['loadMoreRows'];
+
+const loadMorePeople = (rangeToLoad: ReturnType<ReturnType<typeof range>>) =>
+  rangeToLoad.reduce(
+    (people, i) => ({
+      ...people,
+      [i]: { name: name.findName() },
+    }),
+    {} as People,
+  );
 
 export interface ImagesProps {}
 
 const ImageList: React.FC<ImagesProps> = () => {
   const [value, setValue] = useState('');
 
-  const [list, setList] = useState<People>(Array.from(Array(rowCount)));
+  const [list, setList] = useState<People>({});
 
   const [indexToScrollTo, setIndexToScrollTo] = useState(
     initialIndexToScrollTo,
   );
 
   React.useEffect(() => {
-    insertAll(0, loadMorePeople(), list);
+    setList({
+      ...list,
+      ...loadMorePeople(range(0)(pageSize)),
+    });
   }, []); // eslint-disable-line
 
   const rowRenderer = createRowRenderer(list);
 
-  const loadMoreRows: InfiniteLoaderProps['loadMoreRows'] = ({ startIndex }) =>
+  const loadMoreRows: LoadMoreRows = ({ startIndex, stopIndex }) =>
     new Promise(resolve => {
-      console.log('loadMoreRows', startIndex, list);
+      console.log('list', list);
 
-      setList(
-        insertAll(
-          startIndex,
-          loadMorePeople(),
-          remove(startIndex, pageSize, list),
-        ),
-      );
+      setList({
+        ...list,
+        ...loadMorePeople(range(startIndex)(stopIndex).filter(i => !list[i])),
+      });
 
       resolve();
     });
