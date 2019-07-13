@@ -2,7 +2,7 @@ import { Input, Typography } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
-import { insertAll } from 'ramda';
+import { insertAll, remove } from 'ramda';
 import React, { useState } from 'react';
 import {
   AutoSizer,
@@ -12,7 +12,12 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from 'react-virtualized';
-import { People } from './people';
+
+export interface Person {
+  name: string;
+}
+
+export type People = Person[];
 
 const circleWidth = 10;
 
@@ -84,7 +89,15 @@ const ImageList: React.FC<ImagesProps> = () => {
 
   const loadMoreRows: InfiniteLoaderProps['loadMoreRows'] = ({ startIndex }) =>
     new Promise(resolve => {
-      setList(insertAll(startIndex, loadMorePeople(), list));
+      console.log('loadMoreRows', startIndex, list);
+
+      setList(
+        insertAll(
+          startIndex,
+          loadMorePeople(),
+          remove(startIndex, pageSize, list),
+        ),
+      );
 
       resolve();
     });
