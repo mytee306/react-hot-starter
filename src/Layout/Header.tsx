@@ -142,7 +142,6 @@ const Header: FC<HeaderProps> = ({
             <CardActions>
               <Button
                 size="small"
-                color="primary"
                 onClick={() => {
                   signOut();
                   toggleOpen();
