@@ -41,9 +41,8 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
         onChange={(_, value) => setAmount(value as number)}
         step={1}
         marks={marks}
-        style={{ marginLeft: 30 }}
+        style={{ margin: '0 20px', width: '50%' }}
       />
-
       <br />
       <br />
       <Button

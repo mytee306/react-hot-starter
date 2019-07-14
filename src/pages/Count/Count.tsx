@@ -1,11 +1,19 @@
-import { Card, CardActions, CardHeader, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Disqus, Link, Loader, Switch } from 'components';
 import { CreateSimpleAction } from 'models/actions';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import { State } from 'store';
-import { CountState, createDecrementBy, CreateDecrementBy, createGetCount, createIncrement, selectCountLoadingFlag, selectCountValue } from 'store/slices';
+import {
+  CountState,
+  createDecrementBy,
+  CreateDecrementBy,
+  createGetCount,
+  createIncrement,
+  selectCountLoadingFlag,
+  selectCountValue,
+} from 'store/slices';
 import urlJoin from 'url-join';
 import Decrement from './Decrement';
 import Increment from './Increment';
@@ -32,48 +40,41 @@ const Count: FC<CountProps> = ({
 
   return (
     <>
-      <Card>
-        <CardHeader
-          title={
-            <>
-              Count: <Loader isLoading={isLoading}>{value}</Loader>
-            </>
-          }
+      <Typography variant="h2">
+        Count: <Loader isLoading={isLoading}>{value}</Loader>
+      </Typography>
+      <br />
+      <Switch>
+        <Route
+          path={urlJoin(path, '/')}
+          exact
+          render={() => (
+            <Typography>
+              You may{' '}
+              <Link to="increment" style={{ textDecoration: 'underline' }}>
+                increment
+              </Link>{' '}
+              or{' '}
+              <Link to="decrement" style={{ textDecoration: 'underline' }}>
+                decrement
+              </Link>{' '}
+              your count
+            </Typography>
+          )}
         />
-        <CardActions>
-          <Switch>
-            <Route
-              path={urlJoin(path, '/')}
-              exact
-              render={() => (
-                <Typography>
-                  You may{' '}
-                  <Link to="increment" style={{ textDecoration: 'underline' }}>
-                    increment
-                  </Link>{' '}
-                  or{' '}
-                  <Link to="decrement" style={{ textDecoration: 'underline' }}>
-                    decrement
-                  </Link>{' '}
-                  your count
-                </Typography>
-              )}
-            />
-            <Route
-              path={urlJoin(path, 'increment')}
-              render={() => (
-                <Increment isLoading={isLoading} increment={increment} />
-              )}
-            />
-            <Route
-              path={urlJoin(path, 'decrement')}
-              render={() => (
-                <Decrement decrementBy={decrementBy} isLoading={isLoading} />
-              )}
-            />
-          </Switch>
-        </CardActions>
-      </Card>
+        <Route
+          path={urlJoin(path, 'increment')}
+          render={() => (
+            <Increment isLoading={isLoading} increment={increment} />
+          )}
+        />
+        <Route
+          path={urlJoin(path, 'decrement')}
+          render={() => (
+            <Decrement decrementBy={decrementBy} isLoading={isLoading} />
+          )}
+        />
+      </Switch>
       {process.env.NODE_ENV === 'production' && <Disqus />}
     </>
   );
