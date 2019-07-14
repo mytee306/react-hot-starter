@@ -1,5 +1,13 @@
 /* eslint-disable indent */
 
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  makeStyles,
+} from '@material-ui/core';
+import { Title } from '@material-ui/icons';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
@@ -28,6 +36,15 @@ const collect = createCollect({
   [Draggables.Text]: Text,
 });
 
+const useStyles = makeStyles(theme => ({
+  drawer: {
+    width: theme.spacing(7),
+  },
+  paper: {
+    position: 'static',
+  },
+}));
+
 export interface CanvasProps {}
 
 const Canvas: React.FC<CanvasProps> = () => {
@@ -41,15 +58,40 @@ const Canvas: React.FC<CanvasProps> = () => {
     collect,
   });
 
+  const classes = useStyles();
+
   return (
     <div
       ref={dropRef}
       style={{
-        background:
-          isOver && canDrop ? 'lightgreen' : isOver ? 'tomato' : '#eee',
+        display: 'flex',
       }}
     >
-      {element}
+      <Drawer
+        variant="permanent"
+        open
+        className={classes.drawer}
+        classes={{
+          paper: classes.paper,
+        }}
+      >
+        <List>
+          <ListItem button>
+            <ListItemIcon>
+              <Title />
+            </ListItemIcon>
+          </ListItem>
+        </List>
+      </Drawer>
+      <div
+        style={{
+          flexGrow: 1,
+          background:
+            isOver && canDrop ? 'lightgreen' : isOver ? 'tomato' : '#eee',
+        }}
+      >
+        {element}
+      </div>
     </div>
   );
 };
