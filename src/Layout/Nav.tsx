@@ -23,6 +23,7 @@ import {
 import { Link, Tooltip } from 'components';
 import { capitalize, countBy } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 import urlJoin from 'url-join';
 import { objectMap, toAbsolutePath, toObject } from 'utils';
 
@@ -142,18 +143,21 @@ const privateNavItems: INavItems = [
 
 type OnNavigate = () => void;
 
-interface ChildNavItemProps extends IChildNavItem {
+interface ChildNavItemProps extends IChildNavItem, RouteComponentProps {
   onNavigate: OnNavigate;
+  style?: React.CSSProperties;
 }
 
-const ChildNavItem: FC<ChildNavItemProps> = ({
+const PlainChildNavItem: FC<ChildNavItemProps> = ({
   onNavigate,
   text,
   path,
   icon,
   children,
+  location: { pathname },
+  style,
 }) => (
-  <ListItem>
+  <ListItem selected={pathname === path} style={style}>
     <Link
       onClick={onNavigate}
       style={{ flexGrow: 1, display: 'flex' }}
@@ -166,7 +170,9 @@ const ChildNavItem: FC<ChildNavItemProps> = ({
   </ListItem>
 );
 
-interface NavItemProps extends INavItem, WithTheme {
+const ChildNavItem = withRouter(PlainChildNavItem);
+
+interface NavItemProps extends INavItem, WithTheme, RouteComponentProps {
   onNavigate: OnNavigate;
 }
 
@@ -174,16 +180,28 @@ const expandStyles: CSSProperties = {
   cursor: 'pointer',
 };
 
-const NavItemWithoutTheme: FC<NavItemProps> = ({
+const PlainNavItem: FC<NavItemProps> = ({
+  location: { pathname },
   childNavItems,
   onNavigate,
   theme,
   ...navItemProps
 }) => {
-  const [isOpen, setOpen] = useState(false);
-  const toggleOpen = () => setOpen(open => !open);
+  const mappedChildNavItems = childNavItems.map(({ path, ...item }) => ({
+    ...item,
+    path: urlJoin(navItemProps.path, path),
+  }));
+
+  const [isOpen, setOpen] = useState(
+    !!mappedChildNavItems.find(({ path }) => pathname === path),
+  );
+  const toggleOpen = () => setOpen(!isOpen);
 
   const { '/': level } = countBy(navItemProps.path);
+
+  const boxShadow = `-${theme.spacing(level)}px 0px ${
+    theme.palette.primary.light
+  }`;
 
   return (
     <>
@@ -203,13 +221,12 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
         timeout="auto"
         style={{
           marginLeft: theme.spacing(level),
-          borderLeft: '1px solid #eee',
         }}
       >
         <NavItems
-          navItems={childNavItems.map(({ path, ...childItem }) => ({
+          navItems={mappedChildNavItems.map(childItem => ({
             ...childItem,
-            path: urlJoin(navItemProps.path, path),
+            style: { boxShadow },
           }))}
           onNavigate={onNavigate}
         />
@@ -218,7 +235,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
   );
 };
 
-const NavItem = withTheme(NavItemWithoutTheme);
+const NavItem = withRouter(withTheme(PlainNavItem));
 
 interface NavItemsProps {
   navItems: INavItems;

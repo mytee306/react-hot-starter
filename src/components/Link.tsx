@@ -6,6 +6,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 import urlJoin from 'url-join';
+import { useTheme } from 'utils';
 
 export interface LinkProps
   extends Omit<NavLinkProps, 'location'>,
@@ -22,6 +23,8 @@ const Link: FC<LinkProps> = ({
   staticContext: _,
   ...props
 }) => {
+  const theme = useTheme();
+
   const [hovered, setHovered] = useState(false);
 
   const toggleHovered = () => setHovered(!hovered);
@@ -35,9 +38,9 @@ const Link: FC<LinkProps> = ({
       {...props}
       to={fullPath}
       style={{
-        textDecoration: hovered || fullPath === pathname ? 'underline' : 'none',
+        textDecoration: hovered ? 'underline' : 'none',
         ...style,
-        color,
+        color: fullPath === pathname ? theme.palette.primary.light : color,
         pointerEvents: disabled ? 'none' : 'initial',
       }}
       onMouseEnter={toggleHovered}
