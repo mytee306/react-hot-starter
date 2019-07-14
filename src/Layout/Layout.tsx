@@ -10,6 +10,7 @@ import { ChevronLeft } from '@material-ui/icons';
 import { IconButton } from 'components';
 import { EnhancedTheme } from 'models';
 import React, { FC, useState } from 'react';
+import { createToolbarStyles } from 'styles';
 import Breadcrumbs from './Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';
@@ -23,12 +24,7 @@ export const layoutStyles = (theme: EnhancedTheme) =>
     drawer: {
       width: drawerWidth,
     },
-    toolbar: {
-      ...theme.mixins.toolbar,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-    },
+    toolbar: createToolbarStyles(theme),
     breadcrumbs: {
       margin: contentMargin,
     },
