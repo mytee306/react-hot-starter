@@ -36,7 +36,6 @@ import { createToggleType } from 'store/slices/theme/palette/type';
 
 const headerStyles = createStyles({
   header: {
-    flexGrow: 1,
     width: 'auto',
   },
   expand: {

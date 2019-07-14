@@ -2,6 +2,7 @@
   "extends": ["react-app", "airbnb"],
   "plugins": ["immutable", "prefer-arrow", "prettier", "html", "cypress"],
   "rules": {
+    "no-nested-ternary": "off",
     "arrow-parens": "off",
     "object-curly-newline": "off",
     "operator-linebreak": "off",
