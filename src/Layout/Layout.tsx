@@ -3,8 +3,6 @@ import {
   CssBaseline,
   Divider,
   Drawer,
-  Hidden,
-  useMediaQuery,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
@@ -16,19 +14,14 @@ import Breadcrumbs from './Breadcrumbs';
 import Header from './Header';
 import Nav from './Nav';
 
-const minWidth = 240;
+const drawerWidth = 240;
 
-const margin = 20;
+const contentMargin = 20;
 
-export const layoutStyles = (theme: EnhancedTheme) => {
-  const lg = theme.breakpoints.up('lg');
-
-  return createStyles({
+export const layoutStyles = (theme: EnhancedTheme) =>
+  createStyles({
     drawer: {
-      minWidth,
-    },
-    drawerPaper: {
-      minWidth,
+      width: drawerWidth,
     },
     toolbar: {
       ...theme.mixins.toolbar,
@@ -36,30 +29,18 @@ export const layoutStyles = (theme: EnhancedTheme) => {
       alignItems: 'center',
       justifyContent: 'flex-end',
     },
-    content: {
-      margin,
-      [lg]: {
-        marginLeft: margin + minWidth,
-      },
-      transition: theme.transitions.create(['margin'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: theme.transitions.duration.standard,
-      }),
-    },
-    header: {
-      [lg]: {
-        marginLeft: minWidth,
-      },
+    breadcrumbs: {
+      margin: contentMargin,
     },
   });
-};
+
 export interface LayoutProps extends WithStyles<typeof layoutStyles> {
   theme: EnhancedTheme;
   isSignedIn: boolean;
 }
 
 const Layout: FC<LayoutProps> = ({
-  classes: { toolbar, drawer, drawerPaper, content, header },
+  classes: { toolbar, drawer, breadcrumbs },
   children,
   theme,
   isSignedIn,
@@ -70,34 +51,42 @@ const Layout: FC<LayoutProps> = ({
     setOpen(previousOpen => !previousOpen);
   };
 
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
-
   return (
-    <section>
+    <section
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <CssBaseline />
-      <Header toggle={handleDrawerToggle} className={header} />
+      <Header toggle={handleDrawerToggle} />
       <Drawer
-        variant={isLargeScreen ? 'permanent' : 'temporary'}
         open={open}
         onClose={handleDrawerToggle}
         className={drawer}
         classes={{
-          paper: drawerPaper,
+          paper: drawer,
         }}
       >
         <div className={toolbar}>
-          <Hidden lgUp>
-            {/* IconButton does not change color when palette type is toggled */}
-            <IconButton onClick={handleDrawerToggle}>
-              <ChevronLeft />
-            </IconButton>
-          </Hidden>
+          <IconButton onClick={handleDrawerToggle}>
+            <ChevronLeft />
+          </IconButton>
         </div>
         <Divider />
         <Nav isSignedIn={isSignedIn} onNavigate={handleDrawerToggle} />
       </Drawer>
-      {isSignedIn && <Breadcrumbs className={content} />}
-      <main className={content}>{children}</main>
+      {isSignedIn && <Breadcrumbs className={breadcrumbs} />}
+      <main
+        style={{
+          flexGrow: 1,
+          display: 'grid',
+          margin: contentMargin,
+        }}
+      >
+        {children}
+      </main>
     </section>
   );
 };

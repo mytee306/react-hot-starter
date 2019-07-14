@@ -7,7 +7,6 @@ import {
   CardContent,
   CardMedia,
   createStyles,
-  Hidden,
   Popover,
   Toolbar,
   Typography,
@@ -56,7 +55,7 @@ export interface HeaderProps extends WithStyles<typeof headerStyles> {
   isSignedIn: ReturnType<typeof selectSignedInFlag>;
   signOut: CreateSimpleAction;
   isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
-  className: string;
+  className?: string;
   displayName: DisplayName;
   email: User['email'];
   photoURL: PhotoURL;
@@ -83,13 +82,11 @@ const Header: FC<HeaderProps> = ({
   return (
     <AppBar position="static" className={classnames(header, className)}>
       <Toolbar>
-        <Hidden lgUp>
-          <Tooltip title="Navigation">
-            <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
-              <Menu />
-            </IconButton>
-          </Tooltip>
-        </Hidden>
+        <Tooltip title="Navigation">
+          <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
+            <Menu />
+          </IconButton>
+        </Tooltip>
         <Typography className={expand} variant="h6" color="inherit">
           App Name
         </Typography>
