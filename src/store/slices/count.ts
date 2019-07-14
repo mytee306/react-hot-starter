@@ -12,12 +12,12 @@ export const countSliceName = 'count';
 
 const prefix = prefixActionType(countSliceName);
 
-export const initialState = {
+export const initialCountState = {
   value: 0,
   isLoading: false,
 };
 
-export type CountState = typeof initialState;
+export type CountState = typeof initialCountState;
 
 export const createUpdateCount = createAction(prefix('update'));
 
@@ -31,7 +31,7 @@ const setLoading = (state: CountState) => ({ ...state, isLoading: true });
 
 const countSlice = createSlice({
   slice: countSliceName,
-  initialState,
+  initialState: initialCountState,
   reducers: {
     get: state => ({ ...state, isLoading: true }),
     set: (_, { payload }: CreateSetCountAction) => ({

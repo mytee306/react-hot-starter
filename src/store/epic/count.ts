@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import firebase from 'my-firebase';
-import { inc } from 'ramda';
+import { inc, isNil } from 'ramda';
 import { Epic, ofType, StateObservable } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
 import { empty, of, pipe } from 'rxjs';
@@ -20,6 +20,7 @@ import {
   createIncrement,
   createSetCount,
   createSetErrorSnackbar,
+  initialCountState,
   selectCountValue,
 } from '../slices';
 
@@ -39,9 +40,11 @@ const getCount: Epic = (action$, state$) =>
     selectState(selectUid)(state$),
     map(uid => countsCollection.doc(uid)),
     switchMap(doc =>
-      docData<Pick<CountState, 'value'>>(doc).pipe(takeUntilSignedOut(state$)),
+      docData<Partial<Pick<CountState, 'value'>>>(doc).pipe(
+        takeUntilSignedOut(state$),
+      ),
     ),
-    map(({ value }) => value),
+    map(({ value }) => (isNil(value) ? initialCountState.value : value)),
     map(createSetCount),
     catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
   );
