@@ -84,9 +84,11 @@ const Header: FC<HeaderProps> = ({
     <AppBar position="static" className={classnames(header, className)}>
       <Toolbar>
         <Hidden lgUp>
-          <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
-            <Menu />
-          </IconButton>
+          <Tooltip title="Navigation">
+            <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
+              <Menu />
+            </IconButton>
+          </Tooltip>
         </Hidden>
         <Typography className={expand} variant="h6" color="inherit">
           App Name
