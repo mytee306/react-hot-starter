@@ -11,6 +11,7 @@ import {
   ArrowDownward,
   ArrowUpward,
   BarChart,
+  Brush,
   CloudUpload,
   Collections,
   Dashboard,
@@ -44,6 +45,7 @@ const rootPathnames = [
   'images',
   'store',
   'list',
+  'canvas',
 ] as const;
 
 export const absoluteRootPathnames = rootPathnames.map(toAbsolutePath);
@@ -130,6 +132,12 @@ const privateNavItems: INavItems = [
     icon: <ListIcon />,
     childNavItems: [],
   },
+  {
+    text: textPaths.canvas,
+    path: absolutePaths.canvas,
+    icon: <Brush />,
+    childNavItems: [],
+  },
 ];
 
 type OnNavigate = () => void;
@@ -191,7 +199,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
         timeout="auto"
         style={{
           marginLeft: theme.spacing(level),
-          borderLeft: '1px solid #eee',
+          boxShadow: '5px 0px 5px #eee inset',
         }}
       >
         <NavItems

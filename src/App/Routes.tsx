@@ -1,6 +1,7 @@
 import { Switch } from 'components';
 import { absoluteRootPaths } from 'Layout/Nav';
 import { Count, Dashboard, Images, List, Signin, Store } from 'pages';
+import Canvas from 'pages/Canvas';
 import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     <Route path={absoluteRootPaths.images} component={Images} />
     <Route path={absoluteRootPaths.store} component={Store} />
     <Route path={absoluteRootPaths.list} component={List} />
+    <Route path={absoluteRootPaths.canvas} component={Canvas} />
     {/* {absoluteRootPathnames
       .filter(path => path === absoluteRootPaths.dashboard)
       .map((path, i) => (
