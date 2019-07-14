@@ -199,7 +199,7 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
         timeout="auto"
         style={{
           marginLeft: theme.spacing(level),
-          boxShadow: '5px 0px 5px #eee inset',
+          borderLeft: '1px solid #eee',
         }}
       >
         <NavItems
