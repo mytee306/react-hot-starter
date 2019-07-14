@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/core/Breadcrumbs';
 import { Close } from '@material-ui/icons';
-import { IconButton, Link, Tooltip } from 'components';
+import { IconButton, Link, Tooltip, Visible } from 'components';
 import { startCase } from 'lodash';
 import { init, last, take } from 'ramda';
 import React, { FC } from 'react';
@@ -34,6 +34,10 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 }) => {
   const [open, setOpen] = React.useState(true);
 
+  const [showClose, setShowClose] = React.useState(false);
+
+  const toggleShowClose = () => setShowClose(!showClose);
+
   const pathnames = pathname.split('/').filter(Boolean);
 
   const disabled = !pageFound;
@@ -41,7 +45,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
   const color = disabled ? theme.palette.error.dark : 'inherit';
 
   return (
-    <>
+    <div onMouseEnter={toggleShowClose} onMouseLeave={toggleShowClose}>
       {open && (
         <Flex alignItems="center">
           <Box flex={1}>
@@ -62,15 +66,17 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
               </Typography>
             </MaterialBreadcrumbs>
           </Box>
-          <Tooltip title="Close breadcrumbs">
-            <IconButton onClick={() => setOpen(false)}>
-              <Close />
-            </IconButton>
-          </Tooltip>
+          <Visible visible={showClose}>
+            <Tooltip title="Close breadcrumbs">
+              <IconButton onClick={() => setOpen(false)}>
+                <Close />
+              </IconButton>
+            </Tooltip>
+          </Visible>
         </Flex>
       )}
       <Divider />
-    </>
+    </div>
   );
 };
 
