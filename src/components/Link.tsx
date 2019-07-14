@@ -28,12 +28,14 @@ const Link: FC<LinkProps> = ({
 
   const path = to.toString();
 
+  const fullPath = path.startsWith('/') ? path : urlJoin(pathname, path);
+
   return (
     <NavLink
       {...props}
-      to={path.startsWith('/') ? path : urlJoin(pathname, path)}
+      to={fullPath}
       style={{
-        textDecoration: hovered ? 'underline' : 'none',
+        textDecoration: hovered || fullPath === pathname ? 'underline' : 'none',
         ...style,
         color,
         pointerEvents: disabled ? 'none' : 'initial',
