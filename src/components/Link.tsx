@@ -18,7 +18,7 @@ const Link: FC<LinkProps> = ({
   style,
   color = 'inherit',
   to,
-  match: { path },
+  location: { pathname },
   staticContext: _,
   ...props
 }) => {
@@ -26,12 +26,12 @@ const Link: FC<LinkProps> = ({
 
   const toggleHovered = () => setHovered(!hovered);
 
-  const newPath = to.toString();
+  const path = to.toString();
 
   return (
     <NavLink
       {...props}
-      to={newPath.startsWith('/') ? newPath : urlJoin(path, newPath)}
+      to={path.startsWith('/') ? path : urlJoin(pathname, path)}
       style={{
         textDecoration: hovered ? 'underline' : 'none',
         ...style,

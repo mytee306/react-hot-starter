@@ -91,7 +91,7 @@ const privateNavItems: INavItems = [
   {
     text: textPaths.dashboard,
     icon: <Dashboard />,
-    path: '',
+    path: '/',
     childNavItems: [],
   },
   {
