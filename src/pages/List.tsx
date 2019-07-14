@@ -142,7 +142,7 @@ const ImageList: React.FC<ImagesProps> = () => {
         onSubmit={e => {
           e.preventDefault();
 
-          setIndexToScrollTo(Number(value));
+          setIndexToScrollTo(Number(value) - 1);
         }}
       >
         <Input
