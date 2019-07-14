@@ -1,4 +1,5 @@
-import { Card, CardActions, CardContent, Typography } from '@material-ui/core';
+import { Typography, useTheme } from '@material-ui/core';
+import google from 'assets/img/google.svg';
 import { Button } from 'components';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
@@ -10,22 +11,30 @@ export interface SigninProps {
   isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
 }
 
-const Signin: FC<SigninProps> = ({ signIn, isAuthLoading }) => (
-  <Card>
-    <CardContent>
+const Signin: FC<SigninProps> = ({ signIn, isAuthLoading }) => {
+  const theme = useTheme();
+
+  return (
+    <>
       <Typography variant="h2">Welcome</Typography>
-    </CardContent>
-    <CardActions>
+      <br />
+      <Typography>You can sign in using your Google account</Typography>
+      <br />
       <Button
         variant="contained"
         onClick={() => signIn()}
         isLoading={isAuthLoading}
       >
-        Signin
+        <img
+          height={theme.typography.fontSize + 5}
+          src={google}
+          alt="Google Logo"
+        />
+        <span style={{ marginLeft: 5 }}>Sign in</span>
       </Button>
-    </CardActions>
-  </Card>
-);
+    </>
+  );
+};
 
 export default connect(
   (state: State) => ({
