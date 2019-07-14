@@ -20,7 +20,7 @@ import {
   List as ListIcon,
   Person,
 } from '@material-ui/icons';
-import { Link } from 'components';
+import { Link, Tooltip } from 'components';
 import { capitalize, countBy } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import urlJoin from 'url-join';
@@ -189,9 +189,13 @@ const NavItemWithoutTheme: FC<NavItemProps> = ({
     <>
       <ChildNavItem {...navItemProps} onNavigate={onNavigate}>
         {isOpen ? (
-          <ExpandLess onClick={toggleOpen} style={expandStyles} />
+          <Tooltip title="See less">
+            <ExpandLess onClick={toggleOpen} style={expandStyles} />
+          </Tooltip>
         ) : (
-          <ExpandMore onClick={toggleOpen} style={expandStyles} />
+          <Tooltip title="See more">
+            <ExpandMore onClick={toggleOpen} style={expandStyles} />
+          </Tooltip>
         )}
       </ChildNavItem>
       <Collapse

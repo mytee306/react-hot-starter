@@ -82,7 +82,7 @@ const Header: FC<HeaderProps> = ({
   return (
     <AppBar position="static" className={classnames(header, className)}>
       <Toolbar>
-        <Tooltip title="Navigation">
+        <Tooltip title="Open navigation">
           <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
             <Menu />
           </IconButton>

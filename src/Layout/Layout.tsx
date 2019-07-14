@@ -7,7 +7,7 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
-import { IconButton } from 'components';
+import { IconButton, Tooltip } from 'components';
 import { EnhancedTheme } from 'models';
 import React, { FC, useState } from 'react';
 import { createToolbarStyles } from 'styles';
@@ -66,9 +66,11 @@ const Layout: FC<LayoutProps> = ({
         }}
       >
         <div className={toolbar}>
-          <IconButton onClick={handleDrawerToggle}>
-            <ChevronLeft />
-          </IconButton>
+          <Tooltip title="Close navigation">
+            <IconButton onClick={handleDrawerToggle}>
+              <ChevronLeft />
+            </IconButton>
+          </Tooltip>
         </div>
         <Divider />
         <Nav isSignedIn={isSignedIn} onNavigate={handleDrawerToggle} />
