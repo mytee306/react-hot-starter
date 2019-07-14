@@ -4,6 +4,8 @@ export * from './Dashboard';
 export { default as Dashboard } from './Dashboard';
 export * from './Images';
 export { default as Images } from './Images';
+export * from './List';
+export { default as List } from './List';
 export * from './Signin';
 export { default as Signin } from './Signin';
 export * from './Store';

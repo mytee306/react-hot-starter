@@ -1,6 +1,6 @@
 import { Switch } from 'components';
 import { absoluteRootPaths } from 'Layout/Nav';
-import { Count, Dashboard, Images, Signin, Store } from 'pages';
+import { Count, Dashboard, Images, List, Signin, Store } from 'pages';
 import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => (
     <Route path={absoluteRootPaths.count} component={Count} />
     <Route path={absoluteRootPaths.images} component={Images} />
     <Route path={absoluteRootPaths.store} component={Store} />
+    <Route path={absoluteRootPaths.list} component={List} />
     {/* {absoluteRootPathnames
       .filter(path => path === absoluteRootPaths.dashboard)
       .map((path, i) => (

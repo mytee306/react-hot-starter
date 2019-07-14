@@ -16,6 +16,7 @@ import {
   Dashboard,
   ExpandLess,
   ExpandMore,
+  List as ListIcon,
   Person,
 } from '@material-ui/icons';
 import { Link } from 'components';
@@ -42,6 +43,7 @@ const rootPathnames = [
   'count',
   'images',
   'store',
+  'list',
 ] as const;
 
 export const absoluteRootPathnames = rootPathnames.map(toAbsolutePath);
@@ -121,6 +123,12 @@ const privateNavItems: INavItems = [
         childNavItems: [],
       },
     ],
+  },
+  {
+    text: textPaths.list,
+    path: absolutePaths.list,
+    icon: <ListIcon />,
+    childNavItems: [],
   },
 ];
 

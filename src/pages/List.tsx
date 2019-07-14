@@ -181,6 +181,7 @@ const ImageList: React.FC<ImagesProps> = () => {
                     rowRenderer={rowRenderer}
                     scrollToIndex={indexToScrollTo}
                     style={{ border: '1px solid #ccc' }}
+                    scrollToAlignment="start"
                   />
                 )}
               </AutoSizer>
