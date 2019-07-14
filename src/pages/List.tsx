@@ -1,4 +1,4 @@
-import { Input, Typography } from '@material-ui/core';
+import { Input, Typography, withTheme, WithTheme } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
@@ -84,9 +84,9 @@ const loadMorePlaceholders = loadMore(() => 'Loading...');
 
 const loadMorePeople = loadMore(() => name.findName());
 
-export interface ImagesProps {}
+export interface ImagesProps extends WithTheme {}
 
-const ImageList: React.FC<ImagesProps> = () => {
+const ImageList: React.FC<ImagesProps> = ({ theme }) => {
   const [value, setValue] = useState('');
 
   const [list, setList] = useState<People>({});
@@ -133,7 +133,7 @@ const ImageList: React.FC<ImagesProps> = () => {
       >
         <IconButton
           onClick={() => setIndexToScrollTo(0)}
-          style={{ background: '#eee' }}
+          style={{ background: theme.palette.background.paper }}
         >
           <ArrowUpward />
         </IconButton>
@@ -193,4 +193,4 @@ const ImageList: React.FC<ImagesProps> = () => {
   );
 };
 
-export default ImageList;
+export default withTheme(ImageList);
