@@ -1,5 +1,5 @@
 import { useMediaQuery, WithTheme, withTheme } from '@material-ui/core';
-import { Switch } from 'components';
+import { PageRoute, Switch } from 'components';
 import { absoluteRootPaths } from 'Layout/Nav';
 import { Count, Dashboard, Images, List, Signin, Store } from 'pages';
 import Canvas from 'pages/Canvas';
@@ -19,16 +19,20 @@ const Routes: FC<RoutesProps> = ({ isSignedIn, theme }) => {
   return (
     <DndProvider backend={isMediumScreen ? HTML5Backend : TouchBackend}>
       <Switch>
-        {isSignedIn ? null : <Route component={Signin} />}
-        <Route
+        {isSignedIn ? null : <PageRoute component={Signin} />}
+        <PageRoute
           path={absoluteRootPaths.signin}
           render={() => <Redirect to={absoluteRootPaths.dashboard} />}
         />
-        <Route exact path={absoluteRootPaths.dashboard} component={Dashboard} />
-        <Route path={absoluteRootPaths.count} component={Count} />
-        <Route path={absoluteRootPaths.images} component={Images} />
-        <Route path={absoluteRootPaths.store} component={Store} />
-        <Route path={absoluteRootPaths.list} component={List} />
+        <PageRoute
+          exact
+          path={absoluteRootPaths.dashboard}
+          component={Dashboard}
+        />
+        <PageRoute path={absoluteRootPaths.count} component={Count} />
+        <PageRoute path={absoluteRootPaths.images} component={Images} />
+        <PageRoute path={absoluteRootPaths.store} component={Store} />
+        <PageRoute path={absoluteRootPaths.list} component={List} />
         <Route path={absoluteRootPaths.canvas} component={Canvas} />
         {/* {absoluteRootPathnames
         .filter(path => path === absoluteRootPaths.dashboard)

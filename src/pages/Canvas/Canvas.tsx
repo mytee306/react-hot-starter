@@ -1,6 +1,5 @@
 /* eslint-disable indent */
 
-import { Typography } from '@material-ui/core';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
@@ -46,12 +45,10 @@ const Canvas: React.FC<CanvasProps> = () => {
     <div
       ref={dropRef}
       style={{
-        height: '100%',
         background:
           isOver && canDrop ? 'lightgreen' : isOver ? 'tomato' : '#eee',
       }}
     >
-      <Typography variant="h2">Canvas</Typography>
       {element}
     </div>
   );

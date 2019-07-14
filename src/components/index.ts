@@ -10,6 +10,8 @@ export * from './Loader';
 export { default as Loader } from './Loader';
 export * from './NotFound';
 export { default as NotFound } from './NotFound';
+export * from './PageRoute';
+export { default as PageRoute } from './PageRoute';
 export * from './Snackbar';
 export { default as Snackbar } from './Snackbar';
 export * from './Spinner';

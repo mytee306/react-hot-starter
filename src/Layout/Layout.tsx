@@ -82,7 +82,6 @@ const Layout: FC<LayoutProps> = ({
         style={{
           flexGrow: 1,
           display: 'grid',
-          margin: contentMargin,
         }}
       >
         {children}
