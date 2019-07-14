@@ -99,8 +99,6 @@ const ImageList: React.FC<ImagesProps> = () => {
     setList(merge(list, loadMorePeople(range(0)(pageSize))));
   }, []); // eslint-disable-line
 
-  console.log('LIST', list);
-
   const rowRenderer = createRowRenderer(list);
 
   const loadMoreRows: LoadMoreRows = ({ startIndex, stopIndex }) => {
@@ -110,18 +108,14 @@ const ImageList: React.FC<ImagesProps> = () => {
 
     const rowsBeingLoaded = loadMorePlaceholders(rangeToLoad);
 
-    console.log('rowsBeingLoaded', rowsBeingLoaded);
-
     setList(merge(list, rowsBeingLoaded));
 
     return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('loaded rows from', startIndex, 'to', stopIndex);
+      console.log('loaded rows from', startIndex, 'to', stopIndex);
 
-        setList(oldList => merge(oldList, loadMorePeople(rangeToLoad)));
+      setList(oldList => merge(oldList, loadMorePeople(rangeToLoad)));
 
-        resolve();
-      });
+      resolve();
     });
   };
 
