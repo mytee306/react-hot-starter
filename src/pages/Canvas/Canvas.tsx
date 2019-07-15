@@ -9,37 +9,25 @@ import {
   ListItemIcon,
   makeStyles,
   Popover,
-  Typography,
 } from '@material-ui/core';
+import { TypographyProps } from '@material-ui/core/Typography';
 import { Title } from '@material-ui/icons';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
+import { v4 } from 'uuid';
 import Text from './Text';
 
-const createCollect = <Type extends string, Payload>(
-  componentMap: Record<Type, React.ComponentType<Payload>>,
-) => (monitor: DropTargetMonitor) => ({
-  isOver: !!monitor.isOver(),
-  canDrop: !!monitor.canDrop(),
-  element: (() => {
-    const type = monitor.getItemType() as Type;
-    if (type) {
-      const payload: Payload = monitor.getDropResult();
+const collect = (monitor: DropTargetMonitor) => {
+  const props = monitor.getDropResult() as TypographyProps;
 
-      const Component: React.ComponentType<Payload> = componentMap[type];
-
-      return <Component {...payload} />;
-    } else {
-      return null;
-    }
-  })(),
-});
-
-const collect = createCollect({
-  [Draggables.Text]: Text,
-});
-
+  return {
+    isOver: !!monitor.isOver(),
+    canDrop: !!monitor.canDrop(),
+    props,
+    isDragging: monitor.getItemType() === Draggables.Text,
+  };
+};
 const useStyles = makeStyles(theme => ({
   drawer: {
     width: theme.spacing(7),
@@ -52,19 +40,36 @@ const useStyles = makeStyles(theme => ({
 export interface CanvasProps {}
 
 const Canvas: React.FC<CanvasProps> = () => {
-  const [{ isOver, canDrop, element }, dropRef] = useDrop<
+  const [{ isOver, canDrop, props, isDragging }, dropRef] = useDrop<
     DropTextAction,
     DropResult,
     ReturnType<typeof collect>
   >({
     accept: Draggables.Text,
     canDrop: ({ type }) => draggables.includes(type),
+    drop: ({ payload }) => payload,
     collect,
   });
+
+  const [textBlocksProps, setTextBlocksProps] = React.useState<
+    TypographyProps[]
+  >([]);
+
+  React.useEffect(() => {
+    if (props) {
+      setTextBlocksProps(textBlocksProps.concat(props));
+    }
+  }, [props]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isDragging) {
+      setOpen(false);
+    }
+  }, [isDragging]);
 
   const textItemRef = React.useRef<HTMLDivElement>(null);
 
@@ -105,20 +110,25 @@ const Canvas: React.FC<CanvasProps> = () => {
           >
             <Card>
               <CardContent>
-                <Typography>Text Block</Typography>
+                <Text>Text Block</Text>
               </CardContent>
             </Card>
           </Popover>
         </List>
       </Drawer>
       <div
+        ref={dropRef}
         style={{
           flexGrow: 1,
           background:
             isOver && canDrop ? 'lightgreen' : isOver ? 'tomato' : '#eee',
         }}
       >
-        {element}
+        {textBlocksProps.map(textBlockProps => {
+          const key = v4();
+
+          return <Text key={key} {...textBlockProps} />;
+        })}
       </div>
     </div>
   );
