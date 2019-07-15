@@ -1,11 +1,15 @@
 /* eslint-disable indent */
 
 import {
+  Card,
+  CardContent,
   Drawer,
   List,
   ListItem,
   ListItemIcon,
   makeStyles,
+  Popover,
+  Typography,
 } from '@material-ui/core';
 import { Title } from '@material-ui/icons';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
@@ -60,9 +64,14 @@ const Canvas: React.FC<CanvasProps> = () => {
 
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
+  const textItemRef = React.useRef<HTMLDivElement>(null);
+
+  const toggleOpen = () => setOpen(!open);
+
   return (
     <div
-      ref={dropRef}
       style={{
         display: 'flex',
       }}
@@ -76,11 +85,30 @@ const Canvas: React.FC<CanvasProps> = () => {
         }}
       >
         <List>
-          <ListItem button>
+          <ListItem button ref={textItemRef} onClick={toggleOpen}>
             <ListItemIcon>
               <Title />
             </ListItemIcon>
           </ListItem>
+          <Popover
+            anchorEl={textItemRef.current}
+            open={open}
+            onClose={toggleOpen}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
+            <Card>
+              <CardContent>
+                <Typography>Text Block</Typography>
+              </CardContent>
+            </Card>
+          </Popover>
         </List>
       </Drawer>
       <div
