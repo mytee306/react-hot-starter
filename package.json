@@ -27,6 +27,7 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@craco/craco": "^5.2.4",
     "@material-ui/core": "^4.1.3",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/lab": "^4.0.0-alpha.18",
