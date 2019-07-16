@@ -13,7 +13,7 @@ import { selectSignedInFlag, selectTheme, State } from 'store';
 import { createGetAuthState } from 'store/slices';
 import Routes from './Routes';
 
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@material-ui/core' {
   interface Theme extends WithColors {}
 }
 
