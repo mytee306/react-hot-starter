@@ -10,13 +10,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import ghost from 'assets/img/ghost.svg';
-import { random } from 'faker';
 import { startCase } from 'lodash';
 import { Payment } from 'paypal-rest-sdk';
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { v4 } from 'uuid';
 
 const product = {
-  id: random.alphaNumeric(),
+  id: v4(),
   description: 'Ghostly sigh',
   price: 100.0,
   currency: 'USD',

@@ -3,7 +3,7 @@ import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
 import { prefixActionType } from 'utils';
-import uuid from 'uuid/v4';
+import { v4 } from 'uuid';
 
 export const imagesSliceName = 'images';
 
@@ -52,7 +52,7 @@ const imagesSlice = createSlice({
   initialState: initialImages,
   reducers: {
     add: ({ ids, entities }, { payload: image }: AddImage) => {
-      const id = uuid();
+      const id = v4();
 
       return {
         ids: ids.concat(id),
@@ -67,7 +67,7 @@ const imagesSlice = createSlice({
       entities: { ...entities, [id]: { ...entities[id], uploadStatus } },
     }),
     set: (_, { payload: images }: SetImages) => {
-      const ids = images.map(() => uuid());
+      const ids = images.map(() => v4());
 
       return {
         ids,
