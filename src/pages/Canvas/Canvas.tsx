@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   makeStyles,
   Popover,
+  useTheme,
 } from '@material-ui/core';
 import { Title } from '@material-ui/icons';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
@@ -68,6 +69,8 @@ const Canvas: React.FC<CanvasProps> = () => {
 
   const toggleOpen = () => setOpen(!open);
 
+  const theme = useTheme();
+
   return (
     <div
       style={{
@@ -114,7 +117,11 @@ const Canvas: React.FC<CanvasProps> = () => {
         style={{
           flexGrow: 1,
           background:
-            isOver && canDrop ? 'lightgreen' : isOver ? 'tomato' : '#eee',
+            isOver && canDrop
+              ? theme.colors.success.light
+              : isOver
+              ? theme.palette.error.light
+              : theme.palette.background.paper,
         }}
       >
         {dropResults.map(({ id, ...textBlockProps }) => (

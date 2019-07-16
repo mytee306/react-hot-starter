@@ -166,7 +166,7 @@ const Upload: FC<UploadProps> = ({
                         return (
                           <Tooltip title="Successfully Uploaded">
                             <CheckCircleOutline
-                              style={{ color: colors.success }}
+                              style={{ color: colors.success.dark }}
                             />
                           </Tooltip>
                         );

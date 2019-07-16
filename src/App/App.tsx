@@ -30,7 +30,12 @@ const App: FC<AppProps> = ({ getAuthState, isSignedIn, themeOptions }) => {
 
   const theme = createMuiTheme({
     ...themeOptions,
-    colors: { success: colors.green[600] },
+    colors: {
+      success: {
+        dark: colors.green[600],
+        light: colors.green[300],
+      },
+    } as WithColors['colors'],
   } as ThemeOptions);
 
   return (

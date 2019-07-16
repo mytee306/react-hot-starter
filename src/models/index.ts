@@ -16,7 +16,7 @@ export interface EnhancedTheme extends Theme, WithColors {}
 
 export interface WithColors {
   colors: {
-    success: CSSProperties['color'];
+    success: { light: CSSProperties['color']; dark: CSSProperties['color'] };
   };
 }
 
