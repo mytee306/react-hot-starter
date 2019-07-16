@@ -42,8 +42,8 @@ export type CreateDropText = typeof createDropText;
 export type DropTextAction = ReturnType<CreateDropText>;
 
 export interface WithDropResult {
-  top: React.CSSProperties['top'];
-  left: React.CSSProperties['left'];
+  top: number;
+  left: number;
 }
 
 export interface DropResult extends DropTextPayload, WithDropResult {}

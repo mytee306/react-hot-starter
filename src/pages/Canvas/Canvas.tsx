@@ -47,6 +47,19 @@ const useStyles = makeStyles(theme => ({
 export interface CanvasProps {}
 
 const Canvas: React.FC<CanvasProps> = () => {
+  const canvasRef = React.useRef<HTMLDivElement>(null);
+
+  const [{ offsetX, offsetY }, setOffset] = React.useState({
+    offsetX: 0,
+    offsetY: 0,
+  });
+
+  React.useEffect(() => {
+    const { top, left } = canvasRef.current!.getBoundingClientRect();
+
+    setOffset({ offsetX: left, offsetY: top });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const [{ isOver, canDrop, isDragging, props }, dropRef] = useDrop<
     DropTextAction,
     DropResult,
@@ -55,13 +68,13 @@ const Canvas: React.FC<CanvasProps> = () => {
     accept: Draggables.Text,
     canDrop: ({ type }) => draggables.includes(type),
     drop: ({ payload }, monitor) => {
-      const offset = monitor.getClientOffset();
+      const offset = monitor.getSourceClientOffset();
 
       if (offset && payload) {
         return {
           ...payload,
-          top: offset.x,
-          left: offset.y,
+          top: offset.y,
+          left: offset.x,
         };
       } else {
         return undefined;
@@ -74,7 +87,15 @@ const Canvas: React.FC<CanvasProps> = () => {
 
   React.useEffect(() => {
     if (props) {
-      setDropResults(dropResults.concat(props));
+      const { top, left } = props;
+
+      setDropResults(
+        dropResults.concat({
+          ...props,
+          top: top - offsetY,
+          left: left - offsetX,
+        }),
+      );
     }
   }, [props]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -148,9 +169,11 @@ const Canvas: React.FC<CanvasProps> = () => {
           position: 'relative',
         }}
       >
-        {dropResults.map(textBlockProps => (
-          <Text key={textBlockProps.id} {...textBlockProps} />
-        ))}
+        <div ref={canvasRef}>
+          {dropResults.map(textBlockProps => (
+            <Text key={textBlockProps.id} {...textBlockProps} />
+          ))}
+        </div>
       </div>
     </div>
   );
