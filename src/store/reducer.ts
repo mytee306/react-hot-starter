@@ -1,7 +1,7 @@
 import { isEmpty } from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
-import { createSelector, defaultMemoize } from 'reselect';
+import { createSelector } from 'reselect';
 import { createDeepSelector } from 'utils';
 import {
   auth,
@@ -37,7 +37,7 @@ export default reducerWithReset;
 
 export const initialState = reducer(undefined, { type: 'TEST' });
 
-export const selectTheme = defaultMemoize((state: State) => state.theme);
+export const selectTheme = (state: State) => state.theme;
 
 export const selectPaletteType = createSelector(
   selectTheme,
@@ -49,7 +49,7 @@ export const selectDarkThemeFlag = createSelector(
   type => type === 'dark',
 );
 
-export const selectAuth = defaultMemoize((state: State) => state.auth);
+export const selectAuth = (state: State) => state.auth;
 
 export const selectUser = createDeepSelector(selectAuth, ({ user }) => user);
 
