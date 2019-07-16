@@ -19,6 +19,7 @@ import {
   ExpandMore,
   List as ListIcon,
   Person,
+  Store,
 } from '@material-ui/icons';
 import { Link, Tooltip } from 'components';
 import { capitalize, countBy } from 'lodash';
@@ -126,6 +127,12 @@ const privateNavItems: INavItems = [
         childNavItems: [],
       },
     ],
+  },
+  {
+    text: textPaths.store,
+    path: absolutePaths.store,
+    icon: <Store />,
+    childNavItems: [],
   },
   {
     text: textPaths.list,
