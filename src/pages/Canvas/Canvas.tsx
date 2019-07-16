@@ -10,24 +10,19 @@ import {
   makeStyles,
   Popover,
 } from '@material-ui/core';
-import { TypographyProps } from '@material-ui/core/Typography';
 import { Title } from '@material-ui/icons';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
-import { v4 } from 'uuid';
 import Text from './Text';
 
-const collect = (monitor: DropTargetMonitor) => {
-  const props = monitor.getDropResult() as TypographyProps;
+const collect = (monitor: DropTargetMonitor) => ({
+  isOver: !!monitor.isOver(),
+  canDrop: !!monitor.canDrop(),
+  props: monitor.getDropResult() as DropResult,
+  isDragging: monitor.getItemType() === Draggables.Text,
+});
 
-  return {
-    isOver: !!monitor.isOver(),
-    canDrop: !!monitor.canDrop(),
-    props,
-    isDragging: monitor.getItemType() === Draggables.Text,
-  };
-};
 const useStyles = makeStyles(theme => ({
   drawer: {
     width: theme.spacing(7),
@@ -51,13 +46,11 @@ const Canvas: React.FC<CanvasProps> = () => {
     collect,
   });
 
-  const [textBlocksProps, setTextBlocksProps] = React.useState<
-    TypographyProps[]
-  >([]);
+  const [dropResults, setDropResults] = React.useState<DropResult[]>([]);
 
   React.useEffect(() => {
     if (props) {
-      setTextBlocksProps(textBlocksProps.concat(props));
+      setDropResults(dropResults.concat(props));
     }
   }, [props]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -124,11 +117,9 @@ const Canvas: React.FC<CanvasProps> = () => {
             isOver && canDrop ? 'lightgreen' : isOver ? 'tomato' : '#eee',
         }}
       >
-        {textBlocksProps.map(textBlockProps => {
-          const key = v4();
-
-          return <Text key={key} {...textBlockProps} />;
-        })}
+        {dropResults.map(({ id, ...textBlockProps }) => (
+          <Text key={id} {...textBlockProps} />
+        ))}
       </div>
     </div>
   );

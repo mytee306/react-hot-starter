@@ -3,6 +3,7 @@ import { TypographyProps } from '@material-ui/core/Typography';
 import { createDropText } from 'models';
 import React from 'react';
 import { useDrag } from 'react-dnd';
+import { v4 } from 'uuid';
 
 const Text: React.FC<TypographyProps> = ({ children }) => {
   const [text, setText] = React.useState(children);
@@ -12,7 +13,7 @@ const Text: React.FC<TypographyProps> = ({ children }) => {
   }, [children]);
 
   const [, dragRef] = useDrag({
-    item: createDropText({ children: text }),
+    item: createDropText({ id: v4(), children: text }),
   });
 
   return (

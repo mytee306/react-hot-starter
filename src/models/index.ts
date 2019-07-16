@@ -12,13 +12,17 @@ export type Module = NodeModule & {
 
 export type Maybe<A> = null | A;
 
+export interface EnhancedTheme extends Theme, WithColors {}
+
 export interface WithColors {
   colors?: {
     success: CSSProperties['color'];
   };
 }
 
-export interface EnhancedTheme extends Theme, WithColors {}
+export interface WithId {
+  id: string;
+}
 
 export const draggables = ['Text'] as const;
 
@@ -26,13 +30,15 @@ export type Draggable = typeof draggables[number];
 
 export const Draggables = toObject(draggables);
 
+export interface DropTextPayload extends Omit<TypographyProps, 'id'>, WithId {}
+
 export const createDropText = createAction(
   Draggables.Text,
-  action => (payload: TypographyProps) => action(payload),
+  action => (payload: DropTextPayload) => action(payload),
 );
 
 export type CreateDropText = typeof createDropText;
 
 export type DropTextAction = ReturnType<CreateDropText>;
 
-export type DropResult = TypographyProps;
+export type DropResult = DropTextPayload;
