@@ -2,6 +2,7 @@ import { isEmpty } from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector, defaultMemoize } from 'reselect';
+import { createDeepSelector } from 'utils';
 import {
   auth,
   count,
@@ -50,10 +51,7 @@ export const selectDarkThemeFlag = createSelector(
 
 export const selectAuth = defaultMemoize((state: State) => state.auth);
 
-export const selectUser = createSelector(
-  selectAuth,
-  ({ user }) => user,
-);
+export const selectUser = createDeepSelector(selectAuth, ({ user }) => user);
 
 export const selectUid = createSelector(
   selectUser,
@@ -84,7 +82,7 @@ export const selectPhotoURL = createSelector(
 
 export type PhotoURL = ReturnType<typeof selectPhotoURL>;
 
-export const selectSnackbar = createSelector(
+export const selectSnackbar = createDeepSelector(
   selectSnackbarState,
   ({ queue }) => {
     const isQueueEmpty = isEmpty(queue);

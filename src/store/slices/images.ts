@@ -1,8 +1,7 @@
 import { pick } from 'ramda';
 import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
-import { createSelector } from 'reselect';
-import { prefixActionType } from 'utils';
+import { createDeepSelector, prefixActionType } from 'utils';
 import { v4 } from 'uuid';
 
 export const imagesSliceName = 'images';
@@ -106,17 +105,13 @@ export default imagesSlice.reducer;
 
 export type CreateRemoveImage = typeof createRemoveImage;
 
-export const selectImages = createSelector(
-  getImages,
-  ({ ids, entities }) => ids.map(id => entities[id]),
+export const selectImages = createDeepSelector(getImages, ({ ids, entities }) =>
+  ids.map(id => entities[id]),
 );
 
-export const selectImageIds = createSelector(
-  getImages,
-  ({ ids }) => ids,
-);
+export const selectImageIds = createDeepSelector(getImages, ({ ids }) => ids);
 
-export const selectImageEntities = createSelector(
+export const selectImageEntities = createDeepSelector(
   getImages,
   ({ entities }) => entities,
 );
@@ -127,13 +122,13 @@ export interface ImageWIthId extends Image {
 
 export type ImagesWIthId = ImageWIthId[];
 
-export const selectImagesWithIds = createSelector(
+export const selectImagesWithIds = createDeepSelector(
   selectImageIds,
   selectImages,
   (ids, images) => ids.map((id, i) => ({ ...images[i], id })),
 );
 
-export const selectImagesUploading = createSelector(
+export const selectImagesUploading = createDeepSelector(
   getImages,
   ({ entities }) => {
     const uploadingImage = Object.values(entities).find(

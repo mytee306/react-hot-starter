@@ -1,11 +1,17 @@
 /* eslint-disable indent */
 import { useTheme as useMaterialTheme } from '@material-ui/styles';
-import { kebabCase } from 'lodash';
+import { isEqual, kebabCase } from 'lodash';
 import { EnhancedTheme } from 'models';
 import { pipe } from 'ramda';
 import { Selector } from 'react-redux';
+import { createSelectorCreator, defaultMemoize } from 'reselect';
 import { State } from 'store';
 import urlJoin from 'url-join';
+
+export const createDeepSelector = createSelectorCreator(
+  defaultMemoize,
+  isEqual,
+);
 
 const prefixActionTypeWithSeparator = (separator: string) => (
   prefix: string,
