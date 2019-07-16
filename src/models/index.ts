@@ -15,7 +15,7 @@ export type Maybe<A> = null | A;
 export interface EnhancedTheme extends Theme, WithColors {}
 
 export interface WithColors {
-  colors?: {
+  colors: {
     success: CSSProperties['color'];
   };
 }

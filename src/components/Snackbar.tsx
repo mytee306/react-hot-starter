@@ -32,7 +32,7 @@ const getVariants: GetVariants = ({ palette, colors }) => ({
     backgroundColor: palette.error.main,
   },
   success: {
-    backgroundColor: colors!.success,
+    backgroundColor: colors.success,
   },
   info: {
     backgroundColor: palette.primary.light,

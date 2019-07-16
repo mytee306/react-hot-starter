@@ -15,7 +15,6 @@ import Routes from './Routes';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme extends WithColors {}
-  interface ThemeOptions extends WithColors {}
 }
 
 export interface AppProps {
@@ -32,7 +31,7 @@ const App: FC<AppProps> = ({ getAuthState, isSignedIn, themeOptions }) => {
   const theme = createMuiTheme({
     ...themeOptions,
     colors: { success: colors.green[600] },
-  });
+  } as ThemeOptions);
 
   return (
     <ThemeProvider theme={theme}>
