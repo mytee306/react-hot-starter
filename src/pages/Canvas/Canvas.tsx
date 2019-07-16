@@ -15,12 +15,22 @@ import { Title } from '@material-ui/icons';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
-import Text from './Text';
+import Text, { TextBlock } from './Text';
 
 const collect = (monitor: DropTargetMonitor) => ({
   isOver: !!monitor.isOver(),
   canDrop: !!monitor.canDrop(),
-  props: monitor.getDropResult() as DropResult,
+  props: (() => {
+    const dropResult = monitor.getDropResult();
+
+    if (dropResult) {
+      const { dropEffect: _, ...payload } = dropResult;
+
+      return payload as DropResult;
+    } else {
+      return null;
+    }
+  })(),
   isDragging: monitor.getItemType() === Draggables.Text,
 });
 
@@ -30,20 +40,33 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     position: 'static',
+    overflow: 'hidden',
   },
 }));
 
 export interface CanvasProps {}
 
 const Canvas: React.FC<CanvasProps> = () => {
-  const [{ isOver, canDrop, props, isDragging }, dropRef] = useDrop<
+  const [{ isOver, canDrop, isDragging, props }, dropRef] = useDrop<
     DropTextAction,
     DropResult,
     ReturnType<typeof collect>
   >({
     accept: Draggables.Text,
     canDrop: ({ type }) => draggables.includes(type),
-    drop: ({ payload }) => payload,
+    drop: ({ payload }, monitor) => {
+      const offset = monitor.getClientOffset();
+
+      if (offset && payload) {
+        return {
+          ...payload,
+          top: offset.x,
+          left: offset.y,
+        };
+      } else {
+        return undefined;
+      }
+    },
     collect,
   });
 
@@ -106,7 +129,7 @@ const Canvas: React.FC<CanvasProps> = () => {
           >
             <Card>
               <CardContent>
-                <Text>Text Block</Text>
+                <TextBlock>Text Block</TextBlock>
               </CardContent>
             </Card>
           </Popover>
@@ -121,11 +144,12 @@ const Canvas: React.FC<CanvasProps> = () => {
               ? theme.colors.success.light
               : isOver
               ? theme.palette.error.light
-              : theme.palette.background.paper,
+              : '#eee',
+          position: 'relative',
         }}
       >
-        {dropResults.map(({ id, ...textBlockProps }) => (
-          <Text key={id} {...textBlockProps} />
+        {dropResults.map(textBlockProps => (
+          <Text key={textBlockProps.id} {...textBlockProps} />
         ))}
       </div>
     </div>
