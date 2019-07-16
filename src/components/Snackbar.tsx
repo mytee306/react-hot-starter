@@ -1,6 +1,12 @@
 /* eslint-disable consistent-return */
 
-import { createStyles, Snackbar as MaterialSnackbar, SnackbarContent, WithStyles, withStyles } from '@material-ui/core';
+import {
+  createStyles,
+  Snackbar as MaterialSnackbar,
+  SnackbarContent,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
 import { CSSProperties } from '@material-ui/core/styles/withStyles';
 import { Close } from '@material-ui/icons';
 import { EnhancedTheme } from 'models';
@@ -9,8 +15,9 @@ import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { selectSnackbar, State } from 'store';
 import { createCloseSnackbar, SnackbarState, Variant } from 'store/slices';
-import uuid from 'uuid/v4';
 import IconButton from './IconButton';
+
+const close = 'Close';
 
 export interface SnackbarProps extends WithStyles, SnackbarState {
   open: ReturnType<typeof selectSnackbar>['open'];
@@ -67,8 +74,8 @@ const Snackbar: FC<SnackbarProps> = ({
         className={classes[variant]}
         action={[
           <IconButton
-            key={uuid()}
-            aria-label="Close"
+            key={close}
+            aria-label={close}
             className={classes.close}
             onClick={() => closeSnackbar()}
           >
