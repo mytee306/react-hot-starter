@@ -10,19 +10,23 @@ import {
   Typography,
 } from '@material-ui/core';
 import ghost from 'assets/img/ghost.svg';
+import { random } from 'faker';
 import { startCase } from 'lodash';
+import { Payment } from 'paypal-rest-sdk';
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { v4 as uuid } from 'uuid';
 
 const product = {
+  id: random.alphaNumeric(),
   description: 'Ghostly sigh',
   price: 100.0,
   currency: 'USD',
 };
 
-const ItemsTable = <Props extends { items: Record<string, any>[] }>({
+type Product = typeof product;
+
+const ItemsTable: React.FC<{ items: Array<Payment | Product> }> = ({
   items,
-}: Props) => (
+}) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -36,11 +40,11 @@ const ItemsTable = <Props extends { items: Record<string, any>[] }>({
     </TableHead>
     <TableBody>
       {items.map(item => (
-        <TableRow key={uuid()}>
+        <TableRow key={item.id}>
           {Object.values(item)
             .map(value => JSON.stringify(value, null, 2))
             .map(value => (
-              <TableCell key={uuid()}>
+              <TableCell key={value}>
                 <pre>{value}</pre>
                 {/* {typeof value === 'object' ? (
                   <ItemsTable items={[value]} />
@@ -60,7 +64,20 @@ export interface StoreProps {}
 const Store: FC<StoreProps> = () => {
   const paypalRef = useRef<HTMLDivElement>(null);
   const [paidFor, setPaidFor] = useState(false);
-  const [order, setOrder] = useState({});
+  const [order, setPayment] = useState<Payment>({
+    intent: '',
+    payer: {
+      payment_method: '',
+    },
+    transactions: [
+      {
+        amount: {
+          currency: '',
+          total: '',
+        },
+      },
+    ],
+  });
 
   useEffect(() => {
     (window as any).paypal
@@ -78,9 +95,9 @@ const Store: FC<StoreProps> = () => {
             ],
           }),
         onApprove: (_: any, actions: any) =>
-          actions.order.capture().then((approvedOrder: any) => {
+          actions.order.capture().then((approvedOrder: Payment) => {
             setPaidFor(true);
-            setOrder(approvedOrder);
+            setPayment(approvedOrder);
           }),
       })
       .render(paypalRef.current);
