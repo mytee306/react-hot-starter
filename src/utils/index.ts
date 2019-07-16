@@ -1,7 +1,5 @@
 /* eslint-disable indent */
-import { useTheme as useMaterialTheme } from '@material-ui/styles';
 import { isEqual, kebabCase } from 'lodash';
-import { EnhancedTheme } from 'models';
 import { pipe } from 'ramda';
 import { Selector } from 'react-redux';
 import { createSelectorCreator, defaultMemoize } from 'reselect';
@@ -18,8 +16,6 @@ const prefixActionTypeWithSeparator = (separator: string) => (
 ) => (actionType: string) => prefix.concat(separator).concat(actionType);
 
 export const prefixActionType = prefixActionTypeWithSeparator('/');
-
-export const useTheme = () => useMaterialTheme<EnhancedTheme>();
 
 export const makeAbsolute = (path: string) => urlJoin('/', path);
 

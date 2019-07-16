@@ -1,3 +1,4 @@
+import { useTheme } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import {
   NavLink,
@@ -6,7 +7,6 @@ import {
   withRouter,
 } from 'react-router-dom';
 import urlJoin from 'url-join';
-import { useTheme } from 'utils';
 
 export interface LinkProps
   extends Omit<NavLinkProps, 'location'>,
