@@ -21,11 +21,11 @@ import {
   RichUtils,
   SelectionState,
 } from 'draft-js';
+import 'draft-js/dist/Draft.css';
 import { find, pipe, prop } from 'ramda';
 import React, { KeyboardEvent, SFC } from 'react';
 import Select from 'react-select';
-import './Draft.css';
-import './RichTextEditor.css';
+import './TextEditor.css';
 
 const tabCharacter = '  ';
 
@@ -180,7 +180,7 @@ export interface RichEditorState {
   editorState: EditorState;
 }
 
-const RichEditor: React.FC = () => {
+const TextEditor: React.FC = () => {
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty(),
   );
@@ -294,4 +294,4 @@ const RichEditor: React.FC = () => {
   );
 };
 
-export default RichEditor;
+export default TextEditor;
