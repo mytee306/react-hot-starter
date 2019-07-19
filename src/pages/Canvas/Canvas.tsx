@@ -15,7 +15,7 @@ import { Title } from '@material-ui/icons';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
-import Text, { TextBlock } from './Text';
+import Text, { TextTemplate } from './Text';
 
 const collect = (monitor: DropTargetMonitor) => ({
   isOver: !!monitor.isOver(),
@@ -90,11 +90,13 @@ const Canvas: React.FC<CanvasProps> = () => {
       const { top, left } = props;
 
       setDropResults(
-        dropResults.concat({
-          ...props,
-          top: top - offsetY,
-          left: left - offsetX,
-        }),
+        dropResults
+          .filter(({ id }) => props.id !== id)
+          .concat({
+            ...props,
+            top: top - offsetY,
+            left: left - offsetX,
+          }),
       );
     }
   }, [props]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -150,7 +152,7 @@ const Canvas: React.FC<CanvasProps> = () => {
           >
             <Card>
               <CardContent>
-                <TextBlock>Text Block</TextBlock>
+                <TextTemplate>Text Block</TextTemplate>
               </CardContent>
             </Card>
           </Popover>

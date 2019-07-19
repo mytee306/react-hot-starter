@@ -1,12 +1,12 @@
 import { Card, CardContent, Typography } from '@material-ui/core';
 import { TypographyProps } from '@material-ui/system';
 import { isEqual } from 'lodash';
-import { createDropText, WithDropResult } from 'models';
+import { createDropText, DropTextPayload, WithDropResult } from 'models';
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { v4 } from 'uuid';
 
-interface TextBaseProps extends TypographyProps, WithDropResult {}
+interface TextBaseProps extends DropTextPayload, WithDropResult {}
 
 const TextBase: React.FC<
   TextBaseProps & { position: React.CSSProperties['position'] }
@@ -20,7 +20,7 @@ const TextBase: React.FC<
   }, [props]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [, dragRef] = useDrag({
-    item: createDropText({ ...stateProps, id: v4() }),
+    item: createDropText({ ...stateProps }),
   });
 
   return (
@@ -47,6 +47,6 @@ const Text: React.FC<TextBaseProps> = props => (
 
 export default Text;
 
-export const TextBlock: React.FC<TypographyProps> = props => (
-  <TextBase position="static" top={0} left={0} {...props} />
+export const TextTemplate: React.FC<TypographyProps> = props => (
+  <TextBase position="static" top={0} left={0} id={v4()} {...props} />
 );
