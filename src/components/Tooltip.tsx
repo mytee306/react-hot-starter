@@ -6,7 +6,7 @@ export interface TooltipProps extends MaterialTooltipProps {}
 
 const Tooltip: React.FC<TooltipProps> = ({ children, ...props }) => (
   <MaterialTooltip {...props}>
-    <div>{children}</div>
+    <span>{children}</span>
   </MaterialTooltip>
 );
 

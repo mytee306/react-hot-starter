@@ -1,9 +1,3 @@
-.RichEditor-root {
-  background: white;
-  padding: 15px;
-  cursor: text;
-}
-
 .RichEditor-editor .public-DraftEditor-content {
   min-height: 100px;
 }

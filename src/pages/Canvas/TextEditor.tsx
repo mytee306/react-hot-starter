@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-import { IconButton, Tooltip, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import {
   FormatBold,
   FormatItalic,
   FormatQuote,
   FormatUnderlined,
 } from '@material-ui/icons';
+import { IconButton, Tooltip } from 'components';
 import {
   ContentBlock,
   ContentState,
@@ -15,6 +16,7 @@ import {
   DraftEditorCommand,
   DraftHandleValue,
   DraftInlineStyleType,
+  DraftStyleMap,
   Editor,
   EditorState,
   getDefaultKeyBinding,
@@ -77,6 +79,8 @@ const BlockStyleControls: SFC<BlockStyleControlsProps> = ({
 }) => {
   const selection = editorState.getSelection();
 
+  const hasFocus = selection.getHasFocus();
+
   const blockType = editorState
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
@@ -96,6 +100,7 @@ const BlockStyleControls: SFC<BlockStyleControlsProps> = ({
           prop('value') as any,
           onToggle,
         )}
+        isDisabled={!hasFocus}
       />
     </div>
   );
@@ -125,6 +130,8 @@ const InlineStyleControls: SFC<InlineStyleControlsProps> = ({
   editorState,
   onToggle,
 }) => {
+  const hasFocus = editorState.getSelection().getHasFocus();
+
   const theme = useTheme();
 
   const currentStyle = editorState.getCurrentInlineStyle();
@@ -143,7 +150,7 @@ const InlineStyleControls: SFC<InlineStyleControlsProps> = ({
               onToggle(style);
             }}
           >
-            <IconButton style={{ height: 48 }}>
+            <IconButton style={{ height: 48 }} disabled={!hasFocus}>
               <span
                 style={{
                   color: active ? theme.palette.primary.light : 'inherit',
@@ -159,7 +166,7 @@ const InlineStyleControls: SFC<InlineStyleControlsProps> = ({
   );
 };
 
-const styleMap = {
+const styleMap: DraftStyleMap = {
   CODE: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
     fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
@@ -240,8 +247,17 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
       .first()
       .getType() === 'unstyled';
 
+  const theme = useTheme();
+
   return (
-    <div className="RichEditor-root">
+    <div
+      className="RichEditor-root"
+      style={{
+        background: theme.palette.background.paper,
+        padding: 15,
+        cursor: 'text',
+      }}
+    >
       <div
         style={{
           display: 'grid',
