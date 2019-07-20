@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-import { useTheme } from '@material-ui/core';
+import { Divider, useTheme } from '@material-ui/core';
 import {
   FormatBold,
   FormatItalic,
@@ -79,8 +79,6 @@ const BlockStyleControls: SFC<BlockStyleControlsProps> = ({
 }) => {
   const selection = editorState.getSelection();
 
-  const hasFocus = selection.getHasFocus();
-
   const blockType = editorState
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
@@ -100,7 +98,6 @@ const BlockStyleControls: SFC<BlockStyleControlsProps> = ({
           prop('value') as any,
           onToggle,
         )}
-        isDisabled={!hasFocus}
       />
     </div>
   );
@@ -130,8 +127,6 @@ const InlineStyleControls: SFC<InlineStyleControlsProps> = ({
   editorState,
   onToggle,
 }) => {
-  const hasFocus = editorState.getSelection().getHasFocus();
-
   const theme = useTheme();
 
   const currentStyle = editorState.getCurrentInlineStyle();
@@ -150,7 +145,7 @@ const InlineStyleControls: SFC<InlineStyleControlsProps> = ({
               onToggle(style);
             }}
           >
-            <IconButton style={{ height: 48 }} disabled={!hasFocus}>
+            <IconButton style={{ height: 48 }}>
               <span
                 style={{
                   color: active ? theme.palette.primary.light : 'inherit',
@@ -249,6 +244,18 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
 
   const theme = useTheme();
 
+  const [open, setOpen] = React.useState(false);
+
+  const hasFocus = editorState.getSelection().getHasFocus();
+
+  React.useEffect(() => {
+    if (hasFocus) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }, [hasFocus]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div
       className="RichEditor-root"
@@ -258,24 +265,31 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
         cursor: 'text',
       }}
     >
-      <div
-        style={{
-          display: 'grid',
-          gridAutoFlow: 'column',
-          gridGap: 20,
-          alignItems: 'center',
-          justifyContent: 'right',
-        }}
-      >
-        <BlockStyleControls
-          editorState={editorState}
-          onToggle={toggleBlockType}
-        />
-        <InlineStyleControls
-          editorState={editorState}
-          onToggle={toggleInlineStyle}
-        />
-      </div>
+      {open && (
+        <>
+          <div
+            style={{
+              display: 'grid',
+              gridAutoFlow: 'column',
+              gridGap: 20,
+              alignItems: 'center',
+              justifyContent: 'right',
+            }}
+          >
+            <BlockStyleControls
+              editorState={editorState}
+              onToggle={toggleBlockType}
+            />
+            <InlineStyleControls
+              editorState={editorState}
+              onToggle={toggleInlineStyle}
+            />
+          </div>
+          <br />
+          <Divider />
+          <br />
+        </>
+      )}
       <div className="RichEditor-editor" onClick={focus}>
         <Editor
           ref={editor}
