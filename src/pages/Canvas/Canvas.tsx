@@ -16,7 +16,8 @@ import { ContentState } from 'draft-js';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
-import Text, { TextTemplate } from './Text';
+import { Box, Flex } from 'rebass';
+import TextBlock, { TextBlockTemplate } from './TextBlock';
 
 const collect = (monitor: DropTargetMonitor) => ({
   isOver: !!monitor.isOver(),
@@ -119,11 +120,7 @@ const Canvas: React.FC<CanvasProps> = () => {
   const theme = useTheme();
 
   return (
-    <div
-      style={{
-        display: 'flex',
-      }}
-    >
+    <Flex>
       <Drawer
         variant="permanent"
         open
@@ -153,7 +150,7 @@ const Canvas: React.FC<CanvasProps> = () => {
           >
             <Card>
               <CardContent>
-                <TextTemplate
+                <TextBlockTemplate
                   initialContent={ContentState.createFromText('Hello World')}
                 />
               </CardContent>
@@ -166,21 +163,22 @@ const Canvas: React.FC<CanvasProps> = () => {
         style={{
           flexGrow: 1,
           background:
-            isOver && canDrop
-              ? theme.colors.success.light
-              : isOver
-              ? theme.palette.error.light
-              : '#eee',
+          isOver && canDrop
+          ? theme.colors.success.light
+          : isOver
+          ? theme.palette.error.light
+          : '#eee',
           position: 'relative',
         }}
       >
+        <Box bg={theme.palette.background.paper}>Controls</Box>
         <div ref={canvasRef}>
           {dropResults.map(textBlockProps => (
-            <Text key={textBlockProps.id} {...textBlockProps} />
+            <TextBlock key={textBlockProps.id} {...textBlockProps} />
           ))}
         </div>
       </div>
-    </div>
+    </Flex>
   );
 };
 
