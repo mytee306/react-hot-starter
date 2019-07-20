@@ -1,15 +1,12 @@
 import {
   Breadcrumbs as MaterialBreadcrumbs,
-  Divider,
-  Typography,
   withTheme,
   WithTheme,
 } from '@material-ui/core';
 import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/core/Breadcrumbs';
-import { Close } from '@material-ui/icons';
-import { IconButton, Link, Tooltip, Visible } from 'components';
+import { Link } from 'components';
 import { startCase } from 'lodash';
-import { init, last, take } from 'ramda';
+import { take } from 'ramda';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -22,61 +19,40 @@ export interface BreadcrumbsProps
   extends MaterialBreadcrumbsProps,
     RouteComponentProps,
     WithTheme {
-  className: string;
   pageFound: RouterState['pageFound'];
 }
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({
   location: { pathname },
-  className,
   theme,
   pageFound,
 }) => {
-  const [open, setOpen] = React.useState(true);
-
-  const [showClose, setShowClose] = React.useState(false);
-
-  const toggleShowClose = () => setShowClose(!showClose);
-
   const pathnames = pathname.split('/').filter(Boolean);
 
   const disabled = !pageFound;
 
-  const color = disabled ? theme.palette.error.dark : 'inherit';
+  const color = disabled ? theme.palette.error.dark : theme.palette.primary.light;
 
   return (
-    <div onMouseEnter={toggleShowClose} onMouseLeave={toggleShowClose}>
-      {open && (
-        <Flex alignItems="center">
-          <Box flex={1}>
-            <MaterialBreadcrumbs className={className} separator="›">
-              <Link to="/">Dashboard</Link>
-              {init(pathnames).map((name, i) => (
-                <Link
-                  key={name}
-                  to={urlJoin('/', ...take<typeof pathname>(i + 1)(pathnames))}
-                  disabled={!!disabled}
-                  color={color}
-                >
-                  {startCase(name)}
-                </Link>
-              ))}
-              <Typography style={{ color }}>
-                {startCase(last(pathnames))}
-              </Typography>
-            </MaterialBreadcrumbs>
-          </Box>
-          <Visible visible={showClose}>
-            <Tooltip title="Close breadcrumbs">
-              <IconButton onClick={() => setOpen(false)}>
-                <Close />
-              </IconButton>
-            </Tooltip>
-          </Visible>
-        </Flex>
-      )}
-      <Divider />
-    </div>
+    <Flex alignItems="center">
+      <Box flex={1}>
+        <MaterialBreadcrumbs separator="›">
+          <Link to="/" color={color}>
+            Dashboard
+          </Link>
+          {pathnames.map((name, i) => (
+            <Link
+              key={name}
+              to={urlJoin('/', ...take<typeof pathname>(i + 1)(pathnames))}
+              disabled={!!disabled}
+              color={color}
+            >
+              {startCase(name)}
+            </Link>
+          ))}
+        </MaterialBreadcrumbs>
+      </Box>
+    </Flex>
   );
 };
 

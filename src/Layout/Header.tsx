@@ -12,13 +12,18 @@ import {
   Typography,
   WithStyles,
   withStyles,
+  useTheme,
+  useMediaQuery,
 } from '@material-ui/core';
 import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
 import classnames from 'classnames';
 import { Button, IconButton, Tooltip } from 'components';
+import env from 'env';
+import { startCase } from 'lodash';
 import { CreateSimpleAction } from 'models/actions';
 import React, { FC, useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import { Flex } from 'rebass';
 import {
   DisplayName,
   PhotoURL,
@@ -32,6 +37,7 @@ import {
 } from 'store';
 import { createSignout, User } from 'store/slices';
 import { createToggleType } from 'store/slices/theme/palette/type';
+import Breadcrumbs from './Breadcrumbs';
 
 const headerStyles = createStyles({
   header: {
@@ -42,7 +48,7 @@ const headerStyles = createStyles({
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 10,
   },
 });
 
@@ -79,6 +85,10 @@ const Header: FC<HeaderProps> = ({
 
   const toggleOpen = () => setOpen(!open);
 
+  const theme = useTheme();
+
+  const isNotSmallScreen = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
     <AppBar position="static" className={classnames(header, className)}>
       <Toolbar>
@@ -87,9 +97,19 @@ const Header: FC<HeaderProps> = ({
             <Menu />
           </IconButton>
         </Tooltip>
-        <Typography className={expand} variant="h6" color="inherit">
-          App Name
-        </Typography>
+        <Flex className={expand} alignItems="center">
+          <Typography variant="h6" color="inherit">
+            {startCase(env.appName)}
+          </Typography>
+          {isNotSmallScreen && isSignedIn && (
+            <Flex alignItems="center">
+              <Box ml={2} mr={2} fontSize="2.5em">
+                |
+              </Box>
+              <Breadcrumbs />
+            </Flex>
+          )}
+        </Flex>
         <Tooltip title="Toggle dark theme">
           <IconButton onClick={() => togglePaletteType()}>
             {isDark ? <WbSunny /> : <WbSunnyOutlined />}

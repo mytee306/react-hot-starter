@@ -14,10 +14,10 @@ export interface RoutesProps extends WithTheme {
 }
 
 const Routes: FC<RoutesProps> = ({ isSignedIn, theme }) => {
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <DndProvider backend={isSmallScreen ? TouchBackend : HTML5Backend}>
+    <DndProvider backend={isMediumScreen ? TouchBackend : HTML5Backend}>
       <Switch>
         {isSignedIn ? null : <PageRoute component={Signin} />}
         <PageRoute
