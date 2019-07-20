@@ -10,6 +10,8 @@ const development = {
     messagingSenderId: '456166678835',
     appId: '1:456166678835:web:a01054c1878394ae',
   },
+
+  appName: 'react hot starter',
 };
 
 export type Env = typeof development;
