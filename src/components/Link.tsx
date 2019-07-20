@@ -33,6 +33,10 @@ const Link: FC<LinkProps> = ({
 
   const fullPath = path.startsWith('/') ? path : urlJoin(pathname, path);
 
+  const current = fullPath === pathname;
+
+  const currentColor = current ? theme.palette.text.disabled : color;
+
   return (
     <NavLink
       {...props}
@@ -40,8 +44,8 @@ const Link: FC<LinkProps> = ({
       style={{
         textDecoration: hovered ? 'underline' : 'none',
         ...style,
-        color: fullPath === pathname ? theme.palette.primary.light : color,
-        pointerEvents: disabled ? 'none' : 'initial',
+        color: currentColor,
+        pointerEvents: disabled || current ? 'none' : 'initial',
       }}
       onMouseEnter={toggleHovered}
       onMouseLeave={toggleHovered}
