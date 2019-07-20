@@ -1,5 +1,6 @@
 .RichEditor-editor .public-DraftEditor-content {
   min-height: 100px;
+  min-width: 200px;
 }
 
 .RichEditor-editor .RichEditor-blockquote {
