@@ -1,10 +1,10 @@
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { TypographyProps } from '@material-ui/system';
+import { Card, CardContent } from '@material-ui/core';
 import { isEqual } from 'lodash';
 import { createDropText, DropTextPayload, WithDropResult } from 'models';
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { v4 } from 'uuid';
+import TextEditor, { TextEditorProps } from './TextEditor';
 
 interface TextBaseProps extends DropTextPayload, WithDropResult {}
 
@@ -23,6 +23,8 @@ const TextBase: React.FC<
     item: createDropText({ ...stateProps }),
   });
 
+  const { initialContent } = props;
+
   return (
     <Card
       ref={dragRef}
@@ -35,7 +37,7 @@ const TextBase: React.FC<
       }}
     >
       <CardContent>
-        <Typography {...stateProps} />
+        <TextEditor initialContent={initialContent} />
       </CardContent>
     </Card>
   );
@@ -47,6 +49,8 @@ const Text: React.FC<TextBaseProps> = props => (
 
 export default Text;
 
-export const TextTemplate: React.FC<TypographyProps> = props => (
-  <TextBase position="static" top={0} left={0} id={v4()} {...props} />
+export const TextTemplate: React.FC<
+  Pick<TextEditorProps, 'initialContent'>
+> = props => (
+  <TextBase {...props} position="static" top={0} left={0} id={v4()} />
 );

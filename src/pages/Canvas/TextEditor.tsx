@@ -10,6 +10,7 @@ import {
 } from '@material-ui/icons';
 import {
   ContentBlock,
+  ContentState,
   DraftBlockType,
   DraftEditorCommand,
   DraftHandleValue,
@@ -176,13 +177,15 @@ const getBlockStyle = (block: ContentBlock) => {
   }
 };
 
-export interface RichEditorState {
-  editorState: EditorState;
+export interface TextEditorProps {
+  initialContent?: ContentState;
 }
 
-const TextEditor: React.FC = () => {
+const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
   const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty(),
+    EditorState.createWithContent(
+      initialContent || ContentState.createFromText(''),
+    ),
   );
 
   const editor = React.useRef<Editor>(null);

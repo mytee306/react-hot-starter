@@ -12,6 +12,7 @@ import {
   useTheme,
 } from '@material-ui/core';
 import { Title } from '@material-ui/icons';
+import { ContentState } from 'draft-js';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
@@ -152,7 +153,9 @@ const Canvas: React.FC<CanvasProps> = () => {
           >
             <Card>
               <CardContent>
-                <TextTemplate>Text Block</TextTemplate>
+                <TextTemplate
+                  initialContent={ContentState.createFromText('Hello World')}
+                />
               </CardContent>
             </Card>
           </Popover>

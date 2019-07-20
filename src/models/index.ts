@@ -1,5 +1,5 @@
 import { Theme } from '@material-ui/core';
-import { TypographyProps } from '@material-ui/core/Typography';
+import { TextEditorProps } from 'pages/Canvas/TextEditor';
 import { CSSProperties } from 'react';
 import { createAction } from 'typesafe-actions';
 import { toObject } from 'utils';
@@ -30,7 +30,9 @@ export type Draggable = typeof draggables[number];
 
 export const Draggables = toObject(draggables);
 
-export interface DropTextPayload extends Omit<TypographyProps, 'id'>, WithId {}
+export interface DropTextPayload
+  extends WithId,
+    Pick<TextEditorProps, 'initialContent'> {}
 
 export const createDropText = createAction(
   Draggables.Text,
