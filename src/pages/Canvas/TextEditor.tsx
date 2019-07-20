@@ -244,18 +244,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
 
   const theme = useTheme();
 
-  const [open, setOpen] = React.useState(false);
-
-  const hasFocus = editorState.getSelection().getHasFocus();
-
-  React.useEffect(() => {
-    if (hasFocus) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  }, [hasFocus]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <div
       className="RichEditor-root"
@@ -265,31 +253,29 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
         cursor: 'text',
       }}
     >
-      {open && (
-        <>
-          <div
-            style={{
-              display: 'grid',
-              gridAutoFlow: 'column',
-              gridGap: 20,
-              alignItems: 'center',
-              justifyContent: 'right',
-            }}
-          >
-            <BlockStyleControls
-              editorState={editorState}
-              onToggle={toggleBlockType}
-            />
-            <InlineStyleControls
-              editorState={editorState}
-              onToggle={toggleInlineStyle}
-            />
-          </div>
-          <br />
-          <Divider />
-          <br />
-        </>
-      )}
+      <>
+        <div
+          style={{
+            display: 'grid',
+            gridAutoFlow: 'column',
+            gridGap: 20,
+            alignItems: 'center',
+            justifyContent: 'right',
+          }}
+        >
+          <BlockStyleControls
+            editorState={editorState}
+            onToggle={toggleBlockType}
+          />
+          <InlineStyleControls
+            editorState={editorState}
+            onToggle={toggleInlineStyle}
+          />
+        </div>
+        <br />
+        <Divider />
+        <br />
+      </>
       <div className="RichEditor-editor" onClick={focus}>
         <Editor
           ref={editor}
@@ -301,9 +287,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
           customStyleMap={styleMap}
           handleKeyCommand={handleKeyCommand}
           keyBindingFn={mapKeyToEditorCommand}
-          onBlur={() => {
-            setSelection(editorState.getSelection());
-          }}
           onTab={e => {
             e.preventDefault();
 
@@ -320,6 +303,12 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
                 'insert-characters',
               ),
             );
+          }}
+          onFocus={() => {
+            setSelection(selection);
+          }}
+          onBlur={() => {
+            setSelection(editorState.getSelection());
           }}
         />
       </div>
