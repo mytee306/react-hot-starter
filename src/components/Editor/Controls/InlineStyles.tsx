@@ -9,7 +9,6 @@ import {
 import { IconButton, Tooltip } from 'components';
 import { DraftInlineStyleType, EditorState } from 'draft-js';
 import React from 'react';
-import { Flex } from 'rebass';
 
 export interface InlineStyle {
   label: string;
@@ -40,7 +39,7 @@ const InlineStyles: React.FC<InlineStylesControlsProps> = ({
   const currentStyle = editorState.getCurrentInlineStyle();
 
   return (
-    <Flex>
+    <div>
       {INLINE_STYLES.map(({ Icon, label, style }) => {
         const active = currentStyle.has(style);
 
@@ -63,7 +62,7 @@ const InlineStyles: React.FC<InlineStylesControlsProps> = ({
           </Tooltip>
         );
       })}
-    </Flex>
+    </div>
   );
 };
 

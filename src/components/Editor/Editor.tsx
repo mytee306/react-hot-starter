@@ -19,7 +19,7 @@ import {
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import React, { KeyboardEvent } from 'react';
-import { BlockTypeControls, InlineStylesControls } from './Controls';
+import Controls from './Controls';
 
 const useStyles = makeStyles({
   editor: {
@@ -142,24 +142,11 @@ const Editor: React.FC<EditorProps> = ({ initialContent }) => {
       }}
     >
       <>
-        <div
-          style={{
-            display: 'grid',
-            gridAutoFlow: 'column',
-            gridGap: 20,
-            alignItems: 'center',
-            justifyContent: 'right',
-          }}
-        >
-          <BlockTypeControls
-            editorState={editorState}
-            onToggle={toggleBlockType}
-          />
-          <InlineStylesControls
-            editorState={editorState}
-            onToggle={toggleInlineStyle}
-          />
-        </div>
+        <Controls
+          editorState={editorState}
+          toggleBlockType={toggleBlockType}
+          toggleInlineStyle={toggleInlineStyle}
+        />
         <br />
         <Divider />
         <br />
