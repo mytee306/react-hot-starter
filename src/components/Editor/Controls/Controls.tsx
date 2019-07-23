@@ -21,7 +21,7 @@ const Controls: React.FC<ControlsProps> = ({
       gridAutoFlow: 'column',
       gridGap: 20,
       alignItems: 'center',
-      justifyContent: 'right',
+      justifyContent: 'left',
     }}
   >
     <BlockTypeControls editorState={editorState} onToggle={toggleBlockType} />
