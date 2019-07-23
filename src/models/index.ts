@@ -1,5 +1,5 @@
 import { Theme } from '@material-ui/core';
-import { TextEditorProps } from 'pages/Canvas/TextEditor';
+import { EditorProps } from 'components';
 import { CSSProperties } from 'react';
 import { createAction } from 'typesafe-actions';
 import { toObject } from 'utils';
@@ -32,7 +32,7 @@ export const Draggables = toObject(draggables);
 
 export interface DropTextPayload
   extends WithId,
-    Pick<TextEditorProps, 'initialContent'> {}
+    Pick<EditorProps, 'initialContent'> {}
 
 export const createDropText = createAction(
   Draggables.Text,

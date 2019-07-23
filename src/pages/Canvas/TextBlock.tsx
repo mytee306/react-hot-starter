@@ -1,10 +1,10 @@
 import { Card, CardContent } from '@material-ui/core';
+import { Editor, EditorProps } from 'components';
 import { isEqual } from 'lodash';
 import { createDropText, DropTextPayload, WithDropResult } from 'models';
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { v4 } from 'uuid';
-import TextEditor, { TextEditorProps } from './TextEditor';
 
 interface TextBlockBaseProps extends DropTextPayload, WithDropResult {}
 
@@ -37,7 +37,7 @@ const TextBlockBase: React.FC<
       }}
     >
       <CardContent>
-        <TextEditor initialContent={initialContent} />
+        <Editor initialContent={initialContent} />
       </CardContent>
     </Card>
   );
@@ -50,7 +50,7 @@ const TextBlock: React.FC<TextBlockBaseProps> = props => (
 export default TextBlock;
 
 export const TextBlockTemplate: React.FC<
-  Pick<TextEditorProps, 'initialContent'>
+  Pick<EditorProps, 'initialContent'>
 > = props => (
   <TextBlockBase {...props} position="static" top={0} left={0} id={v4()} />
 );

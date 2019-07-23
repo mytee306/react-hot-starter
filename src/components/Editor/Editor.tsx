@@ -1,14 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-import { Divider, useTheme } from '@material-ui/core';
-import {
-  FormatBold,
-  FormatItalic,
-  FormatQuote,
-  FormatUnderlined,
-} from '@material-ui/icons';
-import { IconButton, Tooltip } from 'components';
+import { Divider, makeStyles, useTheme } from '@material-ui/core';
 import {
   ContentBlock,
   ContentState,
@@ -17,7 +10,7 @@ import {
   DraftHandleValue,
   DraftInlineStyleType,
   DraftStyleMap,
-  Editor,
+  Editor as DraftEditor,
   EditorState,
   getDefaultKeyBinding,
   Modifier,
@@ -25,141 +18,35 @@ import {
   SelectionState,
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { find, pipe, prop } from 'ramda';
-import React, { KeyboardEvent, SFC } from 'react';
-import Select from 'react-select';
-import './TextEditor.css';
+import React, { KeyboardEvent } from 'react';
+import { BlockTypeControls, InlineStylesControls } from './Controls';
+
+const useStyles = makeStyles({
+  editor: {
+    '& .public-DraftEditor-content': {
+      minHeight: 100,
+      minWidth: 360,
+    },
+
+    '& .RichEditor-blockquote': {
+      borderLeft: '5px solid #eee',
+      color: 'grey',
+      fontFamily: '"Montserrat", "Georgia", serif',
+      fontStyle: 'italic',
+      margin: '15px 0',
+      padding: '10px 20px',
+    },
+
+    '& .public-DraftStyleDefault-pre': {
+      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+      fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+      fontSize: '1.2em',
+      padding: '10px 20px',
+    },
+  },
+});
 
 const tabCharacter = '  ';
-
-interface BlockValue {
-  label: string;
-  value: DraftBlockType;
-}
-
-type BlockValues = BlockValue[];
-
-const headings: BlockValues = [
-  { label: 'H1', value: 'header-one' },
-  { label: 'H2', value: 'header-two' },
-  { label: 'H3', value: 'header-three' },
-  { label: 'H4', value: 'header-four' },
-  { label: 'H5', value: 'header-five' },
-  { label: 'H6', value: 'header-six' },
-];
-
-const lists: BlockValues = [
-  { label: 'Bulleted', value: 'unordered-list-item' },
-  { label: 'Ordered', value: 'ordered-list-item' },
-];
-
-const otherBlockTypes: BlockValues = [
-  { label: 'Blockquote', value: 'blockquote' },
-  { label: 'Code Block', value: 'code-block' },
-];
-
-const blockTypes = otherBlockTypes.concat(headings).concat(lists);
-
-const blockValues: Array<
-  BlockValue | { label: BlockValue['label']; options: BlockValues }
-> = [
-  ...otherBlockTypes,
-  { label: 'Lists', options: lists },
-  { label: 'Headings', options: headings },
-];
-
-export interface BlockStyleControlsProps {
-  editorState: EditorState;
-  onToggle: (style: DraftBlockType) => void;
-}
-
-const BlockStyleControls: SFC<BlockStyleControlsProps> = ({
-  editorState,
-  onToggle,
-}) => {
-  const selection = editorState.getSelection();
-
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
-
-  const findActive = find<BlockValue>(({ value }) => blockType === value);
-
-  const activeType = findActive(blockTypes);
-
-  return (
-    <div style={{ minWidth: 150, zIndex: 2 }}>
-      <Select
-        placeholder="Block Type..."
-        options={blockValues}
-        value={activeType || null}
-        onChange={pipe(
-          prop('value') as any,
-          onToggle,
-        )}
-      />
-    </div>
-  );
-};
-
-export interface InlineStyle {
-  label: string;
-  style: DraftInlineStyleType;
-  icon: React.ReactElement;
-}
-
-export type InlineStyles = InlineStyle[];
-
-const INLINE_STYLES: InlineStyles = [
-  { label: 'Bold', style: 'BOLD', icon: <FormatBold /> },
-  { label: 'Italic', style: 'ITALIC', icon: <FormatItalic /> },
-  { label: 'Underline', style: 'UNDERLINE', icon: <FormatUnderlined /> },
-  { label: 'Monospace', style: 'CODE', icon: <FormatQuote /> },
-];
-
-export interface InlineStyleControlsProps {
-  editorState: EditorState;
-  onToggle: (style: DraftInlineStyleType) => void;
-}
-
-const InlineStyleControls: SFC<InlineStyleControlsProps> = ({
-  editorState,
-  onToggle,
-}) => {
-  const theme = useTheme();
-
-  const currentStyle = editorState.getCurrentInlineStyle();
-
-  return (
-    <div>
-      {INLINE_STYLES.map(({ icon, label, style }) => {
-        const active = currentStyle.has(style);
-
-        return (
-          <Tooltip
-            key={label}
-            title={label}
-            onMouseDown={e => {
-              e.preventDefault();
-              onToggle(style);
-            }}
-          >
-            <IconButton style={{ height: 48 }}>
-              <span
-                style={{
-                  color: active ? theme.palette.primary.light : 'inherit',
-                }}
-              >
-                {icon}
-              </span>
-            </IconButton>
-          </Tooltip>
-        );
-      })}
-    </div>
-  );
-};
 
 const styleMap: DraftStyleMap = {
   CODE: {
@@ -179,18 +66,18 @@ const getBlockStyle = (block: ContentBlock) => {
   }
 };
 
-export interface TextEditorProps {
+export interface EditorProps {
   initialContent?: ContentState;
 }
 
-const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
+const Editor: React.FC<EditorProps> = ({ initialContent }) => {
   const [editorState, setEditorState] = React.useState(
     EditorState.createWithContent(
       initialContent || ContentState.createFromText(''),
     ),
   );
 
-  const editor = React.useRef<Editor>(null);
+  const editor = React.useRef<DraftEditor>(null);
 
   const [selection, setSelection] = React.useState<SelectionState>(
     SelectionState.createEmpty(''),
@@ -244,9 +131,10 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
 
   const theme = useTheme();
 
+  const classes = useStyles();
+
   return (
     <div
-      className="RichEditor-root"
       style={{
         background: theme.palette.background.paper,
         padding: 15,
@@ -263,11 +151,11 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
             justifyContent: 'right',
           }}
         >
-          <BlockStyleControls
+          <BlockTypeControls
             editorState={editorState}
             onToggle={toggleBlockType}
           />
-          <InlineStyleControls
+          <InlineStylesControls
             editorState={editorState}
             onToggle={toggleInlineStyle}
           />
@@ -276,8 +164,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
         <Divider />
         <br />
       </>
-      <div className="RichEditor-editor" onClick={focus}>
-        <Editor
+      <div className={classes.editor} onClick={focus}>
+        <DraftEditor
           ref={editor}
           editorState={editorState}
           onChange={setEditorState}
@@ -316,4 +204,4 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialContent }) => {
   );
 };
 
-export default TextEditor;
+export default Editor;

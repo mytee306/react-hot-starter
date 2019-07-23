@@ -2,6 +2,8 @@ export * from './Button';
 export { default as Button } from './Button';
 export * from './Disqus';
 export { default as Disqus } from './Disqus';
+export * from './Editor';
+export { default as Editor } from './Editor';
 export * from './IconButton';
 export { default as IconButton } from './IconButton';
 export * from './Link';
