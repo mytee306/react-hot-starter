@@ -18,6 +18,7 @@ import {
   SelectionState,
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
+import { Maybe } from 'models';
 import React, { KeyboardEvent } from 'react';
 import Controls from './Controls';
 
@@ -66,6 +67,8 @@ const getBlockStyle = (block: ContentBlock) => {
   }
 };
 
+export type EditorCommand = DraftEditorCommand | 'tab-indent';
+
 export interface EditorProps {
   initialContent?: ContentState;
 }
@@ -91,22 +94,25 @@ const Editor: React.FC<EditorProps> = ({ initialContent }) => {
     }
   };
 
-  const handleKeyCommand = (
-    command: DraftEditorCommand,
-    newEditorState: EditorState,
-  ): DraftHandleValue => {
-    const newState = RichUtils.handleKeyCommand(newEditorState, command);
+  const handleKeyCommand = (command: EditorCommand): DraftHandleValue => {
+    if (command === 'tab-indent') {
+      const newContentState = Modifier.replaceText(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        tabCharacter,
+      );
 
-    if (newState) {
-      setEditorState(newState);
-
+      setEditorState(
+        EditorState.push(editorState, newContentState, 'insert-characters'),
+      );
       return 'handled';
     } else {
       return 'not-handled';
     }
   };
 
-  const mapKeyToEditorCommand = (e: KeyboardEvent) => getDefaultKeyBinding(e);
+  const mapKeyToEditorCommand = (e: KeyboardEvent): Maybe<EditorCommand> =>
+    e.key === 'Tab' ? 'tab-indent' : getDefaultKeyBinding(e);
 
   const toggleBlockType = (blockType: DraftBlockType) => {
     const newEditorState = RichUtils.toggleBlockType(editorState, blockType);
@@ -162,23 +168,6 @@ const Editor: React.FC<EditorProps> = ({ initialContent }) => {
           customStyleMap={styleMap}
           handleKeyCommand={handleKeyCommand}
           keyBindingFn={mapKeyToEditorCommand}
-          onTab={e => {
-            e.preventDefault();
-
-            const newContentState = Modifier.replaceText(
-              editorState.getCurrentContent(),
-              editorState.getSelection(),
-              tabCharacter,
-            );
-
-            setEditorState(
-              EditorState.push(
-                editorState,
-                newContentState,
-                'insert-characters',
-              ),
-            );
-          }}
           onFocus={() => {
             setSelection(selection);
           }}
