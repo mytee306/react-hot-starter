@@ -1,4 +1,5 @@
 import * as RTL from '@testing-library/react';
+import env from 'env';
 import 'matchmedia-polyfill';
 import 'matchmedia-polyfill/matchMedia.addListener';
 import React from 'react';
@@ -20,6 +21,6 @@ describe('App', () => {
 
   test('App Name', () => {
     const { getByText } = RTL.render(<App />);
-    expect(getByText('App Name')).toBeInTheDocument();
+    expect(getByText(env.appName)).toBeInTheDocument();
   });
 });
