@@ -142,6 +142,11 @@ const Header: FC<HeaderProps> = ({
 
   const [value, setValue] = React.useState<Maybe<Option>>(null);
 
+  const white = (base: React.CSSProperties) => ({
+    ...base,
+    color: theme.palette.common.white,
+  });
+
   return (
     <AppBar position="static" className={classnames(header, className)}>
       <Toolbar>
@@ -167,7 +172,6 @@ const Header: FC<HeaderProps> = ({
           <Search
             style={{
               position: 'absolute',
-              color: theme.palette.primary.dark,
               zIndex: 2,
               left: 10,
             }}
@@ -180,15 +184,20 @@ const Header: FC<HeaderProps> = ({
               setValue(newValue as Option);
             }}
             styles={{
-              container: provided => ({
-                ...provided,
+              container: base => ({
+                ...base,
                 width: 170,
-                color: 'black',
+                color: theme.palette.common.black,
               }),
-              control: provided => ({
-                ...provided,
+              control: base => ({
+                ...base,
                 paddingLeft: 30,
+                border: 'none',
+                backgroundColor: theme.palette.primary.light,
               }),
+              singleValue: white,
+              input: white,
+              dropdownIndicator: white,
             }}
           />
         </Flex>
