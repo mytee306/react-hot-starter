@@ -2,6 +2,7 @@ import { DraftBlockType, EditorState } from 'draft-js';
 import { find, pipe, prop } from 'ramda';
 import React from 'react';
 import Select from 'react-select';
+import { useTheme } from '@material-ui/core';
 
 interface BlockValue {
   label: string;
@@ -59,18 +60,29 @@ const BlocType: React.FC<BlockTypeControlsProps> = ({
 
   const activeType = findActive(blockTypes);
 
+  const theme = useTheme();
+
   return (
-    <div style={{ minWidth: 150, zIndex: 2 }}>
-      <Select
-        placeholder="Block Type..."
-        options={blockValues}
-        value={activeType || null}
-        onChange={pipe(
-          prop('value') as any,
-          onToggle,
-        )}
-      />
-    </div>
+    <Select
+      placeholder="Block Type..."
+      options={blockValues}
+      value={activeType || null}
+      onChange={pipe(
+        prop('value') as any,
+        onToggle,
+      )}
+      menuPortalTarget={document.body}
+      styles={{
+        container: base => ({
+          ...base,
+          minWidth: 150,
+        }),
+        menuPortal: base => ({
+          ...base,
+          zIndex: theme.zIndex.modal,
+        }),
+      }}
+    />
   );
 };
 
