@@ -38,7 +38,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
     <Flex alignItems="center">
       <Box flex={1}>
         <MaterialBreadcrumbs separator="›">
-          <Link to="/" color={color}>
+          <Link to="/">
             Dashboard
           </Link>
           {pathnames.map((name, i) => (
