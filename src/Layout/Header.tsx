@@ -6,14 +6,12 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  createStyles,
+  makeStyles,
   Popover,
   Toolbar,
   Typography,
   useMediaQuery,
   useTheme,
-  WithStyles,
-  withStyles,
 } from '@material-ui/core';
 import {
   Menu,
@@ -90,7 +88,9 @@ const options = labels.map(label => ({
 
 type Option = typeof options[number];
 
-const headerStyles = createStyles({
+const avatarWidth = 140;
+
+const useStyles = makeStyles(theme => ({
   header: {
     width: 'auto',
   },
@@ -101,11 +101,9 @@ const headerStyles = createStyles({
     marginLeft: -12,
     marginRight: 10,
   },
-});
+}));
 
-const avatarWidth = 140;
-
-export interface HeaderProps extends WithStyles<typeof headerStyles> {
+export interface HeaderProps {
   toggle: () => void;
   isDark: ReturnType<typeof selectDarkThemeFlag>;
   togglePaletteType: CreateSimpleAction;
@@ -119,7 +117,6 @@ export interface HeaderProps extends WithStyles<typeof headerStyles> {
 }
 
 const Header: FC<HeaderProps> = ({
-  classes: { header, expand, menuButton },
   toggle,
   isDark,
   togglePaletteType,
@@ -141,6 +138,8 @@ const Header: FC<HeaderProps> = ({
   const isNotSmallScreen = useMediaQuery(theme.breakpoints.up('md'));
 
   const [value, setValue] = React.useState<Maybe<Option>>(null);
+
+  const { header, expand, menuButton } = useStyles();
 
   const white = (base: React.CSSProperties) => ({
     ...base,
@@ -186,7 +185,7 @@ const Header: FC<HeaderProps> = ({
             styles={{
               container: base => ({
                 ...base,
-                width: 170,
+                minWidth: 200,
                 color: theme.palette.common.black,
               }),
               control: base => ({
@@ -198,6 +197,7 @@ const Header: FC<HeaderProps> = ({
               singleValue: white,
               input: white,
               dropdownIndicator: white,
+              placeholder: white,
             }}
           />
         </Flex>
@@ -285,4 +285,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(headerStyles)(Header));
+)(Header);
