@@ -1,5 +1,4 @@
-/* eslint-disable no-var */
-/* eslint-disable indent */
+/* eslint-disable camelcase */
 
 import {
   Table,
@@ -11,7 +10,7 @@ import {
   useTheme,
 } from '@material-ui/core';
 import { startCase } from 'lodash';
-import { Payment } from 'paypal-rest-sdk';
+import { Maybe } from 'models';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { CreditCard, IceCream } from 'react-kawaii';
 import { Box, Flex } from 'rebass';
@@ -26,9 +25,38 @@ const product = {
 
 type Product = typeof product;
 
-const ItemsTable: React.FC<{ items: Array<Payment | Product> }> = ({
-  items,
-}) => (
+interface Order {
+  create_time: string;
+  update_time: string;
+  id: string;
+  intent: string;
+  status: string;
+  payer: {
+    email_address: string;
+    payer_id: string;
+    address: {
+      country_code: string;
+      name: { given_name: string; surname: string };
+    };
+  };
+  purchase_units: {
+    description: string;
+    reference_id: string;
+    soft_descriptor: string;
+    amount: {};
+    payee: {};
+    shipping: {};
+    payments: {};
+  }[];
+  links: {
+    href: string;
+    rel: string;
+    method: string;
+    title: string;
+  }[];
+}
+
+const ItemsTable: React.FC<{ items: Array<Order | Product> }> = ({ items }) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -66,21 +94,7 @@ export interface StoreProps {}
 
 const Store: FC<StoreProps> = () => {
   const paypalRef = useRef<HTMLDivElement>(null);
-  const [paidFor, setPaidFor] = useState(false);
-  const [order, setPayment] = useState<Payment>({
-    intent: '',
-    payer: {
-      payment_method: '',
-    },
-    transactions: [
-      {
-        amount: {
-          currency: '',
-          total: '',
-        },
-      },
-    ],
-  });
+  const [order, setOrder] = useState<Maybe<Order>>(null);
 
   useEffect(() => {
     (window as any).paypal
@@ -98,9 +112,8 @@ const Store: FC<StoreProps> = () => {
             ],
           }),
         onApprove: (_: any, actions: any) =>
-          actions.order.capture().then((approvedOrder: Payment) => {
-            setPaidFor(true);
-            setPayment(approvedOrder);
+          actions.order.capture().then((approvedOrder: Order) => {
+            setOrder(approvedOrder);
           }),
       })
       .render(paypalRef.current);
@@ -110,16 +123,17 @@ const Store: FC<StoreProps> = () => {
 
   return (
     <Box>
-      {paidFor ? (
+      {order ? (
         <div style={{ display: 'grid', justifyItems: 'center' }}>
-          <Box mb={4}>
+          <Flex mb={4} flexDirection="column" style={{ textAlign: 'center' }}>
+            <Typography variant="h2">Successfully purchased</Typography>
             <Typography
               variant="h2"
               style={{ color: theme.colors.success.dark }}
             >
-              Successfully ordered!
+              {order.purchase_units[0].description}
             </Typography>
-          </Box>
+          </Flex>
           <CreditCard mood="happy" color={theme.colors.success.light} />
         </div>
       ) : (
