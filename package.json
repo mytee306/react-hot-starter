@@ -17,7 +17,7 @@
     "storybook:build": "build-storybook -c .storybook -o .out",
     "storybook:preview": "http-server .out",
     "storybook:deploy": "storybook-to-ghpages",
-    "deploy:surge": "surge build",
+    "deploy:surge": "surge build --domain https://react-hot-starter-dev.surge.sh",
     "deploy": "firebase deploy --only hosting",
     "deploy:firebase": "firebase deploy",
     "serve:build": "serve build",
