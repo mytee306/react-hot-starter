@@ -16,7 +16,7 @@ import { ContentState } from 'draft-js';
 import { Draggables, draggables, DropResult, DropTextAction } from 'models';
 import React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
-import { Box, Flex } from 'rebass';
+import { Flex } from 'rebass';
 import TextBlock, { TextBlockTemplate } from './TextBlock';
 
 const collect = (monitor: DropTargetMonitor) => ({
@@ -163,15 +163,15 @@ const Canvas: React.FC<CanvasProps> = () => {
         style={{
           flexGrow: 1,
           background:
-          isOver && canDrop
-          ? theme.colors.success.light
-          : isOver
-          ? theme.palette.error.light
-          : '#eee',
+            isOver && canDrop
+              ? theme.colors.success.light
+              : isOver
+              ? theme.palette.error.light
+              : '#eee',
           position: 'relative',
         }}
       >
-        <Box bg={theme.palette.background.paper}>Controls</Box>
+        {/* <Box bg={theme.palette.background.paper}>Controls</Box> */}
         <div ref={canvasRef}>
           {dropResults.map(textBlockProps => (
             <TextBlock key={textBlockProps.id} {...textBlockProps} />
