@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import { Disqus, Link, Loader, Switch } from 'components';
-import { CreateSimpleAction } from 'models/actions';
+import { CreateSimpleAction } from 'models';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';

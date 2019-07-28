@@ -9,8 +9,7 @@ import {
 } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/core/styles/withStyles';
 import { Close } from '@material-ui/icons';
-import { EnhancedTheme } from 'models';
-import { CreateSimpleAction } from 'models/actions';
+import { CreateSimpleAction, EnhancedTheme } from 'models';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { selectSnackbar, State } from 'store';

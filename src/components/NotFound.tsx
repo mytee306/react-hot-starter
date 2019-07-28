@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import notFoundImgSrc from 'assets/img/ghost.svg';
-import { CreateSimpleAction } from 'models/actions';
+import { CreateSimpleAction } from 'models';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createTogglePageFound } from 'store/slices';

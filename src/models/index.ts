@@ -12,13 +12,13 @@ export type Module = NodeModule & {
 
 export type Maybe<A> = null | A;
 
-export interface EnhancedTheme extends Theme, WithColors {}
-
 export interface WithColors {
   colors: {
     success: { light: CSSProperties['color']; dark: CSSProperties['color'] };
   };
 }
+
+export interface EnhancedTheme extends Theme, WithColors {}
 
 export interface WithId {
   id: string;
@@ -49,3 +49,5 @@ export interface WithDropResult {
 }
 
 export interface DropResult extends DropTextPayload, WithDropResult {}
+
+export * from './actions';

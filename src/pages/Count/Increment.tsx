@@ -1,5 +1,5 @@
 import { Button } from 'components';
-import { CreateSimpleAction } from 'models/actions';
+import { CreateSimpleAction } from 'models';
 import React, { FC } from 'react';
 import { CountState } from 'store/slices';
 
