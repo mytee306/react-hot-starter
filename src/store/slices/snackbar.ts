@@ -48,11 +48,15 @@ const snackbarSlice = createSlice({
 });
 
 export const {
-  actions: { set, reset: createResetSnackbar, close: createCloseSnackbar },
+  actions: { reset: createResetSnackbar, close: createCloseSnackbar },
   selectors: { getSnackbar: selectSnackbarState },
 } = snackbarSlice;
 
 export default snackbarSlice.reducer;
+
+const {
+  actions: { set },
+} = snackbarSlice;
 
 export const createSetSnackbar = ({
   variant = 'default',
