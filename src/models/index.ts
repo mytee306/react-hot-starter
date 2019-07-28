@@ -21,7 +21,7 @@ export interface WithColors {
 export interface EnhancedTheme extends Theme, WithColors {}
 
 export interface SelectOption<Value> {
-  label: string;
+  label: React.ReactNode;
   value: Value;
 }
 
