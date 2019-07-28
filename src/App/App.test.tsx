@@ -1,5 +1,6 @@
 import * as RTL from '@testing-library/react';
 import env from 'env';
+import { startCase } from 'lodash';
 import 'matchmedia-polyfill';
 import 'matchmedia-polyfill/matchMedia.addListener';
 import React from 'react';
@@ -19,8 +20,8 @@ describe('App', () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  test('App Name', () => {
+  test('Search', () => {
     const { getByText } = RTL.render(<App />);
-    expect(getByText(env.appName)).toBeInTheDocument();
+    expect(getByText('Search...')).toBeInTheDocument();
   });
 });
