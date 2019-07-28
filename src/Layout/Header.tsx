@@ -10,19 +10,26 @@ import {
   Popover,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
   WithStyles,
   withStyles,
-  useTheme,
-  useMediaQuery,
 } from '@material-ui/core';
-import { Menu, Person, WbSunny, WbSunnyOutlined } from '@material-ui/icons';
+import {
+  Menu,
+  Person,
+  Search,
+  WbSunny,
+  WbSunnyOutlined,
+} from '@material-ui/icons';
 import classnames from 'classnames';
 import { Button, IconButton, Tooltip } from 'components';
 import env from 'env';
 import { startCase } from 'lodash';
-import { CreateSimpleAction } from 'models/actions';
+import { CreateSimpleAction, Maybe } from 'models';
 import React, { FC, useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import Select from 'react-select';
 import { Flex } from 'rebass';
 import {
   DisplayName,
@@ -38,6 +45,50 @@ import {
 import { createSignout, User } from 'store/slices';
 import { createToggleType } from 'store/slices/theme/palette/type';
 import Breadcrumbs from './Breadcrumbs';
+
+const labels = [
+  'Afghanistan',
+  'Aland Islands',
+  'Albania',
+  'Algeria',
+  'American Samoa',
+  'Andorra',
+  'Angola',
+  'Anguilla',
+  'Antarctica',
+  'Antigua and Barbuda',
+  'Argentina',
+  'Armenia',
+  'Aruba',
+  'Australia',
+  'Austria',
+  'Azerbaijan',
+  'Bahamas',
+  'Bahrain',
+  'Bangladesh',
+  'Barbados',
+  'Belarus',
+  'Belgium',
+  'Belize',
+  'Benin',
+  'Bermuda',
+  'Bhutan',
+  'Bolivia, Plurinational State of',
+  'Bonaire, Sint Eustatius and Saba',
+  'Bosnia and Herzegovina',
+  'Botswana',
+  'Bouvet Island',
+  'Brazil',
+  'British Indian Ocean Territory',
+  'Brunei Darussalam',
+] as const;
+
+const options = labels.map(label => ({
+  label,
+  value: label,
+}));
+
+type Option = typeof options[number];
 
 const headerStyles = createStyles({
   header: {
@@ -89,6 +140,8 @@ const Header: FC<HeaderProps> = ({
 
   const isNotSmallScreen = useMediaQuery(theme.breakpoints.up('md'));
 
+  const [value, setValue] = React.useState<Maybe<Option>>(null);
+
   return (
     <AppBar position="static" className={classnames(header, className)}>
       <Toolbar>
@@ -99,7 +152,7 @@ const Header: FC<HeaderProps> = ({
         </Tooltip>
         <Flex className={expand} alignItems="center">
           <Typography variant="h6" color="inherit">
-            {startCase(env.appName)}
+            {isNotSmallScreen ? startCase(env.appName) : ''}
           </Typography>
           {isNotSmallScreen && isSignedIn && (
             <Flex alignItems="center">
@@ -109,6 +162,35 @@ const Header: FC<HeaderProps> = ({
               <Breadcrumbs />
             </Flex>
           )}
+        </Flex>
+        <Flex alignItems="center" style={{ position: 'relative' }} mr={2}>
+          <Search
+            style={{
+              position: 'absolute',
+              color: theme.palette.primary.dark,
+              zIndex: 2,
+              left: 10,
+            }}
+          />
+          <Select
+            placeholder="Search..."
+            options={options}
+            value={value}
+            onChange={(newValue: unknown) => {
+              setValue(newValue as Option);
+            }}
+            styles={{
+              container: provided => ({
+                ...provided,
+                width: 170,
+                color: 'black',
+              }),
+              control: provided => ({
+                ...provided,
+                paddingLeft: 30,
+              }),
+            }}
+          />
         </Flex>
         <Tooltip title="Toggle dark theme">
           <IconButton onClick={() => togglePaletteType()}>
