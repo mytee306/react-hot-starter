@@ -60,3 +60,6 @@ export const mapStateToProps = <
 
   return fromEntries;
 };
+
+export * from './hooks';
+export * from './operators';

@@ -13,6 +13,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Box, Flex } from 'rebass';
 import { RouterState, selectPageFound, State } from 'store';
 import urlJoin from 'url-join';
+import { useIsNotSmallScreen } from 'utils';
 
 export interface BreadcrumbsProps
   extends MaterialBreadcrumbsProps,
@@ -28,25 +29,32 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 }) => {
   const pathnames = pathname.split('/').filter(Boolean);
 
-  const disabled = !pageFound;
+  const pageNotFound = !pageFound;
 
-  const color = disabled
-    ? theme.palette.error.dark
+  const isNotSmallScreen = useIsNotSmallScreen();
+
+  const color = isNotSmallScreen
+    ? theme.palette.common.white
     : theme.palette.primary.light;
 
   return (
     <Flex alignItems="center">
       <Box flex={1}>
         <MaterialBreadcrumbs separator="›">
-          <Link to="/">
+          <Link to="/" color={color}>
             Dashboard
           </Link>
           {pathnames.map((name, i) => (
             <Link
               key={name}
               to={urlJoin('/', ...take<typeof pathname>(i + 1)(pathnames))}
-              disabled={!!disabled}
+              disabled={pageNotFound}
               color={color}
+              style={{
+                borderBottom: pageNotFound
+                  ? `2px solid ${theme.palette.error.dark}`
+                  : 'none',
+              }}
             >
               {startCase(name)}
             </Link>
