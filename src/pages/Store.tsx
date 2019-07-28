@@ -8,11 +8,13 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useTheme,
 } from '@material-ui/core';
 import { startCase } from 'lodash';
 import { Payment } from 'paypal-rest-sdk';
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { IceCream } from 'react-kawaii';
+import { CreditCard, IceCream } from 'react-kawaii';
+import { Box, Flex } from 'rebass';
 import { v4 } from 'uuid';
 
 const product = {
@@ -31,7 +33,8 @@ const ItemsTable: React.FC<{ items: Array<Payment | Product> }> = ({
     <TableHead>
       <TableRow>
         {Object.entries(items[0])
-          .filter(([, value]) => !(typeof value === 'function'))
+          .filter(([, value]) => typeof value !== 'function')
+          .filter(([key]) => key !== 'id')
           .map(([key]) => key)
           .map(key => (
             <TableCell key={key}>{startCase(key)}</TableCell>
@@ -39,8 +42,8 @@ const ItemsTable: React.FC<{ items: Array<Payment | Product> }> = ({
       </TableRow>
     </TableHead>
     <TableBody>
-      {items.map(item => (
-        <TableRow key={item.id}>
+      {items.map(({ id, ...item }) => (
+        <TableRow key={id}>
           {Object.values(item)
             .map(value => JSON.stringify(value, null, 2))
             .map(value => (
@@ -103,25 +106,36 @@ const Store: FC<StoreProps> = () => {
       .render(paypalRef.current);
   }, []);
 
+  const theme = useTheme();
+
   return (
-    <div>
+    <Box>
       {paidFor ? (
-        <>
-          <Typography variant="h2">Congrats this is your order</Typography>
-          <ItemsTable items={[order]} />
-        </>
+        <div style={{ display: 'grid', justifyItems: 'center' }}>
+          <Box mb={4}>
+            <Typography
+              variant="h2"
+              style={{ color: theme.colors.success.dark }}
+            >
+              Successfully ordered!
+            </Typography>
+          </Box>
+          <CreditCard mood="happy" color={theme.colors.success.light} />
+        </div>
       ) : (
-        <>
-          <IceCream />
-          <br />
-          <br />
-          <ItemsTable items={[product]} />
-          <br />
-          <br />
-          <div ref={paypalRef} />
-        </>
+        <Box mx={3}>
+          <Flex flexDirection={['column', 'row']} mb={4}>
+            <Box mr={[0, 4]} alignSelf={['center', 'flex-start']} mb={[3, 0]}>
+              <IceCream />
+            </Box>
+            <ItemsTable items={[product]} />
+          </Flex>
+          <div style={{ display: 'grid', justifyItems: 'center' }}>
+            <Box width={['100%', '100%', '50%']} ref={paypalRef} />
+          </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
