@@ -3,8 +3,7 @@ import { Selector } from 'react-redux';
 import { StateObservable } from 'redux-observable';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, map, mergeMap, takeUntil } from 'rxjs/operators';
-import { selectSignedInFlag, State } from 'store';
-import { createSetErrorSnackbar } from 'store/slices';
+import { createSetErrorSnackbar, selectSignedInFlag, State } from 'store';
 
 export const selectState = <R>(selector: Selector<State, R>) => (
   state$: StateObservable<State>,

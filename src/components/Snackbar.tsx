@@ -12,8 +12,13 @@ import { Close } from '@material-ui/icons';
 import { CreateSimpleAction, EnhancedTheme } from 'models';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { selectSnackbar, State } from 'store';
-import { createCloseSnackbar, SnackbarState, Variant } from 'store/slices';
+import {
+  createCloseSnackbar,
+  selectSnackbar,
+  SnackbarState,
+  State,
+  Variant,
+} from 'store';
 import IconButton from './IconButton';
 
 const close = 'Close';

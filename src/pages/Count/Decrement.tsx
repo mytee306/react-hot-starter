@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core';
 import { Slider } from '@material-ui/lab';
 import { Button } from 'components';
 import React, { ComponentProps, FC, useState } from 'react';
-import { CountState, CreateDecrementBy } from 'store/slices';
+import { CountState, CreateDecrementBy } from 'store';
 
 export interface DecrementProps {
   decrementBy: CreateDecrementBy;

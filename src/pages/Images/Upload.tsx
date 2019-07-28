@@ -15,7 +15,6 @@ import { Button, IconButton, Spinner } from 'components';
 import React, { createRef, CSSProperties, FC, useState } from 'react';
 import { connect } from 'react-redux';
 import { Box, Flex } from 'rebass';
-import { State } from 'store';
 import {
   createAddImage,
   CreateAddImage,
@@ -28,7 +27,8 @@ import {
   ImagesWIthId,
   selectImagesUploading,
   selectImagesWithIds,
-} from 'store/slices';
+  State,
+} from 'store';
 
 export interface ImageProps {
   boxShadow: CSSProperties['boxShadow'];

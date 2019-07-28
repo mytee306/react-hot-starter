@@ -1,17 +1,8 @@
-import { isEmpty } from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector } from 'reselect';
 import { createDeepSelector } from 'utils';
-import {
-  auth,
-  count,
-  images,
-  router,
-  selectSnackbar as selectSnackbarState,
-  snackbar,
-  theme,
-} from './slices';
+import { auth, count, images, router, snackbar, theme } from './slices';
 
 const reducer = combineReducers({
   count,
@@ -81,20 +72,6 @@ export const selectPhotoURL = createSelector(
 );
 
 export type PhotoURL = ReturnType<typeof selectPhotoURL>;
-
-export const selectSnackbar = createDeepSelector(
-  selectSnackbarState,
-  ({ queue }) => {
-    const isQueueEmpty = isEmpty(queue);
-
-    return {
-      queue: isQueueEmpty
-        ? queue.concat({ message: '', variant: 'default' })
-        : queue,
-      open: !isQueueEmpty,
-    };
-  },
-);
 
 export const selectAuthLoadingFlag = createSelector(
   selectAuth,

@@ -11,8 +11,7 @@ import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Box, Flex } from 'rebass';
-import { State } from 'store';
-import { RouterState, selectPageFound } from 'store/slices';
+import { RouterState, selectPageFound, State } from 'store';
 import urlJoin from 'url-join';
 
 export interface BreadcrumbsProps
@@ -31,7 +30,9 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 
   const disabled = !pageFound;
 
-  const color = disabled ? theme.palette.error.dark : theme.palette.primary.light;
+  const color = disabled
+    ? theme.palette.error.dark
+    : theme.palette.primary.light;
 
   return (
     <Flex alignItems="center">

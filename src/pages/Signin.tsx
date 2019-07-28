@@ -3,8 +3,12 @@ import google from 'assets/img/google.svg';
 import { Button } from 'components';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import { selectAuthLoadingFlag, State } from 'store';
-import { createSignin, CreateSignin } from 'store/slices';
+import {
+  createSignin,
+  CreateSignin,
+  selectAuthLoadingFlag,
+  State,
+} from 'store';
 
 export interface SigninProps {
   signIn: CreateSignin;

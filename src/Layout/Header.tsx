@@ -30,6 +30,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Flex } from 'rebass';
 import {
+  createSignout,
   DisplayName,
   PhotoURL,
   selectAuthLoadingFlag,
@@ -39,8 +40,8 @@ import {
   selectPhotoURL,
   selectSignedInFlag,
   State,
+  User,
 } from 'store';
-import { createSignout, User } from 'store/slices';
 import { createToggleType } from 'store/slices/theme/palette/type';
 import Breadcrumbs from './Breadcrumbs';
 

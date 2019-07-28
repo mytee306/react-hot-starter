@@ -4,7 +4,6 @@ import { CreateSimpleAction } from 'models';
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
-import { State } from 'store';
 import {
   CountState,
   createDecrementBy,
@@ -13,7 +12,8 @@ import {
   createIncrement,
   selectCountLoadingFlag,
   selectCountValue,
-} from 'store/slices';
+  State,
+} from 'store';
 import urlJoin from 'url-join';
 import Decrement from './Decrement';
 import Increment from './Increment';

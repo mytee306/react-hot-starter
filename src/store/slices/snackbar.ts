@@ -1,7 +1,8 @@
-import { drop } from 'ramda';
+import { drop, isEmpty } from 'ramda';
 import { createSlice } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { Optional } from 'utility-types';
+import { createDeepSelector } from 'utils';
 
 export const snackbarSliceName = 'snackbar';
 
@@ -48,7 +49,7 @@ const snackbarSlice = createSlice({
 
 export const {
   actions: { set, reset: createResetSnackbar, close: createCloseSnackbar },
-  selectors: { getSnackbar: selectSnackbar },
+  selectors: { getSnackbar: selectSnackbarState },
 } = snackbarSlice;
 
 export default snackbarSlice.reducer;
@@ -64,3 +65,17 @@ export const createSetErrorSnackbar = ({ ...snackbar }: SimpleSnackbarConfig) =>
 export const createSetSuccessSnackbar = ({
   ...snackbar
 }: SimpleSnackbarConfig) => set({ ...snackbar, variant: 'success' });
+
+export const selectSnackbar = createDeepSelector(
+  selectSnackbarState,
+  ({ queue }) => {
+    const isQueueEmpty = isEmpty(queue);
+
+    return {
+      queue: isQueueEmpty
+        ? queue.concat({ message: '', variant: 'default' })
+        : queue,
+      open: !isQueueEmpty,
+    };
+  },
+);

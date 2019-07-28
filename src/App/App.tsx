@@ -8,8 +8,12 @@ import { CreateSimpleAction, WithColors } from 'models';
 import React, { FC, useEffect } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { selectSignedInFlag, selectTheme, State } from 'store';
-import { createGetAuthState } from 'store/slices';
+import {
+  createGetAuthState,
+  selectSignedInFlag,
+  selectTheme,
+  State,
+} from 'store';
 import Routes from './Routes';
 
 declare module '@material-ui/core' {
