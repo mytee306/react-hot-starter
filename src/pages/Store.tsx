@@ -9,16 +9,16 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import ghost from 'assets/img/ghost.svg';
 import { startCase } from 'lodash';
 import { Payment } from 'paypal-rest-sdk';
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { IceCream } from 'react-kawaii';
 import { v4 } from 'uuid';
 
 const product = {
   id: v4(),
-  description: 'Ghostly sigh',
-  price: 100.0,
+  description: 'Ice cream',
+  price: 10.0,
   currency: 'USD',
 };
 
@@ -112,7 +112,7 @@ const Store: FC<StoreProps> = () => {
         </>
       ) : (
         <>
-          <img src={ghost} alt={product.description} height={200} />
+          <IceCream />
           <br />
           <br />
           <ItemsTable items={[product]} />

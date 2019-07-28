@@ -1,10 +1,11 @@
 import { Typography } from '@material-ui/core';
-import notFoundImgSrc from 'assets/img/ghost.svg';
 import { CreateSimpleAction } from 'models';
 import React, { useEffect } from 'react';
+import { Ghost } from 'react-kawaii';
 import { connect } from 'react-redux';
 import { createTogglePageFound } from 'store';
 import Link from './Link';
+import { Box } from 'rebass';
 
 export interface NotFoundProps {
   togglePageFound: CreateSimpleAction;
@@ -20,19 +21,26 @@ const NotFound: React.FC<NotFoundProps> = ({ togglePageFound }) => {
   }, [togglePageFound]);
 
   return (
-    <div
-      style={{ display: 'grid', alignItems: 'center', justifyItems: 'center' }}
+    <Box
+      mt={4}
+      style={{
+        display: 'grid',
+        alignContent: 'flex-start',
+        justifyContent: 'center',
+      }}
     >
-      <img style={{ width: 140 }} src={notFoundImgSrc} alt="not found" />
-      <br />
-      <br />
-      <Typography variant="h4">Page not found</Typography>
-      <br />
-      <br />
-      <Link to="/">
-        <Typography variant="h5">Go back to Dashboard</Typography>
-      </Link>
-    </div>
+      <div style={{ display: 'grid', justifyItems: 'center' }}>
+        <Ghost mood="shocked" />
+        <br />
+        <br />
+        <Typography variant="h4">Page not found</Typography>
+        <br />
+        <br />
+        <Link to="/">
+          <Typography variant="h5">Go back to Dashboard</Typography>
+        </Link>
+      </div>
+    </Box>
   );
 };
 export default connect(
