@@ -4,3 +4,5 @@ import type from './type';
 export default combineReducers({
   type,
 });
+
+export * from './type';

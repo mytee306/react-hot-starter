@@ -31,6 +31,7 @@ import Select from 'react-select';
 import { Flex } from 'rebass';
 import {
   createSignout,
+  createToggleType,
   DisplayName,
   PhotoURL,
   selectAuthLoadingFlag,
@@ -42,7 +43,6 @@ import {
   State,
   User,
 } from 'store';
-import { createToggleType } from 'store/slices/theme/palette/type';
 import Breadcrumbs from './Breadcrumbs';
 
 const labels = [
