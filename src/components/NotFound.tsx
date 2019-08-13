@@ -3,9 +3,9 @@ import { CreateSimpleAction } from 'models';
 import React, { useEffect } from 'react';
 import { Ghost } from 'react-kawaii';
 import { connect } from 'react-redux';
+import { Box } from 'rebass';
 import { createTogglePageFound } from 'store';
 import Link from './Link';
-import { Box } from 'rebass';
 
 export interface NotFoundProps {
   togglePageFound: CreateSimpleAction;
