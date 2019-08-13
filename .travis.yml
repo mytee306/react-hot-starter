@@ -5,10 +5,7 @@ cache:
   directories:
   - node_modules
 script:
-- npm run cpd
-- npm run lint
-- npm run test
-- npm run build
+- npm run ci
 - commitlint-travis
 # deploy:
 #   provider: firebase
