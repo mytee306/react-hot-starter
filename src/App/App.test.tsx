@@ -1,6 +1,4 @@
 import * as RTL from '@testing-library/react';
-import env from 'env';
-import { startCase } from 'lodash';
 import 'matchmedia-polyfill';
 import 'matchmedia-polyfill/matchMedia.addListener';
 import React from 'react';
