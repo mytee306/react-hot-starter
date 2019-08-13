@@ -19,7 +19,7 @@ const Disqus: React.FC<DisqusProps> = ({
   identifier,
   match: { url, path },
 }) => {
-  const disqusConfig = {
+  const disqusConfig: DisqusConfig = {
     url: env.publicUrl,
     title: title || startCase(path),
     identifier: identifier || url,
