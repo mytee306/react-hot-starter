@@ -97,12 +97,14 @@ const ImageList: React.FC<ImagesProps> = ({ theme }) => {
 
   React.useEffect(() => {
     setList(merge(list, loadMorePeople(range(0)(pageSize))));
-  }, []); // eslint-disable-line
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const rowRenderer = createRowRenderer(list);
 
   const loadMoreRows: LoadMoreRows = ({ startIndex, stopIndex }) => {
-    console.log('load rows from', startIndex, 'to', stopIndex);
+    const log = () =>
+      console.log('load rows from', startIndex, 'to', stopIndex); // eslint-disable-line no-console
+    log();
 
     const rangeToLoad = range(startIndex)(stopIndex + 1).filter(i => !list[i]);
 
@@ -111,7 +113,7 @@ const ImageList: React.FC<ImagesProps> = ({ theme }) => {
     setList(merge(list, rowsBeingLoaded));
 
     return new Promise(resolve => {
-      console.log('loaded rows from', startIndex, 'to', stopIndex);
+      log();
 
       setList(oldList => merge(oldList, loadMorePeople(rangeToLoad)));
 
