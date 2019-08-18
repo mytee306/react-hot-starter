@@ -1,17 +1,18 @@
 import { Typography } from '@material-ui/core';
-import { CreateSimpleAction } from 'models';
 import React, { useEffect } from 'react';
 import { Ghost } from 'react-kawaii';
-import { connect } from 'react-redux';
 import { Box } from 'rebass';
 import { createTogglePageFound } from 'store';
+import { useActions } from 'utils';
 import Link from './Link';
 
-export interface NotFoundProps {
-  togglePageFound: CreateSimpleAction;
-}
+export interface NotFoundProps {}
 
-const NotFound: React.FC<NotFoundProps> = ({ togglePageFound }) => {
+const NotFound: React.FC<NotFoundProps> = () => {
+  const { togglePageFound } = useActions({
+    togglePageFound: createTogglePageFound,
+  });
+
   useEffect(() => {
     togglePageFound();
 
@@ -43,7 +44,4 @@ const NotFound: React.FC<NotFoundProps> = ({ togglePageFound }) => {
     </Box>
   );
 };
-export default connect(
-  null,
-  { togglePageFound: createTogglePageFound },
-)(NotFound);
+export default NotFound;
