@@ -4,8 +4,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  withTheme,
-  WithTheme,
+  useTheme,
 } from '@material-ui/core';
 import {
   ArrowDownward,
@@ -179,7 +178,7 @@ const PlainChildNavItem: FC<ChildNavItemProps> = ({
 
 const ChildNavItem = withRouter(PlainChildNavItem);
 
-interface NavItemProps extends INavItem, WithTheme, RouteComponentProps {
+interface NavItemProps extends INavItem, RouteComponentProps {
   onNavigate: OnNavigate;
 }
 
@@ -191,9 +190,10 @@ const PlainNavItem: FC<NavItemProps> = ({
   location: { pathname },
   childNavItems,
   onNavigate,
-  theme,
   ...navItemProps
 }) => {
+  const theme = useTheme();
+
   const mappedChildNavItems = childNavItems.map(({ path, ...item }) => ({
     ...item,
     path: urlJoin(navItemProps.path, path),
@@ -242,7 +242,7 @@ const PlainNavItem: FC<NavItemProps> = ({
   );
 };
 
-const NavItem = withRouter(withTheme(PlainNavItem));
+const NavItem = withRouter(PlainNavItem);
 
 interface NavItemsProps {
   navItems: INavItems;

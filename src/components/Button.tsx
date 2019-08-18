@@ -1,20 +1,15 @@
-import {
-  Button as MaterialButton,
-  WithTheme,
-  withTheme,
-} from '@material-ui/core';
+import { Button as MaterialButton } from '@material-ui/core';
 import { ButtonProps as MaterialButtonProps } from '@material-ui/core/Button';
 import React, { CSSProperties, FC } from 'react';
 import WithSpinner from './WithSpinner';
 
-export interface ButtonProps extends MaterialButtonProps, WithTheme {
+export interface ButtonProps extends MaterialButtonProps {
   textTransform?: CSSProperties['textTransform'];
   isLoading?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
   isLoading,
-  theme,
   textTransform = 'uppercase',
   color = 'inherit',
   ...props
@@ -33,4 +28,4 @@ const Button: FC<ButtonProps> = ({
   );
 };
 
-export default withTheme(Button);
+export default Button;

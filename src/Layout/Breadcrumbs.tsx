@@ -1,7 +1,6 @@
 import {
   Breadcrumbs as MaterialBreadcrumbs,
-  withTheme,
-  WithTheme,
+  useTheme,
 } from '@material-ui/core';
 import { BreadcrumbsProps as MaterialBreadcrumbsProps } from '@material-ui/core/Breadcrumbs';
 import { Link } from 'components';
@@ -17,16 +16,16 @@ import { useIsNotSmallScreen } from 'utils';
 
 export interface BreadcrumbsProps
   extends MaterialBreadcrumbsProps,
-    RouteComponentProps,
-    WithTheme {
+    RouteComponentProps {
   pageFound: RouterState['pageFound'];
 }
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({
   location: { pathname },
-  theme,
   pageFound,
 }) => {
+  const theme = useTheme();
+
   const pathnames = pathname.split('/').filter(Boolean);
 
   const pageNotFound = !pageFound;
@@ -67,4 +66,4 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
 
 export default connect((state: State) => ({
   pageFound: selectPageFound(state),
-}))(withRouter(withTheme(Breadcrumbs)));
+}))(withRouter(Breadcrumbs));

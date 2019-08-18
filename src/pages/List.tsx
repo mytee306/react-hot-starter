@@ -1,4 +1,4 @@
-import { Input, Typography, withTheme, WithTheme } from '@material-ui/core';
+import { Input, Typography, useTheme } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
@@ -84,9 +84,11 @@ const loadMorePlaceholders = loadMore(() => 'Loading...');
 
 const loadMorePeople = loadMore(() => name.findName());
 
-export interface ImagesProps extends WithTheme {}
+export interface ImagesProps {}
 
-const ImageList: React.FC<ImagesProps> = ({ theme }) => {
+const ImageList: React.FC<ImagesProps> = () => {
+  const theme = useTheme();
+
   const [value, setValue] = useState('');
 
   const [list, setList] = useState<People>({});
@@ -195,4 +197,4 @@ const ImageList: React.FC<ImagesProps> = ({ theme }) => {
   );
 };
 
-export default withTheme(ImageList);
+export default ImageList;

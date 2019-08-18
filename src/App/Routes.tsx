@@ -1,4 +1,4 @@
-import { useMediaQuery, WithTheme, withTheme } from '@material-ui/core';
+import { useMediaQuery, useTheme } from '@material-ui/core';
 import { PageRoute, Switch } from 'components';
 import { absoluteRootPaths } from 'Layout/Nav';
 import { Count, Dashboard, Images, List, Signin, Store } from 'pages';
@@ -9,11 +9,13 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 import { Redirect, Route } from 'react-router-dom';
 
-export interface RoutesProps extends WithTheme {
+export interface RoutesProps {
   isSignedIn: boolean;
 }
 
-const Routes: FC<RoutesProps> = ({ isSignedIn, theme }) => {
+const Routes: FC<RoutesProps> = ({ isSignedIn }) => {
+  const theme = useTheme();
+
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
@@ -48,4 +50,4 @@ const Routes: FC<RoutesProps> = ({ isSignedIn, theme }) => {
   );
 };
 
-export default withTheme(Routes);
+export default Routes;

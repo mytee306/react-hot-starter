@@ -7,8 +7,7 @@ import {
   ListItemText,
   Tooltip,
   Typography,
-  withTheme,
-  WithTheme,
+  useTheme,
 } from '@material-ui/core';
 import { AddToPhotos, CheckCircleOutline, Close } from '@material-ui/icons';
 import { Button, IconButton, Spinner } from 'components';
@@ -72,7 +71,7 @@ export const ImageComponent: FC<ImageProps> = ({
   );
 };
 
-export interface UploadProps extends WithTheme {
+export interface UploadProps {
   addImage: CreateAddImage;
   upload: CreateUpload;
   images: ImagesWIthId;
@@ -83,13 +82,14 @@ export interface UploadProps extends WithTheme {
 const uploadInputRef = createRef<HTMLInputElement>();
 
 const Upload: FC<UploadProps> = ({
-  theme: { palette, spacing, colors, typography, shadows },
   addImage,
   upload,
   images,
   uploading,
   removeImage,
 }) => {
+  const theme = useTheme();
+
   const appropriate = true;
 
   return (
@@ -127,7 +127,7 @@ const Upload: FC<UploadProps> = ({
         onClick={() => uploadInputRef.current!.click()}
         variant="contained"
       >
-        <AddToPhotos style={{ marginRight: spacing(2) }} />
+        <AddToPhotos style={{ marginRight: theme.spacing(2) }} />
         Choose image files
       </Button>
       <br />
@@ -152,8 +152,8 @@ const Upload: FC<UploadProps> = ({
                   <Typography
                     variant="h5"
                     style={{
-                      marginRight: spacing(1),
-                      color: appropriate ? 'initial' : palette.error.dark,
+                      marginRight: theme.spacing(1),
+                      color: appropriate ? 'initial' : theme.palette.error.dark,
                     }}
                   >
                     {name}
@@ -161,12 +161,12 @@ const Upload: FC<UploadProps> = ({
                   {(() => {
                     switch (uploadStatus) {
                       case 'in progress':
-                        return <Spinner size={typography.fontSize} />;
+                        return <Spinner size={theme.typography.fontSize} />;
                       case 'completed':
                         return (
                           <Tooltip title="Successfully Uploaded">
                             <CheckCircleOutline
-                              style={{ color: colors.success.dark }}
+                              style={{ color: theme.colors.success.dark }}
                             />
                           </Tooltip>
                         );
@@ -181,7 +181,7 @@ const Upload: FC<UploadProps> = ({
             <ImageComponent
               dataUrl={dataUrl}
               name={name}
-              boxShadow={shadows[1]}
+              boxShadow={theme.shadows[1]}
               remove={() => removeImage(id)}
             />
           </Box>
@@ -191,16 +191,14 @@ const Upload: FC<UploadProps> = ({
   );
 };
 
-export default withTheme(
-  connect(
-    (state: State) => ({
-      images: selectImagesWithIds(state),
-      uploading: selectImagesUploading(state),
-    }),
-    {
-      upload: createUpload,
-      addImage: createAddImage,
-      removeImage: createRemoveImage,
-    },
-  )(Upload),
-);
+export default connect(
+  (state: State) => ({
+    images: selectImagesWithIds(state),
+    uploading: selectImagesUploading(state),
+  }),
+  {
+    upload: createUpload,
+    addImage: createAddImage,
+    removeImage: createRemoveImage,
+  },
+)(Upload);
