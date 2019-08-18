@@ -1,13 +1,9 @@
-/* eslint-disable consistent-return */
-
 import {
-  createStyles,
+  makeStyles,
   Snackbar as MaterialSnackbar,
   SnackbarContent,
-  WithStyles,
-  withStyles,
 } from '@material-ui/core';
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
+import { StyleRules } from '@material-ui/core/styles';
 import { Close } from '@material-ui/icons';
 import { CreateSimpleAction, EnhancedTheme } from 'models';
 import React, { FC, useEffect } from 'react';
@@ -23,12 +19,12 @@ import IconButton from './IconButton';
 
 const close = 'Close';
 
-export interface SnackbarProps extends WithStyles, SnackbarState {
+export interface SnackbarProps extends SnackbarState {
   open: ReturnType<typeof selectSnackbar>['open'];
   closeSnackbar: CreateSimpleAction;
 }
 
-type GetVariants = (theme: EnhancedTheme) => Record<Variant, CSSProperties>;
+type GetVariants = (theme: EnhancedTheme) => StyleRules<Variant>;
 
 const getVariants: GetVariants = ({ palette, colors }) => ({
   default: {},
@@ -43,20 +39,16 @@ const getVariants: GetVariants = ({ palette, colors }) => ({
   },
 });
 
-const snackbarStyles = (theme: EnhancedTheme) =>
-  createStyles({
-    close: {
-      padding: theme.spacing(1),
-    },
-    ...getVariants(theme),
-  });
+const useStyles = makeStyles(theme => ({
+  close: {
+    padding: theme.spacing(1),
+  },
+  ...getVariants(theme),
+}));
 
-const Snackbar: FC<SnackbarProps> = ({
-  classes,
-  open,
-  closeSnackbar,
-  queue,
-}) => {
+const Snackbar: FC<SnackbarProps> = ({ open, closeSnackbar, queue }) => {
+  const classes = useStyles();
+
   const [{ duration, message, variant }] = queue;
 
   useEffect(() => {
@@ -68,6 +60,8 @@ const Snackbar: FC<SnackbarProps> = ({
       return () => {
         clearTimeout(timeout);
       };
+    } else {
+      return () => {};
     }
   });
 
@@ -91,9 +85,7 @@ const Snackbar: FC<SnackbarProps> = ({
   );
 };
 
-export default withStyles(snackbarStyles, { withTheme: true })(
-  connect(
-    (state: State) => selectSnackbar(state),
-    { closeSnackbar: createCloseSnackbar },
-  )(Snackbar),
-);
+export default connect(
+  (state: State) => selectSnackbar(state),
+  { closeSnackbar: createCloseSnackbar },
+)(Snackbar);

@@ -1,16 +1,13 @@
 import {
-  createStyles,
   CssBaseline,
   Divider,
   Drawer,
+  makeStyles,
   useMediaQuery,
-  withStyles,
-  WithStyles,
-  WithTheme,
+  useTheme,
 } from '@material-ui/core';
 import { ChevronLeft, Close } from '@material-ui/icons';
 import { IconButton, Tooltip, Visible } from 'components';
-import { EnhancedTheme } from 'models';
 import React, { FC, useState } from 'react';
 import { Box, Flex } from 'rebass';
 import { createToolbarStyles } from 'styles';
@@ -20,26 +17,22 @@ import Nav from './Nav';
 
 const drawerWidth = 240;
 
-export const layoutStyles = (theme: EnhancedTheme) =>
-  createStyles({
-    drawer: {
-      width: drawerWidth,
-    },
-    toolbar: createToolbarStyles(theme),
-  });
+const useStyles = makeStyles(theme => ({
+  drawer: {
+    width: drawerWidth,
+  },
+  toolbar: createToolbarStyles(theme),
+}));
 
-export interface LayoutProps
-  extends WithTheme,
-    WithStyles<typeof layoutStyles> {
+export interface LayoutProps {
   isSignedIn: boolean;
 }
 
-const Layout: FC<LayoutProps> = ({
-  classes: { toolbar, drawer },
-  children,
-  theme,
-  isSignedIn,
-}) => {
+const Layout: FC<LayoutProps> = ({ children, isSignedIn }) => {
+  const theme = useTheme();
+
+  const { drawer, toolbar } = useStyles();
+
   const [open, setOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -84,7 +77,13 @@ const Layout: FC<LayoutProps> = ({
       </Drawer>
       {breadcrumbsOpen && isMediumScreen && isSignedIn && (
         <>
-          <Flex alignItems="center" mx={3} my={2} onMouseEnter={toggleShowClose} onMouseLeave={toggleShowClose}>
+          <Flex
+            alignItems="center"
+            mx={3}
+            my={2}
+            onMouseEnter={toggleShowClose}
+            onMouseLeave={toggleShowClose}
+          >
             <Box flex={1}>
               <Breadcrumbs />
             </Box>
@@ -111,4 +110,4 @@ const Layout: FC<LayoutProps> = ({
   );
 };
 
-export default withStyles(layoutStyles, { withTheme: true })(Layout);
+export default Layout;
