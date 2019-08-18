@@ -7,23 +7,20 @@ import { Link } from 'components';
 import { startCase } from 'lodash';
 import { take } from 'ramda';
 import React, { FC } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Box, Flex } from 'rebass';
-import { RouterState, selectPageFound, State } from 'store';
+import { selectPageFound } from 'store';
 import urlJoin from 'url-join';
 import { useIsNotSmallScreen } from 'utils';
 
 export interface BreadcrumbsProps
   extends MaterialBreadcrumbsProps,
-    RouteComponentProps {
-  pageFound: RouterState['pageFound'];
-}
+    RouteComponentProps {}
 
-const Breadcrumbs: FC<BreadcrumbsProps> = ({
-  location: { pathname },
-  pageFound,
-}) => {
+const Breadcrumbs: FC<BreadcrumbsProps> = ({ location: { pathname } }) => {
+  const pageFound = useSelector(selectPageFound);
+
   const theme = useTheme();
 
   const pathnames = pathname.split('/').filter(Boolean);
@@ -64,6 +61,4 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
   );
 };
 
-export default connect((state: State) => ({
-  pageFound: selectPageFound(state),
-}))(withRouter(Breadcrumbs));
+export default withRouter(Breadcrumbs);
