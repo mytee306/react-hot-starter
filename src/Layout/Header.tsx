@@ -20,7 +20,7 @@ import {
   WbSunny,
   WbSunnyOutlined,
 } from '@material-ui/icons';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { Button, IconButton, Tooltip } from 'components';
 import env from 'env';
 import { startCase } from 'lodash';
@@ -148,7 +148,7 @@ const Header: FC<HeaderProps> = ({
   });
 
   return (
-    <AppBar position="static" className={classnames(header, className)}>
+    <AppBar position="static" className={clsx(header, className)}>
       <Toolbar>
         <Tooltip title="Open navigation">
           <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
