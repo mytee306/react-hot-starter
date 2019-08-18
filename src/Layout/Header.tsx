@@ -34,12 +34,12 @@ import {
   createToggleType,
   DisplayName,
   PhotoURL,
-  selectAuthLoadingFlag,
-  selectDarkThemeFlag,
   selectDisplayName,
   selectEmail,
+  selectIsAuthLoading,
+  selectIsPaletteDark,
+  selectIsSignedIn,
   selectPhotoURL,
-  selectSignedInFlag,
   State,
   User,
 } from 'store';
@@ -106,11 +106,11 @@ const useStyles = makeStyles(theme => ({
 
 export interface HeaderProps {
   toggle: () => void;
-  isDark: ReturnType<typeof selectDarkThemeFlag>;
+  isDark: ReturnType<typeof selectIsPaletteDark>;
   togglePaletteType: CreateSimpleAction;
-  isSignedIn: ReturnType<typeof selectSignedInFlag>;
+  isSignedIn: ReturnType<typeof selectIsSignedIn>;
   signOut: CreateSimpleAction;
-  isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
+  isAuthLoading: ReturnType<typeof selectIsAuthLoading>;
   className?: string;
   displayName: DisplayName;
   email: User['email'];
@@ -270,9 +270,9 @@ const Header: FC<HeaderProps> = ({
 };
 
 const mapStateToProps = (state: State) => ({
-  isDark: selectDarkThemeFlag(state),
-  isSignedIn: selectSignedInFlag(state),
-  isAuthLoading: selectAuthLoadingFlag(state),
+  isDark: selectIsPaletteDark(state),
+  isSignedIn: selectIsSignedIn(state),
+  isAuthLoading: selectIsAuthLoading(state),
   displayName: selectDisplayName(state),
   email: selectEmail(state),
   photoURL: selectPhotoURL(state),

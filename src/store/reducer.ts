@@ -35,7 +35,7 @@ export const selectPaletteType = createSelector(
   ({ palette }) => palette.type,
 );
 
-export const selectDarkThemeFlag = createSelector(
+export const selectIsPaletteDark = createSelector(
   selectPaletteType,
   type => type === 'dark',
 );
@@ -49,7 +49,7 @@ export const selectUid = createSelector(
   ({ uid }) => uid,
 );
 
-export const selectSignedInFlag = createSelector(
+export const selectIsSignedIn = createSelector(
   selectUid,
   Boolean,
 );
@@ -73,7 +73,7 @@ export const selectPhotoURL = createSelector(
 
 export type PhotoURL = ReturnType<typeof selectPhotoURL>;
 
-export const selectAuthLoadingFlag = createSelector(
+export const selectIsAuthLoading = createSelector(
   selectAuth,
   ({ isLoading }) => isLoading,
 );

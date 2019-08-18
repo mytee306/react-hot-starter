@@ -10,7 +10,7 @@ import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import {
   createGetAuthState,
-  selectSignedInFlag,
+  selectIsSignedIn,
   selectTheme,
   State,
 } from 'store';
@@ -21,7 +21,7 @@ declare module '@material-ui/core' {
 }
 
 export interface AppProps {
-  isSignedIn: ReturnType<typeof selectSignedInFlag>;
+  isSignedIn: ReturnType<typeof selectIsSignedIn>;
   themeOptions: ThemeOptions;
   getAuthState: CreateSimpleAction;
 }
@@ -57,7 +57,7 @@ export default hot(module)(
   connect(
     (state: State) => ({
       themeOptions: selectTheme(state),
-      isSignedIn: selectSignedInFlag(state),
+      isSignedIn: selectIsSignedIn(state),
     }),
     {
       getAuthState: createGetAuthState,

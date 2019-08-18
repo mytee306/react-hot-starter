@@ -2,8 +2,15 @@ import { pipe } from 'ramda';
 import { Selector } from 'react-redux';
 import { StateObservable } from 'redux-observable';
 import { Observable, of } from 'rxjs';
-import { catchError, filter, first, map, mergeMap, takeUntil } from 'rxjs/operators';
-import { createSetErrorSnackbar, selectSignedInFlag, State } from 'store';
+import {
+  catchError,
+  filter,
+  first,
+  map,
+  mergeMap,
+  takeUntil,
+} from 'rxjs/operators';
+import { createSetErrorSnackbar, selectIsSignedIn, State } from 'store';
 
 export const selectState = <R>(selector: Selector<State, R>) => (
   state$: StateObservable<State>,
@@ -17,7 +24,7 @@ export const takeUntilSignedOut = <T>(state$: StateObservable<State>) =>
   pipe<Observable<T>, Observable<T>>(
     takeUntil(
       state$.pipe(
-        map(selectSignedInFlag),
+        map(selectIsSignedIn),
         filter(signedIn => !signedIn),
       ),
     ),

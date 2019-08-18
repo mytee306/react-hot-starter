@@ -10,8 +10,8 @@ import {
   CreateDecrementBy,
   createGetCount,
   createIncrement,
-  selectCountLoadingFlag,
   selectCountValue,
+  selectIsCountLoading,
   State,
 } from 'store';
 import urlJoin from 'url-join';
@@ -83,7 +83,7 @@ const Count: FC<CountProps> = ({
 export default connect(
   (state: State) => ({
     value: selectCountValue(state),
-    isLoading: selectCountLoadingFlag(state),
+    isLoading: selectIsCountLoading(state),
   }),
   {
     increment: createIncrement,

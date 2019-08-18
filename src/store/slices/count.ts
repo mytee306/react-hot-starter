@@ -59,7 +59,7 @@ export const selectCountValue = createSelector(
   selectCount,
   ({ value }) => value,
 );
-export const selectCountLoadingFlag = createSelector(
+export const selectIsCountLoading = createSelector(
   selectCount,
   ({ isLoading }) => isLoading,
 );

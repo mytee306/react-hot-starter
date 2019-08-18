@@ -3,16 +3,11 @@ import google from 'assets/img/google.svg';
 import { Button } from 'components';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import {
-  createSignin,
-  CreateSignin,
-  selectAuthLoadingFlag,
-  State,
-} from 'store';
+import { createSignin, CreateSignin, selectIsAuthLoading, State } from 'store';
 
 export interface SigninProps {
   signIn: CreateSignin;
-  isAuthLoading: ReturnType<typeof selectAuthLoadingFlag>;
+  isAuthLoading: ReturnType<typeof selectIsAuthLoading>;
 }
 
 const Signin: FC<SigninProps> = ({ signIn, isAuthLoading }) => {
@@ -42,7 +37,7 @@ const Signin: FC<SigninProps> = ({ signIn, isAuthLoading }) => {
 
 export default connect(
   (state: State) => ({
-    isAuthLoading: selectAuthLoadingFlag(state),
+    isAuthLoading: selectIsAuthLoading(state),
   }),
   { signIn: createSignin },
 )(Signin);

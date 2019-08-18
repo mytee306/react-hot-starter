@@ -1,7 +1,7 @@
-import { initialState, selectSignedInFlag } from 'store';
+import { initialState, selectIsSignedIn } from 'store';
 import { mapStateToProps } from '.';
 
-const mappedState = mapStateToProps({ isSignedIn: selectSignedInFlag })(
+const mappedState = mapStateToProps({ isSignedIn: selectIsSignedIn })(
   initialState,
 );
 
