@@ -6,19 +6,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <title>React Hot Starter</title>
     <meta name="theme-color" content="#000000" />
     <meta
       name="Description"
       content="Author: Mateja Petrovic, Category: React Starter Project"
     />
     <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="./lambda.png" />
     <% if (process.env.NODE_ENV === 'development') { %>
     <meta
       property="og:url"
       content="https://react-hot-starter-dev.firebaseapp.com"
     />
-    <% } %>
-    <% if (process.env.NODE_ENV === 'production') { %>
+    <% } %> <% if (process.env.NODE_ENV === 'production') { %>
     <meta
       property="og:url"
       content="https://react-hot-starter.firebaseapp.com"
@@ -30,8 +31,6 @@
       property="og:description"
       content="Built on top of Create React App with all the batteries included"
     />
-    <meta property="og:image" content="./favicon.ico" />
-    <title>React Hot Starter</title>
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="preconnect" href="fonts.googleapis.com" />
     <!--
