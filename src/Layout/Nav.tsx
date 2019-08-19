@@ -166,7 +166,7 @@ const PlainChildNavItem: FC<ChildNavItemProps> = ({
   <ListItem selected={pathname === path} style={style}>
     <Link
       onClick={onNavigate}
-      style={{ flexGrow: 1, display: 'flex' }}
+      style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
       to={path}
     >
       <ListItemIcon>{icon}</ListItemIcon>
