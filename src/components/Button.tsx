@@ -11,7 +11,6 @@ export interface ButtonProps extends MaterialButtonProps {
 const Button: FC<ButtonProps> = ({
   isLoading,
   textTransform = 'uppercase',
-  color = 'inherit',
   ...props
 }) => {
   const { style, children, disabled } = props;
@@ -19,7 +18,6 @@ const Button: FC<ButtonProps> = ({
   return (
     <MaterialButton
       {...props}
-      color={color}
       style={{ ...style, textTransform }}
       disabled={disabled || isLoading}
     >
