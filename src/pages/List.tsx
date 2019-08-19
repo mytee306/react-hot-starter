@@ -65,7 +65,7 @@ const pageSize = 100;
 
 const rowCount = 2000;
 
-const scrollTopIconBottom = 20;
+const scrollTopIconRight = 20;
 
 type LoadMoreRows = InfiniteLoaderProps['loadMoreRows'];
 
@@ -125,29 +125,13 @@ const ImageList: React.FC<ImagesProps> = () => {
 
   return (
     <div>
-      <Tooltip
-        style={{
-          position: 'fixed',
-          bottom: scrollTopIconBottom,
-          right: scrollTopIconBottom,
-          zIndex: 2,
-          opacity: 0.7,
-        }}
-        title="Scroll to top"
-      >
-        <IconButton
-          onClick={() => setIndexToScrollTo(0)}
-          style={{ background: theme.palette.background.paper }}
-        >
-          <ArrowUpward />
-        </IconButton>
-      </Tooltip>
       <form
         onSubmit={e => {
           e.preventDefault();
 
           setIndexToScrollTo(Number(value) - 1);
         }}
+        style={{ position: 'relative', display: 'flex', alignItems: 'center' }}
       >
         <Input
           type="number"
@@ -155,6 +139,22 @@ const ImageList: React.FC<ImagesProps> = () => {
           onChange={({ target: { value: newValue } }) => setValue(newValue)}
         />
         <Button type="submit">Submit</Button>
+        <Tooltip
+          style={{
+            position: 'fixed',
+            zIndex: 2,
+            opacity: 0.7,
+            right: scrollTopIconRight,
+          }}
+          title="Scroll to top"
+        >
+          <IconButton
+            onClick={() => setIndexToScrollTo(0)}
+            style={{ background: theme.palette.background.paper }}
+          >
+            <ArrowUpward />
+          </IconButton>
+        </Tooltip>
       </form>
       <br />
       <br />
