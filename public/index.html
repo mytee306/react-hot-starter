@@ -36,21 +36,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-137872597-2"
-    ></script>
-    <script>
-      /* eslint-disable */
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', 'UA-137872597-2');
-    </script>
+    <% if (process.env.NODE_ENV === 'production') { %>
     <script>
       /* eslint-disable */
       !(function(n, e) {
@@ -127,6 +113,22 @@
         });
       });
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-137872597-2"
+    ></script>
+    <script>
+      /* eslint-disable */
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-137872597-2');
+    </script>
+    <% } %>
     <script
       src="https://www.paypal.com/sdk/js?client-id=AfcqvUlf11d8pCMZjHyFgOu9v6H_RS1-toaL9YbdxTqSgEg3rpXzEO2Gf1-jciVBlUoSmusWerQqvxkk"
       async
