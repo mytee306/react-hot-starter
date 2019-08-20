@@ -17,8 +17,8 @@ import {
 } from '@material-ui/core';
 import {
   Build,
+  Language,
   Menu,
-  Person,
   Search,
   WbSunny,
   WbSunnyOutlined,
@@ -30,23 +30,28 @@ import env from 'env';
 import { startCase } from 'lodash';
 import { CreateSimpleAction, Maybe } from 'models';
 import React, { FC, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import Select from 'react-select';
 import { Flex } from 'rebass';
 import {
+  createSetLang,
   createSignout,
   createToggleType,
   DisplayName,
+  Lang,
   PhotoURL,
+  selectDictionary,
   selectDisplayName,
   selectEmail,
   selectIsAuthLoading,
   selectIsPaletteDark,
   selectIsSignedIn,
+  selectLang,
   selectPhotoURL,
   State,
   User,
 } from 'store';
+import { useActions } from 'utils';
 import './Header.scss';
 
 const labels = [
@@ -92,6 +97,11 @@ const options = labels.map(label => ({
 }));
 
 type Option = typeof options[number];
+
+interface Language {
+  value: Lang;
+  label: string;
+}
 
 const avatarWidth = 140;
 
@@ -153,14 +163,32 @@ const Header: FC<HeaderProps> = ({
 
   const [actionsOpen, setActionsOpen] = React.useState(false);
   const toggleActionsOpen = () => {
-    console.log(actionsOpen);
     setActionsOpen(!actionsOpen);
   };
+
+  const lang = useSelector(selectLang);
+  const dictionary = useSelector(selectDictionary);
+
+  const [langOpen, setLangOpen] = React.useState(false);
+  const toggleLangOpen = () => setLangOpen(!langOpen);
+
+  const languages: Language[] = [
+    {
+      value: 'en',
+      label: 'English',
+    },
+    {
+      value: 'de',
+      label: 'German',
+    },
+  ];
+
+  const { setLang } = useActions({ setLang: createSetLang });
 
   return (
     <AppBar position="static" className={clsx(header, className)}>
       <Toolbar>
-        <Tooltip title="Open navigation">
+        <Tooltip title={dictionary.openNavigation}>
           <IconButton className={menuButton} aria-label="Menu" onClick={toggle}>
             <Menu />
           </IconButton>
@@ -237,7 +265,32 @@ const Header: FC<HeaderProps> = ({
             />
           </SpeedDial>
         </div>
-        {(isSignedIn || isAuthLoading) && (
+        <div onClick={toggleLangOpen} onKeyDown={toggleLangOpen} role="button">
+          <SpeedDial
+            ariaLabel="Language"
+            icon={<Language />}
+            open={langOpen}
+            onMouseEnter={() => setLangOpen(true)}
+            onMouseLeave={() => setLangOpen(false)}
+            direction="down"
+          >
+            {languages.map(({ value: language, label }) => (
+              <SpeedDialAction
+                key={language}
+                tooltipTitle={label}
+                icon={
+                  <Typography
+                    color={lang === language ? 'secondary' : 'primary'}
+                  >
+                    {language}
+                  </Typography>
+                }
+                onClick={() => setLang(language)}
+              />
+            ))}
+          </SpeedDial>
+        </div>
+        {/* {(isSignedIn || isAuthLoading) && (
           <Tooltip title="Profile">
             <div ref={profileButtonRef}>
               <IconButton onClick={toggleOpen} loading={isAuthLoading}>
@@ -245,7 +298,7 @@ const Header: FC<HeaderProps> = ({
               </IconButton>
             </div>
           </Tooltip>
-        )}
+        )} */}
         <Popover
           anchorEl={profileButtonRef.current}
           open={open}

@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 export type Lang = 'en' | 'de';
 
 const en = {
+  language: 'Language',
   close: 'Close',
   actions: 'Actions',
   openNavigation: 'Open navigation',
@@ -53,6 +54,7 @@ const initialState: LangState = {
   langs: {
     en,
     de: {
+      language: 'Sprache',
       close: 'Zumachen',
       actions: 'Aktionen',
       openNavigation: 'Öffnen sie die Navigation',
@@ -108,10 +110,15 @@ export default langSlice.reducer;
 
 export const {
   actions: { set: createSetLang },
-  selectors: { getLang: selectLang },
+  selectors: { getLang: selectLangState },
 } = langSlice;
 
+export const selectLang = createSelector(
+  selectLangState,
+  ({ lang }) => lang,
+);
+
 export const selectDictionary = createSelector(
-  selectLang,
+  selectLangState,
   ({ langs, lang }) => langs[lang],
 );
