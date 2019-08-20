@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+
 import {
   AppBar,
   Box,
@@ -150,6 +152,10 @@ const Header: FC<HeaderProps> = ({
   });
 
   const [actionsOpen, setActionsOpen] = React.useState(false);
+  const toggleActionsOpen = () => {
+    console.log(actionsOpen);
+    setActionsOpen(!actionsOpen);
+  };
 
   return (
     <AppBar position="static" className={clsx(header, className)}>
@@ -190,7 +196,7 @@ const Header: FC<HeaderProps> = ({
             styles={{
               container: base => ({
                 ...base,
-                minWidth: 200,
+                minWidth: 150,
                 color: theme.palette.common.black,
               }),
               control: base => ({
@@ -206,24 +212,31 @@ const Header: FC<HeaderProps> = ({
             }}
           />
         </Flex>
-        <SpeedDial
-          ariaLabel="Actions"
-          icon={<Build />}
-          open={actionsOpen}
-          onMouseEnter={() => setActionsOpen(true)}
-          onMouseLeave={() => setActionsOpen(false)}
-          direction="down"
-          style={{
-            position: 'relative',
-            margin: 10,
-          }}
+        <div
+          onClick={toggleActionsOpen}
+          onKeyDown={toggleActionsOpen}
+          role="button"
         >
-          <SpeedDialAction
-            tooltipTitle="Toggle light"
-            icon={isDark ? <WbSunny color="primary" /> : <WbSunnyOutlined />}
-            onClick={() => togglePaletteType()}
-          />
-        </SpeedDial>
+          <SpeedDial
+            ariaLabel="Actions"
+            icon={<Build />}
+            open={actionsOpen}
+            onMouseEnter={() => setActionsOpen(true)}
+            onMouseLeave={() => setActionsOpen(false)}
+            direction="down"
+            style={{
+              position: 'relative',
+              margin: 10,
+              cursor: 'pointer',
+            }}
+          >
+            <SpeedDialAction
+              tooltipTitle="Toggle light"
+              icon={isDark ? <WbSunny color="primary" /> : <WbSunnyOutlined />}
+              onClick={() => togglePaletteType()}
+            />
+          </SpeedDial>
+        </div>
         {(isSignedIn || isAuthLoading) && (
           <Tooltip title="Profile">
             <div ref={profileButtonRef}>
