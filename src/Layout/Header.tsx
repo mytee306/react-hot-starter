@@ -202,7 +202,7 @@ const Header: FC<HeaderProps> = ({
             }}
           />
         </Flex>
-        <Tooltip title="Toggle dark theme">
+        <Tooltip title="Toggle light">
           <IconButton onClick={() => togglePaletteType()}>
             {isDark ? <WbSunny /> : <WbSunnyOutlined />}
           </IconButton>
