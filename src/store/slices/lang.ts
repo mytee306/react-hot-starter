@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 export type Lang = 'en' | 'de';
 
 const en = {
+  actions: 'Actions',
   openNavigation: 'Open navigation',
   search: 'Search',
   dashboard: 'Dashboard',
@@ -51,6 +52,7 @@ const initialState: LangState = {
   langs: {
     en,
     de: {
+      actions: 'Aktionen',
       openNavigation: 'Öffnen sie die Navigation',
       search: 'Suche',
       dashboard: 'Instrumententafel',

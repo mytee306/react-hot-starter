@@ -14,12 +14,14 @@ import {
   useTheme,
 } from '@material-ui/core';
 import {
+  Build,
   Menu,
   Person,
   Search,
   WbSunny,
   WbSunnyOutlined,
 } from '@material-ui/icons';
+import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import clsx from 'clsx';
 import { Button, IconButton, Tooltip } from 'components';
 import env from 'env';
@@ -44,6 +46,7 @@ import {
   User,
 } from 'store';
 import Breadcrumbs from './Breadcrumbs';
+import './Header.scss';
 
 const labels = [
   'Afghanistan',
@@ -147,6 +150,8 @@ const Header: FC<HeaderProps> = ({
     color: theme.palette.common.white,
   });
 
+  const [actionsOpen, setActionsOpen] = React.useState(false);
+
   return (
     <AppBar position="static" className={clsx(header, className)}>
       <Toolbar>
@@ -202,11 +207,24 @@ const Header: FC<HeaderProps> = ({
             }}
           />
         </Flex>
-        <Tooltip title="Toggle light">
-          <IconButton onClick={() => togglePaletteType()}>
-            {isDark ? <WbSunny /> : <WbSunnyOutlined />}
-          </IconButton>
-        </Tooltip>
+        <SpeedDial
+          ariaLabel="Actions"
+          icon={<Build />}
+          open={actionsOpen}
+          onMouseEnter={() => setActionsOpen(true)}
+          onMouseLeave={() => setActionsOpen(false)}
+          direction="down"
+          style={{
+            position: 'relative',
+            margin: 10,
+          }}
+        >
+          <SpeedDialAction
+            tooltipTitle="Toggle light"
+            icon={isDark ? <WbSunny color="primary" /> : <WbSunnyOutlined />}
+            onClick={() => togglePaletteType()}
+          />
+        </SpeedDial>
         {(isSignedIn || isAuthLoading) && (
           <Tooltip title="Profile">
             <div ref={profileButtonRef}>
