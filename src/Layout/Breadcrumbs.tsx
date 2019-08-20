@@ -12,7 +12,6 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Box, Flex } from 'rebass';
 import { selectPageFound } from 'store';
 import urlJoin from 'url-join';
-import { useIsNotSmallScreen } from 'utils';
 
 export interface BreadcrumbsProps
   extends MaterialBreadcrumbsProps,
@@ -27,11 +26,13 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ location: { pathname } }) => {
 
   const pageNotFound = !pageFound;
 
-  const isNotSmallScreen = useIsNotSmallScreen();
+  // const isNotSmallScreen = useIsNotSmallScreen();
 
-  const color = isNotSmallScreen
-    ? theme.palette.common.white
-    : theme.palette.primary.light;
+  // const color = isNotSmallScreen
+  //   ? theme.palette.common.white
+  //   : theme.palette.primary.light;
+
+  const color = theme.palette.primary.light;
 
   return (
     <Flex alignItems="center">

@@ -45,7 +45,6 @@ import {
   State,
   User,
 } from 'store';
-import Breadcrumbs from './Breadcrumbs';
 import './Header.scss';
 
 const labels = [
@@ -164,14 +163,14 @@ const Header: FC<HeaderProps> = ({
           <Typography variant="h6" color="inherit">
             {isNotSmallScreen ? startCase(env.appName) : ''}
           </Typography>
-          {isNotSmallScreen && isSignedIn && (
+          {/* {isNotSmallScreen && isSignedIn && (
             <Flex alignItems="center">
               <Box ml={2} mr={2} fontSize="2.5em">
                 |
               </Box>
               <Breadcrumbs />
             </Flex>
-          )}
+          )} */}
         </Flex>
         <Flex alignItems="center" style={{ position: 'relative' }} mr={2}>
           <Search

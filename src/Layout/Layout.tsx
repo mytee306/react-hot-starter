@@ -1,11 +1,4 @@
-import {
-  CssBaseline,
-  Divider,
-  Drawer,
-  makeStyles,
-  useMediaQuery,
-  useTheme,
-} from '@material-ui/core';
+import { CssBaseline, Divider, Drawer, makeStyles } from '@material-ui/core';
 import { ChevronLeft, Close } from '@material-ui/icons';
 import { IconButton, Tooltip, Visible } from 'components';
 import React, { FC, useState } from 'react';
@@ -29,8 +22,6 @@ export interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children, isSignedIn }) => {
-  const theme = useTheme();
-
   const { drawer, toolbar } = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -41,7 +32,7 @@ const Layout: FC<LayoutProps> = ({ children, isSignedIn }) => {
 
   const [breadcrumbsOpen, setBreadcrumbsOpen] = React.useState(true);
 
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  // const isMediumScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [showClose, setShowClose] = React.useState(false);
 
@@ -75,7 +66,7 @@ const Layout: FC<LayoutProps> = ({ children, isSignedIn }) => {
         <Divider />
         <Nav isSignedIn={isSignedIn} onNavigate={handleDrawerToggle} />
       </Drawer>
-      {breadcrumbsOpen && isMediumScreen && isSignedIn && (
+      {breadcrumbsOpen && isSignedIn && (
         <>
           <Flex
             alignItems="center"
