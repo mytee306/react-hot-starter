@@ -4,6 +4,8 @@ export * from './count';
 export { default as count } from './count';
 export * from './images';
 export { default as images } from './images';
+export * from './lang';
+export { default as lang } from './lang';
 export * from './router';
 export { default as router } from './router';
 export * from './snackbar';

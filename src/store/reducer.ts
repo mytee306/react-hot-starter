@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { createAction } from 'redux-starter-kit';
 import { createSelector } from 'reselect';
 import { createDeepSelector } from 'utils';
-import { auth, count, images, router, snackbar, theme } from './slices';
+import { auth, count, images, lang, router, snackbar, theme } from './slices';
 
 const reducer = combineReducers({
   count,
@@ -11,6 +11,7 @@ const reducer = combineReducers({
   snackbar,
   images,
   router,
+  lang,
 });
 
 export type State = ReturnType<typeof reducer>;
