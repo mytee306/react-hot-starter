@@ -1,4 +1,3 @@
-import { Typography } from '@material-ui/core';
 import { Slider } from '@material-ui/lab';
 import { Button } from 'components';
 import React, { ComponentProps, FC, useState } from 'react';
@@ -29,10 +28,6 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
         decrementBy(amount);
       }}
     >
-      <Typography>Decrement By Amount</Typography>
-      <br />
-      <br />
-      <br />
       <Slider
         min={min}
         max={max}
@@ -41,7 +36,7 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
         onChange={(_, value) => setAmount(value as number)}
         step={1}
         marks={marks}
-        style={{ margin: '0 20px', width: '50%' }}
+        style={{ margin: '0 20px', width: '50%', marginTop: 30 }}
       />
       <br />
       <br />
