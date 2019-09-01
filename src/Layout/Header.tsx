@@ -196,6 +196,7 @@ const Header: FC<HeaderProps> = ({
               container: base => ({
                 ...base,
                 flexGrow: 1,
+                color: theme.palette.common.black,
               }),
               control: base => ({
                 ...base,
