@@ -2,8 +2,14 @@ import { Typography, useTheme } from '@material-ui/core';
 import google from 'assets/img/google.svg';
 import { Button } from 'components';
 import React, { FC } from 'react';
-import { connect } from 'react-redux';
-import { createSignin, CreateSignin, selectIsAuthLoading, State } from 'store';
+import { connect, useSelector } from 'react-redux';
+import {
+  createSignin,
+  CreateSignin,
+  selectDictionary,
+  selectIsAuthLoading,
+  State,
+} from 'store';
 
 export interface SigninProps {
   signIn: CreateSignin;
@@ -13,11 +19,15 @@ export interface SigninProps {
 const Signin: FC<SigninProps> = ({ signIn, isAuthLoading }) => {
   const theme = useTheme();
 
+  const dict = useSelector(selectDictionary);
+
   return (
     <>
-      <Typography variant="h2">Welcome</Typography>
+      <Typography variant="h2">{dict.welcome}</Typography>
       <br />
-      <Typography>You can sign in using your Google account</Typography>
+      <Typography>
+        {dict.signIn} {dict.with} Google
+      </Typography>
       <br />
       <Button
         variant="contained"
@@ -29,7 +39,7 @@ const Signin: FC<SigninProps> = ({ signIn, isAuthLoading }) => {
           src={google}
           alt="Google Logo"
         />
-        <span style={{ marginLeft: 5 }}>Sign in</span>
+        <span style={{ marginLeft: 5 }}>{dict.signIn}</span>
       </Button>
     </>
   );

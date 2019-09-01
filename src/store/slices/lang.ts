@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 export type Lang = 'en' | 'de';
 
 const en = {
+  welcome: 'Welcome',
   language: 'Language',
   close: 'Close',
   actions: 'Actions',
@@ -22,6 +23,8 @@ const en = {
   list: 'List',
   canvas: 'Canvas',
   signOut: 'Sign out',
+  signIn: 'Sign in',
+  with: 'with',
   minimum: 'Minimum',
   middle: 'Middle',
   maximum: 'Maximum',
@@ -57,6 +60,7 @@ const initialState: LangState = {
   langs: {
     en,
     de: {
+      welcome: 'Willkommen',
       language: 'Sprache',
       close: 'Zumachen',
       actions: 'Aktionen',
@@ -74,6 +78,8 @@ const initialState: LangState = {
       list: 'Liste',
       canvas: 'Malerleinwand',
       signOut: 'Ausloggen',
+      signIn: 'Einloggen',
+      with: 'mit',
       minimum: 'Minimum',
       middle: 'Mitte',
       maximum: 'Maximum',
