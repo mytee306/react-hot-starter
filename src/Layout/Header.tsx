@@ -244,20 +244,23 @@ const Header: FC<HeaderProps> = ({
             onMouseLeave={() => setLangOpen(false)}
             direction="down"
           >
-            {languages.map(({ value: language, label }) => (
-              <SpeedDialAction
-                key={language}
-                tooltipTitle={label}
-                icon={
-                  <Typography
-                    color={lang === language ? 'secondary' : 'primary'}
-                  >
-                    {language}
-                  </Typography>
-                }
-                onClick={() => setLang(language)}
-              />
-            ))}
+            {languages.map(({ value: language, label }) => {
+              const isSelected = lang === language;
+
+              return (
+                <SpeedDialAction
+                  key={language}
+                  tooltipTitle={label}
+                  icon={
+                    <Typography color={isSelected ? 'secondary' : 'primary'}>
+                      {language}
+                    </Typography>
+                  }
+                  onClick={() => setLang(language)}
+                  style={{ pointerEvents: isSelected ? 'none' : 'initial' }}
+                />
+              );
+            })}
           </SpeedDial>
         </div>
       </Toolbar>
