@@ -206,7 +206,12 @@ const Header: FC<HeaderProps> = ({
             </Flex>
           )} */}
         </Flex>
-        <Flex alignItems="center" style={{ position: 'relative' }} mr={2}>
+        <Flex
+          alignItems="center"
+          style={{ position: 'relative' }}
+          mr={2}
+          width={[150, 250]}
+        >
           <Search
             style={{
               position: 'absolute',
@@ -224,8 +229,7 @@ const Header: FC<HeaderProps> = ({
             styles={{
               container: base => ({
                 ...base,
-                minWidth: 150,
-                color: theme.palette.common.black,
+                flexGrow: 1,
               }),
               control: base => ({
                 ...base,
