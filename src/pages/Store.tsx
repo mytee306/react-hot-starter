@@ -13,7 +13,9 @@ import { startCase } from 'lodash';
 import { Maybe } from 'models';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { CreditCard, IceCream } from 'react-kawaii';
+import { useSelector } from 'react-redux';
 import { Box, Flex } from 'rebass';
+import { selectDictionary } from 'store';
 import { v4 } from 'uuid';
 
 const product = {
@@ -96,6 +98,8 @@ const Store: FC<StoreProps> = () => {
   const paypalRef = useRef<HTMLDivElement>(null);
   const [order, setOrder] = useState<Maybe<Order>>(null);
 
+  const dict = useSelector(selectDictionary);
+
   useEffect(() => {
     (window as any).paypal
       .Buttons({
@@ -126,7 +130,7 @@ const Store: FC<StoreProps> = () => {
       {order ? (
         <div style={{ display: 'grid', justifyItems: 'center' }}>
           <Flex mb={4} flexDirection="column" style={{ textAlign: 'center' }}>
-            <Typography variant="h2">Successfully purchased</Typography>
+            <Typography variant="h2">{dict.purchased}</Typography>
             <Typography
               variant="h2"
               style={{ color: theme.colors.success.dark }}

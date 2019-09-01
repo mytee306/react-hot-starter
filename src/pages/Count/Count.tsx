@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core';
 import { Disqus, Link, Loader, Switch } from 'components';
 import { CreateSimpleAction } from 'models';
 import React, { FC, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import {
   CountState,
@@ -11,6 +11,7 @@ import {
   createGetCount,
   createIncrement,
   selectCountValue,
+  selectDictionary,
   selectIsCountLoading,
   State,
 } from 'store';
@@ -38,10 +39,12 @@ const Count: FC<CountProps> = ({
     getCount();
   }, [getCount]);
 
+  const dict = useSelector(selectDictionary);
+
   return (
     <>
       <Typography variant="h2">
-        Count: <Loader isLoading={isLoading}>{value}</Loader>
+        {dict.count}: <Loader isLoading={isLoading}>{value}</Loader>
       </Typography>
       <br />
       <Switch>
@@ -50,15 +53,13 @@ const Count: FC<CountProps> = ({
           exact
           render={() => (
             <Typography>
-              You may{' '}
               <Link to="increment" style={{ textDecoration: 'underline' }}>
-                increment
+                {dict.increment}
               </Link>{' '}
-              or{' '}
+              {dict.or}{' '}
               <Link to="decrement" style={{ textDecoration: 'underline' }}>
-                decrement
+                {dict.decrement}
               </Link>{' '}
-              your count
             </Typography>
           )}
         />

@@ -186,7 +186,7 @@ const Header: FC<HeaderProps> = ({
             }}
           />
           <Select
-            placeholder="Search..."
+            placeholder={`${dictionary.search}...`}
             options={options}
             value={value}
             onChange={(newValue: unknown) => {
@@ -230,7 +230,7 @@ const Header: FC<HeaderProps> = ({
             }}
           >
             <SpeedDialAction
-              tooltipTitle="Toggle light"
+              tooltipTitle={dictionary.toggleLight}
               icon={isDark ? <WbSunny color="primary" /> : <WbSunnyOutlined />}
               onClick={() => togglePaletteType()}
             />

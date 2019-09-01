@@ -4,6 +4,7 @@ import { Button, IconButton, Tooltip } from 'components';
 import { name } from 'faker';
 import { merge, range } from 'ramda';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   AutoSizer,
   InfiniteLoader,
@@ -12,6 +13,7 @@ import {
   ListRowRenderer,
   WindowScroller,
 } from 'react-virtualized';
+import { selectDictionary } from 'store';
 
 export interface Person {
   name: string;
@@ -87,6 +89,8 @@ const loadMorePeople = loadMore(() => name.findName());
 export interface ImagesProps {}
 
 const ImageList: React.FC<ImagesProps> = () => {
+  const dict = useSelector(selectDictionary);
+
   const theme = useTheme();
 
   const [value, setValue] = useState('');
@@ -138,7 +142,7 @@ const ImageList: React.FC<ImagesProps> = () => {
           value={value}
           onChange={({ target: { value: newValue } }) => setValue(newValue)}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{dict.submit}</Button>
         <Tooltip
           style={{
             position: 'fixed',
@@ -146,7 +150,7 @@ const ImageList: React.FC<ImagesProps> = () => {
             opacity: 0.7,
             right: scrollTopIconRight,
           }}
-          title="Scroll to top"
+          title={dict.scrollToTop}
         >
           <IconButton
             onClick={() => setIndexToScrollTo(0)}

@@ -10,7 +10,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Box, Flex } from 'rebass';
-import { selectPageFound } from 'store';
+import { selectDictionary, selectPageFound } from 'store';
 import urlJoin from 'url-join';
 
 export interface BreadcrumbsProps
@@ -21,6 +21,8 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ location: { pathname } }) => {
   const pageFound = useSelector(selectPageFound);
 
   const theme = useTheme();
+
+  const dict = useSelector(selectDictionary);
 
   const pathnames = pathname.split('/').filter(Boolean);
 
@@ -39,7 +41,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ location: { pathname } }) => {
       <Box flex={1}>
         <MaterialBreadcrumbs separator="›">
           <Link to="/" color={color}>
-            Dashboard
+            {dict.dashboard}
           </Link>
           {pathnames.map((name, i) => (
             <Link

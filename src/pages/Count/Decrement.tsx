@@ -1,7 +1,8 @@
 import { Slider } from '@material-ui/lab';
 import { Button } from 'components';
-import React, { ComponentProps, FC, useState } from 'react';
-import { CountState, CreateDecrementBy } from 'store';
+import React, { FC, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { CountState, CreateDecrementBy, selectDictionary } from 'store';
 
 export interface DecrementProps {
   decrementBy: CreateDecrementBy;
@@ -11,14 +12,10 @@ export interface DecrementProps {
 const min = 1;
 const max = 9;
 
-export const marks: ComponentProps<typeof Slider>['marks'] = [
-  { value: min, label: 'Minimum' },
-  { value: 5, label: 'Middle' },
-  { value: max, label: 'Maximum' },
-];
-
 const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
   const [amount, setAmount] = useState(1);
+
+  const dict = useSelector(selectDictionary);
 
   return (
     <form
@@ -35,7 +32,11 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
         valueLabelDisplay="on"
         onChange={(_, value) => setAmount(value as number)}
         step={1}
-        marks={marks}
+        marks={[
+          { value: min, label: dict.minimum },
+          { value: 5, label: dict.middle },
+          { value: max, label: dict.maximum },
+        ]}
         style={{ margin: '0 20px', width: '50%', marginTop: 30 }}
       />
       <br />
@@ -46,7 +47,7 @@ const Decrement: FC<DecrementProps> = ({ decrementBy, isLoading }) => {
         type="submit"
         isLoading={isLoading}
       >
-        Decrement
+        {dict.decrement}
       </Button>
     </form>
   );

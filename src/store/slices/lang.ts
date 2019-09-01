@@ -39,6 +39,9 @@ const en = {
   lists: 'Lists',
   headings: 'Headings',
   bulleted: 'Bulleted',
+  or: 'or',
+  uploaded: 'Uploaded',
+  purchased: 'Purchased',
 };
 
 export type Dictionary = typeof en;
@@ -88,6 +91,9 @@ const initialState: LangState = {
       lists: 'Listen',
       headings: 'Überschriften',
       bulleted: 'Aufzählung',
+      or: 'oder',
+      uploaded: 'Hochgeladen',
+      purchased: 'Gekauft',
     },
   },
 };

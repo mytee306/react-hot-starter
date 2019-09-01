@@ -12,7 +12,7 @@ import {
 import { AddToPhotos, CheckCircleOutline, Close } from '@material-ui/icons';
 import { Button, IconButton, Spinner } from 'components';
 import React, { createRef, CSSProperties, FC, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Box, Flex } from 'rebass';
 import {
   createAddImage,
@@ -24,6 +24,7 @@ import {
   Image,
   ImagesUploading,
   ImagesWIthId,
+  selectDictionary,
   selectImagesUploading,
   selectImagesWithIds,
   State,
@@ -90,6 +91,8 @@ const Upload: FC<UploadProps> = ({
 }) => {
   const theme = useTheme();
 
+  const dict = useSelector(selectDictionary);
+
   const appropriate = true;
 
   return (
@@ -128,19 +131,20 @@ const Upload: FC<UploadProps> = ({
         variant="contained"
       >
         <AddToPhotos style={{ marginRight: theme.spacing(2) }} />
-        Choose image files
+        {dict.chooseImages}
       </Button>
       <br />
       <br />
-      <Typography variant="h4">Chosen Images</Typography>
+      <Typography variant="h4">{dict.chosenImages}</Typography>
       <br />
       <Button
+        type="submit"
         variant="contained"
         color="primary"
         disabled={!images.length}
         isLoading={uploading}
       >
-        Upload
+        {dict.upload}
       </Button>
       <br />
       <List>
@@ -164,7 +168,7 @@ const Upload: FC<UploadProps> = ({
                         return <Spinner size={theme.typography.fontSize} />;
                       case 'completed':
                         return (
-                          <Tooltip title="Successfully Uploaded">
+                          <Tooltip title={dict.uploaded}>
                             <CheckCircleOutline
                               style={{ color: theme.colors.success.dark }}
                             />
