@@ -47,6 +47,7 @@ const rootPathnames = [
   'store',
   'list',
   'canvas',
+  'profile',
 ] as const;
 
 export const absoluteRootPathnames = rootPathnames.map(toAbsolutePath);
@@ -143,6 +144,12 @@ const privateNavItems: INavItems = [
     text: textPaths.canvas,
     path: absolutePaths.canvas,
     icon: <Brush />,
+    childNavItems: [],
+  },
+  {
+    text: textPaths.profile,
+    path: absolutePaths.profile,
+    icon: <Person />,
     childNavItems: [],
   },
 ];

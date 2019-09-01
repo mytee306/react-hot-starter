@@ -2,14 +2,7 @@
 
 import {
   AppBar,
-  Box,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
   makeStyles,
-  Popover,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -25,11 +18,11 @@ import {
 } from '@material-ui/icons';
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import clsx from 'clsx';
-import { Button, IconButton, Tooltip } from 'components';
+import { IconButton, Tooltip } from 'components';
 import env from 'env';
 import { startCase } from 'lodash';
 import { CreateSimpleAction, Maybe } from 'models';
-import React, { FC, useRef, useState } from 'react';
+import React, { FC } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Select from 'react-select';
 import { Flex } from 'rebass';
@@ -37,19 +30,11 @@ import {
   createSetLang,
   createSignout,
   createToggleType,
-  DisplayName,
   Lang,
-  PhotoURL,
   selectDictionary,
-  selectDisplayName,
-  selectEmail,
-  selectIsAuthLoading,
   selectIsPaletteDark,
-  selectIsSignedIn,
   selectLang,
-  selectPhotoURL,
   State,
-  User,
 } from 'store';
 import { useActions } from 'utils';
 import './Header.scss';
@@ -103,8 +88,6 @@ interface Language {
   label: string;
 }
 
-const avatarWidth = 140;
-
 const useStyles = makeStyles(theme => ({
   header: {
     width: 'auto',
@@ -122,32 +105,15 @@ export interface HeaderProps {
   toggle: () => void;
   isDark: ReturnType<typeof selectIsPaletteDark>;
   togglePaletteType: CreateSimpleAction;
-  isSignedIn: ReturnType<typeof selectIsSignedIn>;
-  signOut: CreateSimpleAction;
-  isAuthLoading: ReturnType<typeof selectIsAuthLoading>;
   className?: string;
-  displayName: DisplayName;
-  email: User['email'];
-  photoURL: PhotoURL;
 }
 
 const Header: FC<HeaderProps> = ({
   toggle,
   isDark,
   togglePaletteType,
-  isSignedIn,
-  signOut,
-  isAuthLoading,
   className,
-  displayName,
-  email,
-  photoURL,
 }) => {
-  const [open, setOpen] = useState(false);
-  const profileButtonRef = useRef<HTMLDivElement>(null);
-
-  const toggleOpen = () => setOpen(!open);
-
   const theme = useTheme();
 
   const isNotSmallScreen = useMediaQuery(theme.breakpoints.up('md'));
@@ -294,63 +260,6 @@ const Header: FC<HeaderProps> = ({
             ))}
           </SpeedDial>
         </div>
-        {/* {(isSignedIn || isAuthLoading) && (
-          <Tooltip title="Profile">
-            <div ref={profileButtonRef}>
-              <IconButton onClick={toggleOpen} loading={isAuthLoading}>
-                <Person />
-              </IconButton>
-            </div>
-          </Tooltip>
-        )} */}
-        <Popover
-          anchorEl={profileButtonRef.current}
-          open={open}
-          onClose={toggleOpen}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-        >
-          <Card>
-            <CardActionArea>
-              <Box mt={2} style={{ display: 'grid', justifyItems: 'center' }}>
-                <CardMedia
-                  image={photoURL}
-                  title={displayName}
-                  style={{
-                    height: avatarWidth,
-                    width: avatarWidth,
-                    borderRadius: '50%',
-                  }}
-                />
-              </Box>
-              <CardContent>
-                <Typography gutterBottom variant="h5">
-                  {displayName}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {email}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              <Button
-                size="small"
-                onClick={() => {
-                  signOut();
-                  toggleOpen();
-                }}
-              >
-                Sign out
-              </Button>
-            </CardActions>
-          </Card>
-        </Popover>
       </Toolbar>
     </AppBar>
   );
@@ -358,11 +267,6 @@ const Header: FC<HeaderProps> = ({
 
 const mapStateToProps = (state: State) => ({
   isDark: selectIsPaletteDark(state),
-  isSignedIn: selectIsSignedIn(state),
-  isAuthLoading: selectIsAuthLoading(state),
-  displayName: selectDisplayName(state),
-  email: selectEmail(state),
-  photoURL: selectPhotoURL(state),
 });
 
 const mapDispatchToProps = {
