@@ -209,5 +209,13 @@
     "react-starter-kit",
     "travis",
     "react-hot-loader"
-  ]
+  ],
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/compilers/react-typescript@3.0.26",
+      "tester": "bit.envs/testers/jest@22.4.3"
+    },
+    "componentsDefaultDirectory": "src/components/{name}",
+    "packageManager": "npm"
+  }
 }
