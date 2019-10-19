@@ -129,14 +129,11 @@ export const selectImagesWithIds = createDeepSelector(
 );
 
 export const selectImagesUploading = createDeepSelector(
-  getImages,
-  ({ entities }) => {
-    const uploadingImage = Object.values(entities).find(
+  selectImageEntities,
+  entities =>
+    Object.values(entities).some(
       ({ uploadStatus }) => uploadStatus === 'in progress',
-    );
-
-    return Boolean(uploadingImage);
-  },
+    ),
 );
 
 export type ImagesUploading = ReturnType<typeof selectImagesUploading>;
