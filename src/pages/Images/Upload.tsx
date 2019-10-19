@@ -99,7 +99,7 @@ const Upload: FC<UploadProps> = ({
 
   const dict = useSelector(selectDictionary);
 
-  const appropriate = true;
+  const appropriate = false;
 
   return (
     <form
@@ -147,7 +147,7 @@ const Upload: FC<UploadProps> = ({
         type="submit"
         variant="contained"
         color="primary"
-        disabled={!images.length}
+        disabled={!images.length || !appropriate}
         isLoading={uploading}
       >
         {dict.upload}
@@ -159,15 +159,25 @@ const Upload: FC<UploadProps> = ({
             <ListItem>
               <ListItemText>
                 <Flex alignItems="center">
-                  <Typography
-                    variant="h5"
-                    style={{
-                      marginRight: theme.spacing(1),
-                      color: appropriate ? 'initial' : theme.palette.error.dark,
-                    }}
+                  <Tooltip
+                    title={
+                      appropriate
+                        ? ''
+                        : 'Image was deemed inappropriate, please choose another one.'
+                    }
                   >
-                    {name}
-                  </Typography>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        marginRight: theme.spacing(1),
+                        color: appropriate
+                          ? 'initial'
+                          : theme.palette.error.dark,
+                      }}
+                    >
+                      {name}
+                    </Typography>
+                  </Tooltip>
                   {(() => {
                     switch (uploadStatus) {
                       case 'in progress':
@@ -193,6 +203,9 @@ const Upload: FC<UploadProps> = ({
               name={name}
               boxShadow={theme.shadows[1]}
               remove={() => removeImage(id)}
+              style={{
+                filter: appropriate ? 'none' : 'blur(5px)',
+              }}
             />
           </Box>
         ))}
