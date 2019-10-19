@@ -30,7 +30,11 @@ import {
   State,
 } from 'store';
 
-export interface ImageProps {
+export interface ImageProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLImageElement>,
+    HTMLImageElement
+  > {
   boxShadow: CSSProperties['boxShadow'];
   dataUrl: Image['dataUrl'];
   name: Image['name'];
@@ -42,6 +46,7 @@ export const ImageComponent: FC<ImageProps> = ({
   dataUrl,
   name,
   remove,
+  ...imageProps
 }) => {
   const [hovered, setHovered] = useState(false);
 
@@ -56,6 +61,7 @@ export const ImageComponent: FC<ImageProps> = ({
         style={{ boxShadow }}
         onMouseEnter={toggleHovered}
         onMouseLeave={toggleHovered}
+        {...imageProps}
       />
       <IconButton
         style={{
