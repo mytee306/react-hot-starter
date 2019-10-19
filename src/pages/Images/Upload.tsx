@@ -2,6 +2,7 @@
 /* eslint-disable immutable/no-mutation */
 
 import {
+  Divider,
   List,
   ListItem,
   ListItemText,
@@ -153,6 +154,8 @@ const Upload: FC<UploadProps> = ({
         {dict.upload}
       </Button>
       <br />
+      <br />
+      <Divider />
       <List>
         {images.map(({ name, dataUrl, uploadStatus, id }) => (
           <Box key={name}>
@@ -207,6 +210,9 @@ const Upload: FC<UploadProps> = ({
                 filter: appropriate ? 'none' : 'blur(5px)',
               }}
             />
+            <br />
+            <br />
+            <Divider />
           </Box>
         ))}
       </List>
