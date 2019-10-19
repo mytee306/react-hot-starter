@@ -3,6 +3,7 @@ import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createDeepSelector, prefixActionType } from 'utils';
 import { v4 } from 'uuid';
+import { createSelector } from 'reselect';
 
 export const imagesSliceName = 'images';
 
@@ -105,13 +106,13 @@ export default imagesSlice.reducer;
 
 export type CreateRemoveImage = typeof createRemoveImage;
 
-export const selectImages = createDeepSelector(getImages, ({ ids, entities }) =>
+export const selectImages = createSelector(getImages, ({ ids, entities }) =>
   ids.map(id => entities[id]),
 );
 
 export const selectImageIds = createDeepSelector(getImages, ({ ids }) => ids);
 
-export const selectImageEntities = createDeepSelector(
+export const selectImageEntities = createSelector(
   getImages,
   ({ entities }) => entities,
 );
@@ -122,13 +123,13 @@ export interface ImageWIthId extends Image {
 
 export type ImagesWIthId = ImageWIthId[];
 
-export const selectImagesWithIds = createDeepSelector(
+export const selectImagesWithIds = createSelector(
   selectImageIds,
   selectImages,
   (ids, images) => ids.map((id, i) => ({ ...images[i], id })),
 );
 
-export const selectImagesUploading = createDeepSelector(
+export const selectImagesUploading = createSelector(
   selectImageEntities,
   entities =>
     Object.values(entities).some(
