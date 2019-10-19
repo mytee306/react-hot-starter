@@ -25,6 +25,7 @@ import {
   Image,
   ImagesUploading,
   ImagesWIthId,
+  ImageWIthId,
   selectDictionary,
   selectImagesUploading,
   selectImagesWithIds,
@@ -42,42 +43,39 @@ export interface ImageProps
   remove: () => void;
 }
 
-export const ImageComponent: FC<ImageProps> = ({
-  boxShadow,
-  dataUrl,
-  name,
-  remove,
-  ...imageProps
-}) => {
-  const [hovered, setHovered] = useState(false);
+export const ImageComponent = React.forwardRef<HTMLImageElement, ImageProps>(
+  ({ boxShadow, dataUrl, name, remove, ...imageProps }, ref) => {
+    const [hovered, setHovered] = useState(false);
 
-  const toggleHovered = () => setHovered(!hovered);
+    const toggleHovered = () => setHovered(!hovered);
 
-  return (
-    <Box style={{ position: 'relative', display: 'inline-block' }}>
-      <img
-        src={dataUrl}
-        alt={name}
-        height={150}
-        style={{ boxShadow }}
-        onMouseEnter={toggleHovered}
-        onMouseLeave={toggleHovered}
-        {...imageProps}
-      />
-      <IconButton
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          opacity: 0.7,
-        }}
-        onClick={remove}
-      >
-        <Close />
-      </IconButton>
-    </Box>
-  );
-};
+    return (
+      <Box style={{ position: 'relative', display: 'inline-block' }}>
+        <img
+          ref={ref}
+          src={dataUrl}
+          alt={name}
+          height={150}
+          style={{ boxShadow }}
+          onMouseEnter={toggleHovered}
+          onMouseLeave={toggleHovered}
+          {...imageProps}
+        />
+        <IconButton
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            opacity: 0.7,
+          }}
+          onClick={remove}
+        >
+          <Close />
+        </IconButton>
+      </Box>
+    );
+  },
+);
 
 export interface UploadProps {
   addImage: CreateAddImage;
@@ -99,6 +97,10 @@ const Upload: FC<UploadProps> = ({
   const theme = useTheme();
 
   const dict = useSelector(selectDictionary);
+
+  const imagesRefs = React.useRef<
+    Record<ImageWIthId['id'], HTMLImageElement | null>
+  >({});
 
   const appropriate = false;
 
@@ -202,6 +204,9 @@ const Upload: FC<UploadProps> = ({
             </ListItem>
             <br />
             <ImageComponent
+              ref={ref => {
+                imagesRefs.current[id] = ref;
+              }}
               dataUrl={dataUrl}
               name={name}
               boxShadow={theme.shadows[1]}
