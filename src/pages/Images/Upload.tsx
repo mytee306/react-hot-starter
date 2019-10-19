@@ -27,6 +27,7 @@ import {
   ImagesWIthId,
   ImageWIthId,
   selectDictionary,
+  selectImagesBeingVerified,
   selectImagesUploading,
   selectImagesWithIds,
   State,
@@ -98,6 +99,8 @@ const Upload: FC<UploadProps> = ({
 
   const dict = useSelector(selectDictionary);
 
+  const imagesBeingVerified = useSelector(selectImagesBeingVerified);
+
   const imagesRefs = React.useRef<
     Record<ImageWIthId['id'], HTMLImageElement | null>
   >({});
@@ -128,6 +131,7 @@ const Upload: FC<UploadProps> = ({
                   name,
                   dataUrl: reader.result as string,
                   uploadStatus: 'not started',
+                  verificationStatus: 'not started',
                 });
               };
             });
@@ -151,7 +155,7 @@ const Upload: FC<UploadProps> = ({
         variant="contained"
         color="primary"
         disabled={!images.length || !appropriate}
-        isLoading={uploading}
+        isLoading={uploading || imagesBeingVerified}
       >
         {dict.upload}
       </Button>
@@ -159,67 +163,72 @@ const Upload: FC<UploadProps> = ({
       <br />
       <Divider />
       <List>
-        {images.map(({ name, dataUrl, uploadStatus, id }) => (
-          <Box key={name}>
-            <ListItem>
-              <ListItemText>
-                <Flex alignItems="center">
-                  <Tooltip
-                    title={
-                      appropriate
-                        ? ''
-                        : 'Image was deemed inappropriate, please choose another one.'
-                    }
-                  >
-                    <Typography
-                      variant="h5"
-                      style={{
-                        marginRight: theme.spacing(1),
-                        color: appropriate
-                          ? 'initial'
-                          : theme.palette.error.dark,
-                      }}
+        {images.map(
+          ({ name, dataUrl, uploadStatus, id, verificationStatus }) => (
+            <Box key={name}>
+              <ListItem>
+                <ListItemText>
+                  <Flex alignItems="center">
+                    <Tooltip
+                      title={
+                        appropriate
+                          ? ''
+                          : 'Image was deemed inappropriate, please choose another one.'
+                      }
                     >
-                      {name}
-                    </Typography>
-                  </Tooltip>
-                  {(() => {
-                    switch (uploadStatus) {
-                      case 'in progress':
-                        return <Spinner size={theme.typography.fontSize} />;
-                      case 'completed':
-                        return (
-                          <Tooltip title={dict.uploaded}>
-                            <CheckCircleOutline
-                              style={{ color: theme.colors.success.dark }}
-                            />
-                          </Tooltip>
-                        );
-                      default:
-                        return null;
-                    }
-                  })()}
-                </Flex>
-              </ListItemText>
-            </ListItem>
-            <br />
-            <ImageComponent
-              ref={ref => {
-                imagesRefs.current[id] = ref;
-              }}
-              dataUrl={dataUrl}
-              name={name}
-              boxShadow={theme.shadows[1]}
-              remove={() => removeImage(id)}
-              style={{
-                filter: appropriate ? 'none' : 'blur(5px)',
-              }}
-            />
-            <br />
-            <br />
-            <Divider />
-          </Box>
-        ))}
+                      <Typography
+                        variant="h5"
+                        style={{
+                          marginRight: theme.spacing(1),
+                          color: appropriate
+                            ? 'initial'
+                            : theme.palette.error.dark,
+                        }}
+                      >
+                        {name}
+                      </Typography>
+                    </Tooltip>
+                    {(() => {
+                      switch (uploadStatus) {
+                        case 'in progress':
+                          return <Spinner size={theme.typography.fontSize} />;
+                        case 'completed':
+                          return (
+                            <Tooltip title={dict.uploaded}>
+                              <CheckCircleOutline
+                                style={{ color: theme.colors.success.dark }}
+                              />
+                            </Tooltip>
+                          );
+                        default:
+                          return null;
+                      }
+                    })()}
+                  </Flex>
+                </ListItemText>
+              </ListItem>
+              <br />
+              <ImageComponent
+                ref={ref => {
+                  imagesRefs.current[id] = ref;
+                }}
+                dataUrl={dataUrl}
+                name={name}
+                boxShadow={theme.shadows[1]}
+                remove={() => removeImage(id)}
+                style={{
+                  filter:
+                    appropriate && verificationStatus !== 'in progress'
+                      ? 'none'
+                      : 'blur(5px)',
+                }}
+              />
+              <br />
+              <br />
+              <Divider />
+            </Box>
+          ),
+        )}
       </List>
     </form>
   );

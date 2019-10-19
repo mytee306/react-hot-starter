@@ -26,3 +26,6 @@ export interface SelectOption<Value> {
 }
 
 export type SelectOptions<Value> = SelectOption<Value>[];
+
+export const loadingStatuses = ['not started', 'in progress', 'completed'] as const;
+export type LoadingStatus = typeof loadingStatuses[number];

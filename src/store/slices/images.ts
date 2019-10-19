@@ -1,22 +1,20 @@
+import { LoadingStatus } from 'models';
 import { pick } from 'ramda';
 import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
+import { createSelector } from 'reselect';
 import { createDeepSelector, prefixActionType } from 'utils';
 import { v4 } from 'uuid';
-import { createSelector } from 'reselect';
 
 export const imagesSliceName = 'images';
 
 const prefix = prefixActionType(imagesSliceName);
 
-const uploadStatuses = ['not started', 'in progress', 'completed'] as const;
-
-type UploadStatus = typeof uploadStatuses[number];
-
 export interface Image {
   dataUrl: string;
   name: string;
-  uploadStatus: UploadStatus;
+  uploadStatus: LoadingStatus;
+  verificationStatus: LoadingStatus;
 }
 
 export interface Images {
@@ -106,8 +104,9 @@ export default imagesSlice.reducer;
 
 export type CreateRemoveImage = typeof createRemoveImage;
 
-export const selectImages = createSelector(getImages, ({ ids, entities }) =>
-  ids.map(id => entities[id]),
+export const selectImages = createSelector(
+  getImages,
+  ({ ids, entities }) => ids.map(id => entities[id]),
 );
 
 export const selectImageIds = createDeepSelector(getImages, ({ ids }) => ids);
@@ -138,3 +137,13 @@ export const selectImagesUploading = createSelector(
 );
 
 export type ImagesUploading = ReturnType<typeof selectImagesUploading>;
+
+export const selectImagesBeingVerified = createSelector(
+  selectImageEntities,
+  entities =>
+    Object.values(entities).some(
+      ({ verificationStatus }) => verificationStatus === 'in progress',
+    ),
+);
+
+export type ImagesBeingVerified = ReturnType<typeof selectImagesBeingVerified>;
