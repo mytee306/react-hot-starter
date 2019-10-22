@@ -177,7 +177,7 @@
     "rimraf": "^2.6.3",
     "serve": "^11.0.2",
     "surge": "^0.21.3",
-    "typescript": "^3.7.0-beta",
+    "typescript": "^3.5.1",
     "utility-types": "^3.7.0",
     "wait-on": "^3.2.0",
     "with-knobs": "^0.2.3"
