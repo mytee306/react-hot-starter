@@ -1,8 +1,9 @@
-import { LoadingStatus } from 'models';
+import { ExtendedLoadingStatus, LoadingStatus } from 'models';
 import { pick } from 'ramda';
-import { createAction, createSlice, PayloadAction } from 'redux-starter-kit';
+import { createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
+import { ActionType, createAction } from 'typesafe-actions';
 import { createDeepSelector, prefixActionType } from 'utils';
 import { v4 } from 'uuid';
 
@@ -14,7 +15,7 @@ export interface Image {
   dataUrl: string;
   name: string;
   uploadStatus: LoadingStatus;
-  verificationStatus: LoadingStatus;
+  verificationStatus: ExtendedLoadingStatus;
 }
 
 export interface Images {
@@ -30,12 +31,16 @@ export const createUpload = createAction(prefix('upload'));
 
 export type CreateUpload = typeof createUpload;
 
-export type CreateAddImage = SliceActionCreator<Image>;
+export const createAddImage = createAction(
+  'images/add' as string,
+  action => (image: Image) => action({ ...image, id: v4() }),
+);
+export type CreateAddImage = typeof createAddImage;
 
-export type AddImage = ReturnType<CreateAddImage>;
+export type AddImageAction = ActionType<CreateAddImage>;
 
 export type UpdateProgress = PayloadAction<{
-  id: string;
+  id: ImageWithId['id'];
   uploadStatus: Image['uploadStatus'];
 }>;
 
@@ -43,20 +48,23 @@ export type CreateSetImages = SliceActionCreator<File[]>;
 
 export type SetImages = ReturnType<CreateSetImages>;
 
-export type RemoveImageAction = PayloadAction<Images['ids'][0]>;
+export type RemoveImageAction = PayloadAction<ImageWithId['id']>;
+
+export type UpdateOneImageAction = PayloadAction<
+  Partial<Omit<ImageWithId, 'id'>> & Pick<ImageWithId, 'id'>
+>;
 
 const imagesSlice = createSlice({
   slice: imagesSliceName,
   initialState: initialImages,
   reducers: {
-    add: ({ ids, entities }, { payload: image }: AddImage) => {
-      const id = v4();
-
-      return {
-        ids: ids.concat(id),
-        entities: { ...entities, [id]: image },
-      };
-    },
+    add: (
+      { ids, entities },
+      { payload: { id, ...image } }: AddImageAction,
+    ) => ({
+      ids: ids.concat(id),
+      entities: { ...entities, [id]: image },
+    }),
     updateProgress: (
       { ids, entities },
       { payload: { id, uploadStatus } }: UpdateProgress,
@@ -87,15 +95,25 @@ const imagesSlice = createSlice({
         entities: pick(newIds, entities),
       };
     },
+    updateOne: (
+      { ids, entities },
+      { payload: image }: UpdateOneImageAction,
+    ) => ({
+      ids,
+      entities: {
+        ...entities,
+        [image.id]: { ...entities[image.id], ...image },
+      },
+    }),
   },
 });
 
 export const {
   actions: {
-    add: createAddImage,
     updateProgress: createUpdateProgress,
     set: createSetImages,
     remove: createRemoveImage,
+    updateOne: createUpdateOneImage,
   },
   selectors: { getImages },
 } = imagesSlice;
@@ -116,11 +134,11 @@ export const selectImageEntities = createSelector(
   ({ entities }) => entities,
 );
 
-export interface ImageWIthId extends Image {
+export interface ImageWithId extends Image {
   id: Images['ids'][0];
 }
 
-export type ImagesWIthId = ImageWIthId[];
+export type ImagesWithId = ImageWithId[];
 
 export const selectImagesWithIds = createSelector(
   selectImageIds,

@@ -24,8 +24,7 @@ import {
   createUpload,
   Image,
   ImagesUploading,
-  ImagesWIthId,
-  ImageWIthId,
+  ImagesWithId,
   selectDictionary,
   selectImagesBeingVerified,
   selectImagesUploading,
@@ -81,7 +80,7 @@ export const ImageComponent = React.forwardRef<HTMLImageElement, ImageProps>(
 export interface UploadProps {
   addImage: CreateAddImage;
   upload: CreateUpload;
-  images: ImagesWIthId;
+  images: ImagesWithId;
   uploading: ImagesUploading;
   removeImage: CreateRemoveImage;
 }
@@ -100,10 +99,6 @@ const Upload: FC<UploadProps> = ({
   const dict = useSelector(selectDictionary);
 
   const imagesBeingVerified = useSelector(selectImagesBeingVerified);
-
-  const imagesRefs = React.useRef<
-    Record<ImageWIthId['id'], HTMLImageElement | null>
-  >({});
 
   const appropriate = false;
 
@@ -131,7 +126,7 @@ const Upload: FC<UploadProps> = ({
                   name,
                   dataUrl: reader.result as string,
                   uploadStatus: 'not started',
-                  verificationStatus: 'not started',
+                  verificationStatus: 'in progress',
                 });
               };
             });
@@ -209,9 +204,6 @@ const Upload: FC<UploadProps> = ({
               </ListItem>
               <br />
               <ImageComponent
-                ref={ref => {
-                  imagesRefs.current[id] = ref;
-                }}
                 dataUrl={dataUrl}
                 name={name}
                 boxShadow={theme.shadows[1]}
