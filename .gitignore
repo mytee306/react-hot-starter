@@ -24,3 +24,7 @@ yarn-error.log*
 .out
 
 dist
+
+.env.production
+.env.development
+.env.test
