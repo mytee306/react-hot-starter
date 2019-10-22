@@ -16,7 +16,7 @@ import {
   createSignin,
   createSignout,
   SetAuthErrorAction,
-  User,
+  setAuthErrorType,
 } from '../slices';
 
 const authState$: Epic = action$ =>
@@ -46,7 +46,7 @@ const signIn: Epic = action$ =>
 const userUpdated: Epic = action$ =>
   action$.pipe(
     mapAuthStateChangeToUser,
-    filter<User>(Boolean),
+    filter<any>(Boolean),
     map(createSetUser),
   );
 
@@ -67,7 +67,7 @@ const signOut: Epic = action$ =>
 
 const authError: Epic = action$ =>
   action$.pipe(
-    ofType<SetAuthErrorAction>(createSetAuthError.toString()),
+    ofType<SetAuthErrorAction>(setAuthErrorType),
     map(({ payload }) => payload),
     map(message => createSetErrorSnackbar({ message })),
   );

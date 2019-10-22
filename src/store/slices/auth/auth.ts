@@ -1,9 +1,7 @@
 import { User as FirebaseUser, UserInfo } from 'firebase/app';
 import { combineReducers } from 'redux';
-import { createAction, createReducer } from 'redux-starter-kit';
-import { prefixActionType } from 'utils';
-
-const prefix = prefixActionType('auth');
+import { createReducer } from 'redux-starter-kit';
+import { createAction } from 'typesafe-actions';
 
 export type User = Omit<UserInfo, 'providerId'>;
 
@@ -21,48 +19,63 @@ export const initialUser: User = {
   phoneNumber: '541-012-3456',
 };
 
-export const createSignin = createAction(prefix('signin'));
-
+export const signinType = 'auth/signin';
+export const createSignin = createAction(signinType);
 export type CreateSignin = typeof createSignin;
+export type SigninAction = ReturnType<CreateSignin>;
 
-export const createSignout = createAction(prefix('signout'));
+export const signoutType = 'auth/signout';
+export const createSignout = createAction(signoutType);
+export type CreateSignout = typeof createSignout;
+export type SignoutAction = ReturnType<CreateSignout>;
 
-const prefixWithAuthState = prefixActionType(prefix('state'));
+export const getAuthStateType = 'auth/state/get';
+export const createGetAuthState = createAction(getAuthStateType);
+export type CreateGetAuthState = typeof createGetAuthState;
+export type GetAuthStateAction = ReturnType<CreateGetAuthState>;
 
-export const createGetAuthState = createAction(prefixWithAuthState('get'));
+export const authStateChangeType = 'auth/state/change';
+export const createAuthStateChange = createAction(
+  authStateChangeType,
+  action => (user: FirebaseUser) =>
+    action(user ? (user.toJSON() as User) : null),
+);
+export type CreateAuthStateChange = typeof createAuthStateChange;
+export type AuthStateChangeAction = ReturnType<CreateAuthStateChange>;
 
-export const authStateChangeType = prefixWithAuthState('change');
-
-export const createAuthStateChange = (user: FirebaseUser) =>
-  createAction(authStateChangeType)(user ? (user.toJSON() as User) : null);
-
-export type AuthStateChangeAction = ReturnType<typeof createAuthStateChange>;
-
-export const createSetUser = createAction<User>(prefix('set'));
-
-export type SetUserAction = ReturnType<typeof createSetUser>;
+export const setUserType = 'auth/set';
+export const createSetUser = createAction(
+  setUserType,
+  action => (payload: User) => action(payload),
+);
+export type CreateSetUser = typeof createSetUser;
+export type SetUserAction = ReturnType<CreateSetUser>;
 
 export const user = createReducer(initialUser, {
-  [createSetUser.toString()]: (_, { payload }: SetUserAction) => payload,
+  [setUserType]: (_, { payload }: SetUserAction) => payload,
 });
 
-export const createSetAuthError = createAction<string>(prefix('error'));
-
-export type SetAuthErrorAction = ReturnType<typeof createSetAuthError>;
+export const setAuthErrorType = 'auth/error';
+export const createSetAuthError = createAction(
+  setAuthErrorType,
+  action => (payload: string) => action(payload),
+);
+export type CreateSetAuthError = typeof createSetAuthError;
+export type SetAuthErrorAction = ReturnType<CreateSetAuthError>;
 
 export const error = createReducer<AuthState['error'], SetAuthErrorAction>('', {
-  [createSetAuthError.toString()]: (_, { payload }) => payload,
+  [setAuthErrorType]: (_, { payload }) => payload,
 });
 
 const setToTrue = () => true;
 const setToFalse = () => false;
 
 export const isLoading = createReducer<AuthState['loading']>(false, {
-  [createGetAuthState.toString()]: setToTrue,
-  [createSignin.toString()]: setToTrue,
-  [createSignout.toString()]: setToTrue,
-  [createSetUser.toString()]: setToFalse,
-  [createSetAuthError.toString()]: setToFalse,
+  [getAuthStateType]: setToTrue,
+  [signinType]: setToTrue,
+  [signoutType]: setToTrue,
+  [setUserType]: setToFalse,
+  [setAuthErrorType]: setToFalse,
 });
 
 export default combineReducers({
@@ -70,3 +83,11 @@ export default combineReducers({
   error,
   user,
 });
+
+export type AuthAction =
+  | SigninAction
+  | SignoutAction
+  | GetAuthStateAction
+  | AuthStateChangeAction
+  | SetUserAction
+  | SetAuthErrorAction;
