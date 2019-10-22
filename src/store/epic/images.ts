@@ -1,7 +1,6 @@
 import 'firebase/storage';
 import firebase from 'my-firebase';
 import { Epic, ofType } from 'redux-observable';
-import { PayloadAction } from 'redux-starter-kit';
 import { putString } from 'rxfire/storage';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
@@ -18,7 +17,6 @@ import {
   createUpload,
   imagesSliceName,
   selectImageEntities,
-  UpdateOneImageAction,
 } from '../slices';
 
 const upload: Epic = (action$, state$) =>
@@ -47,13 +45,8 @@ const upload: Epic = (action$, state$) =>
     ),
   );
 
-// TODO strong type State and in-out Actions
-const verifyImage: Epic<
-  PayloadAction,
-  UpdateOneImageAction,
-  PayloadAction,
-  EpicDependencies
-> = (action$, _, { mobilenet$ }) =>
+// TODO strong type Epic
+const verifyImage: Epic = (action$, _, { mobilenet$ }: EpicDependencies) =>
   action$.pipe(
     ofType<AddImageAction>(createAddImage.toString()),
     map(({ payload }) => payload),
