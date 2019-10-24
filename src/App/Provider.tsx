@@ -1,6 +1,6 @@
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
-import React, { SFC } from 'react';
+import React, { FC } from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'store';
@@ -19,10 +19,12 @@ const store = configureStore();
 
 export interface ProviderProps {}
 
-const Provider: SFC<ProviderProps> = ({ children }) => (
+const Provider: FC<ProviderProps> = ({ children }) => (
+  // <StrictMode>
   <Router>
     <StoreProvider store={store}>{children}</StoreProvider>
   </Router>
+  // </StrictMode>
 );
 
 export default Provider;
