@@ -1,16 +1,9 @@
-import {
-  createAction,
-  createSlice,
-  PayloadAction,
-  Reducer,
-} from 'redux-starter-kit';
+import { createSlice, PayloadAction, Reducer } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
-import { prefixActionType } from 'utils';
+import { createAction } from 'typesafe-actions';
 
 export const countSliceName = 'count';
-
-const prefix = prefixActionType(countSliceName);
 
 export const initialCountState = {
   value: 0,
@@ -19,7 +12,10 @@ export const initialCountState = {
 
 export type CountState = typeof initialCountState;
 
-export const createUpdateCount = createAction(prefix('update'));
+export const updateCountType = 'count/update';
+export const createUpdateCount = createAction(updateCountType);
+export type CreateUpdateCount = typeof createUpdateCount;
+export type UpdateCountAction = ReturnType<CreateUpdateCount>;
 
 export type CreateDecrementBy = SliceActionCreator<CountState['value']>;
 

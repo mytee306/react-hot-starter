@@ -1,18 +1,19 @@
 import { PaletteType } from '@material-ui/core';
-import { createAction, createReducer } from 'redux-starter-kit';
-import { prefixActionType } from 'utils';
+import { createReducer } from 'redux-starter-kit';
+import { createAction } from 'typesafe-actions';
 
-const prefixWithSlice = prefixActionType(
-  prefixActionType('theme')(prefixActionType('palette')('type')),
+export const setTypeType = 'theme/palette/type/set';
+export const createSetType = createAction(
+  setTypeType,
+  action => (payload: PaletteType) => action(payload),
 );
+export type CreateSetType = typeof createSetType;
+export type SetTypeAction = ReturnType<CreateSetType>;
 
-export const createSetType = createAction<PaletteType>(prefixWithSlice('set'));
-
-export type CreateSetTypeAction = typeof createSetType;
-
-export type SetTypeAction = ReturnType<typeof createSetType>;
-
-export const createToggleType = createAction(prefixWithSlice('toggle'));
+export const toggleTypeType = 'theme/palette/type/toggle';
+export const createToggleType = createAction(toggleTypeType);
+export type CreateToggleType = typeof createToggleType;
+export type ToggleTypeAction = ReturnType<CreateToggleType>;
 
 export default createReducer<PaletteType, SetTypeAction>('light', {
   [createSetType.toString()]: (_, { payload }) => payload,

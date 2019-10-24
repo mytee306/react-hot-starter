@@ -3,13 +3,11 @@ import { pick } from 'ramda';
 import { createSlice, PayloadAction } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { createSelector } from 'reselect';
-import { ActionType, createAction } from 'typesafe-actions';
-import { createDeepSelector, prefixActionType } from 'utils';
+import { createAction } from 'typesafe-actions';
+import { createDeepSelector } from 'utils';
 import { v4 } from 'uuid';
 
 export const imagesSliceName = 'images';
-
-const prefix = prefixActionType(imagesSliceName);
 
 export interface Image {
   dataUrl: string;
@@ -27,9 +25,10 @@ export interface Images {
 
 export const initialImages: Images = { ids: [], entities: {} };
 
-export const createUpload = createAction(prefix('upload'));
-
+export const uploadType = 'images/upload';
+export const createUpload = createAction(uploadType);
 export type CreateUpload = typeof createUpload;
+export type UploadAction = ReturnType<CreateUpload>;
 
 export const createAddImage = createAction(
   'images/add' as string,
@@ -37,7 +36,7 @@ export const createAddImage = createAction(
 );
 export type CreateAddImage = typeof createAddImage;
 
-export type AddImageAction = ActionType<CreateAddImage>;
+export type AddImageAction = ReturnType<CreateAddImage>;
 
 export type UpdateProgress = PayloadAction<{
   id: ImageWithId['id'];

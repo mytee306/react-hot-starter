@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { createAction } from 'redux-starter-kit';
 import { createSelector } from 'reselect';
+import { createAction } from 'typesafe-actions';
 import { createDeepSelector } from 'utils';
 import { auth, count, images, lang, router, snackbar, theme } from './slices';
 
@@ -18,7 +18,15 @@ export type State = ReturnType<typeof reducer>;
 
 export type Reducer = typeof reducer;
 
-export const createReset = createAction('RESET');
+export const resetType = 'RESET';
+export const createReset = createAction(resetType);
+export type CreateReset = typeof createReset;
+export type ResetAction = ReturnType<CreateReset>;
+
+export const testType = 'TEST';
+export const createTest = createAction(testType);
+export type CreateTest = typeof createTest;
+export type TestAction = ReturnType<CreateTest>;
 
 const reducerWithReset: Reducer = (state, action) =>
   action.type === createReset.toString()
@@ -27,7 +35,7 @@ const reducerWithReset: Reducer = (state, action) =>
 
 export default reducerWithReset;
 
-export const initialState = reducer(undefined, { type: 'TEST' });
+export const initialState = reducer(undefined, createTest());
 
 export const selectTheme = (state: State) => state.theme;
 
