@@ -16,6 +16,6 @@ export type CreateToggleType = typeof createToggleType;
 export type ToggleTypeAction = ReturnType<CreateToggleType>;
 
 export default createReducer<PaletteType, SetTypeAction>('light', {
-  [createSetType.toString()]: (_, { payload }) => payload,
-  [createToggleType.toString()]: type => (type === 'light' ? 'dark' : 'light'),
+  [setTypeType]: (_, { payload }) => payload,
+  [toggleTypeType]: type => (type === 'light' ? 'dark' : 'light'),
 });

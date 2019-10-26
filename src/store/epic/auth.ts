@@ -9,19 +9,19 @@ import {
   AuthStateChangeAction,
   authStateChangeType,
   createAuthStateChange,
-  createGetAuthState,
   createSetAuthError,
   createSetErrorSnackbar,
   createSetUser,
-  createSignin,
-  createSignout,
+  getAuthStateType,
   SetAuthErrorAction,
   setAuthErrorType,
+  signinType,
+  signoutType,
 } from '../slices';
 
 const authState$: Epic = action$ =>
   action$.pipe(
-    ofType(createGetAuthState.toString()),
+    ofType(getAuthStateType),
     switchMap(() => authState(auth())),
     map(createAuthStateChange),
   );
@@ -33,7 +33,7 @@ const mapAuthStateChangeToUser = pipe(
 
 const signIn: Epic = action$ =>
   action$.pipe(
-    ofType(createSignin.toString()),
+    ofType(signinType),
     switchMap(() => {
       const provider = new auth.GoogleAuthProvider();
 
@@ -59,7 +59,7 @@ const signedOut: Epic = action$ =>
 
 const signOut: Epic = action$ =>
   action$.pipe(
-    ofType(createSignout.toString()),
+    ofType(signoutType),
     switchMap(() => auth().signOut()),
     mergeMapTo(empty()),
     catchError(({ message }) => of(createSetAuthError(message))),
