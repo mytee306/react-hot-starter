@@ -35,8 +35,10 @@ const Count: FC<CountProps> = ({
   getCount,
 }) => {
   useEffect(() => {
-    getCount();
-  }, [getCount]);
+    if (!value) {
+      getCount();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const dict = useSelector(selectDictionary);
 
