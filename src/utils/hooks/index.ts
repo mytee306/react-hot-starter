@@ -1,7 +1,13 @@
+/* eslint-disable indent */
+
 import { useMediaQuery, useTheme } from '@material-ui/core';
 import { equals } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {
+  ActionCreator,
+  ActionCreatorsMapObject,
+  bindActionCreators,
+} from 'redux';
 
 export const useIsNotSmallScreen = () => {
   const theme = useTheme();
@@ -16,9 +22,14 @@ export const useDeepSelector = <S extends Parameters<typeof useSelector>[0]>(
 ) => useSelector(selector, equals);
 
 export const useActions = <
-  Actions extends Parameters<typeof bindActionCreators>[0]
->(actions: Actions) => {
+  Actions extends ActionCreator<any> | ActionCreatorsMapObject<any>
+>(
+  actions: Actions,
+) => {
   const dispatch = useDispatch();
 
-  return bindActionCreators(actions, dispatch);
+  return bindActionCreators(
+    actions as Parameters<typeof bindActionCreators>[0],
+    dispatch,
+  );
 };

@@ -9,9 +9,7 @@ import Link from './Link';
 export interface NotFoundProps {}
 
 const NotFound: React.FC<NotFoundProps> = () => {
-  const { togglePageFound } = useActions({
-    togglePageFound: createTogglePageFound,
-  });
+  const { togglePageFound } = useActions(createTogglePageFound);
 
   useEffect(() => {
     togglePageFound();
