@@ -12,16 +12,16 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import { selectCountValue } from 'store/selectors';
+import { getType } from 'typesafe-actions';
 import { selectState, takeUntilSignedOut } from 'utils/operators';
 import { selectUid, State } from '../reducer';
 import {
-  countGetRequest,
-  countIncrementRequest,
-  countSetRequest,
   CountState,
-  createSetCountAsync,
   createSetErrorSnackbar,
+  getCountAsync,
+  incrementCountAsync,
   initialCountState,
+  setCountAsync,
 } from '../slices';
 
 const countsCollection = firebase.firestore().collection('counts');
@@ -36,7 +36,7 @@ const setCount = (state$: StateObservable<State>) =>
 
 const getCount: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(countGetRequest),
+    ofType(getType(getCountAsync.request)),
     selectState(selectUid)(state$),
     map(uid => countsCollection.doc(uid)),
     switchMap(doc =>
@@ -45,13 +45,13 @@ const getCount: Epic = (action$, state$) =>
       ),
     ),
     map(({ value }) => (isNil(value) ? initialCountState.value : value)),
-    map(createSetCountAsync.success),
+    map(setCountAsync.success),
     catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
   );
 
 const increment: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(countIncrementRequest),
+    ofType(getType(incrementCountAsync.request)),
     selectState(selectCountValue)(state$),
     map(inc),
     setCount(state$),
@@ -59,7 +59,7 @@ const increment: Epic = (action$, state$) =>
 
 const decrementBy: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(countSetRequest),
+    ofType(getType(setCountAsync.request)),
     map(({ payload }) => payload),
     withLatestFrom(state$.pipe(map(selectCountValue))),
     map(([amount, value]) => value - amount),

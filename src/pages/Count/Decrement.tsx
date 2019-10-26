@@ -2,10 +2,10 @@ import { Slider } from '@material-ui/lab';
 import { Button } from 'components';
 import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CountState, createSetCountAsync, selectDictionary } from 'store';
+import { CountState, selectDictionary, setCountAsync } from 'store';
 
 export interface DecrementProps {
-  decrementBy: typeof createSetCountAsync.request;
+  decrementBy: typeof setCountAsync.request;
   isLoading: CountState['isLoading'];
 }
 
