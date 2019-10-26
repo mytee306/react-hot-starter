@@ -14,6 +14,7 @@ import {
   SnackbarState,
   State,
   Variant,
+  variants,
 } from 'store';
 import IconButton from './IconButton';
 
@@ -49,24 +50,45 @@ const useStyles = makeStyles(theme => ({
 const Snackbar: FC<SnackbarProps> = ({ open, closeSnackbar, queue }) => {
   const classes = useStyles();
 
-  const [{ duration, message, variant }] = queue;
+  const [
+    { duration = 5000, message, variant } = {
+      duration: 0,
+      message: '',
+      variant: variants[0],
+    },
+  ] = queue;
+
+  const [timeOut, setTimeOut] = React.useState(0);
+  const [timestamp, setTimestamp] = React.useState(0);
+  const [difference, setDifference] = React.useState(0);
 
   useEffect(() => {
-    if (duration) {
-      const timeout = setTimeout(() => {
+    if (queue.length) {
+      setTimestamp(Date.now());
+
+      const newTimeOut = setTimeout(() => {
         closeSnackbar();
       }, duration);
 
-      return () => {
-        clearTimeout(timeout);
-      };
-    } else {
-      return () => {};
+      setTimeOut(newTimeOut);
     }
-  });
+  }, [queue.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <MaterialSnackbar open={open}>
+    <MaterialSnackbar
+      open={open}
+      onMouseEnter={() => {
+        clearTimeout(timeOut);
+
+        const newDifference = Date.now() - timestamp;
+        setDifference(newDifference);
+      }}
+      onMouseLeave={() => {
+        setTimeout(() => {
+          closeSnackbar();
+        }, difference);
+      }}
+    >
       <SnackbarContent
         message={message}
         className={classes[variant]}

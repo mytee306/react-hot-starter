@@ -1,4 +1,4 @@
-import { drop, isEmpty } from 'ramda';
+import { drop } from 'ramda';
 import { createSlice } from 'redux-starter-kit';
 import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
 import { Optional } from 'utility-types';
@@ -72,14 +72,8 @@ export const createSetSuccessSnackbar = ({
 
 export const selectSnackbar = createDeepSelector(
   selectSnackbarState,
-  ({ queue }) => {
-    const isQueueEmpty = isEmpty(queue);
-
-    return {
-      queue: isQueueEmpty
-        ? queue.concat({ message: '', variant: 'default' })
-        : queue,
-      open: !isQueueEmpty,
-    };
-  },
+  ({ queue }) => ({
+    queue,
+    open: !!queue.length,
+  }),
 );
