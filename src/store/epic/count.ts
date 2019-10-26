@@ -11,6 +11,7 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs/operators';
+import { selectCountValue } from 'store/selectors';
 import { selectState, takeUntilSignedOut } from 'utils/operators';
 import { selectUid, State } from '../reducer';
 import {
@@ -21,7 +22,6 @@ import {
   createSetCount,
   createSetErrorSnackbar,
   initialCountState,
-  selectCountValue,
 } from '../slices';
 
 const countsCollection = firebase.firestore().collection('counts');

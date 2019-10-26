@@ -1,9 +1,4 @@
-import { createSlice, PayloadAction, Reducer } from 'redux-starter-kit';
-import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
-import { createSelector } from 'reselect';
 import { createAction } from 'typesafe-actions';
-
-export const countSliceName = 'count';
 
 export const initialCountState = {
   value: 0,
@@ -12,50 +7,52 @@ export const initialCountState = {
 
 export type CountState = typeof initialCountState;
 
-export const updateCountType = 'count/update';
-export const createUpdateCount = createAction(updateCountType);
-export type CreateUpdateCount = typeof createUpdateCount;
-export type UpdateCountAction = ReturnType<CreateUpdateCount>;
+export const getCountType = 'count/get';
+export const createGetCount = createAction(getCountType);
+export type CreateGetCount = typeof createGetCount;
+export type GetCountAction = ReturnType<CreateGetCount>;
 
-export type CreateDecrementBy = SliceActionCreator<CountState['value']>;
+export const setCountType = 'count/setCount';
+export const createSetCount = createAction(
+  setCountType,
+  action => (payload: CountState['value']) => action(payload),
+);
+export type CreateSetCount = typeof createSetCount;
+export type SetCountAction = ReturnType<CreateSetCount>;
 
+export const decrementByType = 'count/decrementBy';
+export const createDecrementBy = createAction(
+  decrementByType,
+  action => (payload: CountState['value']) => action(payload),
+);
+export type CreateDecrementBy = typeof createDecrementBy;
 export type DecrementByAction = ReturnType<CreateDecrementBy>;
 
-export type CreateSetCountAction = PayloadAction<CountState['value']>;
+export const incrementType = 'count/increment';
+export const createIncrement = createAction(incrementType);
+export type CreateIncrement = typeof createIncrement;
+export type IncrementAction = ReturnType<CreateIncrement>;
 
-const setLoading = (state: CountState) => ({ ...state, isLoading: true });
+export type CountAction =
+  | GetCountAction
+  | SetCountAction
+  | IncrementAction
+  | DecrementByAction;
 
-const countSlice = createSlice({
-  slice: countSliceName,
-  initialState: initialCountState,
-  reducers: {
-    get: state => ({ ...state, isLoading: true }),
-    set: (_, { payload }: CreateSetCountAction) => ({
-      value: payload,
-      isLoading: false,
-    }),
-    increment: setLoading,
-    decrementBy: setLoading as Reducer<CountState, DecrementByAction>,
-  },
-});
-
-export const {
-  actions: {
-    get: createGetCount,
-    set: createSetCount,
-    increment: createIncrement,
-    decrementBy: createDecrementBy,
-  },
-  selectors: { getCount: selectCount },
-} = countSlice;
-
-export default countSlice.reducer;
-
-export const selectCountValue = createSelector(
-  selectCount,
-  ({ value }) => value,
-);
-export const selectIsCountLoading = createSelector(
-  selectCount,
-  ({ isLoading }) => isLoading,
-);
+export default (state = initialCountState, action: CountAction) => {
+  switch (action.type) {
+    case getCountType:
+      return { ...state, isLoading: true };
+    case setCountType:
+      return {
+        value: action.payload,
+        isLoading: false,
+      };
+    case incrementType:
+      return { ...state, isLoading: true };
+    case decrementByType:
+      return { ...state, isLoading: true };
+    default:
+      return state;
+  }
+};
