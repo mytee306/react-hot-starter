@@ -20,7 +20,6 @@ import {
   createSetErrorSnackbar,
   getCountAsync,
   incrementCountAsync,
-  initialCountState,
   setCountAsync,
 } from '../slices';
 
@@ -44,9 +43,13 @@ const getCount: Epic = (action$, state$) =>
         takeUntilSignedOut(state$),
       ),
     ),
-    map(({ value }) => (isNil(value) ? initialCountState.value : value)),
-    map(setCountAsync.success),
-    catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
+    map(({ value }) => {
+      if (isNil(value)) {
+        return createSetErrorSnackbar({ message: 'Failed to fetch count.' });
+      } else {
+        return setCountAsync.success(value);
+      }
+    }),
   );
 
 const increment: Epic = (action$, state$) =>
