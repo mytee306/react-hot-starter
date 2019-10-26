@@ -51,8 +51,8 @@ export const createSetUser = createAction(
 export type CreateSetUser = typeof createSetUser;
 export type SetUserAction = ReturnType<CreateSetUser>;
 
-export const user = createReducer(initialUser, {
-  [setUserType]: (_, { payload }: SetUserAction) => payload,
+export const user = createReducer<User, SetUserAction>(initialUser, {
+  [setUserType]: (_, { payload }) => payload,
 });
 
 export const setAuthErrorType = 'auth/error';
@@ -70,7 +70,17 @@ export const error = createReducer<AuthState['error'], SetAuthErrorAction>('', {
 const setToTrue = () => true;
 const setToFalse = () => false;
 
-export const isLoading = createReducer<AuthState['loading']>(false, {
+type LoadingSettingAction =
+  | GetAuthStateAction
+  | SigninAction
+  | SignoutAction
+  | SetUserAction
+  | SetAuthErrorAction;
+
+export const isLoading = createReducer<
+  AuthState['loading'],
+  LoadingSettingAction
+>(false, {
   [getAuthStateType]: setToTrue,
   [signinType]: setToTrue,
   [signoutType]: setToTrue,
@@ -84,10 +94,4 @@ export default combineReducers({
   user,
 });
 
-export type AuthAction =
-  | SigninAction
-  | SignoutAction
-  | GetAuthStateAction
-  | AuthStateChangeAction
-  | SetUserAction
-  | SetAuthErrorAction;
+export type AuthAction = LoadingSettingAction | AuthStateChangeAction;
