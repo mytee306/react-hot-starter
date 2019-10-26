@@ -15,11 +15,11 @@ import { selectCountValue } from 'store/selectors';
 import { selectState, takeUntilSignedOut } from 'utils/operators';
 import { selectUid, State } from '../reducer';
 import {
+  countGetRequest,
+  countIncrementRequest,
+  countSetRequest,
   CountState,
-  createDecrementBy,
-  createGetCount,
-  createIncrement,
-  createSetCount,
+  createSetCountAsync,
   createSetErrorSnackbar,
   initialCountState,
 } from '../slices';
@@ -36,7 +36,7 @@ const setCount = (state$: StateObservable<State>) =>
 
 const getCount: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(createGetCount.toString()),
+    ofType(countGetRequest),
     selectState(selectUid)(state$),
     map(uid => countsCollection.doc(uid)),
     switchMap(doc =>
@@ -45,13 +45,13 @@ const getCount: Epic = (action$, state$) =>
       ),
     ),
     map(({ value }) => (isNil(value) ? initialCountState.value : value)),
-    map(createSetCount),
+    map(createSetCountAsync.success),
     catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
   );
 
 const increment: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(createIncrement.toString()),
+    ofType(countIncrementRequest),
     selectState(selectCountValue)(state$),
     map(inc),
     setCount(state$),
@@ -59,7 +59,7 @@ const increment: Epic = (action$, state$) =>
 
 const decrementBy: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(createDecrementBy.toString()),
+    ofType(countSetRequest),
     map(({ payload }) => payload),
     withLatestFrom(state$.pipe(map(selectCountValue))),
     map(([amount, value]) => value - amount),

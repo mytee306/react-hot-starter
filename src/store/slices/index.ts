@@ -1,7 +1,6 @@
 export * from './auth';
 export { default as auth } from './auth';
 export * from './count';
-export { default as count } from './count';
 export * from './images';
 export { default as images } from './images';
 export * from './lang';

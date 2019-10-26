@@ -1,57 +1,63 @@
-import { createAction } from 'typesafe-actions';
+import { Reducer } from 'redux';
+import { ActionType, createAsyncAction } from 'typesafe-actions';
 
 export const initialCountState = {
   value: 0,
   isLoading: false,
+  error: '',
 };
 
 export type CountState = typeof initialCountState;
 
-export const getCountType = 'count/get';
-export const createGetCount = createAction(getCountType);
-export type CreateGetCount = typeof createGetCount;
-export type GetCountAction = ReturnType<CreateGetCount>;
+export const countGetRequest = 'count/get/request';
+export const countGetSuccess = 'count/get/success';
+export const countGetFailure = 'count/get/failure';
+export const createGetCountAsync = createAsyncAction(
+  countGetRequest,
+  countGetSuccess,
+  countGetFailure,
+)<void, CountState['value'], CountState['error']>();
+export type CountGetAsync = ActionType<typeof createGetCountAsync>;
 
-export const setCountType = 'count/setCount';
-export const createSetCount = createAction(
-  setCountType,
-  action => (payload: CountState['value']) => action(payload),
-);
-export type CreateSetCount = typeof createSetCount;
-export type SetCountAction = ReturnType<CreateSetCount>;
+export const countSetRequest = 'count/set/request';
+export const countSetSuccess = 'count/set/success';
+export const countSetFailure = 'count/set/failure';
+export const createSetCountAsync = createAsyncAction(
+  countSetRequest,
+  countSetSuccess,
+  countSetFailure,
+)<CountState['value'], CountState['value'], CountState['error']>();
+export type CountSetAsync = ActionType<typeof createSetCountAsync>;
 
-export const decrementByType = 'count/decrementBy';
-export const createDecrementBy = createAction(
-  decrementByType,
-  action => (payload: CountState['value']) => action(payload),
-);
-export type CreateDecrementBy = typeof createDecrementBy;
-export type DecrementByAction = ReturnType<CreateDecrementBy>;
+export const countIncrementRequest = 'count/increment/request';
+export const createIncrementCountAsync = createAsyncAction(
+  countIncrementRequest,
+  countSetSuccess,
+  countSetFailure,
+)<void, CountState['value'], CountState['error']>();
+export type CountIncrementAsync = ActionType<typeof createIncrementCountAsync>;
 
-export const incrementType = 'count/increment';
-export const createIncrement = createAction(incrementType);
-export type CreateIncrement = typeof createIncrement;
-export type IncrementAction = ReturnType<CreateIncrement>;
+export type CountAction = CountGetAsync | CountSetAsync | CountIncrementAsync;
 
-export type CountAction =
-  | GetCountAction
-  | SetCountAction
-  | IncrementAction
-  | DecrementByAction;
-
-export default (state = initialCountState, action: CountAction) => {
+export const count: Reducer<CountState, CountAction> = (
+  state = initialCountState,
+  action,
+) => {
   switch (action.type) {
-    case getCountType:
+    case countGetRequest:
+    case countSetRequest:
+    case countIncrementRequest:
       return { ...state, isLoading: true };
-    case setCountType:
+    case countGetSuccess:
+    case countSetSuccess:
       return {
+        ...state,
         value: action.payload,
         isLoading: false,
       };
-    case incrementType:
-      return { ...state, isLoading: true };
-    case decrementByType:
-      return { ...state, isLoading: true };
+    case countGetFailure:
+    case countSetFailure:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

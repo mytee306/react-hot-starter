@@ -6,10 +6,9 @@ import { connect, useSelector } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import {
   CountState,
-  createDecrementBy,
-  CreateDecrementBy,
-  createGetCount,
-  createIncrement,
+  createGetCountAsync,
+  createIncrementCountAsync,
+  createSetCountAsync,
   selectCountValue,
   selectDictionary,
   selectIsCountLoading,
@@ -22,8 +21,8 @@ import Increment from './Increment';
 export interface CountProps extends RouteComponentProps {
   value: CountState['value'];
   isLoading: CountState['isLoading'];
-  increment: CreateSimpleAction;
-  decrementBy: CreateDecrementBy;
+  increment: typeof createIncrementCountAsync.request;
+  decrementBy: typeof createSetCountAsync.request;
   getCount: CreateSimpleAction;
 }
 
@@ -87,8 +86,8 @@ export default connect(
     isLoading: selectIsCountLoading(state),
   }),
   {
-    increment: createIncrement,
-    decrementBy: createDecrementBy,
-    getCount: createGetCount,
+    increment: createIncrementCountAsync.request,
+    decrementBy: createSetCountAsync.request,
+    getCount: createGetCountAsync.request,
   },
 )(Count);
