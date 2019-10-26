@@ -1,5 +1,5 @@
 import { PaletteType } from '@material-ui/core';
-import { createReducer } from 'redux-starter-kit';
+import { Reducer } from 'redux';
 import { createAction } from 'typesafe-actions';
 
 export const setTypeType = 'theme/palette/type/set';
@@ -15,7 +15,18 @@ export const createToggleType = createAction(toggleTypeType);
 export type CreateToggleType = typeof createToggleType;
 export type ToggleTypeAction = ReturnType<CreateToggleType>;
 
-export default createReducer<PaletteType, SetTypeAction>('light', {
-  [setTypeType]: (_, { payload }) => payload,
-  [toggleTypeType]: type => (type === 'light' ? 'dark' : 'light'),
-});
+export type PaletteTypeAction = SetTypeAction | ToggleTypeAction;
+
+export const type: Reducer<PaletteType, PaletteTypeAction> = (
+  state = 'light',
+  action,
+) => {
+  switch (action.type) {
+    case setTypeType:
+      return action.payload;
+    case toggleTypeType:
+      return state === 'light' ? 'dark' : 'light';
+    default:
+      return state;
+  }
+};
