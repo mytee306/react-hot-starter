@@ -5,36 +5,19 @@ import { createDeepSelector } from 'utils';
 import {
   auth,
   AuthAction,
-  AuthState,
   count,
   CountAction,
-  CountState,
   images,
   ImagesAction,
-  ImagesState,
   lang,
   LangAction,
-  LangState,
   router,
   RouterAction,
-  RouterState,
   snackbar,
   SnackbarAction,
-  SnackbarState,
   theme,
   ThemeAction,
-  ThemeState,
 } from './slices';
-
-export interface State {
-  count: CountState;
-  theme: ThemeState;
-  auth: AuthState;
-  snackbar: SnackbarState;
-  images: ImagesState;
-  router: RouterState;
-  lang: LangState;
-}
 
 export type Action =
   | CountAction
@@ -45,7 +28,7 @@ export type Action =
   | RouterAction
   | LangAction;
 
-const reducer = combineReducers<State>({
+const reducer = combineReducers({
   count,
   theme,
   auth,
@@ -56,6 +39,8 @@ const reducer = combineReducers<State>({
 });
 
 export type Reducer = typeof reducer;
+
+export type State = ReturnType<Reducer>;
 
 export const resetType = 'RESET';
 export const createReset = createAction(resetType);
