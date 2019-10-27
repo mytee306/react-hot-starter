@@ -25,8 +25,8 @@ export type CountSetAsync = ActionType<typeof setCountAsync>;
 
 export const incrementCountAsync = createAsyncAction(
   'count/increment/request',
-  'count/set/success',
-  'count/set/failure',
+  'count/increment/success',
+  'count/increment/failure',
 )<void, CountState['value'], CountState['error']>();
 export type CountIncrementAsync = ActionType<typeof incrementCountAsync>;
 
@@ -43,6 +43,7 @@ export const count: Reducer<CountState, CountAction> = (
       return { ...state, isLoading: true };
     case getType(getCountAsync.success):
     case getType(setCountAsync.success):
+    case getType(incrementCountAsync.success):
       return {
         ...state,
         value: action.payload,
@@ -50,7 +51,8 @@ export const count: Reducer<CountState, CountAction> = (
       };
     case getType(getCountAsync.failure):
     case getType(setCountAsync.failure):
-      return { ...state, error: action.payload };
+    case getType(incrementCountAsync.failure):
+      return { ...state, isLoading: false, error: action.payload };
     default:
       return state;
   }
