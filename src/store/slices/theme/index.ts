@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import palette, { PaletteAction, PaletteState } from './palette';
 
-export default combineReducers({
+export const theme = combineReducers({
   palette,
 });
 

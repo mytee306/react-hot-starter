@@ -1,6 +1,5 @@
-import { createSlice } from 'redux-starter-kit';
-import { SliceActionCreator } from 'redux-starter-kit/src/createSlice';
-import { createSelector } from 'reselect';
+import { Reducer } from 'redux';
+import { createAction, getType } from 'typesafe-actions';
 
 export type Lang = 'en' | 'de';
 
@@ -104,35 +103,23 @@ const initialState: LangState = {
   },
 };
 
-export type CreateSetLang = SliceActionCreator<Lang>;
+export const createSetLang = createAction(
+  'lang/set',
+  action => (payload: Lang) => action(payload),
+);
+export type CreateSetLang = typeof createSetLang;
 export type SetLangAction = ReturnType<CreateSetLang>;
 
-const langSlice = createSlice({
-  slice: 'lang',
-  initialState,
-  reducers: {
-    set: (langState, { payload: newLang }: SetLangAction) => ({
-      ...langState,
-      lang: newLang,
-    }),
-  },
-});
-
-export default langSlice.reducer;
+export const lang: Reducer<LangState, LangAction> = (
+  state = initialState,
+  action,
+) => {
+  switch (action.type) {
+    case getType(createSetLang):
+      return { ...state, lang: action.payload };
+    default:
+      return state;
+  }
+};
 
 export type LangAction = SetLangAction;
-
-export const {
-  actions: { set: createSetLang },
-  selectors: { getLang: selectLangState },
-} = langSlice;
-
-export const selectLang = createSelector(
-  selectLangState,
-  ({ lang }) => lang,
-);
-
-export const selectDictionary = createSelector(
-  selectLangState,
-  ({ langs, lang }) => langs[lang],
-);

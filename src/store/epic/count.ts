@@ -14,7 +14,8 @@ import {
 import { selectCountValue } from 'store/selectors';
 import { getType } from 'typesafe-actions';
 import { selectState, takeUntilSignedOut } from 'utils/operators';
-import { selectUid, State } from '../reducer';
+import { State } from '../reducer';
+import { selectUid } from '../selectors';
 import {
   CountState,
   createSetErrorSnackbar,

@@ -1,6 +1,5 @@
 import { User as FirebaseUser, UserInfo } from 'firebase/app';
-import { combineReducers } from 'redux';
-import { createReducer } from 'redux-starter-kit';
+import { combineReducers, Reducer } from 'redux';
 import { createAction } from 'typesafe-actions';
 
 export type User = Omit<UserInfo, 'providerId'>;
@@ -51,9 +50,24 @@ export const createSetUser = createAction(
 export type CreateSetUser = typeof createSetUser;
 export type SetUserAction = ReturnType<CreateSetUser>;
 
-export const user = createReducer<User, SetUserAction>(initialUser, {
-  [setUserType]: (_, { payload }) => payload,
-});
+export type UserAction =
+  | SigninAction
+  | SignoutAction
+  | GetAuthStateAction
+  | AuthStateChangeAction
+  | SetUserAction;
+
+export const user: Reducer<User, SetUserAction> = (
+  state = initialUser,
+  action: SetUserAction,
+) => {
+  switch (action.type) {
+    case setUserType:
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 export const setAuthErrorType = 'auth/error';
 export const createSetAuthError = createAction(
@@ -63,12 +77,17 @@ export const createSetAuthError = createAction(
 export type CreateSetAuthError = typeof createSetAuthError;
 export type SetAuthErrorAction = ReturnType<CreateSetAuthError>;
 
-export const error = createReducer<AuthState['error'], SetAuthErrorAction>('', {
-  [setAuthErrorType]: (_, { payload }) => payload,
-});
-
-const setToTrue = () => true;
-const setToFalse = () => false;
+export const error: Reducer<AuthState['error'], SetAuthErrorAction> = (
+  state = '',
+  action,
+) => {
+  switch (action.type) {
+    case setAuthErrorType:
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 type LoadingSettingAction =
   | GetAuthStateAction
@@ -77,21 +96,27 @@ type LoadingSettingAction =
   | SetUserAction
   | SetAuthErrorAction;
 
-export const isLoading = createReducer<
+export const isLoading: Reducer<
   AuthState['isLoading'],
   LoadingSettingAction
->(false, {
-  [getAuthStateType]: setToTrue,
-  [signinType]: setToTrue,
-  [signoutType]: setToTrue,
-  [setUserType]: setToFalse,
-  [setAuthErrorType]: setToFalse,
-});
+> = (state = false, action) => {
+  switch (action.type) {
+    case getAuthStateType:
+    case signinType:
+    case signoutType:
+      return true;
+    case setUserType:
+    case setAuthErrorType:
+      return false;
+    default:
+      return state;
+  }
+};
 
-export default combineReducers({
+export const auth = combineReducers({
   isLoading,
   error,
   user,
 });
 
-export type AuthAction = LoadingSettingAction | AuthStateChangeAction;
+export type AuthAction = UserAction | SetAuthErrorAction | LoadingSettingAction;
