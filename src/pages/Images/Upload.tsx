@@ -100,7 +100,7 @@ const Upload: FC<UploadProps> = ({
 
   const imagesBeingVerified = useSelector(selectImagesBeingVerified);
 
-  const appropriate = false;
+  const appropriate = true;
 
   return (
     <form
@@ -124,7 +124,7 @@ const Upload: FC<UploadProps> = ({
               reader.onload = () => {
                 addImage({
                   name,
-                  dataUrl: reader.result as string,
+                  dataUrl: String(reader.result),
                   uploadStatus: 'not started',
                   verificationStatus: 'in progress',
                 });
