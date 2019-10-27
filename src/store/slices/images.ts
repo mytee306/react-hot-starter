@@ -45,7 +45,7 @@ export type UpdateProgress = PayloadAction<{
 
 export type CreateSetImages = SliceActionCreator<File[]>;
 
-export type SetImages = ReturnType<CreateSetImages>;
+export type SetImagesAction = ReturnType<CreateSetImages>;
 
 export type RemoveImageAction = PayloadAction<ImageWithId['id']>;
 
@@ -71,7 +71,7 @@ const imagesSlice = createSlice({
       ids,
       entities: { ...entities, [id]: { ...entities[id], uploadStatus } },
     }),
-    set: (_, { payload: images }: SetImages) => {
+    set: (_, { payload: images }: SetImagesAction) => {
       const ids = images.map(() => v4());
 
       return {
@@ -120,6 +120,13 @@ export const {
 export default imagesSlice.reducer;
 
 export type CreateRemoveImage = typeof createRemoveImage;
+
+export type ImagesAction =
+  | RemoveImageAction
+  | UploadAction
+  | AddImageAction
+  | UpdateOneImageAction
+  | SetImagesAction;
 
 export const selectImages = createSelector(
   getImages,

@@ -120,6 +120,8 @@ const langSlice = createSlice({
 
 export default langSlice.reducer;
 
+export type LangAction = SetLangAction;
+
 export const {
   actions: { set: createSetLang },
   selectors: { getLang: selectLangState },

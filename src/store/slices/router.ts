@@ -25,6 +25,11 @@ export const {
 
 export default routerSlice.reducer;
 
+export type CreateTogglePageFound = typeof createTogglePageFound;
+export type TogglePageFoundAction = ReturnType<CreateTogglePageFound>;
+
+export type RouterAction = TogglePageFoundAction;
+
 export const selectPageFound = createSelector(
   selectRouter,
   ({ pageFound }) => pageFound,

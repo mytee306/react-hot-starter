@@ -28,11 +28,9 @@ const initialState: SnackbarState = {
 };
 
 export type CreateSetSnackbar = SliceActionCreator<SnackbarConfig>;
-
 export type SetSnackbarAction = ReturnType<CreateSetSnackbar>;
 
 export type CreateResetSnackbar = SliceActionCreator<SnackbarState>;
-
 export type ResetSnackbarAction = ReturnType<CreateResetSnackbar>;
 
 const snackbarSlice = createSlice({
@@ -52,11 +50,19 @@ export const {
   selectors: { getSnackbar: selectSnackbarState },
 } = snackbarSlice;
 
-export default snackbarSlice.reducer;
-
 const {
   actions: { set },
 } = snackbarSlice;
+
+export default snackbarSlice.reducer;
+
+export type CreateCloseSnackbarAction = typeof createCloseSnackbar;
+export type CloseSnackbarAction = ReturnType<CreateCloseSnackbarAction>;
+
+export type SnackbarAction =
+  | SetSnackbarAction
+  | ResetSnackbarAction
+  | CloseSnackbarAction;
 
 export const createSetSnackbar = ({
   variant = 'default',
