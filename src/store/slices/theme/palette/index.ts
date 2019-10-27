@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { type } from './type';
+import { PaletteTypeAction, type } from './type';
 
 export default combineReducers({
   type,
 });
+
+export type PaletteAction = PaletteTypeAction;
 
 export * from './type';

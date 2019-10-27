@@ -2,7 +2,31 @@ import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
 import { createAction } from 'typesafe-actions';
 import { createDeepSelector } from 'utils';
-import { auth, count, images, lang, router, snackbar, theme } from './slices';
+import {
+  auth,
+  AuthAction,
+  count,
+  CountAction,
+  images,
+  ImagesAction,
+  lang,
+  LangAction,
+  router,
+  RouterAction,
+  snackbar,
+  SnackbarAction,
+  theme,
+  ThemeAction,
+} from './slices';
+
+export type Action =
+  | CountAction
+  | ThemeAction
+  | AuthAction
+  | SnackbarAction
+  | ImagesAction
+  | RouterAction
+  | LangAction;
 
 const reducer = combineReducers({
   count,
