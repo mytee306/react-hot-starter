@@ -16,14 +16,14 @@ export interface Image {
   verificationStatus: ExtendedLoadingStatus;
 }
 
-export interface Images {
+export interface ImagesState {
   ids: string[];
   entities: {
     [id: string]: Image;
   };
 }
 
-export const initialImages: Images = { ids: [], entities: {} };
+export const initialImages: ImagesState = { ids: [], entities: {} };
 
 export const uploadType = 'images/upload';
 export const createUpload = createAction(uploadType);
@@ -141,7 +141,7 @@ export const selectImageEntities = createSelector(
 );
 
 export interface ImageWithId extends Image {
-  id: Images['ids'][0];
+  id: ImagesState['ids'][0];
 }
 
 export type ImagesWithId = ImageWithId[];

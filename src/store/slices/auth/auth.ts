@@ -7,7 +7,7 @@ export type User = Omit<UserInfo, 'providerId'>;
 
 export interface AuthState {
   user: User;
-  loading: boolean;
+  isLoading: boolean;
   error: string;
 }
 
@@ -78,7 +78,7 @@ type LoadingSettingAction =
   | SetAuthErrorAction;
 
 export const isLoading = createReducer<
-  AuthState['loading'],
+  AuthState['isLoading'],
   LoadingSettingAction
 >(false, {
   [getAuthStateType]: setToTrue,
