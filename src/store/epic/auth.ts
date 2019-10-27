@@ -4,7 +4,7 @@ import { Epic, ofType } from 'redux-observable';
 import { authState } from 'rxfire/auth';
 import { empty, of, pipe } from 'rxjs';
 import { catchError, filter, map, mergeMapTo, switchMap } from 'rxjs/operators';
-import { createReset } from '../reducer';
+import { Action, createReset, State } from '../reducer';
 import {
   AuthStateChangeAction,
   authStateChangeType,
@@ -15,11 +15,13 @@ import {
   getAuthStateType,
   SetAuthErrorAction,
   setAuthErrorType,
+  SetSnackbarAction,
+  SetUserAction,
   signinType,
   signoutType,
 } from '../slices';
 
-const authState$: Epic = action$ =>
+const authState$: Epic<Action, AuthStateChangeAction, State> = action$ =>
   action$.pipe(
     ofType(getAuthStateType),
     switchMap(() => authState(auth())),
@@ -27,11 +29,11 @@ const authState$: Epic = action$ =>
   );
 
 const mapAuthStateChangeToUser = pipe(
-  ofType<AuthStateChangeAction>(authStateChangeType),
+  ofType<Action, AuthStateChangeAction>(authStateChangeType),
   map(({ payload }) => payload),
 );
 
-const signIn: Epic = action$ =>
+const signIn: Epic<Action, SetAuthErrorAction, State> = action$ =>
   action$.pipe(
     ofType(signinType),
     switchMap(() => {
@@ -43,7 +45,7 @@ const signIn: Epic = action$ =>
     catchError(({ message }) => of(createSetAuthError(message))),
   );
 
-const userUpdated: Epic = action$ =>
+const userUpdated: Epic<Action, SetUserAction, State> = action$ =>
   action$.pipe(
     mapAuthStateChangeToUser,
     filter<any>(Boolean),
@@ -57,7 +59,7 @@ const signedOut: Epic = action$ =>
     map(() => createReset()),
   );
 
-const signOut: Epic = action$ =>
+const signOut: Epic<Action, SetAuthErrorAction, State> = action$ =>
   action$.pipe(
     ofType(signoutType),
     switchMap(() => auth().signOut()),
@@ -65,9 +67,9 @@ const signOut: Epic = action$ =>
     catchError(({ message }) => of(createSetAuthError(message))),
   );
 
-const authError: Epic = action$ =>
+const authError: Epic<Action, SetSnackbarAction, State> = action$ =>
   action$.pipe(
-    ofType<SetAuthErrorAction>(setAuthErrorType),
+    ofType<Action, SetAuthErrorAction>(setAuthErrorType),
     map(({ payload }) => payload),
     map(message => createSetErrorSnackbar({ message })),
   );

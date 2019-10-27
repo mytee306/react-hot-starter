@@ -8,6 +8,7 @@ import { EpicDependencies } from 'store/configureStore';
 import { getType } from 'typesafe-actions';
 import urlJoin from 'url-join';
 import { selectState } from 'utils/operators';
+import { Action, State } from '../reducer';
 import { selectImageEntities, selectUid } from '../selectors';
 import {
   AddImageAction,
@@ -16,9 +17,15 @@ import {
   createUpdateOneImage,
   createUpdateProgress,
   createUpload,
+  SetSnackbarAction,
+  UpdateOneImageAction,
+  UpdateProgressAction,
 } from '../slices';
 
-const upload: Epic = (action$, state$) =>
+const upload: Epic<Action, UpdateProgressAction | SetSnackbarAction, State> = (
+  action$,
+  state$,
+) =>
   action$.pipe(
     ofType(getType(createUpload)),
     selectState(selectImageEntities)(state$),
@@ -44,10 +51,14 @@ const upload: Epic = (action$, state$) =>
     ),
   );
 
-// TODO strong type Epic
-const verifyImage: Epic = (action$, _, { mobilenet$ }: EpicDependencies) =>
+const verifyImage: Epic<
+  Action,
+  UpdateOneImageAction,
+  State,
+  EpicDependencies
+> = (action$, _, { mobilenet$ }) =>
   action$.pipe(
-    ofType<AddImageAction>(getType(createAddImage)),
+    ofType<Action, AddImageAction>(getType(createAddImage)),
     map(({ payload }) => payload),
     mergeMap(img => {
       const { dataUrl } = img;

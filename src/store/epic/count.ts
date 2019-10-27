@@ -1,20 +1,14 @@
 import 'firebase/firestore';
 import firebase from 'my-firebase';
 import { inc, isNil } from 'ramda';
-import { Epic, ofType, StateObservable } from 'redux-observable';
+import { Epic, ofType } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
-import { empty, of, pipe } from 'rxjs';
-import {
-  catchError,
-  map,
-  mergeMapTo,
-  switchMap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { selectCountValue } from 'store/selectors';
 import { getType } from 'typesafe-actions';
 import { selectState, takeUntilSignedOut } from 'utils/operators';
-import { State } from '../reducer';
+import { Action, State } from '../reducer';
 import { selectUid } from '../selectors';
 import {
   CountState,
@@ -22,19 +16,16 @@ import {
   getCountAsync,
   incrementCountAsync,
   setCountAsync,
+  SetSnackbarAction,
 } from '../slices';
 
 const countsCollection = firebase.firestore().collection('counts');
 
-const setCount = (state$: StateObservable<State>) =>
-  pipe(
-    withLatestFrom(state$.pipe(map(selectUid))),
-    switchMap(([value, uid]) => countsCollection.doc(uid).set({ value })),
-    mergeMapTo(empty()),
-    catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
-  );
-
-const getCount: Epic = (action$, state$) =>
+const getCount: Epic<
+  Action,
+  ReturnType<typeof setCountAsync.success> | SetSnackbarAction,
+  State
+> = (action$, state$) =>
   action$.pipe(
     ofType(getType(getCountAsync.request)),
     selectState(selectUid)(state$),
@@ -53,21 +44,57 @@ const getCount: Epic = (action$, state$) =>
     }),
   );
 
-const increment: Epic = (action$, state$) =>
+const increment: Epic<
+  Action,
+  | ReturnType<typeof incrementCountAsync.success>
+  | ReturnType<typeof incrementCountAsync.failure>,
+  State
+> = (action$, state$) =>
   action$.pipe(
     ofType(getType(incrementCountAsync.request)),
     selectState(selectCountValue)(state$),
     map(inc),
-    setCount(state$),
+    withLatestFrom(state$.pipe(map(selectUid))),
+    switchMap(([value, uid]) =>
+      from(countsCollection.doc(uid).set({ value })).pipe(
+        map(() => incrementCountAsync.success(value)),
+        catchError(error =>
+          of(
+            incrementCountAsync.failure(
+              (error && error.message) || 'Failed to increment count.',
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
-const decrementBy: Epic = (action$, state$) =>
+const decrementBy: Epic<
+  Action,
+  | ReturnType<typeof setCountAsync.success>
+  | ReturnType<typeof setCountAsync.failure>,
+  State
+> = (action$, state$) =>
   action$.pipe(
-    ofType(getType(setCountAsync.request)),
+    ofType<Action, ReturnType<typeof setCountAsync.request>>(
+      getType(setCountAsync.request),
+    ),
     map(({ payload }) => payload),
     withLatestFrom(state$.pipe(map(selectCountValue))),
     map(([amount, value]) => value - amount),
-    setCount(state$),
+    withLatestFrom(state$.pipe(map(selectUid))),
+    switchMap(([value, uid]) =>
+      from(countsCollection.doc(uid).set({ value })).pipe(
+        map(() => setCountAsync.success(value)),
+        catchError(error =>
+          of(
+            setCountAsync.failure(
+              (error && error.message) || 'Failed to decrement count.',
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
 export default [getCount, increment, decrementBy];

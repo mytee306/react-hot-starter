@@ -7,7 +7,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import { configureStore } from 'redux-starter-kit';
 import { from } from 'rxjs';
 import epic from './epic';
-import reducer from './reducer';
+import reducer, { Action, State } from './reducer';
 
 const dependencies = {
   mobilenet$: from(mobilenet.load()),
@@ -15,7 +15,12 @@ const dependencies = {
 
 export type EpicDependencies = typeof dependencies;
 
-const epicMiddleware = createEpicMiddleware({
+const epicMiddleware = createEpicMiddleware<
+  Action,
+  Action,
+  State,
+  EpicDependencies
+>({
   dependencies,
 });
 
