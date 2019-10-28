@@ -63,3 +63,4 @@ export const mapStateToProps = <
 
 export * from './hooks';
 export * from './operators';
+export * from './store';
