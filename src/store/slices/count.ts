@@ -1,5 +1,6 @@
 import { Reducer } from 'redux';
-import { ActionType, createAsyncAction, getType } from 'typesafe-actions';
+import { ActionType, createAsyncAction } from 'typesafe-actions';
+import { createReducer, setError, setIsLoading, setValue } from 'utils';
 
 export const initialCountState = {
   value: 0,
@@ -9,51 +10,54 @@ export const initialCountState = {
 
 export type CountState = typeof initialCountState;
 
+export enum CountGetType {
+  request = 'count/get/request',
+  success = 'count/get/success',
+  failure = 'count/get/failure',
+}
 export const getCountAsync = createAsyncAction(
-  'count/get/request',
-  'count/get/success',
-  'count/get/failure',
+  CountGetType.request,
+  CountGetType.success,
+  CountGetType.failure,
 )<void, CountState['value'], CountState['error']>();
 export type CountGetAsync = ActionType<typeof getCountAsync>;
 
+export enum CountSetType {
+  request = 'count/set/request',
+  success = 'count/set/success',
+  failure = 'count/set/failure',
+}
 export const setCountAsync = createAsyncAction(
-  'count/set/request',
-  'count/set/success',
-  'count/set/failure',
+  CountSetType.request,
+  CountSetType.success,
+  CountSetType.failure,
 )<CountState['value'], CountState['value'], CountState['error']>();
 export type CountSetAsync = ActionType<typeof setCountAsync>;
 
+export enum CountIncrementType {
+  request = 'count/increment/request',
+  success = 'count/increment/success',
+  failure = 'count/increment/failure',
+}
 export const incrementCountAsync = createAsyncAction(
-  'count/increment/request',
-  'count/increment/success',
-  'count/increment/failure',
+  CountIncrementType.request,
+  CountIncrementType.success,
+  CountIncrementType.failure,
 )<void, CountState['value'], CountState['error']>();
 export type CountIncrementAsync = ActionType<typeof incrementCountAsync>;
 
 export type CountAction = CountGetAsync | CountSetAsync | CountIncrementAsync;
 
-export const count: Reducer<CountState, CountAction> = (
-  state = initialCountState,
-  action,
-) => {
-  switch (action.type) {
-    case getType(getCountAsync.request):
-    case getType(setCountAsync.request):
-    case getType(incrementCountAsync.request):
-      return { ...state, isLoading: true };
-    case getType(getCountAsync.success):
-    case getType(setCountAsync.success):
-    case getType(incrementCountAsync.success):
-      return {
-        ...state,
-        value: action.payload,
-        isLoading: false,
-      };
-    case getType(getCountAsync.failure):
-    case getType(setCountAsync.failure):
-    case getType(incrementCountAsync.failure):
-      return { ...state, isLoading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
+export const count: Reducer<CountState, CountAction> = createReducer(
+  initialCountState,
+)<CountAction>({
+  [CountGetType.request]: setIsLoading,
+  [CountSetType.request]: setIsLoading,
+  [CountIncrementType.request]: setIsLoading,
+  [CountGetType.failure]: setError,
+  [CountSetType.failure]: setError,
+  [CountIncrementType.failure]: setError,
+  [CountGetType.success]: setValue,
+  [CountSetType.success]: setValue,
+  [CountIncrementType.success]: setValue,
+});
