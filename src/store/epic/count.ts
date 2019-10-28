@@ -1,13 +1,13 @@
 import 'firebase/firestore';
 import firebase from 'my-firebase';
 import { inc, isNil } from 'ramda';
-import { Epic, ofType } from 'redux-observable';
+import { Epic } from 'redux-observable';
 import { docData } from 'rxfire/firestore';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { selectCountValue } from 'store/selectors';
 import { getType } from 'typesafe-actions';
-import { selectState, takeUntilSignedOut } from 'utils/operators';
+import { ofType, selectState, takeUntilSignedOut } from 'utils';
 import { Action, State } from '../reducer';
 import { selectUid } from '../selectors';
 import {
@@ -76,7 +76,7 @@ const decrementBy: Epic<
   State
 > = (action$, state$) =>
   action$.pipe(
-    ofType<Action, ReturnType<typeof setCountAsync.request>>(
+    ofType<Action, ReturnType<typeof setCountAsync.request>['type']>(
       getType(setCountAsync.request),
     ),
     map(({ payload }) => payload),

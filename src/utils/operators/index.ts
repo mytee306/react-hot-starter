@@ -1,6 +1,9 @@
+/* eslint-disable indent */
+
+import { FilterActionByType, SimpleAction } from 'models';
 import { pipe } from 'ramda';
 import { Selector } from 'react-redux';
-import { StateObservable } from 'redux-observable';
+import { ofType as actionOfType, StateObservable } from 'redux-observable';
 import { Observable, of } from 'rxjs';
 import {
   catchError,
@@ -33,3 +36,13 @@ export const takeUntilSignedOut = <T>(state$: StateObservable<State>) =>
 export const snackError = pipe(
   catchError(({ message }) => of(createSetErrorSnackbar({ message }))),
 );
+
+export const ofType = <
+  Action extends SimpleAction,
+  ActionType extends Action['type']
+>(
+  actionType: ActionType,
+) =>
+  pipe(
+    actionOfType<Action, FilterActionByType<Action, ActionType>>(actionType),
+  );
