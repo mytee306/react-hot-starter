@@ -7,6 +7,8 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
   catchError,
+  delay,
+  filter,
   map,
   mergeMap,
   switchMap,
@@ -21,10 +23,12 @@ import { selectImageEntities, selectUid } from '../selectors';
 import {
   AddImageAction,
   createAddImage,
+  createRemoveImage,
   createSetErrorSnackbar,
   createUpdateOneImage,
   createUpdateProgress,
   createUpload,
+  RemoveImageAction,
   SetSnackbarAction,
   UpdateOneImageAction,
   UpdateProgressAction,
@@ -57,6 +61,15 @@ const upload: Epic<Action, UpdateProgressAction | SetSnackbarAction, State> = (
     catchError(({ message }) =>
       of(createSetErrorSnackbar({ message, duration: 3000 })),
     ),
+  );
+
+const removeUploadedImage: Epic<Action, RemoveImageAction> = action$ =>
+  action$.pipe(
+    ofType<Action, UpdateProgressAction>(getType(createUpdateProgress)),
+    map(({ payload }) => payload),
+    filter(({ uploadStatus }) => uploadStatus === 'completed'),
+    delay(1000),
+    mergeMap(({ id }) => of(createRemoveImage(id))),
   );
 
 const verifyImage: Epic<
@@ -107,4 +120,4 @@ const verifyImage: Epic<
     }),
   );
 
-export default [upload, verifyImage];
+export default [upload, removeUploadedImage, verifyImage];
