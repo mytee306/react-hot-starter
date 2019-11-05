@@ -80,6 +80,7 @@
     "sanctuary": "^2.0.0",
     "source-map-explorer": "^2.1.0",
     "styled-components": "^4.3.1",
+    "swr": "^0.1.6",
     "typesafe-actions": "^4.4.2",
     "url-join": "^4.0.0",
     "uuid": "^3.3.2",
