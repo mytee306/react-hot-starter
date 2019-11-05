@@ -69,7 +69,7 @@ const verifyImage: Epic<
 
       return mobilenet$.pipe(
         mergeMap(net => net.classify(image)),
-        tap(console.log),
+        tap(console.log), // eslint-disable-line no-console
         map(() =>
           createUpdateOneImage({ ...img, verificationStatus: 'completed' }),
         ),
