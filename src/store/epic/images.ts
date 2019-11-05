@@ -1,9 +1,17 @@
 import 'firebase/storage';
+import { KnowledgeGraph } from 'models/knowlegdeGraph';
 import firebase from 'my-firebase';
 import { Epic, ofType } from 'redux-observable';
 import { putString } from 'rxfire/storage';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { ajax } from 'rxjs/ajax';
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { EpicDependencies } from 'store/configureStore';
 import { getType } from 'typesafe-actions';
 import urlJoin from 'url-join';
@@ -68,10 +76,32 @@ const verifyImage: Epic<
       image.src = dataUrl; // eslint-disable-line immutable/no-mutation
 
       return mobilenet$.pipe(
-        mergeMap(net => net.classify(image)),
-        tap(console.log), // eslint-disable-line no-console
-        map(() =>
-          createUpdateOneImage({ ...img, verificationStatus: 'completed' }),
+        switchMap(net => net.classify(image)),
+        map(([{ className }]) => className),
+        switchMap(className =>
+          ajax(
+            `https://kgsearch.googleapis.com/v1/entities:search?query=${className.replace(
+              / /g,
+              '+',
+            )}&key=${process.env.REACT_APP_GOOGLE_API_KEY}&limit=1`,
+          ),
+        ),
+        map(({ response }) => response as KnowledgeGraph),
+        map(
+          ({
+            itemListElement: [
+              {
+                result: { description },
+              },
+            ],
+          }) => description,
+        ),
+        map(description =>
+          createUpdateOneImage({
+            ...img,
+            verificationStatus:
+              description === 'Dog breed' ? 'completed' : 'failed',
+          }),
         ),
       );
     }),

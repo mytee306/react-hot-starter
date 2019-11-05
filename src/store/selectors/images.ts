@@ -41,3 +41,11 @@ export const selectImagesBeingVerified = createSelector(
 );
 
 export type ImagesBeingVerified = ReturnType<typeof selectImagesBeingVerified>;
+
+export const selectAreAllImagesAppropriate = createSelector(
+  selectImageEntities,
+  entities =>
+    Object.values(entities).every(
+      ({ verificationStatus }) => verificationStatus === 'completed',
+    ),
+);
