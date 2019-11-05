@@ -132,7 +132,6 @@
     "@types/redux-logger": "^3.0.7",
     "@types/sanctuary": "^0.14.2",
     "@types/storybook__addon-info": "^4.1.2",
-    "@types/storybook__addon-knobs": "^5.0.1",
     "@types/storybook__addon-storyshots": "^4.0.1",
     "@types/storybook__react": "^4.0.2",
     "@types/url-join": "^4.0.0",
