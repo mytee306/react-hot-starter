@@ -23,7 +23,7 @@ const Provider: FC<ProviderProps> = ({ children }) => {
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
-      LogRocket.init('7lfo0w/react-hot-starter-dev');
+      LogRocket.init(process.env.REACT_APP_LOG_ROCKET_ID || '');
 
       setupLogRocketReact(LogRocket);
 
