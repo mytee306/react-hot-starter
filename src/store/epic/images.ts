@@ -12,6 +12,7 @@ import {
   map,
   mergeMap,
   switchMap,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import { EpicDependencies } from 'store/configureStore';
@@ -100,6 +101,7 @@ const verifyImage: Epic<
           ),
         ),
         map(({ response }) => response as KnowledgeGraph),
+        tap(console.log), // eslint-disable-line no-console
         map(
           ({
             itemListElement: [
