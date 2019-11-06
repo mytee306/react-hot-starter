@@ -1,5 +1,7 @@
 import { Theme } from '@material-ui/core';
 import { CSSProperties } from 'react';
+import { ReactStripeElements } from 'react-stripe-elements';
+import { NonUndefined } from 'utility-types';
 
 export * from './actions';
 export * from './dnd';
@@ -46,3 +48,7 @@ export interface Drift {
 export interface WithDrift {
   drift: Drift;
 }
+
+export type Stripe = NonUndefined<
+  ReactStripeElements.StripeProviderProps['stripe']
+>;
