@@ -3,6 +3,7 @@ import setupLogRocketReact from 'logrocket-react';
 import React, { FC } from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { StripeProvider } from 'react-stripe-elements';
 import configureStore from 'store';
 
 if (process.env.NODE_ENV === 'production') {
@@ -21,9 +22,11 @@ export interface ProviderProps {}
 
 const Provider: FC<ProviderProps> = ({ children }) => (
   // <StrictMode>
-  <Router>
-    <StoreProvider store={store}>{children}</StoreProvider>
-  </Router>
+  <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB || ''}>
+    <Router>
+      <StoreProvider store={store}>{children}</StoreProvider>
+    </Router>
+  </StripeProvider>
   // </StrictMode>
 );
 

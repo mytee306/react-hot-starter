@@ -1,8 +1,17 @@
 import { useMediaQuery, useTheme } from '@material-ui/core';
 import { PageRoute, Switch } from 'components';
 import { absoluteRootPaths } from 'Layout/Nav';
-import { Count, Dashboard, Images, List, Profile, Signin, Store } from 'pages';
-import Canvas from 'pages/Canvas';
+import {
+  Canvas,
+  CheckoutForm,
+  Count,
+  Dashboard,
+  Images,
+  List,
+  Profile,
+  Signin,
+  Store,
+} from 'pages';
 import React, { FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -34,6 +43,10 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => {
         <PageRoute path={absoluteRootPaths.count} component={Count} />
         <PageRoute path={absoluteRootPaths.images} component={Images} />
         <PageRoute path={absoluteRootPaths.store} component={Store} />
+        <PageRoute
+          path={absoluteRootPaths.checkoutForm}
+          component={CheckoutForm}
+        />
         <PageRoute path={absoluteRootPaths.list} component={List} />
         <PageRoute path={absoluteRootPaths.profile} component={Profile} />
         <Route path={absoluteRootPaths.canvas} component={Canvas} />

@@ -1,3 +1,7 @@
+export * from './Canvas';
+export { default as Canvas } from './Canvas';
+export * from './CheckoutForm';
+export { default as CheckoutForm } from './CheckoutForm';
 export * from './Count';
 export { default as Count } from './Count';
 export * from './Dashboard';

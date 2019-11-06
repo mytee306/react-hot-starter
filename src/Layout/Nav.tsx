@@ -17,11 +17,12 @@ import {
   ExpandLess,
   ExpandMore,
   List as ListIcon,
+  Money,
   Person,
   Store,
 } from '@material-ui/icons';
 import { Link, Tooltip } from 'components';
-import { capitalize, countBy } from 'lodash';
+import { capitalize, countBy, startCase } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import urlJoin from 'url-join';
@@ -45,6 +46,7 @@ const rootPathnames = [
   'count',
   'images',
   'store',
+  'checkoutForm',
   'list',
   'canvas',
   'profile',
@@ -76,7 +78,7 @@ export const absoluteRootPaths: Record<keyof typeof rootPaths, string> = {
 
 const paths = toObject(pathnames);
 
-export const textPaths = objectMap(capitalize)(paths);
+export const textPaths = objectMap(startCase)(paths);
 
 const absolutePaths = toAbsolutePathObject(paths);
 
@@ -132,6 +134,12 @@ const privateNavItems: INavItems = [
     text: textPaths.store,
     path: absolutePaths.store,
     icon: <Store />,
+    childNavItems: [],
+  },
+  {
+    text: textPaths.checkoutForm,
+    path: absolutePaths.checkoutForm,
+    icon: <Money />,
     childNavItems: [],
   },
   {
