@@ -1,9 +1,10 @@
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
-import { Stripe, WithDrift } from 'models';
+import { Stripe } from 'models';
 import React, { FC } from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+// import 'react-stripe-elements'; // * fixes tests but does not fix build
 import { StripeProvider } from 'react-stripe-elements';
 import configureStore from 'store';
 
@@ -16,7 +17,7 @@ const Provider: FC<ProviderProps> = ({ children }) => {
 
   React.useEffect(() => {
     if ('Stripe' in window) {
-      setStripe(window.Stripe(process.env.REACT_APP_STRIPE_PUB || ''));
+      setStripe((window as any).Stripe(process.env.REACT_APP_STRIPE_PUB || ''));
     }
   }, []);
 
@@ -30,7 +31,9 @@ const Provider: FC<ProviderProps> = ({ children }) => {
         // * in contrary to the second condition the first one is runtime safe but not typesafe
         // if (window.drift && typeof window.drift.track === 'function') {
         if ('drift' in window) {
-          (window as typeof window & WithDrift).drift.track('LogRocket', {
+          // * although the following is more accurate than any, it causes build to fail
+          // (window as typeof window & WithDrift).drift.track('LogRocket', {
+          (window as any).drift.track('LogRocket', {
             sessionURL,
           });
         }
