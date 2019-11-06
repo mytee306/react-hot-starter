@@ -3,11 +3,7 @@
 import { useMediaQuery, useTheme } from '@material-ui/core';
 import { equals } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  ActionCreator,
-  ActionCreatorsMapObject,
-  bindActionCreators,
-} from 'redux';
+import { bindActionCreators } from 'redux';
 
 export const useIsNotSmallScreen = () => {
   const theme = useTheme();
@@ -21,15 +17,10 @@ export const useDeepSelector = <S extends Parameters<typeof useSelector>[0]>(
   selector: S,
 ) => useSelector(selector, equals);
 
-export const useActions = <
-  Actions extends ActionCreator<any> | ActionCreatorsMapObject<any>
->(
-  actions: Actions,
+export const useActions = (
+  actions: Parameters<typeof bindActionCreators>[0],
 ) => {
   const dispatch = useDispatch();
 
-  return bindActionCreators(
-    actions as Parameters<typeof bindActionCreators>[0],
-    dispatch,
-  );
+  return bindActionCreators(actions, dispatch);
 };
