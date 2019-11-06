@@ -13,7 +13,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
     "cpd": "jscpd src --ignore src/assets/img/*",
-    "ci": "cross-env NODE_OPTIONS=--max_old_space_size=4096 CI=true run-p cpd lint test build --print-label --print-name",
+    "ci": "cross-env NODE_OPTIONS=--max_old_space_size=4096 CI=true run-p cpd lint test build --print-label --print-name --aggregate-output",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -c .storybook -o .out",
     "storybook:preview": "http-server .out",
