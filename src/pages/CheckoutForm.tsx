@@ -1,5 +1,6 @@
 import { Typography } from '@material-ui/core';
 import { Button } from 'components';
+import env from 'env';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import {
@@ -19,10 +20,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   stripe,
   location: { pathname },
 }) => {
-  const origin = process.env.REACT_APP_ORIGIN;
-  const redirectionURL = origin
-    ? urlJoin(origin, pathname)
-    : window.location.href;
+  const redirectionURL = urlJoin(env.publicUrl, pathname);
 
   return (
     <Box>
