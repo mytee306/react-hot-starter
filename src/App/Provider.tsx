@@ -15,7 +15,7 @@ const Provider: FC<ProviderProps> = ({ children }) => {
   const [stripe, setStripe] = React.useState<Stripe>(null);
 
   React.useEffect(() => {
-    if (window.Stripe) {
+    if ('Stripe' in window) {
       setStripe(window.Stripe(process.env.REACT_APP_STRIPE_PUB || ''));
     }
   }, []);
@@ -30,8 +30,7 @@ const Provider: FC<ProviderProps> = ({ children }) => {
         // * in contrary to the second condition the first one is runtime safe but not typesafe
         // if (window.drift && typeof window.drift.track === 'function') {
         if ('drift' in window) {
-          const windowWithDrift = window as typeof window & WithDrift;
-          windowWithDrift.drift.track('LogRocket', {
+          (window as typeof window & WithDrift).drift.track('LogRocket', {
             sessionURL,
           });
         }
