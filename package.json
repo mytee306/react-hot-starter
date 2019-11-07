@@ -27,7 +27,9 @@
     "http-serve:build": "http-server build",
     "commitlint": "commitlint --from HEAD~1",
     "cypress:run": "cypress run",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "docs": "typedoc --out docs src",
+    "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh"
   },
   "dependencies": {
     "@craco/craco": "^5.2.4",
@@ -138,6 +140,7 @@
     "@types/sanctuary": "^0.14.2",
     "@types/storybook__addon-info": "^4.1.2",
     "@types/storybook__addon-storyshots": "^4.0.1",
+    "@types/storybook__addon-storyshots-puppeteer": "^5.1.0",
     "@types/storybook__react": "^4.0.2",
     "@types/url-join": "^4.0.0",
     "@types/uuid": "^3.4.4",
@@ -182,6 +185,7 @@
     "rimraf": "^2.6.3",
     "serve": "^11.0.2",
     "surge": "^0.21.3",
+    "typedoc": "^0.15.0",
     "typescript": "^3.5.1",
     "utility-types": "^3.7.0",
     "wait-on": "^3.2.0",
