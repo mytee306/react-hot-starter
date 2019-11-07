@@ -1,6 +1,4 @@
 const development = {
-  publicUrl: 'http://localhost:3000',
-
   firebaseConfig: {
     apiKey: 'AIzaSyDF9z3Z4LO-KP8IqUqV00_2MY-L-YGdbRg',
     authDomain: 'react-hot-starter-dev.firebaseapp.com',
@@ -20,10 +18,7 @@ export type AllEnvironments = { [envName in typeof process.env.NODE_ENV]: Env };
 
 const allEnvironments: AllEnvironments = {
   development,
-  production: {
-    ...development,
-    publicUrl: 'http://react-hot-starter-dev.firebaseapp.com',
-  },
+  production: development,
   test: development,
 };
 

@@ -1,5 +1,4 @@
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
-import env from 'env';
 import { startCase } from 'lodash';
 import React, { ComponentProps } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -20,7 +19,7 @@ const Disqus: React.FC<DisqusProps> = ({
   match: { url, path },
 }) => {
   const disqusConfig: DisqusConfig = {
-    url: env.publicUrl,
+    url: process.env.REACT_APP_ORIGIN || '',
     title: title || startCase(path),
     identifier: identifier || url,
   };
