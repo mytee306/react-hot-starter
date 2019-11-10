@@ -5,6 +5,7 @@ import React, { FC, useState } from 'react';
 import { Box, Flex } from 'rebass';
 import { createToolbarStyles } from 'styles';
 import Breadcrumbs from './Breadcrumbs';
+import Footer from './Footer';
 import Header from './Header';
 import Nav from './Nav';
 
@@ -97,6 +98,7 @@ const Layout: FC<LayoutProps> = ({ children, isSignedIn }) => {
       >
         {children}
       </main>
+      <Footer />
     </section>
   );
 };
