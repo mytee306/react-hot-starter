@@ -4,7 +4,10 @@ import preval from 'babel-plugin-preval/macro';
 import React from 'react';
 import { Flex } from 'rebass';
 
-const version = preval`
+const version =
+  process.env.NODE_ENV === 'test'
+    ? 1
+    : preval`
 const fs = require('fs');
 
 const json = fs.readFileSync('../../package.json', { encoding: 'UTF-8' });
