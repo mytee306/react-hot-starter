@@ -1,3 +1,3 @@
 # Contributors
 
-- Mateja Petrovic ([mytee306](https://github.com/mytee306))
+- Mateja Petrovic ([mateja306](https://github.com/mateja306))
