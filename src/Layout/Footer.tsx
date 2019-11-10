@@ -7,7 +7,7 @@ import { Flex } from 'rebass';
 const version = preval`
 const fs = require('fs');
 
-module.exports = process.env.NODE_ENV === 'test'
+module.exports = process.env.NODE_ENV === 'test' || process.env.CI === 'true'
   ? 0
   : JSON.parse(fs.readFileSync('../../package.json', { encoding: 'UTF-8' })).version;
 
