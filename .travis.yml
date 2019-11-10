@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-- '8'
+  - "12"
 cache:
   directories:
-  - node_modules
+    - node_modules
 script:
-- npm run ci
-- commitlint-travis
+  - npm run ci
+  - commitlint-travis
 # deploy:
 #   provider: firebase
 #   token:
@@ -14,4 +14,4 @@ script:
 # deploy:
 #   provider: surge
 #   project: ./build/
-#   domain: react-hot-starter-hot-dev.surge.sh
+#   domain: https://react-hot-starter-hot-dev.surge.sh
