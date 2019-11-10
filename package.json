@@ -1,6 +1,6 @@
 {
   "name": "react-hot-starter",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "private": false,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
@@ -29,7 +29,8 @@
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
     "docs": "typedoc --out docs src",
-    "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh"
+    "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@craco/craco": "^5.2.4",
@@ -191,7 +192,8 @@
     "typescript": "^3.5.1",
     "utility-types": "^3.7.0",
     "wait-on": "^3.2.0",
-    "with-knobs": "^0.2.3"
+    "with-knobs": "^0.2.3",
+    "semantic-release": "^15.13.30"
   },
   "browserslist": [
     ">0.2%",
