@@ -7,11 +7,27 @@ cache:
 script:
   - npm run ci
   - commitlint-travis
+  # - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run semantic-release; fi
+# jobs:
+#   include:
+#     - stage: release
+#       if: branch = master
+#       node_js: lts/*
+#       script:
+#         - npm run semantic-release
+# deploy:
+#   provider: firebase
+#   token:
+#     # todo use production project token
+#     secure: qjOd4ivkCLyio/9W4XyCmykp5SNRiZJzMjnDnAo+kS8LlRCil/IfgiiKEyCx8A+Gy2ikiKQrOZiMg0/ATJKqVbF34Hu+34X4oYgUKj8vs85+uDDNsQ5GqQMMKNpcinYsjuO2g8ockHKNi9tjRyXP/NMKJk8nBa01e3PKreIb1dk5nau1G9mE058w71vneMvOzzdnkOYLO5vstxaLQSry6IaTZcAtSENZ0F+oeSFuG/D3qtZl0aujXaNccF+EKiBqKZh+lKwQ5t/FPuKjbe4hw2w688QCaD9Kx5HYNMIjFQUf8uPt28Of7oHCNCQslJxrsSa3kdw3UoLoMxzefJhYa9AOAvw00nfWO70NGIe38prYuc9SIBNhf8Qy5BPiuwV7e0x9E01GktPIcYjcHi+osZQN9xF7Eo0H238ljE8aN9l+G6rVpjOpUKP2FGAh4v6TMB8NrlsqM0kLI7vxUUDfz12acsWwiEVDFaMTgSz8qEZnp/OvJKS3O3X33fpFYKnr6Cr/qVugws70g59JOCPikw2scSRp2KgPxCWiPug4qEYPHyMSJ9Z3bl4k9TCWTJfrJZoYYQzfWDae8RcSWfGuMwQXG/Ih+V96j40fY7ABdxqM/XXR9WNeJ8InLfkFwNEMvIJ3mILvZgpEW8FWl57puM1jrzu49ReD5+rbWqjfE18=
+#   project: react-hot-starter
+#   on:
+#     branch: master
 # deploy:
 #   provider: firebase
 #   token:
 #     secure: qjOd4ivkCLyio/9W4XyCmykp5SNRiZJzMjnDnAo+kS8LlRCil/IfgiiKEyCx8A+Gy2ikiKQrOZiMg0/ATJKqVbF34Hu+34X4oYgUKj8vs85+uDDNsQ5GqQMMKNpcinYsjuO2g8ockHKNi9tjRyXP/NMKJk8nBa01e3PKreIb1dk5nau1G9mE058w71vneMvOzzdnkOYLO5vstxaLQSry6IaTZcAtSENZ0F+oeSFuG/D3qtZl0aujXaNccF+EKiBqKZh+lKwQ5t/FPuKjbe4hw2w688QCaD9Kx5HYNMIjFQUf8uPt28Of7oHCNCQslJxrsSa3kdw3UoLoMxzefJhYa9AOAvw00nfWO70NGIe38prYuc9SIBNhf8Qy5BPiuwV7e0x9E01GktPIcYjcHi+osZQN9xF7Eo0H238ljE8aN9l+G6rVpjOpUKP2FGAh4v6TMB8NrlsqM0kLI7vxUUDfz12acsWwiEVDFaMTgSz8qEZnp/OvJKS3O3X33fpFYKnr6Cr/qVugws70g59JOCPikw2scSRp2KgPxCWiPug4qEYPHyMSJ9Z3bl4k9TCWTJfrJZoYYQzfWDae8RcSWfGuMwQXG/Ih+V96j40fY7ABdxqM/XXR9WNeJ8InLfkFwNEMvIJ3mILvZgpEW8FWl57puM1jrzu49ReD5+rbWqjfE18=
-# deploy:
-#   provider: surge
-#   project: ./build/
-#   domain: https://react-hot-starter-hot-dev.surge.sh
+#   project: react-hot-starter-dev
+#   on:
+#     # todo create branch
+#     branch: develop
