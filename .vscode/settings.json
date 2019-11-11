@@ -6,8 +6,6 @@
     "typescriptreact",
     { "language": "html", "autoFix": true }
   ],
-  "prettier.semi": true,
-  "prettier.singleQuote": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "Abnahme",
