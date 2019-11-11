@@ -32,7 +32,7 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => {
       <Route
         render={({ location }) => (
           <PoseGroup>
-            <RouteContainer key={location.key}>
+            <RouteContainer key={location.pathname}>
               <Switch location={location}>
                 {isSignedIn ? null : <PageRoute component={pages.Signin} />}
                 <PageRoute
