@@ -1,11 +1,23 @@
 /* eslint-disable indent */
 import { isEqual, kebabCase } from 'lodash';
-import { pipe } from 'ramda';
+import { pipe, equals } from 'ramda';
 import { Selector } from 'react-redux';
 import { createSelectorCreator, defaultMemoize } from 'reselect';
 import { State } from 'store';
 import urlJoin from 'url-join';
 
+export const cache = <I, O>(f: (i: I) => O) => {
+  let previousInput: I | null = null; // eslint-disable-line
+
+  return (i: I): O | null => {
+    if (equals(i, previousInput)) {
+      return null;
+    } else {
+      previousInput = i; // eslint-disable-line
+      return f(i);
+    }
+  };
+};
 export const createDeepSelector = createSelectorCreator(
   defaultMemoize,
   isEqual,

@@ -14,11 +14,11 @@ import {
   WindowScroller,
 } from 'react-virtualized';
 import { selectDictionary } from 'store';
+import { cache } from 'utils';
 
 export interface Person {
   name: string;
 }
-
 export type People = { [index: number]: Person };
 
 const circleWidth = 10;
@@ -66,6 +66,19 @@ const initialIndexToScrollTo = -1;
 const pageSize = 100;
 
 const rowCount = 2000;
+
+const scrollButtonTop = 10;
+
+type ScrollButtonStyle = Required<
+  Pick<React.CSSProperties, 'position' | 'left'>
+> &
+  Pick<React.CSSProperties, 'top'>;
+
+const initialScrollButtonStyle: ScrollButtonStyle = {
+  position: 'relative',
+  left: 'auto',
+  top: 'auto',
+};
 
 type LoadMoreRows = InfiniteLoaderProps['loadMoreRows'];
 
@@ -125,6 +138,36 @@ const ImageList: React.FC<ImagesProps> = () => {
     });
   };
 
+  const scrollButtonRef = React.useRef<HTMLDivElement>(null);
+
+  const [scrollButtonStyle, setScrollButtonStyle] = React.useState<
+    ScrollButtonStyle
+  >(initialScrollButtonStyle);
+
+  React.useEffect(() => {
+    const { left, top } = scrollButtonRef.current!.getBoundingClientRect();
+
+    const cachedSetScrollButtonStyle = cache(setScrollButtonStyle);
+
+    const setStyle = () => {
+      if (window.pageYOffset + scrollButtonTop > top) {
+        cachedSetScrollButtonStyle({
+          position: 'fixed',
+          left,
+          top: scrollButtonTop,
+        });
+      } else {
+        cachedSetScrollButtonStyle(initialScrollButtonStyle);
+      }
+    };
+
+    window.addEventListener('scroll', setStyle);
+
+    return () => {
+      window.removeEventListener('scroll', setStyle);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div>
       <form
@@ -141,23 +184,24 @@ const ImageList: React.FC<ImagesProps> = () => {
           onChange={({ target: { value: newValue } }) => setValue(newValue)}
         />
         <Button type="submit">{dict.submit}</Button>
-        <Tooltip
+        <div
+          ref={scrollButtonRef}
           style={{
-            position: 'fixed',
+            ...scrollButtonStyle,
             zIndex: 2,
             opacity: 0.7,
-            right: 10,
-            bottom: 20,
+            marginLeft: 'auto',
           }}
-          title={dict.scrollToTop}
         >
-          <IconButton
-            onClick={() => setIndexToScrollTo(0)}
-            style={{ background: theme.palette.background.paper }}
-          >
-            <ArrowUpward />
-          </IconButton>
-        </Tooltip>
+          <Tooltip title={dict.scrollToTop}>
+            <IconButton
+              onClick={() => setIndexToScrollTo(0)}
+              style={{ background: theme.palette.background.paper }}
+            >
+              <ArrowUpward />
+            </IconButton>
+          </Tooltip>
+        </div>
       </form>
       <br />
       <br />
