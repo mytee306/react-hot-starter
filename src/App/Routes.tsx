@@ -6,12 +6,29 @@ import {
   textRootPathnames,
 } from 'Layout';
 import * as pages from 'pages';
-import React, { FC } from 'react';
+import React, { FC, Suspense } from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 import posed, { PoseGroup } from 'react-pose';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
+import urlJoin from 'url-join';
+
+const lazyComponents = absoluteRootPathnames
+  .map((path, i) => ({
+    path,
+    Component: React.lazy(() =>
+      import(urlJoin('.', 'pages', textRootPathnames[i])),
+    ),
+  }))
+  .map(({ Component, ...rest }) => ({
+    ...rest,
+    Component: (props: RouteComponentProps) => (
+      <Suspense fallback="Loading...">
+        <Component {...props} />
+      </Suspense>
+    ),
+  }));
 
 const RouteContainer = posed.div({
   enter: { opacity: 1 },
@@ -51,12 +68,12 @@ const Routes: FC<RoutesProps> = ({ isSignedIn }) => {
                   path={absoluteRootPaths.canvas}
                   component={pages.Canvas}
                 />
-                {absoluteRootPathnames.map((path, i) => (
+                {lazyComponents.map(({ path, Component }) => (
                   <PageRoute
                     key={path}
                     path={path}
                     // @ts-ignore
-                    component={pages[textRootPathnames[i]]}
+                    component={Component}
                   />
                 ))}
               </Switch>
