@@ -22,7 +22,7 @@ import {
   Store,
 } from '@material-ui/icons';
 import { Link, Tooltip } from 'components';
-import { capitalize, countBy, startCase } from 'lodash';
+import { countBy, startCase } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import urlJoin from 'url-join';
@@ -54,7 +54,12 @@ const rootPathnames = [
 
 export const absoluteRootPathnames = rootPathnames.map(toAbsolutePath);
 
-export const textRootPathnames = rootPathnames.map(capitalize);
+export const textRootPathnames = rootPathnames.map(s =>
+  s
+    .charAt(0)
+    .toUpperCase()
+    .concat(s.slice(1)),
+);
 
 type RootPathnames = typeof rootPathnames[number];
 
