@@ -23,6 +23,7 @@ const en = {
   canvas: 'Canvas',
   signOut: 'Sign out',
   signIn: 'Sign in',
+  signin: 'Signin',
   with: 'with',
   minimum: 'Minimum',
   middle: 'Middle',
@@ -44,6 +45,7 @@ const en = {
   or: 'or',
   uploaded: 'Uploaded',
   purchased: 'Purchased',
+  checkoutForm: 'Checkout Form',
 };
 
 export type Dictionary = typeof en;
@@ -78,6 +80,7 @@ const initialState: LangState = {
       canvas: 'Malerleinwand',
       signOut: 'Ausloggen',
       signIn: 'Einloggen',
+      signin: 'Einloggen',
       with: 'mit',
       minimum: 'Minimum',
       middle: 'Mitte',
@@ -99,6 +102,7 @@ const initialState: LangState = {
       or: 'oder',
       uploaded: 'Hochgeladen',
       purchased: 'Gekauft',
+      checkoutForm: 'Checkout Formular',
     },
   },
 };

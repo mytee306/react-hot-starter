@@ -24,7 +24,10 @@ import {
 import { Link, Tooltip } from 'components';
 import { countBy, startCase } from 'lodash';
 import React, { CSSProperties, FC, ReactElement, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { Dictionary, selectDictionary } from 'store';
+import { Tuple } from 'ts-toolbelt';
 import urlJoin from 'url-join';
 import { objectMap, toAbsolutePath, toObject } from 'utils';
 
@@ -61,16 +64,18 @@ export const textRootPathnames = rootPathnames.map(s =>
     .concat(s.slice(1)),
 );
 
-type RootPathnames = typeof rootPathnames[number];
+type RootPathnames = typeof rootPathnames;
+type RootPathname = RootPathnames[number];
 
 const secondaryPathnames = ['increment', 'decrement', 'upload'] as const;
 
-type SecondaryPathnames = typeof secondaryPathnames[number];
+type SecondaryPathnames = typeof secondaryPathnames;
+type SecondaryPathname = SecondaryPathnames[number];
 
-const pathnames: Array<RootPathnames | SecondaryPathnames> = [
-  ...rootPathnames,
-  ...secondaryPathnames,
-];
+type Pathnames = Tuple.Concat<RootPathnames, SecondaryPathnames>;
+type Pathname = Pathnames[number];
+
+const pathnames = [...rootPathnames, ...secondaryPathnames] as Pathnames;
 
 const toAbsolutePathObject = objectMap(toAbsolutePath);
 
@@ -87,35 +92,37 @@ export const textPaths = objectMap(startCase)(paths);
 
 const absolutePaths = toAbsolutePathObject(paths);
 
-const publicNavItems: INavItems = [
+type GetNavItems = (dict: Dictionary) => INavItems;
+
+const getPublicNavItems: GetNavItems = dict => [
   {
-    text: textPaths.signin,
+    text: dict[paths.signin],
     icon: <Person />,
     path: absolutePaths.signin,
     childNavItems: [],
   },
 ];
 
-const privateNavItems: INavItems = [
+const getPrivateNavItems: GetNavItems = dict => [
   {
-    text: textPaths.dashboard,
+    text: dict[paths.dashboard],
     icon: <Dashboard />,
     path: '/',
     childNavItems: [],
   },
   {
-    text: textPaths.count,
+    text: dict[paths.count],
     path: absolutePaths.count,
     icon: <BarChart />,
     childNavItems: [
       {
-        text: textPaths.increment,
+        text: dict[paths.increment],
         icon: <ArrowUpward />,
         path: absolutePaths.increment,
         childNavItems: [],
       },
       {
-        text: textPaths.decrement,
+        text: dict[paths.decrement],
         icon: <ArrowDownward />,
         path: absolutePaths.decrement,
         childNavItems: [],
@@ -123,12 +130,12 @@ const privateNavItems: INavItems = [
     ],
   },
   {
-    text: textPaths.images,
+    text: dict[paths.images],
     path: absolutePaths.images,
     icon: <Collections />,
     childNavItems: [
       {
-        text: textPaths.upload,
+        text: dict[paths.upload],
         path: absolutePaths.upload,
         icon: <CloudUpload />,
         childNavItems: [],
@@ -136,31 +143,31 @@ const privateNavItems: INavItems = [
     ],
   },
   {
-    text: textPaths.store,
+    text: dict[paths.store],
     path: absolutePaths.store,
     icon: <Store />,
     childNavItems: [],
   },
   {
-    text: textPaths.checkoutForm,
+    text: dict[paths.checkoutForm],
     path: absolutePaths.checkoutForm,
     icon: <Money />,
     childNavItems: [],
   },
   {
-    text: textPaths.list,
+    text: dict[paths.list],
     path: absolutePaths.list,
     icon: <ListIcon />,
     childNavItems: [],
   },
   {
-    text: textPaths.canvas,
+    text: dict[paths.canvas],
     path: absolutePaths.canvas,
     icon: <Brush />,
     childNavItems: [],
   },
   {
-    text: textPaths.profile,
+    text: dict[paths.profile],
     path: absolutePaths.profile,
     icon: <Person />,
     childNavItems: [],
@@ -250,7 +257,7 @@ const PlainNavItem: FC<NavItemProps> = ({
           marginLeft: theme.spacing(level),
         }}
       >
-        <NavItems
+        <INavItems
           navItems={mappedChildNavItems.map(childItem => ({
             ...childItem,
             style: { boxShadow },
@@ -269,7 +276,7 @@ interface NavItemsProps {
   onNavigate: OnNavigate;
 }
 
-const NavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
+const INavItems: FC<NavItemsProps> = ({ navItems, onNavigate }) => (
   <List>
     {navItems.map(navItem => {
       const { childNavItems, text, path } = navItem;
@@ -294,13 +301,20 @@ export interface NavProps {
   onNavigate: OnNavigate;
 }
 
-const Nav: FC<NavProps> = ({ isSignedIn, onNavigate }) => (
-  <nav>
-    <NavItems
-      onNavigate={onNavigate}
-      navItems={isSignedIn ? privateNavItems : publicNavItems}
-    />
-  </nav>
-);
+const Nav: FC<NavProps> = ({ isSignedIn, onNavigate }) => {
+  const dict = useSelector(selectDictionary);
+
+  const navItems = React.useMemo(() => {
+    const getNavItems = isSignedIn ? getPrivateNavItems : getPublicNavItems;
+
+    return getNavItems(dict);
+  }, [dict, isSignedIn]);
+
+  return (
+    <nav>
+      <INavItems onNavigate={onNavigate} navItems={navItems} />
+    </nav>
+  );
+};
 
 export default Nav;
