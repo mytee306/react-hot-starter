@@ -67,8 +67,6 @@ const pageSize = 100;
 
 const rowCount = 2000;
 
-const scrollTopIconRight = 20;
-
 type LoadMoreRows = InfiniteLoaderProps['loadMoreRows'];
 
 const loadMore = (getName: () => Person['name']) => (
@@ -148,7 +146,8 @@ const ImageList: React.FC<ImagesProps> = () => {
             position: 'fixed',
             zIndex: 2,
             opacity: 0.7,
-            right: scrollTopIconRight,
+            right: 10,
+            bottom: 20,
           }}
           title={dict.scrollToTop}
         >
