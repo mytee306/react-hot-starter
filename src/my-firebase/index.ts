@@ -6,4 +6,6 @@ const { firebaseConfig } = env;
 
 export default firebase.initializeApp(firebaseConfig);
 
-export const performance = firebase.performance();
+if (process.env.NODE_ENV === 'production') {
+  firebase.performance();
+}

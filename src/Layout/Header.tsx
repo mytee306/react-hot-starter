@@ -88,7 +88,7 @@ interface Language {
   label: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   header: {
     width: 'auto',
   },

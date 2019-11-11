@@ -1,5 +1,4 @@
 /* eslint-disable indent */
-/* eslint-disable immutable/no-mutation */
 
 import {
   Divider,
@@ -118,10 +117,11 @@ const Upload: FC<UploadProps> = ({
         accept="image/*"
         onChange={({ target: { files } }) => {
           if (files && files.length) {
-            Array.from(files).forEach((file, i) => {
+            Array.from(files).forEach(file => {
               const { name } = file;
               const reader = new FileReader();
               reader.readAsDataURL(file);
+              // eslint-disable-next-line
               reader.onload = () => {
                 addImage({
                   name,

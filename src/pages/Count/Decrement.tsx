@@ -1,4 +1,4 @@
-import { Slider } from '@material-ui/lab';
+import { Slider } from '@material-ui/core';
 import { Button } from 'components';
 import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';

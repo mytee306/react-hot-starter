@@ -46,7 +46,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ location: { pathname } }) => {
           {pathnames.map((name, i) => (
             <Link
               key={name}
-              to={urlJoin('/', ...take<typeof pathname>(i + 1)(pathnames))}
+              to={urlJoin('/', ...take(i + 1, pathnames))}
               disabled={pageNotFound}
               color={color}
               style={{

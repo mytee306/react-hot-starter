@@ -87,7 +87,7 @@ const verifyImage: Epic<
 
       const image = new Image();
 
-      image.src = dataUrl; // eslint-disable-line immutable/no-mutation
+      image.src = dataUrl; // eslint-disable-line
 
       return mobilenet$.pipe(
         switchMap(net => net.classify(image)),
