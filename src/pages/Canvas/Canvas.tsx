@@ -120,7 +120,7 @@ const Canvas: React.FC<CanvasProps> = () => {
   const theme = useTheme();
 
   return (
-    <Flex>
+    <Flex style={{ height: '100%' }}>
       <Drawer
         variant="permanent"
         open
