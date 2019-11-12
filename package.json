@@ -177,6 +177,7 @@
     "http-server": "^0.11.1",
     "husky": "^2.4.1",
     "jest-canvas-mock": "^2.1.2",
+    "jimp": "^0.8.5",
     "jscpd": "^2.0.15",
     "json-schema-faker": "^0.4.7",
     "node-sass": "^4.12.0",
