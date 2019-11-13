@@ -2,8 +2,12 @@
   "name": "react-hot-starter",
   "version": "0.0.0-development",
   "private": false,
+  "bin": {
+    "bin/createPlaceholderImages.ts": "create-placeholder-images"
+  },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "prestart": "./bin/createPlaceholderImages.ts",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "prerender": "react-snapshot",
@@ -195,6 +199,7 @@
     "semantic-release": "^15.13.30",
     "serve": "^11.0.2",
     "surge": "^0.21.3",
+    "ts-node": "^8.5.0",
     "typedoc": "^0.15.0",
     "typescript": "^3.5.1",
     "utility-types": "^3.7.0",
