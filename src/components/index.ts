@@ -6,6 +6,8 @@ export * from './Editor';
 export { default as Editor } from './Editor';
 export * from './IconButton';
 export { default as IconButton } from './IconButton';
+export * from './Img';
+export { default as Img } from './Img';
 export * from './Link';
 export { default as Link } from './Link';
 export * from './Loader';

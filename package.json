@@ -2,12 +2,9 @@
   "name": "react-hot-starter",
   "version": "0.0.0-development",
   "private": false,
-  "bin": {
-    "bin/createPlaceholderImages.ts": "create-placeholder-images"
-  },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "prestart": "./bin/createPlaceholderImages.ts",
+    "prestart": "ts-node --skip-project scripts/createPlaceholderImages.ts",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "prerender": "react-snapshot",

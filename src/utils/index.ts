@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { isEqual, kebabCase } from 'lodash';
-import { pipe, equals } from 'ramda';
+import { equals, pipe } from 'ramda';
 import { Selector } from 'react-redux';
 import { createSelectorCreator, defaultMemoize } from 'reselect';
 import { State } from 'store';
@@ -31,10 +31,7 @@ export const prefixActionType = prefixActionTypeWithSeparator('/');
 
 export const makeAbsolute = (path: string) => urlJoin('/', path);
 
-export const toAbsolutePath = pipe(
-  kebabCase,
-  makeAbsolute,
-);
+export const toAbsolutePath = pipe(kebabCase, makeAbsolute);
 
 export const toObject = <A extends readonly any[]>(array: A) =>
   ({
@@ -67,7 +64,7 @@ export const mapStateToProps = <
   ]);
 
   const fromEntries: {
-    [prop in keyof Map]: ReturnType<Map[prop]>
+    [prop in keyof Map]: ReturnType<Map[prop]>;
   } = Object.fromEntries(entries);
 
   return fromEntries;
@@ -76,3 +73,4 @@ export const mapStateToProps = <
 export * from './hooks';
 export * from './operators';
 export * from './store';
+export * from './files';
