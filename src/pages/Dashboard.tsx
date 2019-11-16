@@ -14,8 +14,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
   return (
     <Box>
       <Typography>{dashboard}</Typography>
-      <Box my={5} mx="auto">
-        <Img src={quasar} alt="quasar" />
+      <Box my={5} mx="auto" width={[1, 1, 1, 850]}>
+        <Img src={quasar} alt="quasar" width="100%" />
       </Box>
     </Box>
   );
