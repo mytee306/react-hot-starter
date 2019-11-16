@@ -9,26 +9,31 @@ const jimp = (_jimp as unknown) as typeof _jimp.default;
 
 const placeholderExtension = '.placeholder.jpeg';
 
+const publicDirPath = path.join(__dirname, '../public');
+
 const createPlaceholder = (src: string) => {
-  const dir = path.dirname(src);
   const imgName = getFileName(src);
 
-  const placeholderSrc = imgName.concat('.placeholder').concat('.jpeg');
+  const placeholderBase = imgName.concat('.placeholder').concat('.jpeg');
 
   return jimp
     .read(src)
-    .then(img => img.quality(20).write(path.join(dir, placeholderSrc)));
+    .then(img =>
+      img.quality(20).write(path.join(publicDirPath, placeholderBase)),
+    );
 };
 
 const relativeParentPath = '../src/assets/img';
 const parentPath = path.join(__dirname, relativeParentPath);
 
+const publicDirChildren = fs.readdirSync(publicDirPath);
+
 fs.readdirSync(parentPath)
   .filter(filePath => path.extname(filePath).match(/\.(jpe?g|png)/))
-  .filter((imagePath, _, a) => {
+  .filter(imagePath => {
     const imageName = getFileName(imagePath);
     return (
-      !a.includes(imageName.concat(placeholderExtension)) &&
+      !publicDirChildren.includes(imageName.concat(placeholderExtension)) &&
       !imagePath.endsWith(placeholderExtension)
     );
   })
