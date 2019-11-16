@@ -19,7 +19,7 @@ describe('App', () => {
   });
 
   test('Search', () => {
-    const { getByText } = RTL.render(<App />);
-    expect(getByText('Search...')).toBeInTheDocument();
+    const { getByPlaceholderText } = RTL.render(<App />);
+    expect(getByPlaceholderText('Search here…')).toBeInTheDocument();
   });
 });
