@@ -23,6 +23,14 @@ const SearchStyle = createGlobalStyle`
     padding-top: 5px;
     padding-bottom: 5px;
   }
+  .ais-SearchBox-input {
+    width: 150px;
+  }
+  @media only screen and (min-width: 600px) {
+    .ais-SearchBox-input {
+      width: 200px;
+    }
+  }
 `;
 
 const searchClient = algoliaSearch(
