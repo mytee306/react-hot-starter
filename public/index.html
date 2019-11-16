@@ -126,7 +126,7 @@
     <script
       async
       defer
-      src="https://www.googletagmanager.com/gtag/js?id=UA-137872597-2"
+      src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GOOGLE_TAG_MANAGER_ID%"
     ></script>
     <script>
       /* eslint-disable */
@@ -136,7 +136,7 @@
       }
       gtag('js', new Date());
 
-      gtag('config', 'UA-137872597-2');
+      gtag('config', process.env.REACT_APP_GOOGLE_TAG_MANAGER_ID);
     </script>
     <script async defer>
       /* eslint-disable */
@@ -187,11 +187,11 @@
         }
       })();
       drift.SNIPPET_VERSION = '0.3.1';
-      drift.load('9ydheenmspnr');
+      drift.load(process.env.REACT_APP_DRIFT_ID);
     </script>
     <% } %>
     <script
-      src="https://www.paypal.com/sdk/js?client-id=AfcqvUlf11d8pCMZjHyFgOu9v6H_RS1-toaL9YbdxTqSgEg3rpXzEO2Gf1-jciVBlUoSmusWerQqvxkk"
+      src="https://www.paypal.com/sdk/js?client-id=%REACT_APP_PAYPAL_CLIENT_ID%"
       async
       defer
     ></script>
@@ -204,7 +204,7 @@
     <script>
       /* eslint-disable */
       (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: 'ca-pub-3144400576265936',
+        google_ad_client: process.env.REACT_APP_GOOGLE_AD_CLIENT_ID,
         enable_page_level_ads: true,
       });
     </script>
