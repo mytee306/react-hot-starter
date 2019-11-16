@@ -18,6 +18,8 @@ export * from './PageRoute';
 export { default as PageRoute } from './PageRoute';
 export * from './Search';
 export { default as Search } from './Search';
+export * from './SearchSelect';
+export { default as SearchSelect } from './SearchSelect';
 export * from './Snackbar';
 export { default as Snackbar } from './Snackbar';
 export * from './Spinner';
