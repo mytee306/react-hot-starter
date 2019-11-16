@@ -125,6 +125,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
+      defer
       src="https://www.googletagmanager.com/gtag/js?id=UA-137872597-2"
     ></script>
     <script>
@@ -137,41 +138,7 @@
 
       gtag('config', 'UA-137872597-2');
     </script>
-    <% } %>
-    <script
-      src="https://www.paypal.com/sdk/js?client-id=AfcqvUlf11d8pCMZjHyFgOu9v6H_RS1-toaL9YbdxTqSgEg3rpXzEO2Gf1-jciVBlUoSmusWerQqvxkk"
-      async
-      defer
-    ></script>
-    <script src="https://js.stripe.com/v3/" async defer></script>
-    <script
-      async
-      defer
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-    ></script>
-    <script>
-      /* eslint-disable */
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: 'ca-pub-3144400576265936',
-        enable_page_level_ads: true,
-      });
-    </script>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-    <% if (process.env.NODE_ENV === 'production') { %>
-    <script>
+    <script async defer>
       /* eslint-disable */
       !(function() {
         var t = (window.driftt = window.drift = window.driftt || []);
@@ -223,5 +190,37 @@
       drift.load('9ydheenmspnr');
     </script>
     <% } %>
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=AfcqvUlf11d8pCMZjHyFgOu9v6H_RS1-toaL9YbdxTqSgEg3rpXzEO2Gf1-jciVBlUoSmusWerQqvxkk"
+      async
+      defer
+    ></script>
+    <script src="https://js.stripe.com/v3/" async defer></script>
+    <script
+      async
+      defer
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    ></script>
+    <script>
+      /* eslint-disable */
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: 'ca-pub-3144400576265936',
+        enable_page_level_ads: true,
+      });
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
   </body>
 </html>
