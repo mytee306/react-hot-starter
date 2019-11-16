@@ -136,7 +136,7 @@
       }
       gtag('js', new Date());
 
-      gtag('config', process.env.REACT_APP_GOOGLE_TAG_MANAGER_ID);
+      gtag('config', '%REACT_APP_GOOGLE_TAG_MANAGER_ID%');
     </script>
     <script async defer>
       /* eslint-disable */
@@ -187,7 +187,7 @@
         }
       })();
       drift.SNIPPET_VERSION = '0.3.1';
-      drift.load(process.env.REACT_APP_DRIFT_ID);
+      drift.load('%REACT_APP_DRIFT_ID%');
     </script>
     <% } %>
     <script
@@ -204,7 +204,7 @@
     <script>
       /* eslint-disable */
       (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: process.env.REACT_APP_GOOGLE_AD_CLIENT_ID,
+        google_ad_client: '%REACT_APP_GOOGLE_AD_CLIENT_ID%',
         enable_page_level_ads: true,
       });
     </script>
