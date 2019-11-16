@@ -15,7 +15,6 @@ const SearchStyle = createGlobalStyle`
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 209px;
   }
   .ais-SearchBox-submit,
   .ais-SearchBox-reset,
@@ -23,10 +22,12 @@ const SearchStyle = createGlobalStyle`
     padding-top: 5px;
     padding-bottom: 5px;
   }
+  .ais-Hits-list,
   .ais-SearchBox-input {
     width: 150px;
   }
   @media only screen and (min-width: 600px) {
+    .ais-Hits-list,
     .ais-SearchBox-input {
       width: 200px;
     }
