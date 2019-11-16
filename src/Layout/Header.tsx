@@ -12,19 +12,17 @@ import {
   Build,
   Language,
   Menu,
-  Search,
   WbSunny,
   WbSunnyOutlined,
 } from '@material-ui/icons';
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import clsx from 'clsx';
-import { IconButton, Tooltip } from 'components';
+import { IconButton, Search, Tooltip } from 'components';
 import env from 'env';
 import { startCase } from 'lodash';
-import { CreateSimpleAction, Maybe } from 'models';
+import { CreateSimpleAction } from 'models';
 import React, { FC } from 'react';
 import { connect, useSelector } from 'react-redux';
-import Select from 'react-select';
 import { Flex } from 'rebass';
 import {
   createSetLang,
@@ -38,50 +36,6 @@ import {
 } from 'store';
 import { useActions } from 'utils';
 import './Header.scss';
-
-const labels = [
-  'Afghanistan',
-  'Aland Islands',
-  'Albania',
-  'Algeria',
-  'American Samoa',
-  'Andorra',
-  'Angola',
-  'Anguilla',
-  'Antarctica',
-  'Antigua and Barbuda',
-  'Argentina',
-  'Armenia',
-  'Aruba',
-  'Australia',
-  'Austria',
-  'Azerbaijan',
-  'Bahamas',
-  'Bahrain',
-  'Bangladesh',
-  'Barbados',
-  'Belarus',
-  'Belgium',
-  'Belize',
-  'Benin',
-  'Bermuda',
-  'Bhutan',
-  'Bolivia, Plurinational State of',
-  'Bonaire, Sint Eustatius and Saba',
-  'Bosnia and Herzegovina',
-  'Botswana',
-  'Bouvet Island',
-  'Brazil',
-  'British Indian Ocean Territory',
-  'Brunei Darussalam',
-] as const;
-
-const options = labels.map(label => ({
-  label,
-  value: label,
-}));
-
-type Option = typeof options[number];
 
 interface Language {
   value: Lang;
@@ -118,14 +72,7 @@ const Header: FC<HeaderProps> = ({
 
   const isNotSmallScreen = useMediaQuery(theme.breakpoints.up('md'));
 
-  const [value, setValue] = React.useState<Maybe<Option>>(null);
-
   const { header, expand, menuButton } = useStyles();
-
-  const white = (base: React.CSSProperties) => ({
-    ...base,
-    color: theme.palette.common.white,
-  });
 
   const [actionsOpen, setActionsOpen] = React.useState(false);
   const toggleActionsOpen = () => {
@@ -172,45 +119,7 @@ const Header: FC<HeaderProps> = ({
             </Flex>
           )} */}
         </Flex>
-        <Flex
-          alignItems="center"
-          style={{ position: 'relative' }}
-          mr={2}
-          width={[150, 250]}
-        >
-          <Search
-            style={{
-              position: 'absolute',
-              zIndex: 2,
-              left: 10,
-            }}
-          />
-          <Select
-            placeholder={`${dictionary.search}...`}
-            options={options}
-            value={value}
-            onChange={(newValue: unknown) => {
-              setValue(newValue as Option);
-            }}
-            styles={{
-              container: base => ({
-                ...base,
-                flexGrow: 1,
-                color: theme.palette.common.black,
-              }),
-              control: base => ({
-                ...base,
-                paddingLeft: 30,
-                border: 'none',
-                backgroundColor: theme.palette.primary.light,
-              }),
-              singleValue: white,
-              input: white,
-              dropdownIndicator: white,
-              placeholder: white,
-            }}
-          />
-        </Flex>
+        <Search />
         <div
           onClick={toggleActionsOpen}
           onKeyDown={toggleActionsOpen}
@@ -278,7 +187,4 @@ const mapDispatchToProps = {
   signOut: createSignout,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
