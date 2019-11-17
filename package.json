@@ -32,7 +32,8 @@
     "docs": "typedoc --out docs src",
     "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh",
     "semantic-release": "semantic-release",
-    "server:run": "cross-env NODE_ENV=development DOTENV_CONFIG_PATH=.env.development.local ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles -r dotenv/config server/index.tsx"
+    "server:run:ts": "cross-env NODE_ENV=development DOTENV_CONFIG_PATH=.env.development.local ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles -r dotenv/config server/index.tsx",
+    "server:run": "cross-env DOTENV_CONFIG_PATH=.env.development.local babel-node -r ./node_modules/module-alias/register -r ./node_modules/ignore-styles -r ./node_modules/dotenv/config server/index.tsx -x .ts,.tsx"
   },
   "dependencies": {
     "@craco/craco": "^5.2.4",
@@ -102,7 +103,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@babel/node": "^7.7.0",
     "@babel/plugin-transform-react-display-name": "^7.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.7.0",
+    "@babel/plugin-transform-typescript": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/preset-typescript": "^7.7.2",
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
     "@commitlint/travis-cli": "^8.0.0",
