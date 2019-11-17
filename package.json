@@ -32,7 +32,7 @@
     "docs": "typedoc --out docs src",
     "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh",
     "semantic-release": "semantic-release",
-    "server:run": "ts-node -P tsconfig.server.json -r module-alias/register server/index.tsx"
+    "server:run": "ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles server/index.tsx"
   },
   "dependencies": {
     "@craco/craco": "^5.2.4",
@@ -181,6 +181,7 @@
     "firebase-tools": "^7.3.0",
     "http-server": "^0.11.1",
     "husky": "^2.4.1",
+    "ignore-styles": "^5.0.1",
     "jest-canvas-mock": "^2.1.2",
     "jimp": "^0.8.5",
     "jscpd": "^2.0.15",
@@ -245,7 +246,7 @@
     "componentsDefaultDirectory": "src/components/{name}",
     "packageManager": "npm"
   },
-  "_moduleAliases": {
-    "components": "src/components"
-  }
+  "_moduleDirectories": [
+    "src"
+  ]
 }
