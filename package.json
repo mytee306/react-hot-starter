@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "prestart": "ts-node --skip-project scripts/createPlaceholderImages.ts",
+    "prestart": "ts-node -P tsconfig.scripts.json scripts/createPlaceholderImages.ts",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "prerender": "react-snapshot",
