@@ -12,19 +12,19 @@ const app = express();
 
 const buildPath = path.join(__dirname, '../build');
 
-app.get('*', (_, res) => {
-  const AppString = renderToString(<App />);
+const AppString = renderToString(<App />);
 
-  res.send(
-    fs.readFileSync(
-      path
-        .join(buildPath, 'index.html')
-        .replace('<div id="root"></div>', `<div id="root">${AppString}</div>`),
-    ),
-  );
-});
+const indexHtml = fs.readFileSync(
+  path
+    .join(buildPath, 'index.html')
+    .replace('<div id="root"></div>', `<div id="root">${AppString}</div>`),
+);
 
 app.use(express.static(buildPath));
+
+app.get('*', (_, res) => {
+  res.send(indexHtml);
+});
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
