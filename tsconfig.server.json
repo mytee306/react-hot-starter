@@ -2,5 +2,7 @@
   "extends": "./tsconfig.scripts.json",
   "compilerOptions": {
     "jsx": "react"
+    // "typeRoots": ["./node_modules/@types", "./node_modules/react-scripts/lib"]
+    // "types": ["./node_modules/react-scripts/lib/react-app.d.ts"]
   }
 }
