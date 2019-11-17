@@ -1,3 +1,5 @@
+import { NonUndefined } from 'utility-types';
+
 const development = {
   firebaseConfig: {
     apiKey: process.env.REACT_APP_FIREBASE_CONFIG_API_KEY,
@@ -15,7 +17,10 @@ const development = {
 
 export type Env = typeof development;
 
-export type AllEnvironments = { [envName in typeof process.env.NODE_ENV]: Env };
+// * SSR support
+type NodeEnv = NonUndefined<typeof process.env.NODE_ENV>;
+
+export type AllEnvironments = { [envName in NodeEnv]: Env };
 
 const allEnvironments: AllEnvironments = {
   development,
@@ -23,4 +28,4 @@ const allEnvironments: AllEnvironments = {
   test: development,
 };
 
-export default allEnvironments[process.env.NODE_ENV];
+export default allEnvironments[process.env.NODE_ENV as NodeEnv];
