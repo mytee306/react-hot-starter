@@ -7,5 +7,6 @@ import 'jest-canvas-mock';
 import 'polyfill-object.fromentries';
 import 'react-stripe-elements';
 
-dotenv.config({ path: '../.env.test' });
+dotenv.config({ path: '../.env.test.local' });
+
 registerRequireContextHook();
