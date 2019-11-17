@@ -182,6 +182,7 @@
     "jimp": "^0.8.5",
     "jscpd": "^2.0.15",
     "json-schema-faker": "^0.4.7",
+    "module-alias": "^2.2.2",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
     "polyfill-object.fromentries": "^1.0.1",
@@ -240,5 +241,8 @@
     },
     "componentsDefaultDirectory": "src/components/{name}",
     "packageManager": "npm"
+  },
+  "_moduleAliases": {
+    "components": "src/components"
   }
 }
