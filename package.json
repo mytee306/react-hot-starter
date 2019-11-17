@@ -32,7 +32,7 @@
     "docs": "typedoc --out docs src",
     "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh",
     "semantic-release": "semantic-release",
-    "server:run": "cross-env NODE_ENV=development ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles server/index.tsx"
+    "server:run": "cross-env NODE_ENV=development DOTENV_CONFIG_PATH=.env.development.local ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles -r dotenv/config server/index.tsx"
   },
   "dependencies": {
     "@craco/craco": "^5.2.4",
