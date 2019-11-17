@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import App from '../src/App';
+
+dotenv.config({ path: '../.env.development.local' });
 
 const portString = process.env.PORT || '3000';
 const port = parseInt(portString, 10);
