@@ -1,6 +1,7 @@
 /* eslint-disable immutable/no-mutation */
 
 module.exports = {
+  plugins: ['babel-plugin-macros'],
   presets: [
     '@babel/preset-env',
     '@babel/preset-react',

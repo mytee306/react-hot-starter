@@ -33,7 +33,7 @@
     "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh",
     "semantic-release": "semantic-release",
     "server:run:ts": "cross-env NODE_ENV=development DOTENV_CONFIG_PATH=.env.development.local ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles -r dotenv/config server/index.tsx",
-    "server:run": "cross-env DOTENV_CONFIG_PATH=.env.development.local babel-node -r ./node_modules/module-alias/register -r ./node_modules/ignore-styles -r ./node_modules/dotenv/config server/index.tsx -x .ts,.tsx"
+    "server:run": "cross-env NODE_ENV=development babel-node -r ./server/preload server/index.tsx -x .ts,.tsx"
   },
   "dependencies": {
     "@craco/craco": "^5.2.4",
@@ -167,6 +167,7 @@
     "@typescript-eslint/parser": "^2.7.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-console": "^0.2.1",
+    "babel-plugin-macros": "^2.6.2",
     "babel-plugin-require-context-hook": "^1.0.0",
     "babel-preset-react-app": "^9.0.0",
     "concurrently": "^4.1.2",
