@@ -35,10 +35,11 @@ export default () => {
 
     epicMiddleware.run(epic);
 
-    (module as Module).hot.accept('./reducer', () =>
-      store.replaceReducer(reducer),
-    );
-
+    if ('hot' in module) {
+      (module as Module).hot.accept('./reducer', () =>
+        store.replaceReducer(reducer),
+      );
+    }
     return store;
   } else {
     const store = configureStore({
