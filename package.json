@@ -64,8 +64,11 @@
     "ramda": "^0.26.1",
     "react": "^16.8.6",
     "react-content-loader": "^4.2.1",
+    "react-dnd-cjs": "^9.5.0",
     "react-dnd-html5-backend": "^9.3.2",
+    "react-dnd-html5-backend-cjs": "^9.5.0",
     "react-dnd-touch-backend": "^9.3.3",
+    "react-dnd-touch-backend-cjs": "^9.5.0",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-hot-loader": "^4.8.2",
@@ -256,5 +259,10 @@
   },
   "_moduleDirectories": [
     "src"
-  ]
+  ],
+  "_moduleAliases": {
+    "react-dnd": "./node_modules/react-dnd-cjs",
+    "react-dnd-html5-backend": "./node_modules/react-dnd-html5-backend-cjs",
+    "react-dnd-touch-backend": "./node_modules/react-dnd-touch-backend-cjs"
+  }
 }
