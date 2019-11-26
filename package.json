@@ -32,8 +32,8 @@
     "docs": "typedoc --out docs src",
     "docs:deploy": "surge docs --domain https://react-hot-starter-docs.surge.sh",
     "semantic-release": "semantic-release",
-    "server:run:ts": "cross-env NODE_ENV=development DOTENV_CONFIG_PATH=.env.development.local ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles -r dotenv/config server/index.tsx",
-    "server:run": "cross-env NODE_ENV=development babel-node -r ./server/preload server/index.tsx -x .ts,.tsx"
+    "server:run:ts": "cross-env SSR=true NODE_ENV=development DOTENV_CONFIG_PATH=.env.development.local ts-node -P tsconfig.server.json -r module-alias/register -r ignore-styles -r dotenv/config server/index.tsx",
+    "server:run": "cross-env SSR=true NODE_ENV=development babel-node -r ./server/preload server/index.tsx -x .ts,.tsx"
   },
   "dependencies": {
     "@craco/craco": "^5.2.4",
@@ -54,6 +54,7 @@
     "firebase": "^7.3.0",
     "folktale": "^2.3.2",
     "formik": "^1.5.2",
+    "history": "^4.10.1",
     "immer": "^3.1.1",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
