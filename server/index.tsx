@@ -1,3 +1,4 @@
+import { ServerStyleSheets } from '@material-ui/core';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -12,13 +13,18 @@ const app = express();
 
 const buildPath = path.join(__dirname, '../build');
 
-const AppString = renderToString(<App />);
+const sheets = new ServerStyleSheets();
+
+const AppString = renderToString(sheets.collect(<App />));
+
+const css = sheets.toString();
 
 const indexHtml = fs
   .readFileSync(path.join(buildPath, 'index.html'), {
     encoding: 'UTF-8',
   })
-  .replace('<div id="root"></div>', `<div id="root">${AppString}</div>`);
+  .replace('<div id="root"></div>', `<div id="root">${AppString}</div>`)
+  .replace(/(?=\s*<\/head>)/, `\n  <style id="jss-server-side">${css}</style>`);
 
 app.get('*', (_, res) => {
   res.send(indexHtml);
@@ -27,5 +33,5 @@ app.get('*', (_, res) => {
 app.use(express.static(buildPath));
 
 app.listen(port, () => {
-  console.log(`http://localhost:${port}`);
+  console.log(`http://localhost:${port}`); // eslint-disable-line no-console
 });
