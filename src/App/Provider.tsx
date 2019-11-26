@@ -1,15 +1,25 @@
+import { createMemoryHistory } from 'history';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
 import { Stripe } from 'models';
 import React, { FC } from 'react';
 import { Provider as StoreProvider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, Router } from 'react-router-dom';
 // import 'react-stripe-elements'; // * fixes tests but does not fix build
 import { StripeProvider } from 'react-stripe-elements';
 import configureStore from 'store';
 
 const store = configureStore();
 
+const RouterProvider: React.FC = ({ children }) => {
+  if (process.env.SSR) {
+    const history = createMemoryHistory();
+
+    return <Router history={history}>{children}</Router>;
+  } else {
+    return <BrowserRouter>{children}</BrowserRouter>;
+  }
+};
 export interface ProviderProps {}
 
 const Provider: FC<ProviderProps> = ({ children }) => {
@@ -44,9 +54,9 @@ const Provider: FC<ProviderProps> = ({ children }) => {
   return (
     // <StrictMode>
     <StripeProvider stripe={stripe}>
-      <Router>
+      <RouterProvider>
         <StoreProvider store={store}>{children}</StoreProvider>
-      </Router>
+      </RouterProvider>
     </StripeProvider>
     // </StrictMode>
   );
