@@ -14,17 +14,17 @@ const buildPath = path.join(__dirname, '../build');
 
 const AppString = renderToString(<App />);
 
-const indexHtml = fs.readFileSync(
-  path
-    .join(buildPath, 'index.html')
-    .replace('<div id="root"></div>', `<div id="root">${AppString}</div>`),
-);
-
-app.use(express.static(buildPath));
+const indexHtml = fs
+  .readFileSync(path.join(buildPath, 'index.html'), {
+    encoding: 'UTF-8',
+  })
+  .replace('<div id="root"></div>', `<div id="root">${AppString}</div>`);
 
 app.get('*', (_, res) => {
   res.send(indexHtml);
 });
+
+app.use(express.static(buildPath));
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
