@@ -10,7 +10,7 @@
     "prerender": "react-snapshot",
     "build:prerender": "run-s build prerender",
     "test:all": "react-app-rewired test",
-    "test": "npm run test:all -- --testPathIgnorePatterns puppeteer",
+    "test": "npm run test:all -- --testPathIgnorePatterns puppeteer Storyshots",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
     "cpd": "jscpd src --ignore src/assets/img/*",
