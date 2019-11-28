@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "react-hot-starter-dev"
+    "default": "react-hot-starter-dev",
+    "prod": "react-hot-starter"
   }
 }
