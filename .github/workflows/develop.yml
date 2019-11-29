@@ -1,0 +1,18 @@
+name: staging
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ci
+        run: npm run ci
+      - name: deploy
+        run: npm run deploy
+        env:
+          REACT_APP_ORIGIN: https://react-hot-starter-dev.firebaseapp.com
