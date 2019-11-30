@@ -5,22 +5,18 @@ node_js:
 cache:
   directories:
     - .npm
-script:
-  - npm run ci
-  - commitlint-travis
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run semantic-release; fi
-# jobs:
-#   include:
-#     - stage: ci
-#       script:
-#         - npm run ci
-#     - stage: commitlint
-#       script:
-#         - commitlint-travis
-#     - stage: release
-#       if: branch = master
-#       script:
-#         - npm run semantic-release
+jobs:
+  include:
+    - stage: ci
+      script:
+        - npm run ci
+    - stage: commitlint
+      script:
+        - commitlint-travis
+    - stage: release
+      if: branch = master
+      script:
+        - npm run semantic-release
 deploy:
   provider: firebase
   token:
