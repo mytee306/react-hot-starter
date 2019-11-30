@@ -10,9 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: install
+        run: npm install
       - name: ci
         run: npm run ci
-      - name: deploy
-        run: npm run deploy
-        env:
-          REACT_APP_ORIGIN: https://react-hot-starter-dev.firebaseapp.com
