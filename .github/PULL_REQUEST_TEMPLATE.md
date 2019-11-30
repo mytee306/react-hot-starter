@@ -1,42 +1,39 @@
----
-name: 🐛 Bug Fix
-about: Did you fix something that did not work as expected?
----
+## PR Checklist
 
-<!---
-Thanks for filing a pull request 😄 ! Before you submit, please read the following:
+Please check if your PR fulfills the following requirements:
 
-Search open/closed similar issues and pull requests before submitting since someone might have pushed the same thing before!
--->
+- [ ] The commit message follows our [guidelines](https://github.com/mateja176/react-hot-starter/blob/develop/CONTRIBUTING.md)
+- [ ] Tests for the changes have been added (for bug fixes / features)
+- [ ] Docs have been added / updated (for bug fixes / features)
 
-# 🐛 bug fix
+## PR Type
 
-<!--- Provide the details of the pull request here and include existing issues this resolves -->
+What kind of change does this PR introduce?
 
-## 🤔 Tell Us What Goes Wrong
+<!-- Please check the one that applies to this PR using "x". -->
 
-<!--- Tell us what should happen -->
+- [ ] Bugfix
+- [ ] Feature
+- [ ] Code style update (formatting, local variables)
+- [ ] Refactoring (no functional changes, no api changes)
+- [ ] Build related changes
+- [ ] CI related changes
+- [ ] Documentation content changes
+- [ ] Other... Please describe:
 
-## 💁 Your Solution
+## What is the current behavior?
 
-<!--- Describe how you fixed the bug -->
+<!-- Please describe the current behavior that you are modifying, or link to a relevant issue. -->
 
-## 🚨 Test instructions
+Issue Number: N/A
 
-<!-- In case it is impossible (or too hard) to reliably test this feature/fix with unit tests, please provide test instructions! -->
+## What is the new behavior?
 
-## 🌍 Your Environment
+## Does this PR introduce a breaking change?
 
-<!--- Include as many relevant details about the environment you experienced the bug in -->
+- [ ] Yes
+- [ ] No
 
-| Software         | Version(s) |
-| ---------------- | ---------- |
-| Node             |
-| npm/Yarn         |
-| Operating System |
+<!-- If this PR contains a breaking change, please describe the impact and migration path for existing applications below. -->
 
-## ✔️ PR Todo
-
-- [ ] Added/updated unit tests for this change
-- [ ] Filled out test instructions (In case there aren't any unit tests)
-- [ ] Included links to related issues/PRs
+## Other information
