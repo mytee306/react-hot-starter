@@ -3,6 +3,7 @@ import { startCase } from 'lodash';
 import React, { ComponentProps } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box } from 'rebass';
+import { useHref } from 'utils';
 
 const shortname = 'react-hot-starter-dev';
 
@@ -18,8 +19,10 @@ const Disqus: React.FC<DisqusProps> = ({
   identifier,
   match: { url, path },
 }) => {
+  const href = useHref();
+
   const disqusConfig: DisqusConfig = {
-    url: process.env.REACT_APP_ORIGIN || '',
+    url: href,
     title: title || startCase(path),
     identifier: identifier || url,
   };

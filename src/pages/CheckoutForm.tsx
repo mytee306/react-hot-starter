@@ -9,17 +9,14 @@ import {
   ReactStripeElements,
 } from 'react-stripe-elements';
 import { Box } from 'rebass';
-import urlJoin from 'url-join';
+import { useHref } from 'utils';
 
 export interface CheckoutFormProps
   extends ReactStripeElements.InjectedStripeProps,
     RouteComponentProps {}
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({
-  stripe,
-  location: { pathname },
-}) => {
-  const redirectionURL = urlJoin(process.env.REACT_APP_ORIGIN || '', pathname);
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ stripe }) => {
+  const redirectionURL = useHref();
 
   return (
     <Box>
