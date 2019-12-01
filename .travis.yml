@@ -22,8 +22,10 @@ deploy:
   project: react-hot-starter
   on:
     branch: master
+  edge: true # opt in to dpl v2
 deploy:
   provider: firebase
   project: react-hot-starter-dev
   on:
     branch: develop
+  edge: true # opt in to dpl v2
