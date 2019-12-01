@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/mateja176/react-hot-starter/compare/v1.2.1...v1.2.2) (2019-12-01)
+
+
+### Bug Fixes
+
+* **index.html:** rearranges scripts ([bdb6a80](https://github.com/mateja176/react-hot-starter/commit/bdb6a80397d251bccd110589a5e1a0c3f94f5675))
+
 ## [1.2.1](https://github.com/mateja176/react-hot-starter/compare/v1.2.0...v1.2.1) (2019-12-01)
 
 
