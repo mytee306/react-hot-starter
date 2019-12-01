@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/mateja176/react-hot-starter/compare/v1.2.0...v1.2.1) (2019-12-01)
+
+
+### Bug Fixes
+
+* **semantic-release:** reorders plugins ([2268c9c](https://github.com/mateja176/react-hot-starter/commit/2268c9c2d4cd0ade920188f35c53e57e34fc87fd))
+
 # [1.2.0](https://github.com/mateja176/react-hot-starter/compare/v1.1.1...v1.2.0) (2019-12-01)
 
 
