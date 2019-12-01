@@ -10,13 +10,8 @@ jobs:
     - stage: ci
       script:
         - npm run ci
-    - stage: commitlint
-      script:
         - commitlint-travis
-    - stage: release
-      if: branch = master
-      script:
-        - npm run semantic-release
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run semantic-release; fi
 deploy:
   provider: firebase
   project: react-hot-starter
