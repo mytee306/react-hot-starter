@@ -18,7 +18,7 @@ import {
   SelectionState,
 } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Maybe } from 'models';
+import { EditorProps, Maybe } from 'models';
 import React, { KeyboardEvent } from 'react';
 import Controls from './Controls';
 
@@ -68,10 +68,6 @@ const getBlockStyle = (block: ContentBlock) => {
 };
 
 export type EditorCommand = DraftEditorCommand | 'tab-indent';
-
-export interface EditorProps {
-  initialContent?: ContentState;
-}
 
 const Editor: React.FC<EditorProps> = ({ initialContent }) => {
   const [editorState, setEditorState] = React.useState(

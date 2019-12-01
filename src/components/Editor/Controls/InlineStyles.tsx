@@ -6,9 +6,10 @@ import {
   FormatQuote,
   FormatUnderlined,
 } from '@material-ui/icons';
-import { IconButton, Tooltip } from 'components';
 import { DraftInlineStyleType, EditorState } from 'draft-js';
 import React from 'react';
+import IconButton from '../../IconButton';
+import Tooltip from '../../Tooltip';
 
 export interface InlineStyle {
   label: string;

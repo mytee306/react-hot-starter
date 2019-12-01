@@ -4,6 +4,7 @@ import { ReactStripeElements } from 'react-stripe-elements';
 import { NonUndefined } from 'utility-types';
 
 export * from './actions';
+export * from './components';
 export * from './dnd';
 
 export type Module = NodeModule & {
