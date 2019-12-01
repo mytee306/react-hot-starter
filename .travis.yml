@@ -30,5 +30,4 @@ deploy:
   project: react-hot-starter-dev
   on:
     branch: develop
-    condition: "$TRAVIS_EVENT_TYPE = pull_request"
   edge: true # opt in to dpl v2
