@@ -1,6 +1,6 @@
-import { EditorProps } from 'components';
 import { createAction } from 'typesafe-actions';
 import { toObject } from 'utils';
+import { EditorProps } from './components';
 
 export interface WithId {
   id: string;
