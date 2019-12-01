@@ -3,7 +3,7 @@ import { startCase } from 'lodash';
 import React, { ComponentProps } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box } from 'rebass';
-import { useHref } from 'utils';
+import { useHref } from 'utils/hooks';
 
 const shortname = 'react-hot-starter-dev';
 
