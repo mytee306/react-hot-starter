@@ -1,7 +1,7 @@
 {
   "name": "react-hot-starter",
   "version": "0.0.0-development",
-  "private": false,
+  "private": true,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "prestart": "ts-node -P tsconfig.scripts.json scripts/createPlaceholderImages.ts",
@@ -100,7 +100,12 @@
     "@commitlint/config-conventional": "^8.0.0",
     "@commitlint/travis-cli": "^8.0.0",
     "@craco/craco": "^5.6.2",
-    "@semantic-release/changelog": "^3.0.5",
+    "@semantic-release/changelog": "^3.0.6",
+    "@semantic-release/commit-analyzer": "^6.3.3",
+    "@semantic-release/git": "^7.0.18",
+    "@semantic-release/github": "^5.5.5",
+    "@semantic-release/npm": "^5.3.4",
+    "@semantic-release/release-notes-generator": "^7.3.5",
     "@storybook/addon-a11y": "^5.1.9",
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-backgrounds": "^5.1.9",
