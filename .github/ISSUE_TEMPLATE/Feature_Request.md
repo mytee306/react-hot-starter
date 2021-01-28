@@ -1,5 +1,6 @@
 ---
 name: 🙋 Feature Request
+about: Have an idea for an improvement?
 ---
 
 <!---
