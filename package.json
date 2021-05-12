@@ -50,7 +50,7 @@
     "formik": "^1.5.2",
     "immer": "^3.1.1",
     "immutable": "^4.0.0-rc.12",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "logrocket": "^1.0.1",
     "logrocket-react": "^3.0.0",
     "matchmedia-polyfill": "^0.3.2",
